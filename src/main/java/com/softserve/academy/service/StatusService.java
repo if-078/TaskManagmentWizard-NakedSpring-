@@ -16,7 +16,7 @@ public class StatusService implements ServiceInterface<Status> {
 
     @Override
     public List<Status> getAll() throws SQLException {
-        return statusDao.getAll();
+        return statusDao.findAll();
     }
 
     @Override

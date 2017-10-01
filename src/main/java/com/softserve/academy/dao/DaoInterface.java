@@ -4,7 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 public interface DaoInterface<E> {
-    List<E> getAll() throws SQLException;
+    List<E> findAll() throws SQLException;
 
     E findOne(int id) throws SQLException;
 

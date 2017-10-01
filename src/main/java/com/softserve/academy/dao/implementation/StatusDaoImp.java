@@ -34,7 +34,7 @@ public class StatusDaoImp implements DaoInterface<Status> {
     }
 
     @Override
-    public List<Status> getAll() throws SQLException {
+    public List<Status> findAll() throws SQLException {
         List<Status> statuses = new ArrayList();
         PreparedStatement preparedStatement = dataSource.getConnection().prepareStatement(readAllQuery);
         ResultSet resultSet = preparedStatement.executeQuery();

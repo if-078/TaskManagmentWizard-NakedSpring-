@@ -1,1 +1,0 @@
-DROP TABLE "task management wizard"."Status";

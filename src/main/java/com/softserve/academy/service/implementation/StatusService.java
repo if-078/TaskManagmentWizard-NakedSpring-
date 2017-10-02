@@ -10,8 +10,13 @@ import java.util.List;
 
 @org.springframework.stereotype.Service
 public class StatusService implements Service<Status> {
-    @Autowired
+
     private EntityDao<Status> statusDao;
+
+    @Autowired
+    public void setStatusDao(EntityDao<Status> statusDao) {
+        this.statusDao = statusDao;
+    }
 
     @Override
     public List<Status> getAll() throws SQLException {

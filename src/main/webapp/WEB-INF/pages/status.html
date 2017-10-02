@@ -20,6 +20,7 @@
             display: inline-block;
         }
 
+
     </style>
 
 </head>
@@ -43,28 +44,23 @@
             getStatus();
         });
         $("#addStatus").click(function () {
-            showForm();
+            showForm();            
         });
         $("#addStatusForm").submit(function (event) {
             addStatus();
-            clearStatuses();
-            getStatus();
-            hideForm();
             event.preventDefault();
+            });
+
+        $("#statuses").on("click", ".delete" ,function () {
+            deleteStatus($(this).attr("id"));
+
         });
-        $(".delete").click(function () {
-            var id = $(this).attr("id");
-            deleteStatus(id);
-            clearStatuses();
-            getStatus();
-        });
-        $("#update").click(function () {
+        $("#statuses").on("click", ".update" ,function () {
             var id = $(this).attr("id");
             var name = $(this).attr("id");
            json={"id":id,"name":name};
             updateStatus(json);
-            clearStatuses();
-            getStatus();
+
         });
 
     });
@@ -77,7 +73,12 @@
             type: "POST",
             contentType: "application/json",
             dataType: "json",
-            data: JSON.stringify(json)
+            data: JSON.stringify(json),
+            success:function(){
+            clearStatuses();
+            getStatus();
+            hideForm();
+            }
         });
 
     }
@@ -85,11 +86,13 @@
     function deleteStatus(id) {
         json = {"id": id};
         $.ajax({
-            url: 'status/',
+            url: 'status/del',
             type: "DELETE",
             data: JSON.stringify(json),
             success: function (data) {
                 if (data == true) {
+                clearStatuses();
+            getStatus();
                     alert("Deleting success")
                 }
             }
@@ -97,7 +100,17 @@
     }
 
     function updateStatus(json) {
-
+        $.ajax({
+            url: "status/updt",
+            datatype: "json",
+            type: "Put",
+            success: function (data) {
+               if (data == true) {
+                clearStatuses();
+                getStatus();
+                alert("Updating success")
+                }
+            }});
     }
 
     function getStatus() {
@@ -137,6 +150,7 @@
     function clearStatuses() {
         $("#statuses .status").remove();
     }
+
 </script>
 </body>
 </html>

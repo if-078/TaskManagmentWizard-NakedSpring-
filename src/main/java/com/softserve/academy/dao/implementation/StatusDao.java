@@ -15,22 +15,25 @@ import java.util.List;
 
 @Repository
 public class StatusDao implements EntityDao<Status> {
-    @Autowired
-    private DataSource dataSource;
 
+    private DataSource dataSource;
     private String createQuery;
     private String readQuery;
     private String readAllQuery;
     private String updateQuery;
     private String deleteQuery;
 
-    public StatusDao() {
+    @Autowired
+    public StatusDao(DataSource dataSource) {
+        this.dataSource = dataSource;
         createQuery = "Insert into Status (name) values (?);";
         readQuery = "Select * from Status where id=?;";
         readAllQuery = "Select * from Status";
         updateQuery = "Update Status Set name =? Where id=?";
         deleteQuery = "Delete From Status Where id=?";
     }
+
+
 
     @Override
     public List<Status> getAll() throws SQLException {

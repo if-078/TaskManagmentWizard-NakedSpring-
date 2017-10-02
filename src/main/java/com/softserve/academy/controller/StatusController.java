@@ -15,10 +15,15 @@ import java.util.List;
 @RequestMapping("status")
 public class StatusController {
 
-    @Autowired
     Service<Status> service;
-    @Autowired
+
     ObjectMapper objectMapper;
+
+    @Autowired
+    public StatusController(Service<Status> service, ObjectMapper objectMapper) {
+        this.service = service;
+        this.objectMapper = objectMapper;
+    }
 
     @GetMapping()
     public String getStatuses() throws SQLException, JsonProcessingException {
@@ -32,19 +37,20 @@ public class StatusController {
         return service.create(status);
     }
 
-    @GetMapping(value="/one")
+    @GetMapping(value = "/one")
     Status getStatus(@RequestBody String json) throws SQLException, IOException {
         int id = objectMapper.readValue(json, Integer.class);
         return service.findOne(id);
     }
 
-    @DeleteMapping("/")
+    @DeleteMapping("/del")
     boolean deleteStatus(@RequestBody String json) throws SQLException, IOException {
-        int id = objectMapper.readValue(json, Integer.class);
-        return service.delete(id);
+        Status status=new Status();
+        status = objectMapper.readValue(json, Status.class);
+        return service.delete(status.getId());
     }
 
-    @PutMapping(value = "/")
+    @PutMapping(value = "/updt")
     boolean updateStatus(@RequestBody String json) throws SQLException, IOException {
         Status statusObj = objectMapper.readValue(json, Status.class);
         return service.update(statusObj);

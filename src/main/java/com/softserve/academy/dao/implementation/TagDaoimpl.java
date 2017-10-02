@@ -8,6 +8,7 @@ import com.softserve.academy.dao.mappers.TagMapper;
 import com.softserve.academy.entity.Tag;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -22,7 +23,8 @@ import org.springframework.stereotype.Repository;
 public class TagDaoimpl extends AbstractDao<Tag> {
 
   @Autowired
-  public TagDaoimpl(String tagTable, RowMapper<Tag> tagMapper) {
+  public TagDaoimpl(@Value("tmw.tag")String tagTable, 
+          @Value("#new TagMapper()") RowMapper<Tag> tagMapper) {
     super(tagTable, tagMapper);
   }
 

@@ -1,6 +1,7 @@
 package dao;
 
 import com.softserve.academy.configuration.MainAppConfig;
+import com.softserve.academy.entity.User;
 import javax.sql.DataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,6 +17,10 @@ public class TestConfig {
     return new EmbeddedDatabaseBuilder().setType(EmbeddedDatabaseType.H2)
         .addScript("classpath:create_db.sql").build();
   }
+
   @Bean
-  public 
+  public User iwan() {
+    return new User("Iwan", "234", "mail");
+  }
+
 }

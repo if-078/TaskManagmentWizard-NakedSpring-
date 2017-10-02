@@ -16,7 +16,7 @@ public class MainAppConfig {
   private Environment env;
 
   @Bean
-  public DataSource getDataSource() {
+  public DataSource dataSource() {
     DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
     driverManagerDataSource.setSchema(env.getProperty("jdbc.schema"));
     driverManagerDataSource.setDriverClassName(env.getProperty("jdbc.driver"));

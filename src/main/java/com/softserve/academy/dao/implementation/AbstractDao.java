@@ -5,8 +5,11 @@
 package com.softserve.academy.dao.implementation;
 
 import com.softserve.academy.dao.DaoInterface;
+import java.lang.annotation.Target;
 import java.util.List;
+import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -15,17 +18,17 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 /**
  * @param <E>
  */
-@DependsOn("getDataSource")
+// @DependsOn("getDataSource")
 public abstract class AbstractDao<E> implements DaoInterface<E> {
   protected final String table;
   private final RowMapper<E> mapper;
 
-  @Autowired
   protected NamedParameterJdbcTemplate operations;
 
-  public AbstractDao(String tablename, RowMapper<E> mapper) {
+  public AbstractDao(String tablename, RowMapper<E> mapper, DataSource dataSource) {
     this.table = tablename;
     this.mapper = mapper;
+    operations = new NamedParameterJdbcTemplate(dataSource);
   }
 
   @Override

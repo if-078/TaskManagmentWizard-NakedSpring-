@@ -1,6 +1,7 @@
 package com.softserve.academy.dao.implementation;
 
 import com.softserve.academy.entity.User;
+import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.RowMapper;
@@ -13,9 +14,8 @@ import org.springframework.stereotype.Repository;
 public class UserDaoImpl extends AbstractDao<User> {
 
   @Autowired
-  public UserDaoImpl(@Value("tmw.user") String userTable,
-      @Value("#{new UserMapper()}") RowMapper<User> userMapper) {
-    super(userTable, userMapper);
+  public UserDaoImpl(String userTable, RowMapper<User> userMapper, DataSource dataSource) {
+    super(userTable, userMapper, dataSource);
   }
 
   @Override

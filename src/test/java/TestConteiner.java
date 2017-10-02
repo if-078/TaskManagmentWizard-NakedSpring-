@@ -16,7 +16,7 @@ public class TestConteiner {
   @Test
   public void getContextBeans() {
     ApplicationContext applicationContext =
-        new AnnotationConfigApplicationContext(TestConfig.class);
+        new AnnotationConfigApplicationContext(MainAppConfig.class);
     DataSource dataSource = (DataSource) applicationContext.getBean(DataSource.class);
     assertNotNull(dataSource);
 

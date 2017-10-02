@@ -7,6 +7,7 @@ package com.softserve.academy.dao.implementation;
 import com.softserve.academy.dao.mappers.TagMapper;
 import com.softserve.academy.entity.Tag;
 import java.util.List;
+import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.RowMapper;
@@ -23,9 +24,8 @@ import org.springframework.stereotype.Repository;
 public class TagDaoimpl extends AbstractDao<Tag> {
 
   @Autowired
-  public TagDaoimpl(@Value("tmw.tag") String tagTable,
-      @Value("#new TagMapper()") RowMapper<Tag> tagMapper) {
-    super(tagTable, tagMapper);
+  public TagDaoimpl(String tagTable, RowMapper<Tag> tagMapper, DataSource dataSource) {
+    super(tagTable, tagMapper, dataSource);
   }
 
   public List<Tag> getAllByUserId(int user_id) {

@@ -51,14 +51,29 @@
             getStatus();
             hideForm();
             event.preventDefault();
-        })
+        });
+        $(".delete").click(function () {
+            var id = $(this).attr("id");
+            deleteStatus(id);
+            clearStatuses();
+            getStatus();
+        });
+        $("#update").click(function () {
+            var id = $(this).attr("id");
+            var name = $(this).attr("id");
+           json={"id":id,"name":name};
+            updateStatus(json);
+            clearStatuses();
+            getStatus();
+        });
+
     });
 
     function addStatus() {
         var name = $("#statusName").val();
         var json = {"name": name};
         $.ajax({
-            url: 'statuses/',
+            url: 'status/',
             type: "POST",
             contentType: "application/json",
             dataType: "json",
@@ -67,9 +82,27 @@
 
     }
 
+    function deleteStatus(id) {
+        json = {"id": id};
+        $.ajax({
+            url: 'status/',
+            type: "DELETE",
+            data: JSON.stringify(json),
+            success: function (data) {
+                if (data == true) {
+                    alert("Deleting success")
+                }
+            }
+        });
+    }
+
+    function updateStatus(json) {
+
+    }
+
     function getStatus() {
         $.ajax({
-            url: "statuses/",
+            url: "status/",
             datatype: "json",
             type: "Get",
             success: function (data) {
@@ -83,7 +116,7 @@
 
     function renderStatuses(list) {
         for (var status = 0; status < list.length; status++) {
-            $("#statuses").append("<div class='status' id='" + status + "'><p>" + list[status].id + " " + list[status].name + "</p></div>");
+            $("#statuses").append("<div class='status' id='" + list[status].id + "'><p>" + list[status].id + " " + list[status].name + "</p><button class='delete' id='"+ list[status].id +"' >Delete</button> <button class='update'>Update</button></div>");
         }
     }
 

@@ -26,7 +26,7 @@ public class UserDaoImpl extends AbstractDao<User> {
     param.addValue("pass", entity.getPass());
     param.addValue("email", entity.getEmail());
     operations.update(sql, param, keyHolder);
-    entity.setId((int) keyHolder.getKey());
+    entity.setId(keyHolder.getKey().intValue());
     
     return entity;
   }

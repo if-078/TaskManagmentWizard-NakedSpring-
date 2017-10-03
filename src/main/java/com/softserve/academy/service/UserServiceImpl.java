@@ -4,49 +4,51 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
+import com.softserve.academy.dao.DaoInterface;
+import com.softserve.academy.dao.UserDao;
 import com.softserve.academy.entity.User;
+import com.softserve.academy.service.interfaces.ServiceInterface;
 import com.softserve.academy.service.interfaces.UserService;
 
-public class UserServiceImpl implements UserService {
+@Service
+public class UserServiceImpl implements ServiceInterface<User> {
 	
-	@Autowired
+  	@Autowired
+  	DaoInterface<User> userDao;
+	//UserDao userDao;
 	
 	
-
 	@Override
 	public List getAll() throws SQLException {
-	
-		return null;
+	    return userDao.getAll();
 	}
 
 	@Override
 	public User findOne(int id) throws SQLException {
-		return null;
+		return userDao.findOne(id);
 	}
 
 	@Override
 	public boolean update(User user) throws SQLException {
-		// TODO Auto-generated method stub
-		return false;
+		return userDao.update(user);
 	}
 
 	@Override
 	public boolean delete(int id) throws SQLException {
-		// TODO Auto-generated method stub
-		return false;
+		return userDao.delete(id);
 	}
 
 	@Override
 	public User create(User user) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		return userDao.create(user);
 	}
 
-	@Override
+	/*@Override
 	public User findByEmail(String email) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+		return userDao.findByEmail(email);
+	}*/
 
 }

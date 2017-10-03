@@ -6,7 +6,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 public class User {
 
-  private int user_id;
+  private Integer user_id;
   private String name;
   private String pass;
   private String email;
@@ -23,7 +23,7 @@ public class User {
     return user_id;
   }
 
-  public void setId(int id) {
+  public void setId(Integer id) {
     this.user_id = id;
   }
 

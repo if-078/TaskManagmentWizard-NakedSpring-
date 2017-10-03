@@ -21,6 +21,7 @@
         }
 
 
+
     </style>
 
 </head>
@@ -36,33 +37,40 @@
         <input id="statusName" type="text"></br>
         <input type="submit" value="Create">
     </form>
+
 </div>
 <script>
     $(document).ready(function () {
         $("#showStatuses").click(function () {
-            clearStatuses();
-            getStatus();
+        clearStatuses();
+        getStatus();
         });
         $("#addStatus").click(function () {
-            showForm();            
+            showForm();
         });
         $("#addStatusForm").submit(function (event) {
-            addStatus();
-            event.preventDefault();
+        addStatus();
+        event.preventDefault();
             });
 
         $("#statuses").on("click", ".delete" ,function () {
-            deleteStatus($(this).attr("id"));
+        deleteStatus($(this).attr("id"));
 
         });
-        $("#statuses").on("click", ".update" ,function () {
-            var id = $(this).attr("id");
-            var name = $(this).attr("id");
-           json={"id":id,"name":name};
-            updateStatus(json);
-
+        $("#statuses").on("click", ".update" ,function (event) {
+        var target=$(event.target);
+        addUpdateInput(target);
+        $(".status").on("submit","#updateStatusForm",function (event) {
+        var target=$(event.target);
+        var id=$(target).parent(".name").prev(".id").html();
+        var name=$("#statusName").val();
+        var json = {"id":id,"name": name};
+        console.log(target);
+        updateStatus(json);  
+        event.preventDefault();
         });
-
+        });
+        
     });
 
     function addStatus() {
@@ -101,9 +109,9 @@
 
     function updateStatus(json) {
         $.ajax({
-            url: "status/updt",
-            datatype: "json",
-            type: "Put",
+            url: "status/update",
+            type: "PUT",
+            data:JSON.stringify(json),
             success: function (data) {
                if (data == true) {
                 clearStatuses();
@@ -116,11 +124,9 @@
     function getStatus() {
         $.ajax({
             url: "status/",
-            datatype: "json",
-            type: "Get",
+            type: "GET",
             success: function (data) {
                 var list = JSON.parse(data);
-                console.log(list);
                 renderStatuses(list);
             }
         });
@@ -129,7 +135,7 @@
 
     function renderStatuses(list) {
         for (var status = 0; status < list.length; status++) {
-            $("#statuses").append("<div class='status' id='" + list[status].id + "'><p>" + list[status].id + " " + list[status].name + "</p><button class='delete' id='"+ list[status].id +"' >Delete</button> <button class='update'>Update</button></div>");
+            $("#statuses").append("<div class='status' id='" + list[status].id + "'><p class='id'>" + list[status].id + "</p><p class='name'> " + list[status].name + "</p><button class='delete' id='"+ list[status].id +"' >Delete</button> <button class='update'>Update</button></div>");
         }
     }
 
@@ -150,6 +156,11 @@
     function clearStatuses() {
         $("#statuses .status").remove();
     }
+    function addUpdateInput(target){
+    target.siblings(".name").html("<form id='updateStatusForm' ><input id='statusName' type='text'></br><input type='submit' value='Update'></form>");
+
+    }
+
 
 </script>
 </body>

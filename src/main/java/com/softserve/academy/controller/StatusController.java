@@ -50,7 +50,7 @@ public class StatusController {
         return service.delete(status.getId());
     }
 
-    @PutMapping(value = "/updt")
+    @PutMapping(value = "/update")
     boolean updateStatus(@RequestBody String json) throws SQLException, IOException {
         Status statusObj = objectMapper.readValue(json, Status.class);
         return service.update(statusObj);

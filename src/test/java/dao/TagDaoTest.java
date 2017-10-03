@@ -1,9 +1,7 @@
 package dao;
 
 
-import com.softserve.academy.configuration.DaoConfig;
-import com.softserve.academy.configuration.MainAppConfig;
-import com.softserve.academy.configuration.webConfig.WebAppConfig;
+import com.softserve.academy.dao.DaoConfig;
 import com.softserve.academy.dao.implementation.*;
 import com.softserve.academy.entity.Tag;
 import com.softserve.academy.entity.User;
@@ -16,23 +14,28 @@ import org.springframework.test.context.ContextConfiguration;
 
 // @RunWith(SpringJUnit4ClassRunner.class)
 
-@ContextConfiguration(classes = {TestConfig.class, DaoConfig.class})
+@ContextConfiguration(classes = {TestConfig.class})
 public class TagDaoTest {
 
-  @Autowired
   public TagDaoimpl tagDao;
-  @Autowired
   public UserDaoImpl userDao;
 
-
   @Test
-  public void shouldCreate4TagsGetAllDeleteUpdateAndGet() {
+  public void loadDAOAndUSerFromContextAndGetSetItToH2DB() {
     System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
     ApplicationContext applicationContext =
         new AnnotationConfigApplicationContext(TestConfig.class);
-    User u = applicationContext.getBean(User.class);
-    System.err.println(u.getName());
+    User u = (User) applicationContext.getBean("iwan");
+    userDao = applicationContext.getBean(UserDaoImpl.class);
+    tagDao = applicationContext.getBean(TagDaoimpl.class);
+    System.err.println(u);
     System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-    // userDao.create(u);
+    userDao.create(u);
+    userDao.create(new User("Namw", "Pass", "mail"));
+    tagDao.create(new Tag("#Kurva", 1));
+    userDao.getAll().stream().forEach((u1) -> {
+      System.out.println(u1);
+    });
+    System.out.println(tagDao.findOne(1));
   }
 }

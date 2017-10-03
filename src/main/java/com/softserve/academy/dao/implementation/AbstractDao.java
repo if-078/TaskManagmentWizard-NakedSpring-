@@ -18,7 +18,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 /**
  * @param <E>
  */
-// @DependsOn("getDataSource")
+@DependsOn("dataSource")
 public abstract class AbstractDao<E> implements DaoInterface<E> {
   protected final String table;
   private final RowMapper<E> mapper;

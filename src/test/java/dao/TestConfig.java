@@ -1,26 +1,29 @@
 package dao;
 
-import com.softserve.academy.configuration.MainAppConfig;
 import com.softserve.academy.entity.User;
 import javax.sql.DataSource;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.ComponentScans;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
-import org.springframework.test.context.ContextConfiguration;
 
 @Configuration
+@ComponentScan("com.softserve.academy.dao")
 public class TestConfig {
 
   @Bean
-  public DataSource h2DataSource() {
+  public DataSource dataSource() {
     return new EmbeddedDatabaseBuilder().setType(EmbeddedDatabaseType.H2)
         .addScript("classpath:create_db.sql").build();
   }
 
-  @Bean
-  public User iwan() {
+  @Bean(name = "iwan")
+  public User getIwan() {
     return new User("Iwan", "234", "mail");
   }
 
 }
+
+

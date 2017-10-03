@@ -2,7 +2,7 @@
  * To change this license header, choose License Headers in Project Properties. To change this
  * template file, choose Tools | Templates and open the template in the editor.
  */
-package com.softserve.academy.configuration;
+package com.softserve.academy.dao;
 
 import com.softserve.academy.dao.mappers.TagMapper;
 import com.softserve.academy.dao.mappers.UserMapper;
@@ -35,4 +35,6 @@ public class DaoConfig {
   public RowMapper tagMapper() {
     return new TagMapper();
   }
+
+
 }

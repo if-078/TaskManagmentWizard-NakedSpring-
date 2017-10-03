@@ -1,7 +1,7 @@
 package dao;
 
 
-import com.softserve.academy.dao.DaoConfig;
+import com.softserve.academy.dao.config.DaoConfig;
 import com.softserve.academy.dao.implementation.*;
 import com.softserve.academy.entity.Tag;
 import com.softserve.academy.entity.User;

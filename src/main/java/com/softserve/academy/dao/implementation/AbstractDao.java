@@ -56,5 +56,9 @@ public abstract class AbstractDao<E> implements DaoInterface<E> {
 
   @Override
   public abstract boolean update(E entity);
+  
+  public RowMapper<E> getMapper(){
+	  return mapper;
+  }
 
 }

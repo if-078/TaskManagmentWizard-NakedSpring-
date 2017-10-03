@@ -1,0 +1,63 @@
+# Maven ###
+log/
+target/
+!.mvn/wrapper/maven-wrapper.jar
+.mvn/timing.properties
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+nbactions
+nb-configuration
+README
+
+### Eclipse ###
+.classpath
+.project
+.settings/
+
+### Binaries ###
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+*.war
+*.ear
+*.sar
+*.class
+
+### Git ###
+.git/
+git/
+.git
+*.log
+
+*.DS_Store
+Thumbs.db
+*.sw?
+.#*
+*#
+*~
+*.sublime-*

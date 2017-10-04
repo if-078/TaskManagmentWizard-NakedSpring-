@@ -3,7 +3,7 @@ package com.softserve.academy.service.interfaces;
 import java.sql.SQLException;
 import java.util.List;
 
-public interface ServiceInterface<E> {
+public interface Service<E> {
     List<E> getAll() throws SQLException;
 
     E findOne(int id) throws SQLException;

@@ -1,12 +1,11 @@
 package dao;
 
 
-import com.softserve.academy.dao.config.DaoConfig;
-import com.softserve.academy.dao.implementation.*;
+import com.softserve.academy.dao.implementation.TagDaoimpl;
+import com.softserve.academy.dao.implementation.UserDaoImpl;
 import com.softserve.academy.entity.Tag;
 import com.softserve.academy.entity.User;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.test.context.ContextConfiguration;

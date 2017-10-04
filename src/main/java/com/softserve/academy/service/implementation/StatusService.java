@@ -1,18 +1,22 @@
-package com.softserve.academy.service;
+package com.softserve.academy.service.implementation;
 
-import com.softserve.academy.dao.DaoInterface;
+import com.softserve.academy.dao.interfaces.EntityDao;
 import com.softserve.academy.entity.Status;
-import com.softserve.academy.service.interfaces.ServiceInterface;
+import com.softserve.academy.service.interfaces.Service;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
 import java.util.List;
 
-@Service
-public class StatusService implements ServiceInterface<Status> {
+@org.springframework.stereotype.Service
+public class StatusService implements Service<Status> {
+
+    private EntityDao<Status> statusDao;
+
     @Autowired
-    private DaoInterface<Status> statusDao;
+    public void setStatusDao(EntityDao<Status> statusDao) {
+        this.statusDao = statusDao;
+    }
 
     @Override
     public List<Status> getAll() throws SQLException {

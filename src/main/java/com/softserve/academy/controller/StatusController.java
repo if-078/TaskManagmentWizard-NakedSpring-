@@ -3,44 +3,57 @@ package com.softserve.academy.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.softserve.academy.entity.Status;
-import com.softserve.academy.service.interfaces.ServiceInterface;
+import com.softserve.academy.service.interfaces.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import com.softserve.academy.service.StatusService;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
 @RestController
-@RequestMapping("statuses")
+@RequestMapping("status")
 public class StatusController {
 
-    @Autowired
-    ServiceInterface<Status> service;
-    @Autowired
+    Service<Status> service;
+
     ObjectMapper objectMapper;
 
-    @GetMapping(value = "/")
+    @Autowired
+    public StatusController(Service<Status> service, ObjectMapper objectMapper) {
+        this.service = service;
+        this.objectMapper = objectMapper;
+    }
+
+    @GetMapping()
     public String getStatuses() throws SQLException, JsonProcessingException {
-        Status status=new Status();
         List list = service.getAll();
         String json = objectMapper.writeValueAsString(list);
         return json;
     }
 
-    @PostMapping(value = "/")
+    @PostMapping()
     public Status createStatus(@RequestBody Status status) throws SQLException {
         return service.create(status);
     }
 
-    @GetMapping("/{id}")
-    Status getStatus(@PathVariable Integer id) throws SQLException {
+    @GetMapping(value = "/one")
+    Status getStatus(@RequestBody String json) throws SQLException, IOException {
+        int id = objectMapper.readValue(json, Integer.class);
         return service.findOne(id);
     }
 
-    @DeleteMapping("/{id}")
-    boolean deleteStatus(@PathVariable Integer id) throws SQLException {
-        return service.delete(id);
+    @DeleteMapping("/del")
+    boolean deleteStatus(@RequestBody String json) throws SQLException, IOException {
+        Status status=new Status();
+        status = objectMapper.readValue(json, Status.class);
+        return service.delete(status.getId());
+    }
+
+    @PutMapping(value = "/update")
+    boolean updateStatus(@RequestBody String json) throws SQLException, IOException {
+        Status statusObj = objectMapper.readValue(json, Status.class);
+        return service.update(statusObj);
     }
 
 }

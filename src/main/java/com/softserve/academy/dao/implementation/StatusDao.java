@@ -1,9 +1,8 @@
 package com.softserve.academy.dao.implementation;
 
-import com.softserve.academy.dao.DaoInterface;
+import com.softserve.academy.dao.interfaces.EntityDao;
 import com.softserve.academy.entity.Status;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
@@ -15,23 +14,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class StatusDaoImp implements DaoInterface<Status> {
-    @Autowired
-    private DataSource dataSource;
+public class StatusDao implements EntityDao<Status> {
 
+    private DataSource dataSource;
     private String createQuery;
     private String readQuery;
     private String readAllQuery;
     private String updateQuery;
     private String deleteQuery;
 
-    public StatusDaoImp() {
+    @Autowired
+    public StatusDao(DataSource dataSource) {
+        this.dataSource = dataSource;
         createQuery = "Insert into Status (name) values (?);";
         readQuery = "Select * from Status where id=?;";
         readAllQuery = "Select * from Status";
         updateQuery = "Update Status Set name =? Where id=?";
         deleteQuery = "Delete From Status Where id=?";
     }
+
+
 
     @Override
     public List<Status> getAll() throws SQLException {
@@ -44,6 +46,8 @@ public class StatusDaoImp implements DaoInterface<Status> {
             status.setName(resultSet.getString(2));
             statuses.add(status);
         }
+        preparedStatement.close();
+        resultSet.close();
         return statuses;
     }
 
@@ -59,6 +63,8 @@ public class StatusDaoImp implements DaoInterface<Status> {
             status.setName(resultSet.getString(2));
             break;
         }
+        preparedStatement.close();
+        resultSet.close();
         return status;
     }
 
@@ -71,17 +77,19 @@ public class StatusDaoImp implements DaoInterface<Status> {
             preparedStatement.setInt(2, entity.getId());
             result = preparedStatement.executeUpdate();
         }
+        preparedStatement.close();
         return result >= 1;
     }
 
     @Override
     public boolean delete(int id) throws SQLException {
         int result = 0;
-        PreparedStatement preparedStatement = dataSource.getConnection().prepareStatement(deleteQuery); {
-            preparedStatement.setInt(1, id);
-            result = preparedStatement.executeUpdate();
-            return result >= 1;
-        }
+        PreparedStatement preparedStatement = dataSource.getConnection().prepareStatement(deleteQuery);
+        preparedStatement.setInt(1, id);
+        result = preparedStatement.executeUpdate();
+        preparedStatement.close();
+        return result >= 1;
+
     }
 
     @Override
@@ -93,6 +101,8 @@ public class StatusDaoImp implements DaoInterface<Status> {
         if (resultSet.next()) {
             entity.setId(resultSet.getInt(1));
         }
+        preparedStatement.close();
+        resultSet.close();
         return entity;
     }
 }

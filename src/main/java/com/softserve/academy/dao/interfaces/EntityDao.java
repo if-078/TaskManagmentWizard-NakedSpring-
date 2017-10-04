@@ -1,9 +1,9 @@
-package com.softserve.academy.dao;
+package com.softserve.academy.dao.interfaces;
 
 import java.sql.SQLException;
 import java.util.List;
 
-public interface DaoInterface<E> {
+public interface EntityDao<E> {
     List<E> getAll() throws SQLException;
 
     E findOne(int id) throws SQLException;

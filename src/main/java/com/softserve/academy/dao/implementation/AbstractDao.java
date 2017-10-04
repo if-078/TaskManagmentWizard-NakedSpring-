@@ -1,15 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties. To change this
- * template file, choose Tools | Templates and open the template in the editor.
- */
 package com.softserve.academy.dao.implementation;
 
-import com.softserve.academy.dao.DaoInterface;
-import java.lang.annotation.Target;
+import com.softserve.academy.dao.interfaces.EntityDao;
 import java.util.List;
 import javax.sql.DataSource;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -19,7 +12,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
  * @param <E>
  */
 @DependsOn("dataSource")
-public abstract class AbstractDao<E> implements DaoInterface<E> {
+public abstract class AbstractDao<E> implements EntityDao<E> {
   protected final String table;
   private final RowMapper<E> mapper;
 

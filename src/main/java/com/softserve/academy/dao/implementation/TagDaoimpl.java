@@ -27,10 +27,10 @@ public class TagDaoimpl extends AbstractDao<Tag> {
     super(tagTable, tagMapper, dataSource);
   }
 
-  public List<Tag> getAllByUserId(int user_id) {
+  public List<Tag> getAllByUserId(int userId) {
     String sql = "SELECT * FROM " + table + " WHERE user_id = :user_id";
     List<Tag> list =
-        operations.query(sql, new MapSqlParameterSource("user_id", user_id), new TagMapper());
+        operations.query(sql, new MapSqlParameterSource("user_id", userId), new TagMapper());
     return list;
   }
 
@@ -55,6 +55,11 @@ public class TagDaoimpl extends AbstractDao<Tag> {
     param.addValue("id", entity.getId());
     return operations.update(sql, param) == 1;
 
+  }
+
+  public boolean deleleAllByUserId(int userId) {
+    String Sql = "DELETE FROM " + table + " WHERE user_id = :user_id";
+    return operations.update(Sql, new MapSqlParameterSource("user_id", userId)) > 0;
   }
 
 }

@@ -9,10 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import org.springframework.jdbc.core.RowMapper;
 
-/**
- *
- * @author Oleg
- */
+
 public class TagMapper implements RowMapper<Tag> {
 
   @Override

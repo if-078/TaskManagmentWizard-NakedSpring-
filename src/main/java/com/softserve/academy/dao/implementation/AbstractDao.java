@@ -5,11 +5,8 @@
 package com.softserve.academy.dao.implementation;
 
 import com.softserve.academy.dao.DaoInterface;
-import java.lang.annotation.Target;
 import java.util.List;
 import javax.sql.DataSource;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;

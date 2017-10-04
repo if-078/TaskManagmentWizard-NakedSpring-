@@ -8,7 +8,7 @@ import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 
 @Configuration
-@ComponentScan("com.softserve.academy.dao")
+@ComponentScan(basePackages = {"com.softserve.academy.dao", "com.softserve.academy.service"})
 public class TestConfig {
 
   @Bean

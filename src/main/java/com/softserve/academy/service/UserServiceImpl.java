@@ -4,15 +4,10 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-import com.softserve.academy.dao.DaoInterface;
-import com.softserve.academy.dao.UserDao;
 import com.softserve.academy.dao.implementation.UserDaoImpl;
 import com.softserve.academy.entity.User;
-import com.softserve.academy.service.interfaces.ServiceInterface;
 import com.softserve.academy.service.interfaces.UserService;
 
 @Service

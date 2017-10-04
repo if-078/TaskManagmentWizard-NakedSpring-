@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,10 +23,8 @@ import com.softserve.academy.service.interfaces.UserService;
 public class UserController {
   
   @Autowired
-  //UserService userService;
-  ServiceInterface<User> userService;
+  UserService userService;
   
-
 	@GetMapping("/")
 	List<User> getAllUsers() throws SQLException {
 		return userService.getAll();
@@ -41,10 +40,10 @@ public class UserController {
 		return userService.findOne(id);
 	}
 	
-	/*@GetMapping("/{email}")
+	@GetMapping("/email/{email}")
 	User getUser(@PathVariable String email)throws SQLException {
 		return userService.findByEmail(email);
-	}*/
+	}
 
 	@PutMapping("/")
 	boolean updateUser(@RequestBody User user)throws SQLException {
@@ -55,6 +54,5 @@ public class UserController {
 	boolean deleteUser(@PathVariable Integer id) throws SQLException {
 		return userService.delete(id);
 	}
-
 
 }

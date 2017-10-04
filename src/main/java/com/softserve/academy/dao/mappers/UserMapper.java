@@ -4,7 +4,9 @@ import com.softserve.academy.entity.User;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Component;
 
+@Component
 public class UserMapper implements RowMapper<User> {
 
   @Override
@@ -18,3 +20,4 @@ public class UserMapper implements RowMapper<User> {
   }
 
 }
+

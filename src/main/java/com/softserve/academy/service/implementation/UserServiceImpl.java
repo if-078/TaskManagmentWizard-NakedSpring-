@@ -1,4 +1,4 @@
-package com.softserve.academy.service;
+package com.softserve.academy.service.implementation;
 
 import java.sql.SQLException;
 import java.util.List;

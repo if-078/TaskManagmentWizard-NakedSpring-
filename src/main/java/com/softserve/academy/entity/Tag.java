@@ -1,7 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties. To change this
- * template file, choose Tools | Templates and open the template in the editor.
- */
+
 package com.softserve.academy.entity;
 
 /**
@@ -10,9 +7,9 @@ package com.softserve.academy.entity;
  */
 public class Tag {
 
-  public int id;
-  public String name;
-  public int userId;
+  private int id;
+  private String name;
+  private int userId;
 
   public Tag(int id, String name, int userId) {
     this.id = id;

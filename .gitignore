@@ -8,7 +8,27 @@ tomcat
 # Default excludes
 #
 
+<<<<<<< HEAD
 # Binaries
+=======
+### NetBeans ###
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+nbactions
+nb-configuration
+README
+
+### Eclipse ###
+.classpath
+.project
+.settings/
+
+### Binaries ###
+>>>>>>> oleg
 *.7z
 *.dmg
 *.gz

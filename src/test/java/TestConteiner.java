@@ -1,5 +1,4 @@
 
-import dao.TestConfig;
 import com.softserve.academy.configuration.MainAppConfig;
 import javax.sql.DataSource;
 import static org.junit.Assert.assertNotNull;
@@ -9,7 +8,6 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.test.context.ContextConfiguration;
 
 
-// @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {MainAppConfig.class})
 public class TestConteiner {
 

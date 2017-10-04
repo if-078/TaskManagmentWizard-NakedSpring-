@@ -9,21 +9,21 @@ import com.softserve.academy.entity.Tag;
 import java.util.List;
 import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
-/**
- *
- * @author Oleg
- */
 @Repository
-public class TagDaoimpl extends AbstractDao<Tag> {
+@PropertySource("classpath:tables.properties")
+public class TagDaoimpl extends Dao<Tag> {
 
   @Autowired
-  public TagDaoimpl(String tagTable, RowMapper<Tag> tagMapper, DataSource dataSource) {
+  public TagDaoimpl(@Value("${tag}") String tagTable, RowMapper<Tag> tagMapper,
+      DataSource dataSource) {
     super(tagTable, tagMapper, dataSource);
   }
 

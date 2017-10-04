@@ -3,6 +3,8 @@ package com.softserve.academy.dao.implementation;
 import com.softserve.academy.entity.User;
 import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -10,10 +12,12 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class UserDaoImpl extends AbstractDao<User> {
+@PropertySource("classpath:tables.properties")
+public class UserDaoImpl extends Dao<User> {
 
   @Autowired
-  public UserDaoImpl(String userTable, RowMapper<User> userMapper, DataSource dataSource) {
+  public UserDaoImpl(@Value("${user}") String userTable, RowMapper<User> userMapper,
+      DataSource dataSource) {
     super(userTable, userMapper, dataSource);
   }
 

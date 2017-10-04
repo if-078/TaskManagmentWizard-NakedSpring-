@@ -1,8 +1,7 @@
 package com.softserve.academy.entity;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 
 public class User {
 
@@ -27,6 +26,7 @@ public class User {
     this.user_id = id;
   }
 
+  @NotBlank
   public String getName() {
     return name;
   }
@@ -35,6 +35,7 @@ public class User {
     this.name = name;
   }
 
+  @NotBlank
   public String getPass() {
     return pass;
   }
@@ -43,6 +44,8 @@ public class User {
     this.pass = pass;
   }
 
+  @NotBlank
+  @Pattern(regexp = "^(.+)@(.+)$")
   public String getEmail() {
     return email;
   }
@@ -50,23 +53,5 @@ public class User {
   public void setEmail(String email) {
     this.email = email;
   }
-
-  @Override
-  public int hashCode() {
-
-    return HashCodeBuilder.reflectionHashCode(this, true);
-  }
-
-  @Override
-  public boolean equals(Object obj) {
-
-    return EqualsBuilder.reflectionEquals(this, obj, true);
-  }
-
-  @Override
-  public String toString() {
-
-    return ToStringBuilder.reflectionToString(this);
-  }
-
+  
 }

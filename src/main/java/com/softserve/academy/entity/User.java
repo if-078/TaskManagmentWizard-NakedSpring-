@@ -1,5 +1,8 @@
 package com.softserve.academy.entity;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -7,8 +10,12 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 public class User {
 
   private Integer user_id;
+  @NotBlank
   private String name;
+  @NotBlank
   private String pass;
+  @NotBlank
+  @Size(max=3)
   private String email;
 
   public User() {}

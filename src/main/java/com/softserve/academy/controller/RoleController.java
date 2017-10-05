@@ -4,7 +4,6 @@ import com.softserve.academy.entity.Role;
 import com.softserve.academy.service.interfaces.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
@@ -23,8 +22,8 @@ public class RoleController {
 	}
 
 	@PostMapping("/")
-	@ResponseStatus(HttpStatus.OK)
-	Role createRole( @Validated @RequestBody Role role)throws SQLException {
+	//@ResponseStatus(HttpStatus.OK)
+	Role createRole( @RequestBody Role role)throws SQLException {
 		return roleService.create(role);
 	}
 
@@ -35,7 +34,7 @@ public class RoleController {
 	
 	@PutMapping("/")
 	@ResponseStatus(HttpStatus.OK)
-	boolean updateRole(@Validated @RequestBody Role role)throws SQLException {
+	boolean updateRole(@RequestBody Role role)throws SQLException {
 		return roleService.update(role);
 	}
 

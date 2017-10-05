@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/tasks")
+@RequestMapping("tasks")
 public class TaskController {
 
     @Autowired

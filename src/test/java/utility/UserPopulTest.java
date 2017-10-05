@@ -1,9 +1,6 @@
 package utility;
 
-import com.softserve.academy.entity.Role;
-import com.softserve.academy.entity.Status;
 import com.softserve.academy.entity.Task;
-import com.softserve.academy.entity.User;
 import dao.TestConfig;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;

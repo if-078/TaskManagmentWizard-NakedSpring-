@@ -6,13 +6,16 @@ import static org.junit.Assert.assertEquals;
 import java.sql.SQLException;
 
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 
 import com.softserve.academy.entity.User;
 import com.softserve.academy.service.interfaces.UserService;
+import utility.UserPopulator;
 
 @ContextConfiguration(classes = {TestConfig.class})
 public class UserDaoTest {
@@ -50,7 +53,7 @@ public class UserDaoTest {
   }
   
   @Test
-  public void iTShouldInsertAndGetByEmailAndGetAll() throws SQLException {
+  public void iTShouldInsertAndGetByEmailAndGetAll(@Autowired UserPopulator populator) throws SQLException {
 	// Given
 	User userByEmail;
 	User userNew = new User();
@@ -64,5 +67,4 @@ public class UserDaoTest {
 	assertThat(userNew.getEmail()).isEqualTo(userByEmail.getEmail());
 	assertEquals(true, userService.getAll().size() >= 1);
 	}
-
 }

@@ -47,11 +47,11 @@ public class RoleDaoImpl extends Dao<Role> {
     MapSqlParameterSource param = new MapSqlParameterSource();
     param.addValue("name", role.getName());
     param.addValue("id", role.getId());
-    return operations.update("UPDATE " + table + " SET name = :name, WHERE id = :id", param) == 1;
+    return operations.update("UPDATE " + table + " SET name = :name WHERE id = :id", param) == 1;
   }
 
   public boolean deleteAll() {
-    return operations.update("DELETE FROM " + table, new MapSqlParameterSource()) == 1;
+    return operations.update("DELETE FROM " + table , new MapSqlParameterSource()) == 1;
   }
 }
 

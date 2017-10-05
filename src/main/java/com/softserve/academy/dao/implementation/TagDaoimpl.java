@@ -17,11 +17,9 @@ import org.springframework.stereotype.Repository;
 @PropertySource("classpath:tables.properties")
 public class TagDaoimpl extends Dao<Tag> {
 
-  @Autowired
-  public TagDaoimpl(@Value("${tag}") String tagTable, RowMapper<Tag> tagMapper,
-      DataSource dataSource) {
-    super(tagTable, tagMapper, dataSource);
-  }
+    public TagDaoimpl() {
+    }
+
 
   public List<Tag> getAllByUserId(int userId) {
     String sql = "SELECT * FROM " + table + " WHERE user_id = :user_id";
@@ -57,6 +55,16 @@ public class TagDaoimpl extends Dao<Tag> {
     String Sql = "DELETE FROM " + table + " WHERE user_id = :user_id";
     return operations.update(Sql, new MapSqlParameterSource("user_id", userId)) > 0;
   }
+    @Autowired
+    public void setTable(@Value("${tag}")String table) {
+        this.table = table;
+    }
+    @Autowired
+    public void setMapper(RowMapper<Tag> mapper) {
+        this.mapper = mapper;
+    }
+  
+  
 
 }
 

@@ -13,13 +13,10 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @PropertySource("classpath:tables.properties")
-public class UserDaoImpl extends AbstractDao<User> {
+public class UserDaoImpl extends Dao<User>{
 
-  @Autowired
-  public UserDaoImpl(@Value("${user}") String userTable, RowMapper<User> userMapper,
-      DataSource dataSource) {
-    super(userTable, userMapper, dataSource);
-  }
+    public UserDaoImpl() {
+    }
 
   @Override
   public User create(User entity) {
@@ -54,7 +51,19 @@ public class UserDaoImpl extends AbstractDao<User> {
     MapSqlParameterSource param = new MapSqlParameterSource();
     param.addValue("email", email);
 
-    return operations.queryForObject(sql, param, super.getMapper());
+    return operations.queryForObject(sql, param, super.mapper);
   }
+
+    @Autowired
+    public void setTable(@Value("${user}")String table) {
+        this.table = table;
+    }
+
+    @Autowired
+    public void setMapper(RowMapper<User> mapper) {
+        this.mapper = mapper;
+    }
+  
+  
 
 }

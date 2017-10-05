@@ -1,14 +1,18 @@
 package com.softserve.academy.entity;
 
-public class Priority {
+public class Role {
     private int id;
     private String name;
 
-    public Priority(int id, String name) {
+    public Role() {}
+
+    public Role(String name) { this.name = name; }
+
+    public Role(int id, String name) {
         this.id = id;
         this.name = name;
     }
-    
+
     public int getId() {
         return id;
     }
@@ -21,7 +25,7 @@ public class Priority {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setName(String role) {
+        this.name = role;
     }
 }

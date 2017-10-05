@@ -130,7 +130,6 @@ CREATE TABLE IF NOT EXISTS tmw.role(
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
-
 -- -----------------------------------------------------
 -- Table tmw.`users_tasks`
 -- -----------------------------------------------------
@@ -156,3 +155,4 @@ CREATE TABLE IF NOT EXISTS tmw.users_tasks (
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
+

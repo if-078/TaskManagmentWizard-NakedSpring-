@@ -1,47 +1,45 @@
 
 package com.softserve.academy.dao.implementation;
 
-import com.softserve.academy.entity.Status;
+import com.softserve.academy.entity.Priority;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.stereotype.Repository;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.stereotype.Repository;
 
 @Repository
 @PropertySource("classpath:tables.properties")
-public class StatusDao extends Dao<Status> {
+public class PriorityDao extends Dao<Priority>{
 
-    @Autowired    
-    public void setTable(@Value("${status}") String table) {
-        this.table = table;
+    public PriorityDao() {
     }
     
-    @Autowired
-    public void setMapper(RowMapper<Status> mapper) {
-        this.mapper = mapper;
-    }
-
     @Override
-    public Status create(Status entity) {
-            MapSqlParameterSource param = new MapSqlParameterSource();
+    public Priority create(Priority entity) {
+        MapSqlParameterSource param = new MapSqlParameterSource();
     KeyHolder keyHolder = new GeneratedKeyHolder();
     param.addValue("name", entity.getName());
     operations.update("INSERT INTO " + table + " (name) VALUES (:name)", param, keyHolder);
     entity.setId((int) keyHolder.getKey());
     return entity;
-    }
+  }
 
     @Override
-    public boolean update(Status entity) {
-        MapSqlParameterSource param = new MapSqlParameterSource();
-    param.addValue("name", entity.getName());
-    param.addValue("id", entity.getId());
-    return operations.update("UPDATE " + table + " SET name = :name WHERE id = :id", param) == 1;
-  }
-    
-    
+    public boolean update(Priority entity) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Autowired
+    public void setTable(@Value("${priority}")String table) {
+        this.table = table;
+    }
+
+    @Autowired
+    public void setMapper(RowMapper<Priority> mapper) {
+        this.mapper = mapper;
+    }
 }

@@ -36,7 +36,7 @@ public class TagDaoimpl extends Dao<Tag> {
     param.addValue("name", entity.getName());
     param.addValue("user_id", entity.getUserId());
     operations.update(sql, param, keyHolder);
-    entity.setId((int) keyHolder.getKey());
+    entity.setId( keyHolder.getKey().intValue());
     return entity;
   }
 

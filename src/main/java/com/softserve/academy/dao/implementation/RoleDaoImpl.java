@@ -27,7 +27,7 @@ public class RoleDaoImpl extends Dao<Role> {
     KeyHolder keyHolder = new GeneratedKeyHolder();
     param.addValue("name", role.getName());
     operations.update("INSERT INTO " + table + " (name) VALUES (:name)", param, keyHolder);
-    role.setId((int) keyHolder.getKey());
+    role.setId( keyHolder.getKey().intValue());
     return role;
   }
 

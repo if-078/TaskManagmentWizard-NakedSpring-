@@ -17,11 +17,8 @@ import java.util.List;
 @PropertySource("classpath:tables.properties")
 public class RoleDaoImpl extends Dao<Role> {
 
-  @Autowired
-  public RoleDaoImpl(@Value("${role}") String roleTable, RowMapper<Role> roleMapper,
-      DataSource dataSource) {
-    super(roleTable, roleMapper, dataSource);
-  }
+    public RoleDaoImpl() {
+    }
 
 
   @Override
@@ -53,5 +50,15 @@ public class RoleDaoImpl extends Dao<Role> {
   public boolean deleteAll() {
     return operations.update("DELETE FROM " + table , new MapSqlParameterSource()) == 1;
   }
+
+    @Autowired
+    public void setTable(@Value("${role}")String table) {
+        this.table = table;
+    }
+    @Autowired
+    public void setMapper(RowMapper<Role> mapper) {
+        this.mapper = mapper;
+    }
+   
 }
 

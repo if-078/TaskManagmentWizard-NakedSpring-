@@ -20,6 +20,10 @@ nbdist/
 .nb-gradle/
 nbactions
 nb-configuration
+nbactions.
+nb-configuration.
+.nbactions
+.nb-configuration
 README
 
 ### Eclipse ###

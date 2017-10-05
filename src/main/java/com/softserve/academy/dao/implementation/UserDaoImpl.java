@@ -1,7 +1,6 @@
 package com.softserve.academy.dao.implementation;
 
 import com.softserve.academy.entity.User;
-import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
@@ -27,7 +26,7 @@ public class UserDaoImpl extends Dao<User>{
     param.addValue("pass", entity.getPass());
     param.addValue("email", entity.getEmail());
     operations.update(sql, param, keyHolder);
-    entity.setId(keyHolder.getKey().intValue());
+    entity.setId( keyHolder.getKey().intValue());
 
     return entity;
   }

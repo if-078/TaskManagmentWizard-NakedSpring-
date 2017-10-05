@@ -31,7 +31,7 @@ public class StatusDao extends Dao<Status> {
     KeyHolder keyHolder = new GeneratedKeyHolder();
     param.addValue("name", entity.getName());
     operations.update("INSERT INTO " + table + " (name) VALUES (:name)", param, keyHolder);
-    entity.setId((int) keyHolder.getKey());
+    entity.setId( keyHolder.getKey().intValue());
     return entity;
     }
 

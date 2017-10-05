@@ -21,13 +21,13 @@ public class CommentDaoImpl extends Dao<Comment>{
 
     @Override
     public Comment create(Comment entity) {
-        String sql = "INSERT INTO " + table + " (comment, created_date, task_id, user_id) VALUES (:commentText, :createdDate, :taskId, :userId)";
+        String sql = "INSERT INTO " + table + " (comment, created_date, task_id, user_id) VALUES (:comment, :created_date, :task_id, :user_id)";
         MapSqlParameterSource param = new MapSqlParameterSource();
         KeyHolder keyHolder = new GeneratedKeyHolder();
-        param.addValue("commentText", entity.getCommentText());
-        param.addValue("createdDate", entity.getCreatedDate());
-        param.addValue("taskId", entity.getTaskId());
-        param.addValue("userId", entity.getUserId());
+        param.addValue("comment", entity.getCommentText());
+        param.addValue("created_date", entity.getCreatedDate());
+        param.addValue("task_id", entity.getTaskId());
+        param.addValue("user_id", entity.getUserId());
         operations.update(sql, param, keyHolder);
         entity.setId(keyHolder.getKey().intValue());
 
@@ -38,8 +38,8 @@ public class CommentDaoImpl extends Dao<Comment>{
     public boolean update(Comment entity) {
         MapSqlParameterSource param = new MapSqlParameterSource();
         String sql =
-                "UPDATE " + table + " SET comment = :commentText WHERE id = :id";
-        param.addValue("commentText", entity.getCommentText());
+                "UPDATE " + table + " SET comment = :comment WHERE id = :id";
+        param.addValue("comment", entity.getCommentText());
         param.addValue("id", entity.getId());
 
         return operations.update(sql, param) == 1;

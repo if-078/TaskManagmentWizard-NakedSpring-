@@ -13,10 +13,10 @@ public class CommentMapper implements RowMapper<Comment> {
     public Comment mapRow(ResultSet rs, int i) throws SQLException {
         Comment comment = new Comment();
         comment.setId(rs.getInt("id"));
-        comment.setCommentText(rs.getString("commentText"));
-        comment.setCreatedDate(rs.getTimestamp("createdDate").toLocalDateTime());
-        comment.setTaskId(rs.getInt("taskId"));
-        comment.setUserId(rs.getInt("userId"));
+        comment.setCommentText(rs.getString("comment"));
+        comment.setCreatedDate(rs.getTimestamp("created_date").toLocalDateTime());
+        comment.setTaskId(rs.getInt("task_id"));
+        comment.setUserId(rs.getInt("user_id"));
         return comment;
     }
 

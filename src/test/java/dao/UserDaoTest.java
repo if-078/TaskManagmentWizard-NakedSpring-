@@ -20,13 +20,15 @@ import utility.UserPopulator;
 @ContextConfiguration(classes = {TestConfig.class})
 public class UserDaoTest {
   
-  public UserService userService;
+  private UserService userService;
+  private UserPopulator populator;
   
   @Before
   public void getObcetsFromContext() throws SQLException {
       ApplicationContext applicationContext =
               new AnnotationConfigApplicationContext(TestConfig.class);
       userService = applicationContext.getBean(UserService.class);
+      populator = applicationContext.getBean(UserPopulator.class);
   }
   
   @Test
@@ -53,18 +55,13 @@ public class UserDaoTest {
   }
   
   @Test
-  public void iTShouldInsertAndGetByEmailAndGetAll(@Autowired UserPopulator populator) throws SQLException {
+  public void iTShouldInsertAndGetByEmailAndGetAll() throws SQLException {
 	// Given
 	User userByEmail;
-	User userNew = new User();
-	userNew.setName("if-078");
-	userNew.setEmail("softServeAcademy@gmail.com");
-	userNew.setPass("academypassword");
+	User userNew = populator.createCustomUser("Academy", "soft@serve.com");
 	// When
-	userNew = userService.create(userNew);
 	userByEmail = userService.findByEmail(userNew.getEmail());
 	// Then
 	assertThat(userNew.getEmail()).isEqualTo(userByEmail.getEmail());
-	assertEquals(true, userService.getAll().size() >= 1);
-	}
+	assertEquals(true, userService.getAll().size() >= 1);	}
 }

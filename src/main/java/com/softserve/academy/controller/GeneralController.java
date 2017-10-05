@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @RestControllerAdvice
 public class GeneralController {
  
-  private final static String DEFAULTFAILUREMESSAGE = "Internal Server Error";
+  private static final String DEFAULTFAILUREMESSAGE = "Internal Server Error";
   private static final String FALLBACKOPTION = "Error of validation";
   private static final int FIRST_FIELD_NOT_PASSED_VALIDATION = 0;
   

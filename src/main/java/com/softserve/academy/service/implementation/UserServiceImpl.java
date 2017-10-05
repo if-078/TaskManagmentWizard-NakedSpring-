@@ -1,6 +1,5 @@
 package com.softserve.academy.service.implementation;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,27 +16,27 @@ public class UserServiceImpl implements UserService {
 	UserDaoImpl userDao;
 	
 	@Override
-	public List getAll() throws SQLException {
+	public List getAll() {
 	    return userDao.getAll();
 	}
 
 	@Override
-	public User findOne(int id) throws SQLException {
+	public User findOne(int id) {
 		return userDao.findOne(id);
 	}
 
 	@Override
-	public boolean update(User user) throws SQLException {
+	public boolean update(User user) {
 		return userDao.update(user);
 	}
 
 	@Override
-	public boolean delete(int id) throws SQLException {
+	public boolean delete(int id) {
 		return userDao.delete(id);
 	}
 
 	@Override
-	public User create(User user) throws SQLException {
+	public User create(User user) {
 		return userDao.create(user);
 	}
 

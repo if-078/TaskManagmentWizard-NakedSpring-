@@ -7,6 +7,7 @@ import com.softserve.academy.service.implementation.RoleService;
 import org.junit.*;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.test.context.ContextConfiguration;
 
 import java.sql.SQLException;
@@ -35,12 +36,12 @@ public class RoleDaoTest {
         assertEquals("fdsa", roleService.findOne(role.getId()).getName());
     }
 
-    @Test
+    @Test(expected = EmptyResultDataAccessException.class)
     public void testCreateAndGetAndDelete() throws Exception {
         role = roleService.create(role);
         assertNotNull(roleService.findOne(role.getId()));
         roleService.delete(role.getId());
-        assertNull(roleService.findOne(role.getId()));
+        roleService.findOne(role.getId());
     }
 
     @Test

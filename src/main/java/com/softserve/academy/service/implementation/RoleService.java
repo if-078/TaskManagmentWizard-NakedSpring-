@@ -15,7 +15,7 @@ public class RoleService implements Service<Role> {
 
   @Override
   public List<Role> getAll() {
-    throw new UnsupportedOperationException("Not supported yet.");
+    return dao.getAll();
   }
 
   @Override

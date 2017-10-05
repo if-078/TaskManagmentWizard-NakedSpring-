@@ -48,11 +48,11 @@ public class RoleDaoTest {
     public void testCreateAndGetAllAndDeleteAll() throws Exception {
         List<Role> list = roleService.addBatch(new Role("zxcv1"), new Role("zxcv2"), new Role("zxcv3"));
         assertEquals(3, list.size());
-/*        int id = list.get(0).getId();
+        int id = list.get(0).getId();
         for (Role role : roleService.getAll()) {
             if (role.getId() == id) assertEquals("zxcv" + id++, role.getName());
-        }*/
+        }
         roleService.deleteAll();
-        //assertEquals(0, roleService.getAll().size());
+        assertEquals(0, roleService.getAll().size());
     }
 }

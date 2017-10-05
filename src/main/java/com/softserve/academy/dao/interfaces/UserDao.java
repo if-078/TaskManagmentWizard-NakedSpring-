@@ -1,4 +1,4 @@
-package com.softserve.academy.dao;
+package com.softserve.academy.dao.interfaces;
 
 
 import com.softserve.academy.dao.interfaces.EntityDao;

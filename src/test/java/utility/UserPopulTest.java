@@ -2,6 +2,7 @@ package utility;
 
 import com.softserve.academy.entity.Role;
 import com.softserve.academy.entity.Status;
+import com.softserve.academy.entity.Task;
 import com.softserve.academy.entity.User;
 import dao.TestConfig;
 import org.junit.Test;
@@ -19,8 +20,8 @@ public class UserPopulTest {
     public void testo () throws SQLException {
         ApplicationContext applicationContext =
                 new AnnotationConfigApplicationContext(TestConfig.class);
-        RolePopulator populator = applicationContext.getBean(RolePopulator.class);
-        Role status= populator.createDefaultStatus();
+        TaskPopulator populator = applicationContext.getBean(TaskPopulator.class);
+        Task status= populator.createDefaultHeadTask();
         System.out.println(status.getName());
         System.out.println(String.valueOf(status.getId()));
     }

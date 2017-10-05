@@ -8,10 +8,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
-import utility.PriorityPopulator;
-import utility.RolePopulator;
-import utility.StatusPopulator;
-import utility.UserPopulator;
+import utility.*;
 
 @Configuration
 @ComponentScan(basePackages = {"com.softserve.academy.dao", "com.softserve.academy.service" })
@@ -41,5 +38,10 @@ public class TestConfig {
   @Bean
   public RolePopulator getRolePop(){
     return new RolePopulator();
+  }
+
+  @Bean
+  TaskPopulator getTaskPopulator(){
+    return new TaskPopulator();
   }
 }

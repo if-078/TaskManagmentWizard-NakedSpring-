@@ -37,8 +37,7 @@ public class TaskPopulator {
     }
 
 
-
-    public Task createDefaultHeadTask () throws SQLException {
+    public Task createDefaultHeadTask() throws SQLException {
         int hourFromMillSecs = 1000 * 60 * 60;
         Task task = new Task();
         User defUser = userPopulator.createDefaultUser();
@@ -47,7 +46,7 @@ public class TaskPopulator {
         task.setCreated_date(new Date(System.currentTimeMillis()));
         task.setEnd_date(new Date(System.currentTimeMillis() + (7 * hourFromMillSecs * 24))); //end date after one week
         task.setStart_date(new Date(System.currentTimeMillis() + (hourFromMillSecs)));
-        task.setEstimate_time(new Time(2, 0 , 0));
+        task.setEstimate_time(new Time(2, 0, 0));
         task.setId(-1);
         task.setParent_id(0);
         task.setPriority_id(priorityPopulator.initOnePriority("HIGH").getId());
@@ -55,4 +54,20 @@ public class TaskPopulator {
         return dao.create(task);
     }
 
+
+    public Task createDefaultHeadTaskWithCustomUser(User user) throws SQLException {
+        int hourFromMillSecs = 1000 * 60 * 60;
+        Task task = new Task();
+        task.setName("Default task name");
+        task.setAssign_to(user.getId());
+        task.setCreated_date(new Date(System.currentTimeMillis()));
+        task.setEnd_date(new Date(System.currentTimeMillis() + (7 * hourFromMillSecs * 24))); //end date after one week
+        task.setStart_date(new Date(System.currentTimeMillis() + (hourFromMillSecs)));
+        task.setEstimate_time(new Time(2, 0, 0));
+        task.setId(-1);
+        task.setParent_id(0);
+        task.setPriority_id(priorityPopulator.initOnePriority("HIGH").getId());
+        task.setStatus_id(statusPopulator.createDefaultStatus().getId());
+        return dao.create(task);
+    }
 }

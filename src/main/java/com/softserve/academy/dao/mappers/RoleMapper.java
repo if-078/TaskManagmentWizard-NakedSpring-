@@ -6,10 +6,11 @@ package com.softserve.academy.dao.mappers;
 
 import com.softserve.academy.entity.Role;
 import org.springframework.jdbc.core.RowMapper;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import org.springframework.stereotype.Component;
 
+@Component
 public class RoleMapper implements RowMapper<Role> {
 
   @Override

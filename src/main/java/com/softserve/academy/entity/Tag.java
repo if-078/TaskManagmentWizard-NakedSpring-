@@ -17,11 +17,6 @@ public class Tag {
     this.userId = userId;
   }
 
-  public Tag(String name, int userId) {
-    this.name = name;
-    this.userId = userId;
-  }
-
   public Tag() {}
 
   public int getId() {

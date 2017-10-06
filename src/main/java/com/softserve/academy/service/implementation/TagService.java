@@ -3,7 +3,7 @@ package com.softserve.academy.service.implementation;
 
 
 
-import com.softserve.academy.dao.implementation.TagDaoimpl;
+import com.softserve.academy.dao.implementation.TagDao;
 import com.softserve.academy.entity.Tag;
 import com.softserve.academy.service.interfaces.Service;
 import java.util.List;
@@ -15,7 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class TagService implements Service<Tag> {
 
   @Autowired
-  TagDaoimpl tagDao;
+  TagDao tagDao;
 
   @Override
   public List<Tag> getAll() {

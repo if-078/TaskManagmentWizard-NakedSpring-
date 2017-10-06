@@ -15,9 +15,9 @@ import java.util.List;
 
 @Repository
 @PropertySource("classpath:tables.properties")
-public class RoleDaoImpl extends Dao<Role> {
+public class RoleDao extends Dao<Role> {
 
-    public RoleDaoImpl() {
+    public RoleDao() {
     }
 
 

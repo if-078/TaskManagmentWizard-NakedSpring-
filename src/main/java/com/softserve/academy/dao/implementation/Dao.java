@@ -14,27 +14,21 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
-/**
- * @param <E>
- */
 @DependsOn("dataSource")
 public abstract class Dao<E> implements EntityDao<E> {
-  protected  String table;
-  protected  RowMapper<E> mapper;
+  protected String table;
+  protected RowMapper<E> mapper;
   protected NamedParameterJdbcTemplate operations;
 
   public Dao(String tablename, RowMapper<E> mapper) {
     this.table = tablename;
     this.mapper = mapper;
-    
+
   }
 
-    public Dao() {
- 
-        
-    }
-   
-  
+  public Dao() {
+
+  }
 
   @Override
   public List<E> getAll() {
@@ -61,10 +55,10 @@ public abstract class Dao<E> implements EntityDao<E> {
 
   @Override
   public abstract boolean update(E entity);
-    
-    @Autowired
-    private void setOperations(DataSource dataSource) {
-        this.operations = new NamedParameterJdbcTemplate(dataSource);
-    }
+
+  @Autowired
+  private void setOperations(DataSource dataSource) {
+    this.operations = new NamedParameterJdbcTemplate(dataSource);
+  }
 
 }

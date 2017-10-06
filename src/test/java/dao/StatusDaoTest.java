@@ -2,7 +2,7 @@
 package dao;
 
 import com.softserve.academy.dao.implementation.PriorityDao;
-import com.softserve.academy.dao.implementation.RoleDaoImpl;
+import com.softserve.academy.dao.implementation.RoleDao;
 import com.softserve.academy.dao.implementation.StatusDao;
 import com.softserve.academy.entity.Priority;
 import com.softserve.academy.entity.Status;

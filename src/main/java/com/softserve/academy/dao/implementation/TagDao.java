@@ -15,9 +15,9 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @PropertySource("classpath:tables.properties")
-public class TagDaoimpl extends Dao<Tag> {
+public class TagDao extends Dao<Tag> {
 
-    public TagDaoimpl() {
+    public TagDao() {
     }
 
 

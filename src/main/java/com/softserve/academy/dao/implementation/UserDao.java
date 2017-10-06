@@ -12,9 +12,9 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @PropertySource("classpath:tables.properties")
-public class UserDaoImpl extends Dao<User>{
+public class UserDao extends Dao<User>{
 
-    public UserDaoImpl() {
+    public UserDao() {
     }
 
   @Override

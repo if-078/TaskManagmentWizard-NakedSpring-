@@ -1,6 +1,6 @@
 package utility;
 
-import com.softserve.academy.dao.implementation.UserDaoImpl;
+import com.softserve.academy.dao.implementation.UserDao;
 import com.softserve.academy.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.sql.SQLException;
@@ -9,10 +9,10 @@ import java.sql.SQLException;
 public class UserPopulator {
 
 
-    private UserDaoImpl userDao;
+    private UserDao userDao;
 
     @Autowired
-    public void setUserDao(UserDaoImpl userDao) {
+    public void setUserDao(UserDao userDao) {
         this.userDao = userDao;
     }
 

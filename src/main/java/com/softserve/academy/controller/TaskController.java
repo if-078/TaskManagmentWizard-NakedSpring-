@@ -1,9 +1,14 @@
 package com.softserve.academy.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.softserve.academy.entity.Task;
 import com.softserve.academy.service.implementation.TaskService;
+import com.softserve.academy.service.interfaces.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -11,37 +16,49 @@ import java.util.List;
 @RequestMapping("tasks")
 public class TaskController {
 
+
+  Service<Task> service;
+  ObjectMapper objectMapper;
+
   @Autowired
-  TaskService taskService;
-  /*
-   * @Autowired TaskDao taskService;
-   */
-
-
-  @PostMapping("/")
-  void createTask(@RequestBody Task task) throws SQLException {
-    taskService.create(task);
+  public TaskController(Service<Task> service, ObjectMapper objectMapper) {
+    this.service = service;
+    this.objectMapper = objectMapper;
   }
 
-  @PutMapping("/")
-  void updateTask(@RequestBody Task task) throws SQLException {
-    taskService.update(task);
+
+  @PostMapping
+  public Task createTask(@RequestBody Task task) throws SQLException {
+    return  service.create(task);
   }
 
-  @DeleteMapping("/{id}")
-  void deleteTask(@PathVariable int id) throws SQLException {
-    taskService.delete(id);
+  @PutMapping("/update")
+  boolean updateTask(@RequestBody String json) throws SQLException, IOException {
+    Task taskObj = objectMapper.readValue(json, Task.class);
+    return service.update(taskObj);
   }
 
-  @GetMapping("/")
-  List<Task> getAllTasks() throws SQLException {
-    return taskService.getAll();
+  @DeleteMapping("/delete")
+  boolean deleteTask(@RequestBody String json) throws SQLException, IOException {
+    Task task = new Task();
+    task = objectMapper.readValue(json, Task.class);
+    return service.delete(task.getId());
   }
 
-  @GetMapping("/{id}")
-  Task getTask(@PathVariable int id) throws SQLException {
-    return taskService.findOne(id);
+  @GetMapping//("/")
+  String getAllTasks() throws SQLException, JsonProcessingException {
+    List list = service.getAll();
+    String json = objectMapper.writeValueAsString(list);
+    return json;
   }
+
+  @GetMapping("/one")
+  Task getTask(@RequestBody String json) throws SQLException, IOException {
+    int id = objectMapper.readValue(json, Integer.class);
+    return service.findOne(id);
+  }
+
+
 
   /*
    * @GetMapping("/tag/{id}") List<Task> tasksByTag(@PathVariable int id) { return

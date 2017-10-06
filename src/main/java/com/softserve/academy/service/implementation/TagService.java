@@ -15,7 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class TagService implements Service<Tag> {
 
   @Autowired
-  TagDaoimpl dao;
+  TagDaoimpl tagDao;
 
   @Override
   public List<Tag> getAll() {
@@ -24,31 +24,31 @@ public class TagService implements Service<Tag> {
 
 
   public List<Tag> getAllByUserId(int userId) {
-    return dao.getAllByUserId(userId);
+    return tagDao.getAllByUserId(userId);
   }
 
   public boolean deleleAllByUserId(int userId) {
-    return dao.deleleAllByUserId(userId);
+    return tagDao.deleleAllByUserId(userId);
   }
 
   @Override
   public Tag findOne(int id) {
-    return dao.findOne(id);
+    return tagDao.findOne(id);
   }
 
   @Override
   public boolean update(Tag entity) {
-    return dao.update(entity);
+    return tagDao.update(entity);
   }
 
   @Override
   public boolean delete(int id) {
-    return dao.delete(id);
+    return tagDao.delete(id);
   }
 
   @Override
   public Tag create(Tag entity) {
-    return dao.create(entity);
+    return tagDao.create(entity);
   }
 
 }

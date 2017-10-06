@@ -3,9 +3,9 @@ package com.softserve.academy.controller;
 
 import com.softserve.academy.entity.Tag;
 import com.softserve.academy.service.implementation.TagService;
+import java.sql.SQLException;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,28 +13,28 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
-@RequestMapping("user/{uId}/tags")
+@RestController
+@RequestMapping("tags")
 public class TagController {
 
   @Autowired
   private TagService service;
 
-  @GetMapping(value = "/all")
-  public List<Tag> getTagsByUserId(@PathVariable Integer uId) {
-    return service.getAllByUserId(uId);
+  @GetMapping("/all/{id}")
+  List<Tag> getTagsByUserId(@PathVariable Integer Id) throws SQLException {
+    return service.getAllByUserId(Id);
   }
 
-  @PostMapping(value = "/")
-  public Tag createTag(@RequestBody Tag tag) {
+  @PostMapping("/")
+  public Tag createTag(@RequestBody Tag tag) throws SQLException {
     return service.create(tag);
   }
 
-  @GetMapping("/{tId}")
-  public Tag findTag(@PathVariable Integer tId) {
-    return service.findOne(tId);
+  @GetMapping("/{id}")
+  public Tag findTag(@PathVariable Integer id) throws SQLException {
+    return service.findOne(id);
   }
 
   @PutMapping("/")

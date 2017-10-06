@@ -49,6 +49,7 @@ public class TagDaoTest {
     tagService.create(new Tag(6, "#Axe", 2));
     tagService.create(new Tag(7, "#Knife", 3));
     tagService.create(new Tag(8, "#Searching", 3));
+    assertThat(tagService.findOne(8).getName()).isEqualTo("#Searching");
     assertThat(tagService.create(new Tag(9, "#Books", 3)).getId()).isEqualTo(9);
     assertThat(tagService.delete(4)).isTrue();
     assertThat(tagService.getAllByUserId(2)).hasSize(2);

@@ -55,8 +55,7 @@ public class TagDaoTest {
     assertThat(tagService.getAllByUserId(2)).hasSize(2);
     assertThat(tagService.update(new Tag(1, "#Cat2", 2))).isTrue();
     assertThat(tagService.deleleAllByUserId(1)).isTrue();
-    tagService.getAllByUserId(1).stream().forEach(System.out::println);
-    System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+
   }
 
   @Test

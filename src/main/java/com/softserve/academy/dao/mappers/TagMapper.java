@@ -12,13 +12,11 @@ import org.springframework.stereotype.Component;
 public class TagMapper implements RowMapper<Tag> {
 
   @Override
-  public Tag mapRow(ResultSet rs, int i) throws SQLException {
-    ResultSetMetaData rsmd = rs.getMetaData();
-
+  public Tag mapRow(ResultSet rs, int i) throws SQLException { 
     Tag tag = new Tag();
     tag.setId(rs.getInt("id"));
     tag.setName(rs.getString("name"));
-    tag.setId(rs.getInt("user_id"));
+    tag.setUserId(rs.getInt("user_id"));
     return tag;
   }
 

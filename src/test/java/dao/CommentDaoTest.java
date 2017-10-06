@@ -40,7 +40,7 @@ public class CommentDaoTest {
         commentService = applicationContext.getBean(CommentServiceImpl.class);
         TaskPopulator tp = applicationContext.getBean(TaskPopulator.class);
         UserPopulator up = applicationContext.getBean(UserPopulator.class);
-        user = up.createDefaultUser();
+        user = up.createDefaultEntity();
         task = tp.createDefaultHeadTaskWithCustomUser(user);
 
     }

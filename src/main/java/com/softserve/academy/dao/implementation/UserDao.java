@@ -54,7 +54,7 @@ public class UserDao extends Dao<User>{
   }
 
     @Autowired
-    public void setTable(@Value("${user}")String table) {
+    public void setTable(@Value("${uuser}")String table) {
         this.table = table;
     }
 

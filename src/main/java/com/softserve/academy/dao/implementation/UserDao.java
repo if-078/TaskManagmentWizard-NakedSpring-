@@ -1,5 +1,6 @@
 package com.softserve.academy.dao.implementation;
 
+import com.softserve.academy.dao.mappers.UserMapper;
 import com.softserve.academy.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,10 +13,11 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @PropertySource("classpath:tables.properties")
-public class UserDao extends Dao<User>{
+public class UserDao extends Dao<User> {
 
-    public UserDao() {
-    }
+  public UserDao(@Value("${uuser}") String table) {
+    super(table, new UserMapper());
+  }
 
   @Override
   public User create(User entity) {
@@ -26,7 +28,7 @@ public class UserDao extends Dao<User>{
     param.addValue("pass", entity.getPass());
     param.addValue("email", entity.getEmail());
     operations.update(sql, param, keyHolder);
-    entity.setId( keyHolder.getKey().intValue());
+    entity.setId(keyHolder.getKey().intValue());
 
     return entity;
   }
@@ -52,17 +54,5 @@ public class UserDao extends Dao<User>{
 
     return operations.queryForObject(sql, param, super.mapper);
   }
-
-    @Autowired
-    public void setTable(@Value("${uuser}")String table) {
-        this.table = table;
-    }
-
-    @Autowired
-    public void setMapper(RowMapper<User> mapper) {
-        this.mapper = mapper;
-    }
-  
-  
 
 }

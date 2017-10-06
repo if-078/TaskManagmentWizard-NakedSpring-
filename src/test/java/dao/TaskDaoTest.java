@@ -5,28 +5,26 @@ import com.softserve.academy.entity.Task;
 import com.softserve.academy.service.implementation.TaskService;
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import java.sql.SQLException;
 import java.util.Date;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+@RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {TestConfig.class})
 public class TaskDaoTest {
 
+  @Autowired
   private TaskDao dao;
   private TaskService serv;
 
 
   @Before
   public void getObcetsFromContext() throws SQLException {
-    ApplicationContext applicationContext =
-        new AnnotationConfigApplicationContext(TestConfig.class);
-    dao = applicationContext.getBean(TaskDao.class);
-    serv = applicationContext.getBean(TaskService.class);
-
     Date date = new Date();
     java.sql.Timestamp sqlDate = new java.sql.Timestamp(date.getTime());
     java.sql.Time estTime = new java.sql.Time(date.getTime());

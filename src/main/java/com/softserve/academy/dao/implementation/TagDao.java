@@ -3,11 +3,8 @@ package com.softserve.academy.dao.implementation;
 import com.softserve.academy.dao.mappers.TagMapper;
 import com.softserve.academy.entity.Tag;
 import java.util.List;
-import javax.sql.DataSource;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
@@ -17,9 +14,9 @@ import org.springframework.stereotype.Repository;
 @PropertySource("classpath:tables.properties")
 public class TagDao extends Dao<Tag> {
 
-    public TagDao() {
-    }
-
+  public TagDao(@Value("${tag}") String table) {
+    super(table, new TagMapper());
+  }
 
   public List<Tag> getAllByUserId(int userId) {
     String sql = "SELECT * FROM " + table + " WHERE user_id = :user_id";
@@ -36,7 +33,7 @@ public class TagDao extends Dao<Tag> {
     param.addValue("name", entity.getName());
     param.addValue("user_id", entity.getUserId());
     operations.update(sql, param, keyHolder);
-    entity.setId( keyHolder.getKey().intValue());
+    entity.setId(keyHolder.getKey().intValue());
     return entity;
   }
 
@@ -48,23 +45,12 @@ public class TagDao extends Dao<Tag> {
     param.addValue("user_id", entity.getUserId());
     param.addValue("id", entity.getId());
     return operations.update(sql, param) == 1;
-
   }
 
   public boolean deleleAllByUserId(int userId) {
     String Sql = "DELETE FROM " + table + " WHERE user_id = :user_id";
     return operations.update(Sql, new MapSqlParameterSource("user_id", userId)) > 0;
   }
-    @Autowired
-    public void setTable(@Value("${tag}")String table) {
-        this.table = table;
-    }
-    @Autowired
-    public void setMapper(RowMapper<Tag> mapper) {
-        this.mapper = mapper;
-    }
-  
-  
 
 }
 

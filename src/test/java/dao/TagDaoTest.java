@@ -11,21 +11,21 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.test.context.ContextConfiguration;
 import static org.assertj.core.api.Assertions.*;
 import org.junit.Before;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-
+@RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {TestConfig.class})
 public class TagDaoTest {
 
-
+  @Autowired
   public UserDao userDao;
+  @Autowired
   public TagService tagService;
 
   @Before
   public void getObcetsFromContext() throws SQLException {
-    ApplicationContext applicationContext =
-        new AnnotationConfigApplicationContext(TestConfig.class);
-    userDao = applicationContext.getBean(UserDao.class);
-    tagService = applicationContext.getBean(TagService.class);
     userDao.create(new User("Ingret", "12", "email@lala.du"));
     userDao.create(new User("Ragnar", "92", "email@lala.eu"));
     userDao.create(new User("Garret", "35", "email@gmail.uu"));

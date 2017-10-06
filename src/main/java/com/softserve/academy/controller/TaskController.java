@@ -45,7 +45,7 @@ public class TaskController {
     return service.delete(task.getId());
   }
 
-  @GetMapping//("/")
+  @GetMapping("/")
   String getAllTasks() throws SQLException, JsonProcessingException {
     List list = service.getAll();
     String json = objectMapper.writeValueAsString(list);

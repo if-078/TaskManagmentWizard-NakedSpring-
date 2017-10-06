@@ -8,18 +8,24 @@ header {
     height: 70px;
     border-radius: 5px;
     border: 1px solid #ccc;
+    display:flex;
 }
-
+#auth-container{
+    margin-left:600px ;
+}
+#auth-container a{
+    color: white;
+}
 #logo {
     margin-top: 10px;
     margin-left: 10px;
 }
 
-.header-logo-container {
+#header-logo-container {
     display: flex;
 }
 
-.header-logo-container p {
+#header-logo-container p {
     margin-top: 22px;
     margin-left: 10px;
     font-style: italic;
@@ -58,9 +64,31 @@ article {
     display: none;
 }
 
-footer {
-    height: 50px;
+#task-container {
+    display: flex;
+}
+
+.task {
     margin-top: 10px;
+    margin-right: 10px;
+    height: 100px;
+    width: 100px;
     border-radius: 5px;
     border: 1px solid #ccc;
+}
+.task p{
+    margin-top: 10px;
+    text-align: center;
+}
+
+footer {
+    height: 40px;
+    margin-top: 10px;
+    background: #39a3ef ;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+footer h3{
+    margin-top: 5px; ;
+    margin-left: 20px;
 }

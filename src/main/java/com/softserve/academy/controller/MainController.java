@@ -8,7 +8,7 @@ public class MainController {
 
     @RequestMapping("/")
     public String getIndexPage() {
-        return "status";
+        return "index";
     }
 
 }

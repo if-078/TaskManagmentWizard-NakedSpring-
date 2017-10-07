@@ -1,6 +1,6 @@
 package utility;
 
-import com.softserve.academy.dao.implementation.CommentDaoImpl;
+import com.softserve.academy.dao.implementation.CommentDao;
 import com.softserve.academy.entity.Comment;
 import dao.TestConfig;
 import org.junit.Assert;
@@ -16,7 +16,7 @@ public class CommentPopulTest {
     public void commentCreatedAndInserted (){
         ApplicationContext context = new AnnotationConfigApplicationContext(TestConfig.class);
         CommentPopulator populator = context.getBean(CommentPopulator.class);
-        CommentDaoImpl dao = context.getBean(CommentDaoImpl.class);
+        CommentDao dao = context.getBean(CommentDao.class);
         Comment actual = populator.createDefaultEntity();
         Comment result = dao.findOne(actual.getId());
         Assert.assertEquals(actual.getCommentText(), result.getCommentText());

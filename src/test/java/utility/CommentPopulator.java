@@ -1,6 +1,6 @@
 package utility;
 
-import com.softserve.academy.dao.implementation.CommentDaoImpl;
+import com.softserve.academy.dao.implementation.CommentDao;
 import com.softserve.academy.entity.Comment;
 import com.softserve.academy.entity.Task;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,10 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class CommentPopulator implements Populator<Comment>{
 
     private TaskPopulator taskPopulator;
-    private CommentDaoImpl dao;
+    private CommentDao dao;
 
     @Autowired
-    public void setDao(CommentDaoImpl dao) {
+    public void setDao(CommentDao dao) {
         this.dao = dao;
     }
 

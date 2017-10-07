@@ -4,13 +4,13 @@ import java.sql.SQLException;
 import java.util.List;
 
 public interface EntityDao<E> {
-    List<E> getAll() throws SQLException;
+  List<E> getAll();
 
-    E findOne(int id) throws SQLException;
+  E findOne(int id);
 
-    boolean update(E entity)throws SQLException;
+  boolean update(E entity);
 
-    boolean delete(int id)throws SQLException;
+  boolean delete(int id);
 
-    E create(E entity)throws SQLException;
+  E create(E entity);
 }

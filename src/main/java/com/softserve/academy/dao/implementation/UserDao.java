@@ -1,11 +1,10 @@
 package com.softserve.academy.dao.implementation;
 
+import com.softserve.academy.dao.interfaces.UserDaoInterface;
 import com.softserve.academy.dao.mappers.UserMapper;
 import com.softserve.academy.entity.User;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
@@ -13,7 +12,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @PropertySource("classpath:tables.properties")
-public class UserDao extends Dao<User> {
+public class UserDao extends Dao<User> implements UserDaoInterface {
 
   public UserDao(@Value("${uuser}") String table) {
     super(table, new UserMapper());
@@ -47,6 +46,7 @@ public class UserDao extends Dao<User> {
 
   }
 
+  @Override
   public User findByEmail(String email) {
     String sql = "SELECT * FROM " + table + " WHERE email = :email";
     MapSqlParameterSource param = new MapSqlParameterSource();

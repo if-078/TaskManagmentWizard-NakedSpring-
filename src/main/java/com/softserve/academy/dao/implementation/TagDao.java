@@ -1,5 +1,6 @@
 package com.softserve.academy.dao.implementation;
 
+import com.softserve.academy.dao.interfaces.TagDaoInterface;
 import com.softserve.academy.dao.mappers.TagMapper;
 import com.softserve.academy.entity.Tag;
 import java.util.List;
@@ -12,17 +13,10 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @PropertySource("classpath:tables.properties")
-public class TagDao extends Dao<Tag> {
+public class TagDao extends Dao<Tag> implements TagDaoInterface {
 
   public TagDao(@Value("${tag}") String table) {
     super(table, new TagMapper());
-  }
-
-  public List<Tag> getAllByUserId(int userId) {
-    String sql = "SELECT * FROM " + table + " WHERE user_id = :user_id";
-    List<Tag> list =
-        operations.query(sql, new MapSqlParameterSource("user_id", userId), new TagMapper());
-    return list;
   }
 
   @Override
@@ -50,6 +44,13 @@ public class TagDao extends Dao<Tag> {
   public boolean deleleAllByUserId(int userId) {
     String Sql = "DELETE FROM " + table + " WHERE user_id = :user_id";
     return operations.update(Sql, new MapSqlParameterSource("user_id", userId)) > 0;
+  }
+
+  public List<Tag> getAllByUserId(int userId) {
+    String sql = "SELECT * FROM " + table + " WHERE user_id = :user_id";
+    List<Tag> list =
+        operations.query(sql, new MapSqlParameterSource("user_id", userId), new TagMapper());
+    return list;
   }
 
 }

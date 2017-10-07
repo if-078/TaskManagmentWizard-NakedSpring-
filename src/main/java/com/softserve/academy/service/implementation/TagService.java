@@ -15,7 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class TagService implements Service<Tag> {
 
   @Autowired
-  TagDao tagDao;
+  private TagDao tagDao;
 
   @Override
   public List<Tag> getAll() {

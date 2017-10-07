@@ -1,6 +1,6 @@
 package com.softserve.academy.service.implementation;
 
-import com.softserve.academy.dao.implementation.CommentDaoImpl;
+import com.softserve.academy.dao.implementation.CommentDao;
 import com.softserve.academy.entity.Comment;
 import com.softserve.academy.service.interfaces.Service;
 import java.util.List;
@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class CommentServiceImpl implements Service<Comment> {
 
     @Autowired
-    CommentDaoImpl dao;
+    CommentDao dao;
 
     @Override
     public List getAll() {

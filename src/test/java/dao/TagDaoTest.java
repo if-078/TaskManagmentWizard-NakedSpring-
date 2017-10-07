@@ -1,6 +1,7 @@
 package dao;
 
 import com.softserve.academy.dao.implementation.*;
+import com.softserve.academy.dao.interfaces.EntityDao;
 import com.softserve.academy.entity.Tag;
 import com.softserve.academy.entity.User;
 import com.softserve.academy.service.implementation.TagService;
@@ -20,7 +21,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 public class TagDaoTest {
 
   @Autowired
-  public UserDao userDao;
+  public EntityDao userDao;
   @Autowired
   public TagService tagService;
 

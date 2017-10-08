@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="time managment tool">
+    <meta name="author" content="RO">
+    <link rel="shortcut icon" href="../../assets/ico/favicon.ico">
+    <title>Tmw</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link href="../pages/css/starter-template.css" rel="stylesheet">
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+
+<body>
+<div class="main-container">
+    <header>
+        <div class="header-logo-container"><img id="logo" src="imgs/logo.png" height="50" width="50">
+            <p>Task Managment Wizard</p></div>
+    </header>
+    <div class="data-container">
+        <aside class="btn-group-vertical">
+            <button id="tasks-btn" type="button" class="btn btn-default">Tasks<span class="counter"></span></button>
+            <button id="for-today-btn" type="button" class="btn btn-default">For Today <span class="counter"></span>
+            </button>
+            <button id="sprint-btn" type="button" class="btn btn-default">Sprint<span class="counter"></span></button>
+        </aside>
+        <article class="content-container">
+            <div id="task-container" class="content">
+                <h2>Tasks</h2>
+            </div>
+            <div id="today-container" class="content">
+                <h2>Tasks For Today</h2>
+            </div>
+            <div id="sprint-container" class="content">
+                <h2>Sprint</h2>
+            </div>
+        </article>
+    </div>
+
+    <footer>
+
+    </footer>
+</div>
+<script>
+    $(document).ready(function () {
+        $("#tasks-btn").click(function () {
+            clearContent();
+            $("#task-container").show();
+        })
+        $("#for-today-btn").click(function () {
+            clearContent();
+            getTasks();
+            $("#today-container").show();
+        })
+        $("#sprint-btn").click(function () {
+            clearContent();
+            $("#sprint-container").show();
+        })
+    });
+
+    function getTasks() {
+        $.ajax({
+            url: "tasks/",
+            type: "GET",
+            success: function (data) {
+                var list = JSON.parse(data);
+                renderTasks(list);
+            }
+        });
+    }
+
+    function clearContent() {
+        $(".content").hide();
+    }
+
+    function renderTasks(list) {
+        for (var task = 0; status < list.length; task++) {
+            var id = "task" + list[task].id;
+            var searchId = "#" + id;
+            var name=list[task].name;
+            var priority=list[task].priority;
+            $("#task-container").append("<div id='" + id + "' class='task'></div>");
+            $(searchId).html("<p class='name'>"+name+"</p><p class='priority'>"+priority+"</p>");
+        }
+    }
+</script>
+
+</body>
+</html>

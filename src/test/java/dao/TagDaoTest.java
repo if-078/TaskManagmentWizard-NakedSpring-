@@ -1,6 +1,7 @@
 package dao;
 
 import com.softserve.academy.dao.implementation.*;
+import com.softserve.academy.dao.interfaces.EntityDao;
 import com.softserve.academy.entity.Tag;
 import com.softserve.academy.entity.User;
 import com.softserve.academy.service.implementation.TagService;
@@ -11,21 +12,21 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.test.context.ContextConfiguration;
 import static org.assertj.core.api.Assertions.*;
 import org.junit.Before;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-
+@RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {TestConfig.class})
 public class TagDaoTest {
 
-
-  public UserDaoImpl userDao;
+  @Autowired
+  public EntityDao userDao;
+  @Autowired
   public TagService tagService;
 
   @Before
   public void getObcetsFromContext() throws SQLException {
-    ApplicationContext applicationContext =
-        new AnnotationConfigApplicationContext(TestConfig.class);
-    userDao = applicationContext.getBean(UserDaoImpl.class);
-    tagService = applicationContext.getBean(TagService.class);
     userDao.create(new User("Ingret", "12", "email@lala.du"));
     userDao.create(new User("Ragnar", "92", "email@lala.eu"));
     userDao.create(new User("Garret", "35", "email@gmail.uu"));
@@ -49,13 +50,13 @@ public class TagDaoTest {
     tagService.create(new Tag(6, "#Axe", 2));
     tagService.create(new Tag(7, "#Knife", 3));
     tagService.create(new Tag(8, "#Searching", 3));
+    assertThat(tagService.findOne(8).getName()).isEqualTo("#Searching");
     assertThat(tagService.create(new Tag(9, "#Books", 3)).getId()).isEqualTo(9);
     assertThat(tagService.delete(4)).isTrue();
     assertThat(tagService.getAllByUserId(2)).hasSize(2);
     assertThat(tagService.update(new Tag(1, "#Cat2", 2))).isTrue();
     assertThat(tagService.deleleAllByUserId(1)).isTrue();
-    tagService.getAllByUserId(1).stream().forEach(System.out::println);
-    System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+
   }
 
   @Test

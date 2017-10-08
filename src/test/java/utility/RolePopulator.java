@@ -1,21 +1,22 @@
 package utility;
 
-import com.softserve.academy.dao.implementation.RoleDaoImpl;
+import com.softserve.academy.dao.implementation.RoleDao;
 import com.softserve.academy.entity.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
-public class RolePopulator {
+public class RolePopulator implements Populator<Role>{
 
 
-    private RoleDaoImpl dao;
+    private RoleDao dao;
 
     @Autowired
-    public void setDao(RoleDaoImpl dao) {
+    public void setDao(RoleDao dao) {
         this.dao = dao;
     }
 
-    public Role createDefaultStatus(){
+    @Override
+    public Role createDefaultEntity() {
         Role role = new Role();
         role.setId(-1);
         role.setName("WIZARD");

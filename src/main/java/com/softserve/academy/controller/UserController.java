@@ -4,7 +4,6 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,18 +25,18 @@ public class UserController {
   @Autowired
   UserService userService;
   
-	@GetMapping("/")
+	@GetMapping("/all")
 	List<User> getAllUsers() throws SQLException {
 		return userService.getAll();
 	}
 
-	@PostMapping("/")
-	@ResponseStatus(HttpStatus.OK)
-	User createUser( @Validated @RequestBody User user)throws SQLException {
+	@PostMapping("/add/")
+	@ResponseStatus(HttpStatus.CREATED)
+	User createUser(@RequestBody User user)throws SQLException {
 		return userService.create(user);
 	}
 
-	@GetMapping("/{id}")
+	@GetMapping("/id/{id}")
 	User getUser(@PathVariable Integer id)throws SQLException {
 		return userService.findOne(id);
 	}
@@ -47,13 +46,13 @@ public class UserController {
 		return userService.findByEmail(email);
 	}
 
-	@PutMapping("/")
+	@PutMapping("/update")
 	@ResponseStatus(HttpStatus.OK)
-	boolean updateUser(@Validated @RequestBody User user)throws SQLException {
+	boolean updateUser(@RequestBody User user)throws SQLException {
 		return userService.update(user);
 	}
 
-	@DeleteMapping("/{id}")
+	@DeleteMapping("/del/{id}")
 	boolean deleteUser(@PathVariable Integer id) throws SQLException {
 		return userService.delete(id);
 	}

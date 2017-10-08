@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.softserve.academy.dao.implementation.UserDaoImpl;
+import com.softserve.academy.dao.implementation.UserDao;
 import com.softserve.academy.entity.User;
 import com.softserve.academy.service.interfaces.UserService;
 
@@ -13,7 +13,7 @@ import com.softserve.academy.service.interfaces.UserService;
 public class UserServiceImpl implements UserService {
 	
 	@Autowired
-	UserDaoImpl userDao;
+	UserDao userDao;
 	
 	@Override
 	public List getAll() {

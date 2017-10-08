@@ -1,22 +1,21 @@
 package utility;
 
-import com.softserve.academy.dao.implementation.UserDaoImpl;
+import com.softserve.academy.dao.implementation.UserDao;
 import com.softserve.academy.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import java.sql.SQLException;
 
 
-public class UserPopulator {
+public class UserPopulator implements Populator<User>{
 
-
-    private UserDaoImpl userDao;
+    private UserDao userDao;
 
     @Autowired
-    public void setUserDao(UserDaoImpl userDao) {
+    public void setUserDao(UserDao userDao) {
         this.userDao = userDao;
     }
 
-    public User createDefaultUser() throws SQLException {
+    @Override
+    public User createDefaultEntity() {
         User user = new User();
         user.setName("default name");
         user.setPass("******");
@@ -25,7 +24,7 @@ public class UserPopulator {
         return userDao.create(user);
     }
 
-    public User createCustomUser(String name, String email) throws SQLException {
+    public User createCustomUser(String name, String email){
         User user = new User();
         user.setName(name);
         user.setEmail(email);

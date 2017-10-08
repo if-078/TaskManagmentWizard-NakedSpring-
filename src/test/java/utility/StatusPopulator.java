@@ -5,7 +5,7 @@ import com.softserve.academy.dao.implementation.StatusDao;
 import com.softserve.academy.entity.Status;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public class StatusPopulator{
+public class StatusPopulator implements Populator<Status>{
     private StatusDao dao;
 
     @Autowired
@@ -13,7 +13,8 @@ public class StatusPopulator{
         this.dao = dao;
     }
 
-    public Status createDefaultStatus(){
+    @Override
+    public Status createDefaultEntity() {
         Status status = new Status();
         status.setId(-1);
         status.setName("In queue");

@@ -14,9 +14,9 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @PropertySource("classpath:tables.properties")
-public class CommentDaoImpl extends Dao<Comment>{
+public class CommentDao extends Dao<Comment>{
 
-    public CommentDaoImpl() {
+    public CommentDao() {
     }
 
     @Override

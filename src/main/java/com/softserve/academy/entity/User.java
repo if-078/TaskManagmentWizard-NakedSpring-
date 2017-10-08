@@ -1,9 +1,5 @@
 package com.softserve.academy.entity;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
-
-
 public class User {
 
   private Integer user_id;
@@ -27,7 +23,7 @@ public class User {
     this.user_id = id;
   }
 
-  @NotBlank
+
   public String getName() {
     return name;
   }
@@ -36,7 +32,7 @@ public class User {
     this.name = name;
   }
 
-  @NotBlank
+
   public String getPass() {
     return pass;
   }
@@ -45,8 +41,7 @@ public class User {
     this.pass = pass;
   }
 
-  @NotBlank
-  @Pattern(regexp = "^(.+)@(.+)$")
+
   public String getEmail() {
     return email;
   }

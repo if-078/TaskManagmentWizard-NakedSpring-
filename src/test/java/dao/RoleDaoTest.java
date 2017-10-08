@@ -2,9 +2,7 @@ package dao;
 
 import static org.junit.Assert.*;
 
-import com.softserve.academy.dao.implementation.RoleDao;
 import com.softserve.academy.entity.Role;
-import com.softserve.academy.service.implementation.RoleServiceImpl;
 import com.softserve.academy.service.interfaces.RoleService;
 import org.junit.*;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -22,8 +20,6 @@ public class RoleDaoTest {
 
   @Autowired
   public RoleService roleService;
-  @Autowired
-  public RoleDao roleDao;
   @Autowired
   public RolePopulator rolePopulator;
 

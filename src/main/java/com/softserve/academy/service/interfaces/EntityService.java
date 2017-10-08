@@ -3,7 +3,7 @@ package com.softserve.academy.service.interfaces;
 
 import java.util.List;
 
-public interface Service<E> {
+public interface EntityService<E> {
   List<E> getAll();
 
   E findOne(int id);

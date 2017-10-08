@@ -1,7 +1,9 @@
 
 package com.softserve.academy.dao.implementation;
 
+import com.softserve.academy.dao.mappers.StatusMapper;
 import com.softserve.academy.entity.Status;
+import com.softserve.academy.entity.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
@@ -15,33 +17,32 @@ import org.springframework.jdbc.support.KeyHolder;
 @PropertySource("classpath:tables.properties")
 public class StatusDao extends Dao<Status> {
 
-    @Autowired    
-    public void setTable(@Value("${status}") String table) {
-        this.table = table;
-    }
-    
-    @Autowired
-    public void setMapper(RowMapper<Status> mapper) {
-        this.mapper = mapper;
-    }
+  public StatusDao(@Value("${status}") String table) {
+    super(table, new StatusMapper());
+  }
 
-    @Override
-    public Status create(Status entity) {
-            MapSqlParameterSource param = new MapSqlParameterSource();
+  @Override
+  public Status create(Status entity) {
     KeyHolder keyHolder = new GeneratedKeyHolder();
-    param.addValue("name", entity.getName());
-    jdbcTemplate.update("INSERT INTO " + table + " (name) VALUES (:name)", param, keyHolder);
-    entity.setId( keyHolder.getKey().intValue());
+    jdbcTemplate.update("INSERT INTO " + table + " (name) VALUES (:name)", getParameters(entity),
+        keyHolder);
+    entity.setId(keyHolder.getKey().intValue());
     return entity;
-    }
+  }
 
-    @Override
-    public boolean update(Status entity) {
-        MapSqlParameterSource param = new MapSqlParameterSource();
+  @Override
+  public boolean update(Status entity) {
+
+    return jdbcTemplate.update("UPDATE " + table + " SET name = :name WHERE id = :id",
+        getParameters(entity)) == 1;
+  }
+
+  private MapSqlParameterSource getParameters(Status entity) {
+    MapSqlParameterSource param = new MapSqlParameterSource();
     param.addValue("name", entity.getName());
     param.addValue("id", entity.getId());
-    return jdbcTemplate.update("UPDATE " + table + " SET name = :name WHERE id = :id", param) == 1;
+    return param;
   }
-    
-    
+
+
 }

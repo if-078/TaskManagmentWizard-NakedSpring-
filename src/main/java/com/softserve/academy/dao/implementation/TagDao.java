@@ -3,6 +3,7 @@ package com.softserve.academy.dao.implementation;
 import com.softserve.academy.dao.interfaces.TagDaoInterface;
 import com.softserve.academy.dao.mappers.TagMapper;
 import com.softserve.academy.entity.Tag;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
@@ -21,37 +22,42 @@ public class TagDao extends Dao<Tag> implements TagDaoInterface {
 
   @Override
   public Tag create(Tag entity) {
-    MapSqlParameterSource param = new MapSqlParameterSource();
-    KeyHolder keyHolder = new GeneratedKeyHolder();
     String sql = "INSERT INTO " + table + " (name, user_id) VALUES (:name, :user_id)";
-    param.addValue("name", entity.getName());
-    param.addValue("user_id", entity.getUserId());
-    jdbcTemplate.update(sql, param, keyHolder);
+    KeyHolder keyHolder = new GeneratedKeyHolder();
+    jdbcTemplate.update(sql, getParameters(entity), keyHolder);
     entity.setId(keyHolder.getKey().intValue());
     return entity;
   }
 
   @Override
   public boolean update(Tag entity) {
-    MapSqlParameterSource param = new MapSqlParameterSource();
     String sql = "UPDATE " + table + " SET name = :name, user_id = :user_id WHERE id = :id";
-    param.addValue("name", entity.getName());
-    param.addValue("user_id", entity.getUserId());
-    param.addValue("id", entity.getId());
-    return jdbcTemplate.update(sql, param) == 1;
+    return jdbcTemplate.update(sql, getParameters(entity)) == 1;
   }
 
+  private MapSqlParameterSource getParameters(Tag entity) {
+    MapSqlParameterSource param = new MapSqlParameterSource();
+    param.addValue("id", entity.getId());
+    param.addValue("name", entity.getName());
+    param.addValue("user_id", entity.getUserId());
+    return param;
+  }
+
+  @Override
   public boolean deleleAllByUserId(int userId) {
     String Sql = "DELETE FROM " + table + " WHERE user_id = :user_id";
     return jdbcTemplate.update(Sql, new MapSqlParameterSource("user_id", userId)) > 0;
   }
 
+  @Override
   public List<Tag> getAllByUserId(int userId) {
     String sql = "SELECT * FROM " + table + " WHERE user_id = :user_id";
     List<Tag> list =
         jdbcTemplate.query(sql, new MapSqlParameterSource("user_id", userId), new TagMapper());
     return list;
   }
+
+
 
 }
 

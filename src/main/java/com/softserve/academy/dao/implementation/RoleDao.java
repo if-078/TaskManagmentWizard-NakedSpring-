@@ -26,7 +26,7 @@ public class RoleDao extends Dao<Role> implements RoleDaoInterface {
     KeyHolder keyHolder = new GeneratedKeyHolder();
     param.addValue("name", role.getName());
     jdbcTemplate.update("INSERT INTO " + table + " (name) VALUES (:name)", param, keyHolder);
-    role.setId( keyHolder.getKey().intValue());
+    role.setId(keyHolder.getKey().intValue());
     return role;
   }
 
@@ -50,6 +50,5 @@ public class RoleDao extends Dao<Role> implements RoleDaoInterface {
   public boolean deleteAll() {
     return jdbcTemplate.update("DELETE FROM " + table , new MapSqlParameterSource()) == 1;
   }
-
 }
 

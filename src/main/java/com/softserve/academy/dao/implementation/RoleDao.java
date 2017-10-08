@@ -1,7 +1,6 @@
 package com.softserve.academy.dao.implementation;
 
 import com.softserve.academy.entity.Role;
-import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
@@ -17,8 +16,7 @@ import java.util.List;
 @PropertySource("classpath:tables.properties")
 public class RoleDao extends Dao<Role> {
 
-    public RoleDao() {
-    }
+  public RoleDao() {}
 
 
   @Override
@@ -27,7 +25,7 @@ public class RoleDao extends Dao<Role> {
     KeyHolder keyHolder = new GeneratedKeyHolder();
     param.addValue("name", role.getName());
     jdbcTemplate.update("INSERT INTO " + table + " (name) VALUES (:name)", param, keyHolder);
-    role.setId( keyHolder.getKey().intValue());
+    role.setId(keyHolder.getKey().intValue());
     return role;
   }
 
@@ -48,17 +46,18 @@ public class RoleDao extends Dao<Role> {
   }
 
   public boolean deleteAll() {
-    return jdbcTemplate.update("DELETE FROM " + table , new MapSqlParameterSource()) == 1;
+    return jdbcTemplate.update("DELETE FROM " + table, new MapSqlParameterSource()) == 1;
   }
 
-    @Autowired
-    public void setTable(@Value("${role}")String table) {
-        this.table = table;
-    }
-    @Autowired
-    public void setMapper(RowMapper<Role> mapper) {
-        this.mapper = mapper;
-    }
-   
+  @Autowired
+  public void setTable(@Value("${role}") String table) {
+    this.table = table;
+  }
+
+  @Autowired
+  public void setMapper(RowMapper<Role> mapper) {
+    this.mapper = mapper;
+  }
+
 }
 

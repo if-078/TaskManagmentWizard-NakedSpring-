@@ -34,7 +34,7 @@ public class RoleDaoTest {
     assertEquals("fdsa", roleService.findOne(role.getId()).getName());
   }
 
-  @Test(expected = EmptyResultDataAccessException.class)
+  @Test
   public void testCreateAndGetAndDelete() throws Exception {
     role = roleService.create(role);
     assertNotNull(roleService.findOne(role.getId()));

@@ -1,3 +1,4 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties. To change this
  * template file, choose Tools | Templates and open the template in the editor.
@@ -10,6 +11,7 @@ import java.util.List;
 import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.DependsOn;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -46,7 +48,11 @@ public abstract class Dao<E> implements EntityDao<E> {
   public E findOne(int id) {
 
     String sql = "SELECT * FROM " + table + " WHERE  id = :id";
-    return jdbcTemplate.queryForObject(sql, new MapSqlParameterSource("id", id), mapper);
+    try {
+      return jdbcTemplate.queryForObject(sql, new MapSqlParameterSource("id", id), mapper);
+    } catch (EmptyResultDataAccessException e) {
+      return null;
+    }
   }
 
   @Override

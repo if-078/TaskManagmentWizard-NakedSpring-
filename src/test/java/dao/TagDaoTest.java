@@ -12,21 +12,24 @@ import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import utility.Populator;
+import utility.UserPopulator;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {TestConfig.class})
 public class TagDaoTest {
 
   @Autowired
-  public EntityDao userDao;
-  @Autowired
   public TagService tagService;
+  @Autowired
+  public Populator<User> populator;
 
   @Before
-  public void getObcetsFromContext() throws SQLException {
-    userDao.create(new User("Ingret", "12", "email@lala.du"));
-    userDao.create(new User("Ragnar", "92", "email@lala.eu"));
-    userDao.create(new User("Garret", "35", "email@gmail.uu"));
+  public void createFewUsers() {
+    populator.createDefaultEntity();
+    populator.createDefaultEntity();
+    populator.createDefaultEntity();
+
   }
 
   @Test
@@ -35,6 +38,7 @@ public class TagDaoTest {
     assertThat(tagService.deleleAllByUserId(100)).isFalse();
     assertThat(tagService.update(new Tag(2, "atata", 1))).isFalse();
     assertThat(tagService.delete(100)).isFalse();
+    assertThat(tagService.findOne(1000)).isNull();
   }
 
   @Test

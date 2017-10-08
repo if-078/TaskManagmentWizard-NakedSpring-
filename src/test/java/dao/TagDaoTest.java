@@ -33,12 +33,12 @@ public class TagDaoTest {
   }
 
   @Test
-  public void lightNegativeTesting() {
+  public void CRUDNegativeTesting() {
     assertThat(tagService.getAllByUserId(100)).isEmpty();
     assertThat(tagService.deleleAllByUserId(100)).isFalse();
     assertThat(tagService.update(new Tag(2, "atata", 1))).isFalse();
     assertThat(tagService.delete(100)).isFalse();
-    assertThat(tagService.findOne(1000)).isNull();
+    assertThat(tagService.findOne(-1000)).isNull();
   }
 
   @Test
@@ -61,7 +61,7 @@ public class TagDaoTest {
   }
 
   @Test
-  public void hardNegativeTesting() {
+  public void CreateNegativeTesting() {
     // tagService.create(new Tag(7, "#Knife", 99));
     // tagService.update(new Tag(7, "#Knife", 100));
   }

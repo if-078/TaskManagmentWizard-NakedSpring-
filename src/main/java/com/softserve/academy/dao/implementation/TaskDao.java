@@ -198,7 +198,7 @@ public class TaskDao extends Dao<Task> {
         param.addValue("parent_id", 0);
 
         operations.update(sql, param, keyHolder);
-        task.setId((int) keyHolder.getKey());
+        task.setId(keyHolder.getKey().intValue());
         return task;
 
         /*try (Statement stmt = datasource.getConnection().createStatement()) {

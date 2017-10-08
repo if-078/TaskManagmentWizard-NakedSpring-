@@ -26,7 +26,7 @@ public class UserDao extends Dao<User> implements UserDaoInterface {
     param.addValue("name", entity.getName());
     param.addValue("pass", entity.getPass());
     param.addValue("email", entity.getEmail());
-    operations.update(sql, param, keyHolder);
+    jdbcTemplate.update(sql, param, keyHolder);
     entity.setId(keyHolder.getKey().intValue());
 
     return entity;
@@ -42,7 +42,7 @@ public class UserDao extends Dao<User> implements UserDaoInterface {
     param.addValue("email", entity.getEmail());
     param.addValue("id", entity.getId());
 
-    return operations.update(sql, param) == 1;
+    return jdbcTemplate.update(sql, param) == 1;
 
   }
 
@@ -52,7 +52,7 @@ public class UserDao extends Dao<User> implements UserDaoInterface {
     MapSqlParameterSource param = new MapSqlParameterSource();
     param.addValue("email", email);
 
-    return operations.queryForObject(sql, param, super.mapper);
+    return jdbcTemplate.queryForObject(sql, param, super.mapper);
   }
 
 }

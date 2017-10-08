@@ -26,7 +26,7 @@ public class RoleDao extends Dao<Role> {
     MapSqlParameterSource param = new MapSqlParameterSource();
     KeyHolder keyHolder = new GeneratedKeyHolder();
     param.addValue("name", role.getName());
-    operations.update("INSERT INTO " + table + " (name) VALUES (:name)", param, keyHolder);
+    jdbcTemplate.update("INSERT INTO " + table + " (name) VALUES (:name)", param, keyHolder);
     role.setId( keyHolder.getKey().intValue());
     return role;
   }
@@ -44,11 +44,11 @@ public class RoleDao extends Dao<Role> {
     MapSqlParameterSource param = new MapSqlParameterSource();
     param.addValue("name", role.getName());
     param.addValue("id", role.getId());
-    return operations.update("UPDATE " + table + " SET name = :name WHERE id = :id", param) == 1;
+    return jdbcTemplate.update("UPDATE " + table + " SET name = :name WHERE id = :id", param) == 1;
   }
 
   public boolean deleteAll() {
-    return operations.update("DELETE FROM " + table , new MapSqlParameterSource()) == 1;
+    return jdbcTemplate.update("DELETE FROM " + table , new MapSqlParameterSource()) == 1;
   }
 
     @Autowired

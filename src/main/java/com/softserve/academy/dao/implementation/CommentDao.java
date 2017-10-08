@@ -28,7 +28,7 @@ public class CommentDao extends Dao<Comment>{
         param.addValue("created_date", entity.getCreatedDate());
         param.addValue("task_id", entity.getTaskId());
         param.addValue("user_id", entity.getUserId());
-        operations.update(sql, param, keyHolder);
+        jdbcTemplate.update(sql, param, keyHolder);
         entity.setId(keyHolder.getKey().intValue());
 
         return entity;
@@ -42,7 +42,7 @@ public class CommentDao extends Dao<Comment>{
         param.addValue("comment", entity.getCommentText());
         param.addValue("id", entity.getId());
 
-        return operations.update(sql, param) == 1;
+        return jdbcTemplate.update(sql, param) == 1;
 
     }
 

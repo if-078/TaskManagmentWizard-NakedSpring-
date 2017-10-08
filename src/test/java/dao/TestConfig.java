@@ -41,7 +41,12 @@ public class TestConfig {
   }
 
   @Bean
-  TaskPopulator getTaskPopulator(){
+  public TaskPopulator getTaskPopulator(){
     return new TaskPopulator();
   }
+
+  @Bean
+  public CommentPopulator getCommentPopulator(){
+      return new CommentPopulator();
+    }
 }

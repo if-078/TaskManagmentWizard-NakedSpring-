@@ -1,7 +1,8 @@
 package utility;
 
-import com.softserve.academy.entity.Task;
+import com.softserve.academy.entity.User;
 import dao.TestConfig;
+import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -14,12 +15,11 @@ import java.sql.SQLException;
 public class UserPopulTest {
 
     @Test
-    public void testo () throws SQLException {
+    public void defaultUserCreated () throws SQLException {
         ApplicationContext applicationContext =
                 new AnnotationConfigApplicationContext(TestConfig.class);
-        TaskPopulator populator = applicationContext.getBean(TaskPopulator.class);
-        Task status= populator.createDefaultHeadTask();
-        System.out.println(status.getName());
-        System.out.println(String.valueOf(status.getId()));
+        UserPopulator populator = applicationContext.getBean(UserPopulator.class);
+        User user= populator.createDefaultEntity();
+        Assert.assertTrue(user.getId()>0);
     }
 }

@@ -20,13 +20,7 @@ public class PriorityDao extends Dao<Priority>{
     
     @Override
     public Priority create(Priority entity) {
-        MapSqlParameterSource param = new MapSqlParameterSource();
-    KeyHolder keyHolder = new GeneratedKeyHolder();
-    param.addValue("name", entity.getName());
-    operations.update("INSERT INTO " + table + " (name) VALUES (:name)", param, keyHolder);
-    entity.setId( keyHolder.getKey().intValue());
-    
-    return entity;
+        throw new UnsupportedOperationException("create operation not available for priority table");
   }
 
     @Override

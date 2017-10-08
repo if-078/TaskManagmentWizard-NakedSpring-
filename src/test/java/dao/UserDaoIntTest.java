@@ -3,12 +3,8 @@ package dao;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
 import java.sql.SQLException;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import com.softserve.academy.entity.User;
 import com.softserve.academy.service.interfaces.UserService;
@@ -18,23 +14,15 @@ import utility.UserPopulator;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {TestConfig.class})
-public class UserDaoTest {
+public class UserDaoIntTest {
 
   @Autowired
   private UserService userService;
   @Autowired
   private UserPopulator populator;
 
-
   @Test
-  public void iTShoudExecuteNegativeTest() throws SQLException {
-    int testId = 50;
-    assertThat(userService.getAll().isEmpty());
-    assertThat(userService.delete(testId)).isFalse();
-  }
-
-  @Test
-  public void iTShouldInsertAndGetOneAndDelete() throws SQLException {
+  public void iTshouldInsertAndGetOneAndDelete() throws SQLException {
     // Given
     User userNew = new User();
     userNew.setName("if-078");
@@ -50,7 +38,7 @@ public class UserDaoTest {
   }
 
   @Test
-  public void iTShouldInsertAndGetByEmailAndGetAll() throws SQLException {
+  public void iTshouldInsertAndGetByEmailAndGetAll() throws SQLException {
     // Given
     User userByEmail;
     User userNew = populator.createCustomUser("Academy", "soft@serve.com");

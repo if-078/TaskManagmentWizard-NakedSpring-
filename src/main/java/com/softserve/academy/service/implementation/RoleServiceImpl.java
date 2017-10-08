@@ -1,17 +1,19 @@
 package com.softserve.academy.service.implementation;
 
 import com.softserve.academy.dao.implementation.RoleDao;
+import com.softserve.academy.dao.interfaces.RoleDaoInterface;
 import com.softserve.academy.entity.Role;
+import com.softserve.academy.service.interfaces.RoleService;
 import com.softserve.academy.service.interfaces.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
 @org.springframework.stereotype.Service
-public class RoleService implements Service<Role> {
+public class RoleServiceImpl implements RoleService {
 
   @Autowired
-  RoleDao dao;
+  RoleDaoInterface dao;
 
   @Override
   public List<Role> getAll() {

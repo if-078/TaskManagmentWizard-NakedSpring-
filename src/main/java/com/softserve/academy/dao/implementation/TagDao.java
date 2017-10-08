@@ -26,7 +26,7 @@ public class TagDao extends Dao<Tag> implements TagDaoInterface {
     String sql = "INSERT INTO " + table + " (name, user_id) VALUES (:name, :user_id)";
     param.addValue("name", entity.getName());
     param.addValue("user_id", entity.getUserId());
-    operations.update(sql, param, keyHolder);
+    jdbcTemplate.update(sql, param, keyHolder);
     entity.setId(keyHolder.getKey().intValue());
     return entity;
   }
@@ -38,18 +38,18 @@ public class TagDao extends Dao<Tag> implements TagDaoInterface {
     param.addValue("name", entity.getName());
     param.addValue("user_id", entity.getUserId());
     param.addValue("id", entity.getId());
-    return operations.update(sql, param) == 1;
+    return jdbcTemplate.update(sql, param) == 1;
   }
 
   public boolean deleleAllByUserId(int userId) {
     String Sql = "DELETE FROM " + table + " WHERE user_id = :user_id";
-    return operations.update(Sql, new MapSqlParameterSource("user_id", userId)) > 0;
+    return jdbcTemplate.update(Sql, new MapSqlParameterSource("user_id", userId)) > 0;
   }
 
   public List<Tag> getAllByUserId(int userId) {
     String sql = "SELECT * FROM " + table + " WHERE user_id = :user_id";
     List<Tag> list =
-        operations.query(sql, new MapSqlParameterSource("user_id", userId), new TagMapper());
+        jdbcTemplate.query(sql, new MapSqlParameterSource("user_id", userId), new TagMapper());
     return list;
   }
 

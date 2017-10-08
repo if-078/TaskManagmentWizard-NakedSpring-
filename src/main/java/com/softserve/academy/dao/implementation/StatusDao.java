@@ -30,7 +30,7 @@ public class StatusDao extends Dao<Status> {
             MapSqlParameterSource param = new MapSqlParameterSource();
     KeyHolder keyHolder = new GeneratedKeyHolder();
     param.addValue("name", entity.getName());
-    operations.update("INSERT INTO " + table + " (name) VALUES (:name)", param, keyHolder);
+    jdbcTemplate.update("INSERT INTO " + table + " (name) VALUES (:name)", param, keyHolder);
     entity.setId( keyHolder.getKey().intValue());
     return entity;
     }
@@ -40,7 +40,7 @@ public class StatusDao extends Dao<Status> {
         MapSqlParameterSource param = new MapSqlParameterSource();
     param.addValue("name", entity.getName());
     param.addValue("id", entity.getId());
-    return operations.update("UPDATE " + table + " SET name = :name WHERE id = :id", param) == 1;
+    return jdbcTemplate.update("UPDATE " + table + " SET name = :name WHERE id = :id", param) == 1;
   }
     
     

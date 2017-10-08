@@ -38,7 +38,7 @@ public class TaskDao extends Dao<Task> {
   @Override
   public List<Task> getAll() {
     String sql = "SELECT * FROM " + table;
-    List<Task> tasks = operations.query(sql, new TaskMapper());
+    List<Task> tasks = jdbcTemplate.query(sql, new TaskMapper());
 
     return tasks;
 
@@ -66,7 +66,7 @@ public class TaskDao extends Dao<Task> {
         + " WHERE tmw.task.id = :id";
 
     List<Task> tasks =
-        operations.query(query, new MapSqlParameterSource("id", id), new TaskMapper());
+        jdbcTemplate.query(query, new MapSqlParameterSource("id", id), new TaskMapper());
     Task task = tasks.get(0);
     return task;
 
@@ -114,7 +114,7 @@ public class TaskDao extends Dao<Task> {
     param.addValue("parent_id", task.getParent_id());
     param.addValue("id", task.getId());
 
-    return operations.update(sql, param) == 1;
+    return jdbcTemplate.update(sql, param) == 1;
 
     /*
      * try (PreparedStatement ps = datasource.getConnection().prepareStatement(sql);) {
@@ -132,7 +132,7 @@ public class TaskDao extends Dao<Task> {
     int countUpdate = 0;
     String sql = "DELETE FROM " + table + " WHERE id=:id";
 
-    return operations.update(sql, new MapSqlParameterSource("id", id)) > 0;
+    return jdbcTemplate.update(sql, new MapSqlParameterSource("id", id)) > 0;
 
     /*
      * try (Statement stmt = datasource.getConnection().createStatement();) {
@@ -170,7 +170,7 @@ public class TaskDao extends Dao<Task> {
     param.addValue("priority_id", 1);
     param.addValue("parent_id", 0);
 
-    operations.update(sql, param, keyHolder);
+    jdbcTemplate.update(sql, param, keyHolder);
     task.setId((int) keyHolder.getKey());
     return task;
 

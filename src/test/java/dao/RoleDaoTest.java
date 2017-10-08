@@ -1,11 +1,12 @@
 package dao;
 
 import static org.junit.Assert.*;
+
+import com.softserve.academy.dao.implementation.RoleDao;
 import com.softserve.academy.entity.Role;
-import com.softserve.academy.service.implementation.RoleService;
+import com.softserve.academy.service.implementation.RoleServiceImpl;
+import com.softserve.academy.service.interfaces.RoleService;
 import org.junit.*;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.test.context.ContextConfiguration;
 import java.sql.SQLException;
@@ -13,6 +14,7 @@ import java.util.List;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import utility.RolePopulator;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {TestConfig.class})
@@ -20,16 +22,24 @@ public class RoleDaoTest {
 
   @Autowired
   public RoleService roleService;
-  Role role;
+  @Autowired
+  public RoleDao roleDao;
+  @Autowired
+  public RolePopulator rolePopulator;
 
   @Before
   public void getObcetsFromContext() throws SQLException {
-    role = new Role("asdf");
+    rolePopulator.initTable();
+  }
+
+  @After
+  public void dropObjectsFromContext() throws SQLException {
+    rolePopulator.deleteRecordsOfTable();
   }
 
   @Test
-  public void testCreateAndUpdateAndGet() throws Exception {
-    role = roleService.create(role);
+  public void testCreateAndUpdateAndFind() throws Exception {
+    Role role = roleService.create(rolePopulator.initOneEntity("asdf"));
     assertEquals("asdf", roleService.findOne(role.getId()).getName());
     role.setName("fdsa");
     roleService.update(role);
@@ -37,8 +47,8 @@ public class RoleDaoTest {
   }
 
   @Test(expected = EmptyResultDataAccessException.class)
-  public void testCreateAndGetAndDelete() throws Exception {
-    role = roleService.create(role);
+  public void testCreateAndFindAndDeleteAndFindEmpty() throws Exception {
+    Role role = roleService.create(rolePopulator.initOneEntity("asdf"));
     assertNotNull(roleService.findOne(role.getId()));
     roleService.delete(role.getId());
     roleService.findOne(role.getId());
@@ -46,9 +56,12 @@ public class RoleDaoTest {
 
   @Test
   public void testCreateAndGetAllAndDeleteAll() throws Exception {
-    List<Role> list = roleService.addBatch(new Role("zxcv1"), new Role("zxcv2"), new Role("zxcv3"));
+    List<Role> list = roleService.addBatch(
+            rolePopulator.initOneEntity("zxcv1"),
+            rolePopulator.initOneEntity("zxcv2"),
+            rolePopulator.initOneEntity("zxcv3"));
     assertEquals(3, list.size());
-    int id = list.get(0).getId();
+    int id = 1;
     for (Role role : roleService.getAll()) {
       if (role.getId() == id)
         assertEquals("zxcv" + id++, role.getName());

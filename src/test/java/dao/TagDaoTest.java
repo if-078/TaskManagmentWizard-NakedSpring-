@@ -1,14 +1,11 @@
 package dao;
 
-import com.softserve.academy.dao.implementation.*;
 import com.softserve.academy.dao.interfaces.EntityDao;
 import com.softserve.academy.entity.Tag;
 import com.softserve.academy.entity.User;
 import com.softserve.academy.service.implementation.TagService;
 import java.sql.SQLException;
 import org.junit.Test;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import static org.assertj.core.api.Assertions.*;
 import org.junit.Before;

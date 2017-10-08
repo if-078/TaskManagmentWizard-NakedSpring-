@@ -3,12 +3,12 @@ package com.softserve.academy.service.implementation;
 import com.softserve.academy.dao.implementation.StatusDao;
 import com.softserve.academy.dao.interfaces.EntityDao;
 import com.softserve.academy.entity.Status;
-import com.softserve.academy.service.interfaces.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
+import com.softserve.academy.service.interfaces.EntityService;
 
 @org.springframework.stereotype.Service
-public class StatusService implements Service<Status> {
+public class StatusService implements EntityService<Status> {
 
   @Autowired
   StatusDao statusDao;

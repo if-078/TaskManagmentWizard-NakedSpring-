@@ -4,24 +4,24 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.softserve.academy.entity.Task;
 import com.softserve.academy.service.implementation.TaskService;
-import com.softserve.academy.service.interfaces.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
+import com.softserve.academy.service.interfaces.EntityService;
 
 @RestController
 @RequestMapping("tasks")
 public class TaskController {
 
 
-  Service<Task> service;
+  EntityService<Task> service;
   ObjectMapper objectMapper;
 
   @Autowired
-  public TaskController(Service<Task> service, ObjectMapper objectMapper) {
+  public TaskController(EntityService<Task> service, ObjectMapper objectMapper) {
     this.service = service;
     this.objectMapper = objectMapper;
   }

@@ -3,23 +3,14 @@ package com.softserve.academy.service.implementation;
 import com.softserve.academy.dao.implementation.RoleDao;
 import com.softserve.academy.dao.interfaces.RoleDaoInterface;
 import com.softserve.academy.entity.Role;
-<<<<<<< HEAD:src/main/java/com/softserve/academy/service/implementation/RoleServiceImpl.java
 import com.softserve.academy.service.interfaces.RoleService;
-import com.softserve.academy.service.interfaces.Service;
-=======
->>>>>>> d73202f5a22cfc9794d14a1d84c323fe17c4bc46:src/main/java/com/softserve/academy/service/implementation/RoleService.java
-import org.springframework.beans.factory.annotation.Autowired;
-
 import java.util.List;
-import com.softserve.academy.service.interfaces.EntityService;
 
-@org.springframework.stereotype.Service
-<<<<<<< HEAD:src/main/java/com/softserve/academy/service/implementation/RoleServiceImpl.java
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
 public class RoleServiceImpl implements RoleService {
-=======
-public class RoleService implements EntityService<Role> {
->>>>>>> d73202f5a22cfc9794d14a1d84c323fe17c4bc46:src/main/java/com/softserve/academy/service/implementation/RoleService.java
-
   @Autowired
   RoleDaoInterface dao;
 

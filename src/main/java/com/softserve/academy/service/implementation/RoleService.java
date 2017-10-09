@@ -1,15 +1,15 @@
 package com.softserve.academy.service.implementation;
 
-import com.softserve.academy.service.interfaces.RoleServiceInterface;
 import com.softserve.academy.dao.interfaces.RoleDaoInterface;
 import com.softserve.academy.entity.Role;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import java.util.List;
+import com.softserve.academy.service.interfaces.RoleServiceInterface;
 import org.springframework.stereotype.Service;
 
 @Service
-public class RoleServiceImpl implements RoleServiceInterface {
+public class RoleService implements RoleServiceInterface {
+
   @Autowired
   RoleDaoInterface dao;
 
@@ -42,7 +42,7 @@ public class RoleServiceImpl implements RoleServiceInterface {
     return dao.create(role);
   }
 
-  public List<Role> addBatch(Role...roles) {
+  public List<Role> addBatch(Role... roles) {
     return dao.addBatch(roles);
   }
 }

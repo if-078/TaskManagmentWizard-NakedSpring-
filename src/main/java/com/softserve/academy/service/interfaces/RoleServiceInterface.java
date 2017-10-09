@@ -5,7 +5,7 @@ import com.softserve.academy.entity.Role;
 
 import java.util.List;
 
-public interface RoleService extends EntityDao<Role> {
+public interface RoleServiceInterface extends EntityDao<Role> {
 	List<Role> addBatch(Role... roles);
 
 	boolean deleteAll();

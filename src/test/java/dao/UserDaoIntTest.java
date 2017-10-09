@@ -6,8 +6,9 @@ import java.sql.SQLException;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
+
+import com.softserve.academy.dao.interfaces.UserDaoInterface;
 import com.softserve.academy.entity.User;
-import com.softserve.academy.service.interfaces.UserService;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import utility.UserPopulator;
@@ -17,7 +18,7 @@ import utility.UserPopulator;
 public class UserDaoIntTest {
 
   @Autowired
-  private UserService userService;
+  private UserDaoInterface userDao;
   @Autowired
   private UserPopulator populator;
 
@@ -27,14 +28,14 @@ public class UserDaoIntTest {
     User userNew = new User();
     userNew.setName("if-078");
     userNew.setEmail("softServeAcademy@gmail.test");
-    userNew.setPass("academypassword");
+    
     User userFindOne;
     // When
-    userNew = userService.create(userNew);
-    userFindOne = userService.findOne(userNew.getId());
+    userNew = userDao.create(userNew);
+    userFindOne = userDao.findOne(userNew.getId());
     // Then
     assertThat(userNew.getEmail()).isEqualTo(userFindOne.getEmail());
-    assertThat(userService.delete(userFindOne.getId())).isTrue();
+    assertThat(userDao.delete(userFindOne.getId())).isTrue();
   }
 
   @Test
@@ -43,9 +44,9 @@ public class UserDaoIntTest {
     User userByEmail;
     User userNew = populator.createCustomUser("Academy", "soft@serve.com");
     // When
-    userByEmail = userService.findByEmail(userNew.getEmail());
+    userByEmail = userDao.findByEmail(userNew.getEmail());
     // Then
     assertThat(userNew.getEmail()).isEqualTo(userByEmail.getEmail());
-    assertEquals(true, userService.getAll().size() >= 1);
+    assertEquals(true, userDao.getAll().size() >= 1);
   }
 }

@@ -1,6 +1,5 @@
 package com.softserve.academy.service.implementation;
 
-import com.softserve.academy.dao.implementation.RoleDao;
 import com.softserve.academy.dao.interfaces.RoleDaoInterface;
 import com.softserve.academy.entity.Role;
 import com.softserve.academy.service.interfaces.RoleService;

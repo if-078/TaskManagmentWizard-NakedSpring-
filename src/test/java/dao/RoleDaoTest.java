@@ -1,9 +1,7 @@
 package dao;
 
 import static org.junit.Assert.*;
-
 import com.softserve.academy.entity.Role;
-import com.softserve.academy.service.interfaces.RoleService;
 import org.junit.*;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.test.context.ContextConfiguration;
@@ -13,13 +11,14 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import utility.RolePopulator;
+import com.softserve.academy.service.interfaces.RoleServiceInterface;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {TestConfig.class})
 public class RoleDaoTest {
 
   @Autowired
-  public RoleService roleService;
+  public RoleServiceInterface roleService;
   @Autowired
   public RolePopulator rolePopulator;
 
@@ -42,7 +41,7 @@ public class RoleDaoTest {
     assertEquals("fdsa", roleService.findOne(role.getId()).getName());
   }
 
-  @Test(expected = EmptyResultDataAccessException.class)
+  @Test
   public void testCreateAndFindAndDeleteAndFindEmpty() throws Exception {
     Role role = roleService.create(rolePopulator.initOneEntity("asdf"));
     assertNotNull(roleService.findOne(role.getId()));
@@ -52,10 +51,8 @@ public class RoleDaoTest {
 
   @Test
   public void testCreateAndGetAllAndDeleteAll() throws Exception {
-    List<Role> list = roleService.addBatch(
-            rolePopulator.initOneEntity("zxcv1"),
-            rolePopulator.initOneEntity("zxcv2"),
-            rolePopulator.initOneEntity("zxcv3"));
+    List<Role> list = roleService.addBatch(rolePopulator.initOneEntity("zxcv1"),
+        rolePopulator.initOneEntity("zxcv2"), rolePopulator.initOneEntity("zxcv3"));
     assertEquals(3, list.size());
     int id = 1;
     for (Role role : roleService.getAll()) {

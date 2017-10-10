@@ -3,6 +3,9 @@ package com.softserve.academy.entity;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
+import java.util.Objects;
+
+
 public class User {
 
   private Integer user_id;
@@ -55,6 +58,24 @@ public class User {
 
   public void setEmail(String email) {
     this.email = email;
+  }
+  
+  @Override
+  public boolean equals(Object obj) 
+  {
+     if (obj == null)
+     {
+        return false;
+     }
+     if (getClass() != obj.getClass())
+     {
+        return false;
+     }
+     final User other = (User) obj;
+     return    Objects.equals(this.user_id, other.user_id)
+            && Objects.equals(this.name, other.name)
+            && Objects.equals(this.email, other.email)
+            && Objects.equals(this.pass, other.pass);
   }
 
 }

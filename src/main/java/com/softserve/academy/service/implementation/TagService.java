@@ -5,17 +5,18 @@ package com.softserve.academy.service.implementation;
 
 import com.softserve.academy.dao.implementation.TagDao;
 import com.softserve.academy.entity.Tag;
-import com.softserve.academy.service.interfaces.Service;
+import com.softserve.academy.service.interfaces.TagServiceInterface;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 
 
-@org.springframework.stereotype.Service
-public class TagService implements Service<Tag> {
+@Service
+public class TagService implements TagServiceInterface {
 
   @Autowired
-  TagDao tagDao;
+  private TagDao tagDao;
 
   @Override
   public List<Tag> getAll() {
@@ -23,10 +24,12 @@ public class TagService implements Service<Tag> {
   }
 
 
+  @Override
   public List<Tag> getAllByUserId(int userId) {
     return tagDao.getAllByUserId(userId);
   }
 
+  @Override
   public boolean deleleAllByUserId(int userId) {
     return tagDao.deleleAllByUserId(userId);
   }

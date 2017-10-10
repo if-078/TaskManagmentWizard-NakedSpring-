@@ -4,12 +4,10 @@ import com.softserve.academy.dao.implementation.TaskDao;
 import com.softserve.academy.entity.Task;
 import com.softserve.academy.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import java.sql.SQLException;
 import java.sql.Time;
 import java.util.Date;
 
-public class TaskPopulator {
+public class TaskPopulator implements Populator<Task> {
 
     private TaskDao dao;
     private UserPopulator userPopulator;
@@ -36,11 +34,11 @@ public class TaskPopulator {
         this.priorityPopulator = priorityPopulator;
     }
 
-
-    public Task createDefaultHeadTask() throws SQLException {
+    @Override
+    public Task createDefaultEntity(){
         int hourFromMillSecs = 1000 * 60 * 60;
         Task task = new Task();
-        User defUser = userPopulator.createDefaultUser();
+        User defUser = userPopulator.createDefaultEntity();
         task.setName("Default task name");
         task.setAssign_to(defUser.getId());
         task.setCreated_date(new Date(System.currentTimeMillis()));
@@ -50,12 +48,12 @@ public class TaskPopulator {
         task.setId(-1);
         task.setParent_id(0);
         task.setPriority_id(priorityPopulator.initOnePriority("HIGH").getId());
-        task.setStatus_id(statusPopulator.createDefaultStatus().getId());
+        task.setStatus_id(statusPopulator.createDefaultEntity().getId());
         return dao.create(task);
     }
 
 
-    public Task createDefaultHeadTaskWithCustomUser(User user) throws SQLException {
+    public Task createDefaultHeadTaskWithCustomUser(User user){
         int hourFromMillSecs = 1000 * 60 * 60;
         Task task = new Task();
         task.setName("Default task name");
@@ -67,7 +65,7 @@ public class TaskPopulator {
         task.setId(-1);
         task.setParent_id(0);
         task.setPriority_id(priorityPopulator.initOnePriority("HIGH").getId());
-        task.setStatus_id(statusPopulator.createDefaultStatus().getId());
+        task.setStatus_id(statusPopulator.createDefaultEntity().getId());
         return dao.create(task);
     }
 }

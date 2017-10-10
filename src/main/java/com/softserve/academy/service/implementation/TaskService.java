@@ -2,14 +2,14 @@ package com.softserve.academy.service.implementation;
 
 import com.softserve.academy.dao.implementation.TaskDao;
 import com.softserve.academy.entity.Task;
-import com.softserve.academy.service.interfaces.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.lang.annotation.Annotation;
 import java.sql.SQLException;
 import java.util.List;
+import com.softserve.academy.service.interfaces.EntityService;
 
 @org.springframework.stereotype.Service
-public class TaskService implements Service<Task> {
+public class TaskService implements EntityService<Task> {
 
   @Autowired
   TaskDao taskDao;

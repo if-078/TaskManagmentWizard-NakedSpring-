@@ -38,4 +38,12 @@ public class StatusService implements EntityService<Status> {
   public Status create(Status entity) {
     return statusDao.create(entity);
   }
+
+  public Status findByName (Status target){
+    for (Status status : getAll()){
+      if (status.getName().equals(target.getName()))
+        return status;
+    }
+    return null;
+  }
 }

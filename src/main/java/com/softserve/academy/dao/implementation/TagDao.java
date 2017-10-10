@@ -3,6 +3,8 @@ package com.softserve.academy.dao.implementation;
 import com.softserve.academy.dao.interfaces.TagDaoInterface;
 import com.softserve.academy.dao.mappers.TagMapper;
 import com.softserve.academy.entity.Tag;
+
+import java.lang.annotation.Target;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Value;
@@ -35,14 +37,6 @@ public class TagDao extends Dao<Tag> implements TagDaoInterface {
     return jdbcTemplate.update(sql, getParameters(entity)) == 1;
   }
 
-  private MapSqlParameterSource getParameters(Tag entity) {
-    MapSqlParameterSource param = new MapSqlParameterSource();
-    param.addValue("id", entity.getId());
-    param.addValue("name", entity.getName());
-    param.addValue("user_id", entity.getUserId());
-    return param;
-  }
-
   @Override
   public boolean deleleAllByUserId(int userId) {
     String Sql = "DELETE FROM " + table + " WHERE user_id = :user_id";
@@ -57,7 +51,12 @@ public class TagDao extends Dao<Tag> implements TagDaoInterface {
     return list;
   }
 
-
+  private MapSqlParameterSource getParameters(Tag entity) {
+    MapSqlParameterSource param = new MapSqlParameterSource();
+    param.addValue("id", entity.getId());
+    param.addValue("name", entity.getName());
+    param.addValue("user_id", entity.getUserId());
+    return param;
+  }
 
 }
-

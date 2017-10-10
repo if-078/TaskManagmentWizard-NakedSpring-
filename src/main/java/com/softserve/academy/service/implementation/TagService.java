@@ -1,16 +1,12 @@
 
 package com.softserve.academy.service.implementation;
 
-
-
 import com.softserve.academy.dao.implementation.TagDao;
 import com.softserve.academy.entity.Tag;
 import com.softserve.academy.service.interfaces.TagServiceInterface;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-
 
 @Service
 public class TagService implements TagServiceInterface {
@@ -52,6 +48,13 @@ public class TagService implements TagServiceInterface {
   @Override
   public Tag create(Tag entity) {
     return tagDao.create(entity);
+  }
+
+  public Tag findTagByName (Tag target){  //gain all user tags and found one with name equals as target name;
+    for (Tag t : getAllByUserId(target.getUserId())){
+      return t;
+    }
+    return null;
   }
 
 }

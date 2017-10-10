@@ -7,14 +7,14 @@ import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
 import java.util.List;
-import com.softserve.academy.service.interfaces.EntityService;
+import com.softserve.academy.service.interfaces.RoleServiceInterface;
 
 @RestController
 @RequestMapping("roles")
 public class RoleController {
   
-  @Autowired
-  EntityService<Role> roleService;
+	@Autowired
+	public RoleServiceInterface roleService;
   
 	@GetMapping("/")
 	List<Role> getAllRoles() throws SQLException {

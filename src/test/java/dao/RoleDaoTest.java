@@ -3,7 +3,6 @@ package dao;
 import static org.junit.Assert.*;
 import com.softserve.academy.entity.Role;
 import org.junit.*;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.test.context.ContextConfiguration;
 import java.sql.SQLException;
 import java.util.List;

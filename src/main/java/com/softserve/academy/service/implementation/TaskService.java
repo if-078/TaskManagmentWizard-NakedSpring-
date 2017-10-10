@@ -24,7 +24,6 @@ public class TaskService implements EntityService<Task> {
     return taskDao.findOne(id);
   }
 
-
   @Override
   public boolean update(Task task) {
     return taskDao.update(task);

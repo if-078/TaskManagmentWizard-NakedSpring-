@@ -3,7 +3,6 @@ package dao;
 import static org.junit.Assert.*;
 import com.softserve.academy.entity.Role;
 import org.junit.*;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.test.context.ContextConfiguration;
 import java.sql.SQLException;
 import java.util.List;
@@ -12,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import utility.RolePopulator;
 import com.softserve.academy.service.interfaces.RoleServiceInterface;
+import org.springframework.dao.EmptyResultDataAccessException;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {TestConfig.class})

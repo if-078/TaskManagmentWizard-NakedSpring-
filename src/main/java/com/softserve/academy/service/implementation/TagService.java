@@ -10,8 +10,6 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
-
-
 @Service
 public class TagService implements TagServiceInterface {
 
@@ -63,6 +61,13 @@ public class TagService implements TagServiceInterface {
       return new Tag();
     }
     return entity;
+  }
+
+  public Tag findTagByName (Tag target){  //gain all user tags and found one with name equals as target name;
+    for (Tag t : getAllByUserId(target.getUserId())){
+      return t;
+    }
+    return null;
   }
 
 }

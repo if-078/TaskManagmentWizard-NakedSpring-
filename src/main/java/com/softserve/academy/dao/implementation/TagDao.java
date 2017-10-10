@@ -34,14 +34,6 @@ public class TagDao extends Dao<Tag> implements TagDaoInterface {
     return jdbcTemplate.update(sql, getParameters(entity)) == 1;
   }
 
-  private MapSqlParameterSource getParameters(Tag entity) {
-    MapSqlParameterSource param = new MapSqlParameterSource();
-    param.addValue("id", entity.getId());
-    param.addValue("name", entity.getName());
-    param.addValue("user_id", entity.getUserId());
-    return param;
-  }
-
   @Override
   public boolean deleleAllByUserId(int userId) {
     String Sql = "DELETE FROM " + table + " WHERE user_id = :user_id";
@@ -56,7 +48,12 @@ public class TagDao extends Dao<Tag> implements TagDaoInterface {
     return list;
   }
 
-
+  private MapSqlParameterSource getParameters(Tag entity) {
+    MapSqlParameterSource param = new MapSqlParameterSource();
+    param.addValue("id", entity.getId());
+    param.addValue("name", entity.getName());
+    param.addValue("user_id", entity.getUserId());
+    return param;
+  }
 
 }
-

@@ -1,8 +1,4 @@
 
-/*
- * To change this license header, choose License Headers in Project Properties. To change this
- * template file, choose Tools | Templates and open the template in the editor.
- */
 package com.softserve.academy.dao.implementation;
 
 
@@ -11,7 +7,6 @@ import java.util.List;
 import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.DependsOn;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -46,13 +41,8 @@ public abstract class Dao<E> implements EntityDao<E> {
 
   @Override
   public E findOne(int id) {
-
     String sql = "SELECT * FROM " + table + " WHERE  id = :id";
-    try {
-      return jdbcTemplate.queryForObject(sql, new MapSqlParameterSource("id", id), mapper);
-    } catch (EmptyResultDataAccessException e) {
-      return null;
-    }
+    return jdbcTemplate.queryForObject(sql, new MapSqlParameterSource("id", id), mapper);
   }
 
   @Override

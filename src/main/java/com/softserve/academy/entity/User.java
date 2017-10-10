@@ -3,6 +3,8 @@ package com.softserve.academy.entity;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
+import com.softserve.academy.validator.UniqUserEmail;
+
 import java.util.Objects;
 
 
@@ -52,6 +54,7 @@ public class User {
 
   @NotBlank
   @Pattern(regexp = "^(.+)@(.+)$")
+  @UniqUserEmail
   public String getEmail() {
     return email;
   }

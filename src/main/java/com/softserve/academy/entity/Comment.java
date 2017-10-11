@@ -2,7 +2,7 @@ package com.softserve.academy.entity;
 
 import java.time.LocalDateTime;
 
-public class Comment {
+public class Comment{
     private int id;
     private String commentText;
     private LocalDateTime createdDate = LocalDateTime.now();

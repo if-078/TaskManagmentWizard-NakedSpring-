@@ -64,6 +64,13 @@ public class TaskService implements TaskServiceInterface {
   public List<Task> getUserTask(int userId){  //todo: make impl of this method in dao with sql query
     return getAll().stream().filter(s-> s.getAssign_to() == userId).collect(Collectors.toList());
   }
+
+  @Override
+  public List<Task> getTasksByTag(int tagId) {
+    return taskDao.getTasksByTag(tagId);
+  }
+
+
   /*
    * /@Override public ArrayList<Task> getTaskByStatus(int statusId) { return
    * taskDao.getTaskByStatus(statusId); }
@@ -77,8 +84,7 @@ public class TaskService implements TaskServiceInterface {
    * //@Override public ArrayList<Task> getTasksAssignToUser(int userId) { return
    * taskDao.getTasksAssignToUser(userId); }
    * 
-   * //@Override public ArrayList<Task> getTasksByTag(int tagId) { return
-   * taskDao.getTasksByTag(tagId); }
+   * //@Override
    * 
    * //@Override public ArrayList<Task> treeOfTasks(int taskId) { return
    * taskDao.treeOfTasks(taskId); }

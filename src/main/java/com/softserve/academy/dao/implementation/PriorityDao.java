@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 @PropertySource("classpath:tables.properties")
 public class PriorityDao extends Dao<Priority> {
@@ -23,6 +25,16 @@ public class PriorityDao extends Dao<Priority> {
   @Override
   public boolean update(Priority entity) {
     throw new UnsupportedOperationException("update operation not available for priority table");
+  }
+
+  public Priority findByName (Priority target){
+    List<Priority> priorities = getAll();
+    for (Priority p : priorities){
+      if (p.getName().contains(target.getName())){
+        return p;
+      }
+    }
+    return new Priority();
   }
 
 }

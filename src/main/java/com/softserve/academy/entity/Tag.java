@@ -5,7 +5,7 @@ package com.softserve.academy.entity;
  *
  * @author Oleg
  */
-public class Tag {
+public class Tag implements NamedEntity{
 
   private int id;
   private String name;
@@ -23,6 +23,7 @@ public class Tag {
     return id;
   }
 
+  @Override
   public String getName() {
     return name;
   }
@@ -35,6 +36,7 @@ public class Tag {
     this.id = tagId;
   }
 
+  @Override
   public void setName(String name) {
     this.name = name;
   }

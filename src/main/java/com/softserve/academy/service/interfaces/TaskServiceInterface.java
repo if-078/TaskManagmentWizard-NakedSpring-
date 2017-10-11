@@ -11,10 +11,11 @@ import java.util.List;
 
 public interface TaskServiceInterface extends EntityServiceInterface<Task>{
 
-    public List<Task> getTasksForToday();
-    public List<Tag> getTagsOfTask(int taskId);
-    public List<Comment> getCommentsOfTask(int taskId);
-    public List<Task> getSubtasks(int id);
+    List<Task> getTasksForToday();
+    List<Tag> getTagsOfTask(int taskId);
+    List<Comment> getCommentsOfTask(int taskId);
+    List<Task> getSubtasks(int id);
+    List<Task> getTasksByTag(int tagId);
 
     /*public ArrayList<Task> getTaskByStatus(int statusId);
 

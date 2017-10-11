@@ -15,6 +15,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -160,6 +161,17 @@ public class TaskDao extends Dao<Task> implements TaskDaoInterface {
     List<Task> tasks =
         jdbcTemplate.query(query, new MapSqlParameterSource("parent_id", id), new TaskMapper());
 
+    return tasks;
+  }
+
+  @Override
+  public List<Task> getTasksByTag(int tagId) {
+    String query =
+   "SELECT task.id, task.name, " + "task.created_date, task.start_date, " +
+    "task.end_date, task.estimate_time, " + "task.assign_to, task.status_id, " +
+    "task.priority_id, task.parent_id " + "FROM task INNER JOIN tags_tasks " +
+   "ON task.id=tags_tasks.task_id " + "WHERE tags_tasks.tag_id=" + tagId;
+    List<Task> tasks = jdbcTemplate.query(query, new MapSqlParameterSource("tags_tasks.tag_id", tagId), new TaskMapper());
     return tasks;
   }
 

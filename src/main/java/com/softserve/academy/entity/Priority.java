@@ -1,6 +1,6 @@
 package com.softserve.academy.entity;
 
-public class Priority {
+public class Priority implements NamedEntity{
     private int id;
     private String name;
 
@@ -8,7 +8,10 @@ public class Priority {
         this.id = id;
         this.name = name;
     }
-    
+
+    public Priority() {
+    }
+
     public int getId() {
         return id;
     }
@@ -17,10 +20,12 @@ public class Priority {
         this.id = id;
     }
 
+    @Override
     public String getName() {
         return name;
     }
 
+    @Override
     public void setName(String name) {
         this.name = name;
     }

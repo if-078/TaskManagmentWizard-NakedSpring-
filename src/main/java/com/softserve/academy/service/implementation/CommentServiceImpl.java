@@ -4,12 +4,12 @@ import com.softserve.academy.dao.implementation.CommentDao;
 import com.softserve.academy.entity.Comment;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.softserve.academy.service.interfaces.EntityService;
+import com.softserve.academy.service.interfaces.EntityServiceInterface;
 
 
 
 @org.springframework.stereotype.Service
-public class CommentServiceImpl implements EntityService<Comment> {
+public class CommentServiceImpl implements EntityServiceInterface<Comment> {
 
     @Autowired
     CommentDao dao;

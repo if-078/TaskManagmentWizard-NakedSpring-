@@ -2,7 +2,6 @@
 package com.softserve.academy.dao.implementation;
 
 
-import com.softserve.academy.dao.interfaces.EntityDao;
 import java.util.List;
 import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,9 +9,10 @@ import org.springframework.context.annotation.DependsOn;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import com.softserve.academy.dao.interfaces.EntityDaoInterface;
 
 @DependsOn("dataSource")
-public abstract class Dao<E> implements EntityDao<E> {
+public abstract class Dao<E> implements EntityDaoInterface<E> {
   protected String table;
   protected RowMapper<E> mapper;
   protected NamedParameterJdbcTemplate jdbcTemplate;

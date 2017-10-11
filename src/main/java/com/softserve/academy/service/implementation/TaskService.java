@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.lang.annotation.Annotation;
 import java.sql.SQLException;
 import java.util.List;
-import com.softserve.academy.service.interfaces.EntityService;
+import com.softserve.academy.service.interfaces.EntityServiceInterface;
 
 @org.springframework.stereotype.Service
 public class TaskService implements TaskServiceInterface {

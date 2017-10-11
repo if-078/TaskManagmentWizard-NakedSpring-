@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public interface TaskServiceInterface extends EntityService<Task>{
+public interface TaskServiceInterface extends EntityServiceInterface<Task>{
 
     public List<Task> getTasksForToday();
     public List<Tag> getTagsOfTask(int taskId);

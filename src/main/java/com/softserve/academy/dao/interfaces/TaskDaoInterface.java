@@ -6,7 +6,7 @@ import com.softserve.academy.entity.Task;
 
 import java.util.List;
 
-public interface TaskDaoInterface extends EntityDao<Task>{
+public interface TaskDaoInterface extends EntityDaoInterface<Task>{
 
     public List<Task> getTasksForToday();
 

@@ -6,7 +6,7 @@ import com.softserve.academy.entity.Tag;
 
 import java.util.List;
 
-public interface RoleDaoInterface extends EntityDao<Role> {
+public interface RoleDaoInterface extends EntityDaoInterface<Role> {
   List<Role> addBatch(Role... roles);
 
   boolean deleteAll();

@@ -1,16 +1,14 @@
 package com.softserve.academy.service.implementation;
 
-import com.softserve.academy.dao.implementation.TaskDao;
 import com.softserve.academy.dao.interfaces.TaskDaoInterface;
 import com.softserve.academy.entity.Comment;
 import com.softserve.academy.entity.Tag;
 import com.softserve.academy.entity.Task;
 import com.softserve.academy.service.interfaces.TaskServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
-import java.lang.annotation.Annotation;
-import java.sql.SQLException;
+
 import java.util.List;
-import com.softserve.academy.service.interfaces.EntityServiceInterface;
+import java.util.stream.Collectors;
 
 @org.springframework.stereotype.Service
 public class TaskService implements TaskServiceInterface {
@@ -63,6 +61,9 @@ public class TaskService implements TaskServiceInterface {
     return taskDao.getSubtasks(id);
   }
 
+  public List<Task> getUserTask(int userId){  //todo: make impl of this method in dao with sql query
+    return getAll().stream().filter(s-> s.getAssign_to() == userId).collect(Collectors.toList());
+  }
   /*
    * /@Override public ArrayList<Task> getTaskByStatus(int statusId) { return
    * taskDao.getTaskByStatus(statusId); }

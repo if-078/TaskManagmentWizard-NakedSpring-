@@ -63,7 +63,7 @@ public class TagService implements TagServiceInterface {
   }
 
   public Tag findTagByName (Tag target){
-    return getAllByUserId(target.getUserId()).stream().filter(s-> s.getName().contains(target.getName())).findFirst().orElse(new Tag());
+    return getAllByUserId(target.getUserId()).stream().filter(s-> s.getName().contains(target.getName())).findAny().orElse(new Tag());
   }
 
 }

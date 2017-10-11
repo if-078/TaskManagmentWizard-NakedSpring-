@@ -40,10 +40,6 @@ public class StatusService implements EntityServiceInterface<Status> {
   }
 
   public Status findByName (Status target){
-    for (Status status : getAll()){
-      if (status.getName().equals(target.getName()))
-        return status;
-    }
-    return null;
+    return getAll().stream().filter(s-> s.getName().contains(target.getName())).findAny().orElse(new Status());
   }
 }

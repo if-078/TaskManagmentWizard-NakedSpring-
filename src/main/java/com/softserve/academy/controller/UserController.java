@@ -26,6 +26,7 @@ public class UserController {
   UserService userService;
   
 	@GetMapping("/all")
+	@ResponseStatus(HttpStatus.OK)
 	List<User> getAllUsers() throws SQLException {
 		return userService.getAll();
 	}
@@ -37,22 +38,25 @@ public class UserController {
 	}
 
 	@GetMapping("/id/{id}")
+	@ResponseStatus(HttpStatus.OK)
 	User getUser(@PathVariable Integer id)throws SQLException {
 		return userService.findOne(id);
 	}
 	
 	@GetMapping("/email/{email}")
+	@ResponseStatus(HttpStatus.OK)
 	User getUser(@PathVariable String email)throws SQLException {
 		return userService.findByEmail(email);
 	}
 
 	@PutMapping("/update")
-	@ResponseStatus(HttpStatus.OK)
+	@ResponseStatus(HttpStatus.NO_CONTENT)
 	boolean updateUser(@RequestBody User user)throws SQLException {
 		return userService.update(user);
 	}
 
 	@DeleteMapping("/del/{id}")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
 	boolean deleteUser(@PathVariable Integer id) throws SQLException {
 		return userService.delete(id);
 	}

@@ -1,5 +1,6 @@
 package com.softserve.academy.DTO;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.softserve.academy.entity.NamedEntity;
 import com.softserve.academy.entity.Priority;
 import com.softserve.academy.entity.Status;
@@ -18,15 +19,15 @@ public class SearchingTransferObject {
         this.id = id;
     }
 
-    public void setStatuses(String[] statuses) {
+    public void setStatus(String[] statuses) {
         this.statuses = statuses;
     }
 
-    public void setTags(String[] tags) {
+    public void setTag(String[] tags) {
         this.tags = tags;
     }
 
-    public void setPriorities(String[] priorities) {
+    public void setPriority(String[] priorities) {
         this.priorities = priorities;
     }
 
@@ -38,15 +39,15 @@ public class SearchingTransferObject {
         return id;
     }
 
-    public String[] getStatuses() {
+    public String[] getStatus() {
         return statuses;
     }
 
-    public String[] getTags() {
+    public String[] getTag() {
         return tags;
     }
 
-    public String[] getPriorities() {
+    public String[] getPriority() {
         return priorities;
     }
 
@@ -56,14 +57,17 @@ public class SearchingTransferObject {
         return res;
     }
 
+    @JsonIgnore
     public List<Status> getTargetStatuses (){
         return getEntitiesFromNames(Status.class, statuses);
     }
 
+    @JsonIgnore
     public List<Priority> getTargetPriorities (){
         return getEntitiesFromNames(Priority.class, priorities);
     }
 
+    @JsonIgnore
     private   <T extends NamedEntity> List<T> getEntitiesFromNames(Class<T> tClass, String[] strings){
         List<T> res = new ArrayList<>();
         for (String s : strings){

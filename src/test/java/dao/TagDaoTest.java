@@ -1,6 +1,5 @@
 package dao;
 
-import com.softserve.academy.dao.implementation.TagDao;
 import com.softserve.academy.entity.Tag;
 import com.softserve.academy.entity.User;
 import com.softserve.academy.service.implementation.TagService;
@@ -10,9 +9,6 @@ import static org.assertj.core.api.Assertions.*;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
-import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import utility.Populator;
 

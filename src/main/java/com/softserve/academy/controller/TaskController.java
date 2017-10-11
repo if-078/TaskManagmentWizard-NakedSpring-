@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
-import com.softserve.academy.service.interfaces.EntityService;
+import com.softserve.academy.service.interfaces.EntityServiceInterface;
 
 @RestController
 @RequestMapping("tasks")

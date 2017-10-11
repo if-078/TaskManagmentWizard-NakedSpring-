@@ -14,15 +14,16 @@ import org.mockito.runners.MockitoJUnitRunner;
 import com.softserve.academy.dao.implementation.UserDao;
 import com.softserve.academy.entity.User;
 import com.softserve.academy.service.implementation.UserServiceImpl;
-import com.softserve.academy.service.interfaces.UserService;
 
 import static org.mockito.Mockito.*;
+import com.softserve.academy.service.interfaces.UserServiceInterface;
+import static org.junit.Assert.assertNotNull;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UserServiceTest {
   
   @InjectMocks
-  private UserService userService = new UserServiceImpl();
+  private UserServiceInterface userService = new UserServiceImpl();
   
   @Mock
   private UserDao userDao;

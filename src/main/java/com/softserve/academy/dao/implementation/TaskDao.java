@@ -8,32 +8,22 @@ import com.softserve.academy.dao.mappers.TaskMapper;
 import com.softserve.academy.entity.Comment;
 import com.softserve.academy.entity.Tag;
 import com.softserve.academy.entity.Task;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
-
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Repository
 @PropertySource("classpath:tables.properties")
 public class TaskDao extends Dao<Task> implements TaskDaoInterface {
 
-  @Autowired
-  public void setTable(@Value("${task}") String table) {
-    this.table = table;
-  }
 
-  @Autowired
-  public void setMapper(RowMapper<Task> mapper) {
-    this.mapper = mapper;
+  public TaskDao(@Value("${task}") String table) {
+    super(table, new TaskMapper());
   }
 
 
@@ -133,8 +123,9 @@ public class TaskDao extends Dao<Task> implements TaskDaoInterface {
   public List<Task> getTasksForToday() {
     LocalDateTime date = LocalDateTime.now();
     System.out.println(date.toLocalDate());
-    String sql = "SELECT id, name, created_date, start_date, end_date, estimate_time, " +
-            "assign_to, status_id, priority_id, parent_id FROM task WHERE date(start_date) = '"+date.toLocalDate() + "'";
+    String sql = "SELECT id, name, created_date, start_date, end_date, estimate_time, "
+        + "assign_to, status_id, priority_id, parent_id FROM task WHERE date(start_date) = '"
+        + date.toLocalDate() + "'";
 
     List<Task> tasks = jdbcTemplate.query(sql, new TaskMapper());
 
@@ -143,30 +134,31 @@ public class TaskDao extends Dao<Task> implements TaskDaoInterface {
 
   @Override
   public List<Tag> getTagsOfTask(int taskId) {
-    String sql = "SELECT tag.id, tag.name, tag.user_id FROM tag INNER JOIN tags_tasks  " +
-           "ON tag.id=tags_tasks.tag_id  WHERE tags_tasks.task_id = :tags_tasks.task_id";
+    String sql = "SELECT tag.id, tag.name, tag.user_id FROM tag INNER JOIN tags_tasks  "
+        + "ON tag.id=tags_tasks.tag_id  WHERE tags_tasks.task_id = :tags_tasks.task_id";
 
-    List<Tag> tags =
-            jdbcTemplate.query(sql, new MapSqlParameterSource("tags_tasks.task_id", taskId), new TagMapper());
+    List<Tag> tags = jdbcTemplate.query(sql,
+        new MapSqlParameterSource("tags_tasks.task_id", taskId), new TagMapper());
 
     return tags;
   }
 
   @Override
   public List<Comment> getCommentsOfTask(int taskId) {
-    String sql = "SELECT id, comment, created_date, task_id, user_id FROM comment " + "WHERE task_id = :task_id";
+    String sql = "SELECT id, comment, created_date, task_id, user_id FROM comment "
+        + "WHERE task_id = :task_id";
     List<Comment> comments =
-            jdbcTemplate.query(sql, new MapSqlParameterSource("task_id", taskId), new CommentMapper());
+        jdbcTemplate.query(sql, new MapSqlParameterSource("task_id", taskId), new CommentMapper());
 
     return comments;
   }
 
   @Override
   public List<Task> getSubtasks(int id) {
-    String query = "SELECT id, name, created_date, start_date, end_date, estimate_time, " +
-            "assign_to, status_id, priority_id, parent_id FROM task WHERE parent_id = :parent_id";
+    String query = "SELECT id, name, created_date, start_date, end_date, estimate_time, "
+        + "assign_to, status_id, priority_id, parent_id FROM task WHERE parent_id = :parent_id";
     List<Task> tasks =
-            jdbcTemplate.query(query, new MapSqlParameterSource("parent_id", id), new TaskMapper());
+        jdbcTemplate.query(query, new MapSqlParameterSource("parent_id", id), new TaskMapper());
 
     return tasks;
   }
@@ -182,8 +174,7 @@ public class TaskDao extends Dao<Task> implements TaskDaoInterface {
    *
    * //@Override public ArrayList<Task> getTaskByPriority(int priorityId) { String query =
    * "SELECT task_id, name, created_date, start_date, end_date, estimate_time, " +
-   * "assign_to, status_id, priority_id, parent_id " + "FROM task WHERE priority_id=" +
-   * priorityId;
+   * "assign_to, status_id, priority_id, parent_id " + "FROM task WHERE priority_id=" + priorityId;
    *
    * return executeSelect(query, datasource); }
    *

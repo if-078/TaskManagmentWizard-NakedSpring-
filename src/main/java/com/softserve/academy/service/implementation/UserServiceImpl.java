@@ -7,10 +7,10 @@ import org.springframework.stereotype.Service;
 
 import com.softserve.academy.dao.implementation.UserDao;
 import com.softserve.academy.entity.User;
-import com.softserve.academy.service.interfaces.UserService;
+import com.softserve.academy.service.interfaces.UserServiceInterface;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserServiceInterface {
 	
 	@Autowired
 	UserDao userDao;

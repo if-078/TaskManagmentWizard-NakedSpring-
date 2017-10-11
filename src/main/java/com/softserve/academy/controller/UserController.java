@@ -16,14 +16,14 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.http.HttpStatus;
 
 import com.softserve.academy.entity.User;
-import com.softserve.academy.service.interfaces.UserService;
+import com.softserve.academy.service.interfaces.UserServiceInterface;
 
 @RestController
 @RequestMapping("users")
 public class UserController {
   
   @Autowired
-  UserService userService;
+  UserServiceInterface userService;
   
 	@GetMapping("/all")
 	@ResponseStatus(HttpStatus.OK)

@@ -47,7 +47,7 @@ public class SearchService {
         this.taskService = taskService;
     }
 
-    public List<Task> getFiltredResult (){
+    public List<Task> getFilteredResult (){
         return thirdPrepareFiltering();
     }
 
@@ -72,11 +72,11 @@ public class SearchService {
     }
 
     private List<Task> thirdPrepareFiltering(){
-        List<Task> preFiltredTasks = secondPrepareFiltering();
+        List<Task> tasks = secondPrepareFiltering();
         List<Status> statuses= filterStatuses();
         List<Task> res = new ArrayList<>();
         for (Status status : statuses){
-             Stream<Task> stream =  preFiltredTasks.stream().filter(task -> task.getStatus_id() == status.getId());
+             Stream<Task> stream =  tasks.stream().filter(task -> task.getStatus_id() == status.getId());
              res.addAll(stream.collect(Collectors.toList()));
         }
         return res;

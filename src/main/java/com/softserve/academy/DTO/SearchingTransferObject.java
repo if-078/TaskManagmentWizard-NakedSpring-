@@ -64,7 +64,7 @@ public class SearchingTransferObject {
         return getEntitiesFromNames(Priority.class, priorities);
     }
 
-    public  <T extends NamedEntity> List<T> getEntitiesFromNames(Class<T> tClass, String[] strings){
+    private   <T extends NamedEntity> List<T> getEntitiesFromNames(Class<T> tClass, String[] strings){
         List<T> res = new ArrayList<>();
         for (String s : strings){
             T t = null;

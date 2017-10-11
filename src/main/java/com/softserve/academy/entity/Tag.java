@@ -1,10 +1,5 @@
-
 package com.softserve.academy.entity;
 
-/**
- *
- * @author Oleg
- */
 public class Tag implements NamedEntity{
 
   private int id;

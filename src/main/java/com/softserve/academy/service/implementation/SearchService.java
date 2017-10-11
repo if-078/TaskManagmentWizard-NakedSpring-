@@ -1,7 +1,6 @@
 package com.softserve.academy.service.implementation;
 
 import com.softserve.academy.DTO.SearchingTransferObject;
-import com.softserve.academy.dao.implementation.Dao;
 import com.softserve.academy.dao.implementation.PriorityDao;
 import com.softserve.academy.entity.Priority;
 import com.softserve.academy.entity.Status;
@@ -9,9 +8,10 @@ import com.softserve.academy.entity.Tag;
 import com.softserve.academy.entity.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class SearchService {
@@ -20,11 +20,11 @@ public class SearchService {
     private PriorityDao priorityDao;
     private TagService tagService;
     private TaskService taskService;
-    private SearchingTransferObject searchingTransferObject;
+    private SearchingTransferObject sto;
 
 
     public SearchService(SearchingTransferObject searchingTransferObject) {
-        this.searchingTransferObject = searchingTransferObject;
+        this.sto = searchingTransferObject;
     }
 
     @Autowired
@@ -47,16 +47,42 @@ public class SearchService {
         this.taskService = taskService;
     }
 
-    private List<Task> filterTasks(SearchingTransferObject sto) {
-        List<Tag> userTags = filterTags(sto);
+    public List<Task> getFiltredResult (){
+        return thirdPrepareFiltering();
+    }
+
+    private List<Task> firstPreparedFiltering() {
+        List<Tag> userTags = filterTags();
         List<Task> res = new ArrayList<>();
         for (Tag tag : userTags){
             res.addAll(taskService.getTasksByTag(tag.getId()));
         }
+        return res.stream().filter(task -> task.getAssign_to() == sto.getId()).collect(Collectors.toList());
+    }
+
+    private List<Task> secondPrepareFiltering (){
+        List<Task> tasks = firstPreparedFiltering();
+        List<Priority> priorities = filterPriorities();
+        List<Task> res = new ArrayList<>() ;
+        for (Priority p : priorities){
+            Stream<Task> stream = tasks.stream().filter(task -> task.getPriority_id() == p.getId());
+            res.addAll(stream.collect(Collectors.toList()));
+        }
         return res;
     }
 
-    private List<Tag> filterTags(SearchingTransferObject sto){
+    private List<Task> thirdPrepareFiltering(){
+        List<Task> preFiltredTasks = secondPrepareFiltering();
+        List<Status> statuses= filterStatuses();
+        List<Task> res = new ArrayList<>();
+        for (Status status : statuses){
+             Stream<Task> stream =  preFiltredTasks.stream().filter(task -> task.getStatus_id() == status.getId());
+             res.addAll(stream.collect(Collectors.toList()));
+        }
+        return res;
+    }
+
+    private List<Tag> filterTags(){
         List<Tag> res = new ArrayList<>();
         for (Tag t : sto.getTargetTags()){
             res.add(tagService.findTagByName(t));
@@ -64,7 +90,7 @@ public class SearchService {
         return res;
     }
 
-    private List<Status> filterStatuses (SearchingTransferObject sto){
+    private List<Status> filterStatuses (){
         List<Status> res = new ArrayList<>();
         for (Status status : sto.getTargetStatuses()){
             res.add(statusService.findByName(status));
@@ -72,7 +98,7 @@ public class SearchService {
         return res;
     }
 
-    private List<Priority> filterPriorities(SearchingTransferObject sto){
+    private List<Priority> filterPriorities(){
         List<Priority> res = new ArrayList<>(4);
         for (Priority p : sto.getTargetPriorities()){
             res.add(priorityDao.findByName(p));

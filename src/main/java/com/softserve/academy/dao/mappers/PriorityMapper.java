@@ -1,4 +1,3 @@
-
 package com.softserve.academy.dao.mappers;
 
 import com.softserve.academy.entity.Priority;

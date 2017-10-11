@@ -1,6 +1,5 @@
 package com.softserve.academy.service.interfaces;
 
-
 import java.util.List;
 
 public interface EntityServiceInterface<E> {

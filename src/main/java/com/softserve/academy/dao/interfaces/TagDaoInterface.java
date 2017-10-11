@@ -1,4 +1,3 @@
-
 package com.softserve.academy.dao.interfaces;
 
 import com.softserve.academy.entity.Tag;

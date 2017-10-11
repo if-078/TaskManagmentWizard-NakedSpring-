@@ -1,6 +1,5 @@
 package dao;
 
-import com.softserve.academy.dao.implementation.TagDao;
 import com.softserve.academy.entity.Tag;
 import com.softserve.academy.entity.User;
 import com.softserve.academy.service.implementation.TagService;
@@ -10,9 +9,6 @@ import static org.assertj.core.api.Assertions.*;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
-import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import utility.Populator;
 
@@ -20,8 +16,6 @@ import utility.Populator;
 @ContextConfiguration(classes = {TestConfig.class})
 public class TagDaoTest {
 
-  @Autowired
-  public TagDao dao;
   @Autowired
   public TagService tagService;
   @Autowired
@@ -35,10 +29,8 @@ public class TagDaoTest {
 
   }
 
-
-
   @Test
-  public void CRUDPositiveTest() {
+  public void shouldCreateFindOneAndAllUpdateAndDelete() {
     tagService.create(new Tag(1, "#Cat", 1));
     tagService.create(new Tag(2, "#bicycle", 1));
     tagService.create(new Tag(3, "#Books", 1));
@@ -53,12 +45,10 @@ public class TagDaoTest {
     assertThat(tagService.getAllByUserId(3)).hasSize(3);
     assertThat(tagService.update(new Tag(1, "#Cat2", 2))).isTrue();
     assertThat(tagService.deleleAllByUserId(1)).isTrue();
-    dao.getAll().forEach((obj) -> System.out.print(obj));
-    System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
   }
 
   @Test
-  public void CRUDNegativeTest() {
+  public void shouldNOTCreateFindOneAndAllUpdateAndDelete() {
     assertThat(tagService.getAllByUserId(9999)).isEmpty();
     assertThat(tagService.deleleAllByUserId(9999)).isFalse();
     assertThat(tagService.update(new Tag(2, "atata", 9999))).isFalse();

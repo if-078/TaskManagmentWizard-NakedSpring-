@@ -6,7 +6,6 @@ import java.sql.SQLException;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
-
 import com.softserve.academy.dao.interfaces.UserDaoInterface;
 import com.softserve.academy.entity.User;
 import org.junit.runner.RunWith;
@@ -28,7 +27,7 @@ public class UserDaoIntTest {
     User userNew = new User();
     userNew.setName("if-078");
     userNew.setEmail("softServeAcademy@gmail.test");
-    
+
     User userFindOne;
     // When
     userNew = userDao.create(userNew);

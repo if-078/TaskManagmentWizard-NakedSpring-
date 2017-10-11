@@ -9,8 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import org.springframework.stereotype.Service;
 
-@org.springframework.stereotype.Service
+@Service
 public class TaskService implements TaskServiceInterface {
 
   @Autowired
@@ -84,7 +85,8 @@ public class TaskService implements TaskServiceInterface {
    * //@Override public ArrayList<Task> getTasksAssignToUser(int userId) { return
    * taskDao.getTasksAssignToUser(userId); }
    * 
-   * //@Override
+   * //@Override public ArrayList<Task> getTasksByTag(int tagId) { return
+   * taskDao.getTasksByTag(tagId); }
    * 
    * //@Override public ArrayList<Task> treeOfTasks(int taskId) { return
    * taskDao.treeOfTasks(taskId); }

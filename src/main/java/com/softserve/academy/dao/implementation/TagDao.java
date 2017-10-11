@@ -3,9 +3,6 @@ package com.softserve.academy.dao.implementation;
 import com.softserve.academy.dao.interfaces.TagDaoInterface;
 import com.softserve.academy.dao.mappers.TagMapper;
 import com.softserve.academy.entity.Tag;
-
-import java.lang.annotation.Target;
-import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;

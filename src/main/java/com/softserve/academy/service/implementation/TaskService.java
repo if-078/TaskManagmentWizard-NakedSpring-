@@ -1,7 +1,11 @@
 package com.softserve.academy.service.implementation;
 
 import com.softserve.academy.dao.implementation.TaskDao;
+import com.softserve.academy.dao.interfaces.TaskDaoInterface;
+import com.softserve.academy.entity.Comment;
+import com.softserve.academy.entity.Tag;
 import com.softserve.academy.entity.Task;
+import com.softserve.academy.service.interfaces.TaskServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.lang.annotation.Annotation;
 import java.sql.SQLException;
@@ -9,10 +13,10 @@ import java.util.List;
 import com.softserve.academy.service.interfaces.EntityService;
 
 @org.springframework.stereotype.Service
-public class TaskService implements EntityService<Task> {
+public class TaskService implements TaskServiceInterface {
 
   @Autowired
-  TaskDao taskDao;
+  TaskDaoInterface taskDao;
 
   @Override
   public List<Task> getAll() {
@@ -39,9 +43,24 @@ public class TaskService implements EntityService<Task> {
     return taskDao.create(task);
   }
 
-  // @Override
-  public Class<? extends Annotation> annotationType() {
-    return null;
+  @Override
+  public List<Task> getTasksForToday() {
+    return taskDao.getTasksForToday();
+  }
+
+  @Override
+  public List<Tag> getTagsOfTask(int taskId) {
+    return taskDao.getTagsOfTask(taskId);
+  }
+
+  @Override
+  public List<Comment> getCommentsOfTask(int taskId) {
+    return taskDao.getCommentsOfTask(taskId);
+  }
+
+  @Override
+  public List<Task> getSubtasks(int id) {
+    return taskDao.getSubtasks(id);
   }
 
   /*
@@ -57,8 +76,6 @@ public class TaskService implements EntityService<Task> {
    * //@Override public ArrayList<Task> getTasksAssignToUser(int userId) { return
    * taskDao.getTasksAssignToUser(userId); }
    * 
-   * //@Override public ArrayList<Task> getTasksForToday() { return taskDao.getTasksForToday(); }
-   * 
    * //@Override public ArrayList<Task> getTasksByTag(int tagId) { return
    * taskDao.getTasksByTag(tagId); }
    * 
@@ -66,12 +83,6 @@ public class TaskService implements EntityService<Task> {
    * taskDao.treeOfTasks(taskId); }
    * 
    * //@Override public User getAuthorOfTask(int taskId) { return taskDao.getAuthorOfTask(taskId); }
-   * 
-   * //@Override public ArrayList<Tag> getTagsOfTask(int taskId) { return
-   * taskDao.getTagsOfTask(taskId); }
-   * 
-   * //@Override public ArrayList<Comment> getCommentsOfTask(int taskId) { return
-   * taskDao.getCommentsOfTask(taskId); }
    */
 
 }

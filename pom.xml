@@ -121,6 +121,7 @@
                 <version>2.2</version>
                 <configuration>
                     <path>/</path>
+                    <port>8585</port>
                 </configuration>
             </plugin>
 

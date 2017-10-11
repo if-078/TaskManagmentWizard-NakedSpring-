@@ -1,5 +1,7 @@
 package com.softserve.academy.service.interfaces;
 
+import com.softserve.academy.entity.Comment;
+import com.softserve.academy.entity.Tag;
 import com.softserve.academy.entity.Task;
 
 
@@ -7,17 +9,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public interface TaskServiceInterface {
+public interface TaskServiceInterface extends EntityService<Task>{
 
-    public List<Task> getAll() throws SQLException;
-
-    public Task get(int id) throws SQLException;
-
-    public void update(Task task) throws SQLException;
-
-    public void delete(int id) throws SQLException;
-
-    public void create(Task task) throws SQLException;
+    public List<Task> getTasksForToday();
+    public List<Tag> getTagsOfTask(int taskId);
+    public List<Comment> getCommentsOfTask(int taskId);
+    public List<Task> getSubtasks(int id);
 
     /*public ArrayList<Task> getTaskByStatus(int statusId);
 
@@ -31,12 +28,7 @@ public interface TaskServiceInterface {
 
     public ArrayList<Task> getTasksByTag(int tagId);
 
-    public  ArrayList<Task> treeOfTasks(int taskId);
-
     public User getAuthorOfTask(int taskId);
-
-    public ArrayList<Tag> getTagsOfTask(int taskId);
-
-    public ArrayList<Comment> getCommentsOfTask(int taskId);*/
+*/
 
 }

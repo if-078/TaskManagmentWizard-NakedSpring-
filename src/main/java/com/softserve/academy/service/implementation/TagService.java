@@ -34,11 +34,10 @@ public class TagService implements TagServiceInterface {
 
   @Override
   public Tag findOne(int id) {
-    Tag tag;
     try {
-      return tag = tagDao.findOne(id);
+      return tagDao.findOne(id);
     } catch (EmptyResultDataAccessException e) {
-      return tag = new Tag();
+      return new Tag();
     }
 
   }
@@ -63,11 +62,8 @@ public class TagService implements TagServiceInterface {
     return entity;
   }
 
-  public Tag findTagByName (Tag target){  //gain all user tags and found one with name equals as target name;
-    for (Tag t : getAllByUserId(target.getUserId())){
-      return t;
-    }
-    return null;
+  public Tag findTagByName (Tag target){
+    return getAllByUserId(target.getUserId()).stream().filter(s-> s.getName().contains(target.getName())).findFirst().orElse(new Tag());
   }
 
 }

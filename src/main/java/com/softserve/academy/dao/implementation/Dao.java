@@ -1,7 +1,6 @@
 
 package com.softserve.academy.dao.implementation;
 
-
 import java.util.List;
 import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;

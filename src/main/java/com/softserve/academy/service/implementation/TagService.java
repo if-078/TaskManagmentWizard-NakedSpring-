@@ -1,4 +1,3 @@
-
 package com.softserve.academy.service.implementation;
 
 import com.softserve.academy.dao.implementation.TagDao;
@@ -63,8 +62,9 @@ public class TagService implements TagServiceInterface {
     return entity;
   }
 
-  public Tag findTagByName (Tag target){  //gain all user tags and found one with name equals as target name;
-    for (Tag t : getAllByUserId(target.getUserId())){
+  public Tag findTagByName(Tag target) { // gain all user tags and found one with name equals as
+                                         // target name;
+    for (Tag t : getAllByUserId(target.getUserId())) {
       return t;
     }
     return null;

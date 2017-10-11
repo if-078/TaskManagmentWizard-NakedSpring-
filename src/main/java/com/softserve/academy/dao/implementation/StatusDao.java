@@ -1,4 +1,3 @@
-
 package com.softserve.academy.dao.implementation;
 
 import com.softserve.academy.dao.mappers.StatusMapper;

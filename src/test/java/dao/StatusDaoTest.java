@@ -1,4 +1,3 @@
-
 package dao;
 
 import com.softserve.academy.dao.implementation.StatusDao;

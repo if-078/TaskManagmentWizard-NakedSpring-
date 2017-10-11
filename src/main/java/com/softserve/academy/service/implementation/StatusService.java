@@ -5,9 +5,9 @@ import com.softserve.academy.entity.Status;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 import com.softserve.academy.service.interfaces.EntityServiceInterface;
-import com.softserve.academy.dao.interfaces.EntityDaoInterface;
+import org.springframework.stereotype.Service;
 
-@org.springframework.stereotype.Service
+@Service
 public class StatusService implements EntityServiceInterface<Status> {
 
   @Autowired
@@ -39,8 +39,8 @@ public class StatusService implements EntityServiceInterface<Status> {
     return statusDao.create(entity);
   }
 
-  public Status findByName (Status target){
-    for (Status status : getAll()){
+  public Status findByName(Status target) {
+    for (Status status : getAll()) {
       if (status.getName().equals(target.getName()))
         return status;
     }

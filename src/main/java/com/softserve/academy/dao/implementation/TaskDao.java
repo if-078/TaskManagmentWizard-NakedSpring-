@@ -1,6 +1,5 @@
 package com.softserve.academy.dao.implementation;
 
-
 import com.softserve.academy.dao.interfaces.TaskDaoInterface;
 import com.softserve.academy.dao.mappers.CommentMapper;
 import com.softserve.academy.dao.mappers.TagMapper;

@@ -8,18 +8,18 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
-import com.softserve.academy.service.interfaces.EntityService;
+import com.softserve.academy.service.interfaces.EntityServiceInterface;
 
 @RestController
 @RequestMapping("status")
 public class StatusController {
 
-  EntityService<Status> service;
+  EntityServiceInterface<Status> service;
 
   ObjectMapper objectMapper;
 
   @Autowired
-  public StatusController(EntityService<Status> service, ObjectMapper objectMapper) {
+  public StatusController(EntityServiceInterface<Status> service, ObjectMapper objectMapper) {
     this.service = service;
     this.objectMapper = objectMapper;
   }

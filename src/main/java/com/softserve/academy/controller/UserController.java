@@ -17,16 +17,17 @@ import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 
 import com.softserve.academy.entity.User;
-import com.softserve.academy.service.interfaces.UserService;
+import com.softserve.academy.service.interfaces.UserServiceInterface;
 
 @RestController
 @RequestMapping("users")
 public class UserController {
   
   @Autowired
-  UserService userService;
+  UserServiceInterface userService;
   
 	@GetMapping("/all")
+	@ResponseStatus(HttpStatus.OK)
 	List<User> getAllUsers() throws SQLException {
 		return userService.getAll();
 	}
@@ -38,22 +39,25 @@ public class UserController {
 	}
 
 	@GetMapping("/id/{id}")
+	@ResponseStatus(HttpStatus.OK)
 	User getUser(@PathVariable Integer id)throws SQLException {
 		return userService.findOne(id);
 	}
 	
 	@GetMapping("/email/{email}")
+	@ResponseStatus(HttpStatus.OK)
 	User getUser(@PathVariable String email)throws SQLException {
 		return userService.findByEmail(email);
 	}
 
 	@PutMapping("/update")
-	@ResponseStatus(HttpStatus.OK)
-	boolean updateUser(@Validated @RequestBody User user)throws SQLException {
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	boolean updateUser(@RequestBody User user)throws SQLException {
 		return userService.update(user);
 	}
 
 	@DeleteMapping("/del/{id}")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
 	boolean deleteUser(@PathVariable Integer id) throws SQLException {
 		return userService.delete(id);
 	}

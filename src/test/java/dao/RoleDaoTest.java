@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import utility.RolePopulator;
 import com.softserve.academy.service.interfaces.RoleServiceInterface;
+import org.springframework.dao.EmptyResultDataAccessException;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {TestConfig.class})
@@ -40,7 +41,7 @@ public class RoleDaoTest {
     assertEquals("fdsa", roleService.findOne(role.getId()).getName());
   }
 
-  @Test
+  @Test(expected = EmptyResultDataAccessException.class)
   public void testCreateAndFindAndDeleteAndFindEmpty() throws Exception {
     Role role = roleService.create(rolePopulator.initOneEntity("asdf"));
     assertNotNull(roleService.findOne(role.getId()));

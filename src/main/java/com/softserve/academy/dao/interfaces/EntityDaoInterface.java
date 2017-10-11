@@ -1,9 +1,8 @@
-package com.softserve.academy.service.interfaces;
-
+package com.softserve.academy.dao.interfaces;
 
 import java.util.List;
 
-public interface EntityService<E> {
+public interface EntityDaoInterface<E> {
   List<E> getAll();
 
   E findOne(int id);

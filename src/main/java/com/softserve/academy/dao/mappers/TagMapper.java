@@ -1,12 +1,9 @@
-
 package com.softserve.academy.dao.mappers;
 
 import com.softserve.academy.entity.Tag;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.stereotype.Component;
 
 
 public class TagMapper implements RowMapper<Tag> {

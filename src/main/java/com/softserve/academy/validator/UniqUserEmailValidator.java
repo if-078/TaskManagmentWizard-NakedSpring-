@@ -5,13 +5,13 @@ import javax.validation.ConstraintValidatorContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import com.softserve.academy.service.interfaces.UserService;
+import com.softserve.academy.service.interfaces.UserServiceInterface;
 
 @Component
 public class UniqUserEmailValidator implements ConstraintValidator <UniqUserEmail , String> {
 	
 	@Autowired
-	UserService userService;
+	UserServiceInterface userService;
 	
 	int equal = 0;
 

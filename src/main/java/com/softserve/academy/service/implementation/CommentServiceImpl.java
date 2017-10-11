@@ -4,39 +4,38 @@ import com.softserve.academy.dao.implementation.CommentDao;
 import com.softserve.academy.entity.Comment;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.softserve.academy.service.interfaces.EntityService;
+import com.softserve.academy.service.interfaces.EntityServiceInterface;
+import org.springframework.stereotype.Service;
 
+@Service
+public class CommentServiceImpl implements EntityServiceInterface<Comment> {
 
+  @Autowired
+  CommentDao dao;
 
-@org.springframework.stereotype.Service
-public class CommentServiceImpl implements EntityService<Comment> {
+  @Override
+  public List getAll() {
+    return dao.getAll();
+  }
 
-    @Autowired
-    CommentDao dao;
+  @Override
+  public Comment findOne(int id) {
+    return dao.findOne(id);
+  }
 
-    @Override
-    public List getAll() {
-        return dao.getAll();
-    }
+  @Override
+  public boolean update(Comment entity) {
+    return dao.update(entity);
+  }
 
-    @Override
-    public Comment findOne(int id) {
-        return dao.findOne(id);
-    }
+  @Override
+  public boolean delete(int id) {
+    return dao.delete(id);
+  }
 
-    @Override
-    public boolean update(Comment entity) {
-        return dao.update(entity);
-    }
-
-    @Override
-    public boolean delete(int id) {
-        return dao.delete(id);
-    }
-
-    @Override
-    public Comment create(Comment entity) {
-        return dao.create(entity);
-    }
+  @Override
+  public Comment create(Comment entity) {
+    return dao.create(entity);
+  }
 
 }

@@ -1,7 +1,6 @@
 
 package dao;
 
-import com.softserve.academy.dao.implementation.PriorityDao;
 import com.softserve.academy.dao.implementation.StatusDao;
 import com.softserve.academy.entity.Status;
 import org.junit.Test;
@@ -17,26 +16,21 @@ public class StatusDaoTest {
 
   @Autowired
   public StatusDao statusDao;
-  @Autowired
-  public PriorityDao priorityDao;
-
-
-
-  // @Test
-  // public void simpleTest(){
-  // Priority p1 = new Priority(1, "Low");
-  // Priority p2 = new Priority(2, "High");
-  // priorityDao.create(p1);
-  // priorityDao.create(p2);
-  // assertThat(priorityDao.findOne(1).getId()).isEqualTo(1);
-  // }
-
 
   @Test
-  public void simpleTest2() {
+  public void itShouldCreateFindOneUpdateGetAllDelete() {
     Status st1 = new Status();
-    st1.setId(1);
-    st1.setName("atata");
+    st1.setName("InProgrss");
+    Status st2 = new Status();
+    st2.setName("Waiting");
     assertThat(statusDao.create(st1)).isEqualTo(st1);
+    assertThat(statusDao.create(st2)).isEqualTo(st2);
+    assertThat(statusDao.findOne(st1.getId()).getId()).isEqualTo(st1.getId());
+    st2.setId(2);
+    st2.setName("Stopped");
+    assertThat(statusDao.update(st2)).isTrue();
+    assertThat(statusDao.getAll()).isNotEmpty();
+    assertThat(statusDao.delete(5)).isTrue();
+
   }
 }

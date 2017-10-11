@@ -21,8 +21,6 @@ import utility.Populator;
 public class TagDaoTest {
 
   @Autowired
-  public TagDao dao;
-  @Autowired
   public TagService tagService;
   @Autowired
   public Populator<User> populator;
@@ -35,10 +33,8 @@ public class TagDaoTest {
 
   }
 
-
-
   @Test
-  public void CRUDPositiveTest() {
+  public void shouldCreateFindOneAndAllUpdateAndDelete() {
     tagService.create(new Tag(1, "#Cat", 1));
     tagService.create(new Tag(2, "#bicycle", 1));
     tagService.create(new Tag(3, "#Books", 1));
@@ -53,12 +49,10 @@ public class TagDaoTest {
     assertThat(tagService.getAllByUserId(3)).hasSize(3);
     assertThat(tagService.update(new Tag(1, "#Cat2", 2))).isTrue();
     assertThat(tagService.deleleAllByUserId(1)).isTrue();
-    dao.getAll().forEach((obj) -> System.out.print(obj));
-    System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
   }
 
   @Test
-  public void CRUDNegativeTest() {
+  public void shouldNOTCreateFindOneAndAllUpdateAndDelete() {
     assertThat(tagService.getAllByUserId(9999)).isEmpty();
     assertThat(tagService.deleleAllByUserId(9999)).isFalse();
     assertThat(tagService.update(new Tag(2, "atata", 9999))).isFalse();

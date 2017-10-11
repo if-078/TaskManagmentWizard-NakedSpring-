@@ -1,16 +1,15 @@
 package com.softserve.academy.service.implementation;
 
-import com.softserve.academy.dao.implementation.TaskDao;
 import com.softserve.academy.dao.interfaces.TaskDaoInterface;
 import com.softserve.academy.entity.Comment;
 import com.softserve.academy.entity.Tag;
 import com.softserve.academy.entity.Task;
 import com.softserve.academy.service.interfaces.TaskServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
-import java.lang.annotation.Annotation;
-import java.sql.SQLException;
+import org.springframework.dao.DataAccessException;
+import org.springframework.dao.EmptyResultDataAccessException;
+
 import java.util.List;
-import com.softserve.academy.service.interfaces.EntityServiceInterface;
 
 @org.springframework.stereotype.Service
 public class TaskService implements TaskServiceInterface {
@@ -25,7 +24,11 @@ public class TaskService implements TaskServiceInterface {
 
   @Override
   public Task findOne(int id) {
-    return taskDao.findOne(id);
+    try {
+      return taskDao.findOne(id);
+    } catch (EmptyResultDataAccessException e) {
+      return new Task();
+    }
   }
 
   @Override
@@ -40,7 +43,11 @@ public class TaskService implements TaskServiceInterface {
 
   @Override
   public Task create(Task task) {
-    return taskDao.create(task);
+    try {
+      return taskDao.create(task);
+    } catch (DataAccessException e) {
+      return new Task();
+    }
   }
 
   @Override

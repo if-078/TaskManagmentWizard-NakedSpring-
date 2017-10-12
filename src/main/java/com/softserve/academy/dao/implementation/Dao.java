@@ -22,10 +22,6 @@ public abstract class Dao<E> implements EntityDaoInterface<E> {
 
   }
 
-  public Dao() {
-
-  }
-
   @Autowired
   private void setJdbcTemplate(DataSource dataSource) {
     this.jdbcTemplate = new NamedParameterJdbcTemplate(dataSource);

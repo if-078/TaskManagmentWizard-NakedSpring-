@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 
 import com.softserve.academy.entity.User;
 import com.softserve.academy.service.interfaces.UserServiceInterface;
@@ -31,9 +32,9 @@ public class UserController {
 		return userService.getAll();
 	}
 
-	@PostMapping("/add/")
+	@PostMapping("/add")
 	@ResponseStatus(HttpStatus.CREATED)
-	User createUser(@RequestBody User user)throws SQLException {
+	User createUser(@Validated @RequestBody User user)throws SQLException {
 		return userService.create(user);
 	}
 
@@ -51,7 +52,7 @@ public class UserController {
 
 	@PutMapping("/update")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	boolean updateUser(@RequestBody User user)throws SQLException {
+	boolean updateUser(@Validated @RequestBody User user)throws SQLException {
 		return userService.update(user);
 	}
 

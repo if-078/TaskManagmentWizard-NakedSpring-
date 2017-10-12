@@ -1,6 +1,13 @@
 package com.softserve.academy.entity;
 
+import javax.validation.constraints.Pattern;
+
+import org.hibernate.validator.constraints.NotBlank;
+
+import com.softserve.academy.validator.UniqUserEmail;
+
 import java.util.Objects;
+
 
 public class User {
 
@@ -26,6 +33,7 @@ public class User {
   }
 
 
+  @NotBlank
   public String getName() {
     return name;
   }
@@ -35,6 +43,7 @@ public class User {
   }
 
 
+  @NotBlank
   public String getPass() {
     return pass;
   }
@@ -44,6 +53,9 @@ public class User {
   }
 
 
+  @NotBlank
+  @Pattern(regexp = "^(.+)@(.+)$")
+  @UniqUserEmail
   public String getEmail() {
     return email;
   }

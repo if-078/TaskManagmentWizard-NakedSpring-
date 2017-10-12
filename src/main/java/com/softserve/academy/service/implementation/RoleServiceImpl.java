@@ -1,17 +1,18 @@
 package com.softserve.academy.service.implementation;
 
-import com.softserve.academy.dao.implementation.RoleDao;
+import com.softserve.academy.service.interfaces.RoleServiceInterface;
+import com.softserve.academy.dao.interfaces.RoleDaoInterface;
 import com.softserve.academy.entity.Role;
-import com.softserve.academy.service.interfaces.Service;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import java.util.List;
 
-@org.springframework.stereotype.Service
-public class RoleService implements Service<Role> {
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.stereotype.Service;
 
+@Service
+public class RoleServiceImpl implements RoleServiceInterface {
   @Autowired
-  RoleDao dao;
+  RoleDaoInterface dao;
 
   @Override
   public List<Role> getAll() {
@@ -20,7 +21,12 @@ public class RoleService implements Service<Role> {
 
   @Override
   public Role findOne(int id) {
-    return dao.findOne(id);
+    try {
+      return dao.findOne(id);
+    } catch (EmptyResultDataAccessException e) {
+      e.printStackTrace();
+      return new Role();
+    }
   }
 
   @Override

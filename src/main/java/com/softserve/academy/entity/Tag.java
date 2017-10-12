@@ -1,10 +1,5 @@
-
 package com.softserve.academy.entity;
 
-/**
- *
- * @author Oleg
- */
 public class Tag {
 
   private int id;

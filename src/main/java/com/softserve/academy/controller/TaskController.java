@@ -3,8 +3,7 @@ package com.softserve.academy.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.softserve.academy.entity.Task;
-import com.softserve.academy.service.implementation.TaskService;
-import com.softserve.academy.service.interfaces.Service;
+import com.softserve.academy.service.interfaces.TaskServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,38 +15,36 @@ import java.util.List;
 @RequestMapping("tasks")
 public class TaskController {
 
-
-  Service<Task> service;
   ObjectMapper objectMapper;
+  TaskServiceInterface taskService;
 
   @Autowired
-  public TaskController(Service<Task> service, ObjectMapper objectMapper) {
-    this.service = service;
+  public TaskController(ObjectMapper objectMapper, TaskServiceInterface taskService) {
     this.objectMapper = objectMapper;
+    this.taskService = taskService;
   }
-
 
   @PostMapping
   public Task createTask(@RequestBody Task task) throws SQLException {
-    return  service.create(task);
+    return  taskService.create(task);
   }
 
   @PutMapping("/update")
   boolean updateTask(@RequestBody String json) throws SQLException, IOException {
     Task taskObj = objectMapper.readValue(json, Task.class);
-    return service.update(taskObj);
+    return taskService.update(taskObj);
   }
 
   @DeleteMapping("/delete")
   boolean deleteTask(@RequestBody String json) throws SQLException, IOException {
     Task task = new Task();
     task = objectMapper.readValue(json, Task.class);
-    return service.delete(task.getId());
+    return taskService.delete(task.getId());
   }
 
   @GetMapping("/")
   String getAllTasks() throws SQLException, JsonProcessingException {
-    List list = service.getAll();
+    List list = taskService.getAll();
     String json = objectMapper.writeValueAsString(list);
     return json;
   }
@@ -55,7 +52,35 @@ public class TaskController {
   @GetMapping("/one")
   Task getTask(@RequestBody String json) throws SQLException, IOException {
     int id = objectMapper.readValue(json, Integer.class);
-    return service.findOne(id);
+    return taskService.findOne(id);
+  }
+
+  @GetMapping("/today")
+  String getTasksForToday() throws SQLException, JsonProcessingException {
+    List list = taskService.getTasksForToday();
+    String json = objectMapper.writeValueAsString(list);
+    return json;
+  }
+
+  @GetMapping("/{id}/tags")
+  String getTagsOfTask(@PathVariable Integer id) throws SQLException, JsonProcessingException {
+    List list = taskService.getTagsOfTask(id);
+    String json = objectMapper.writeValueAsString(list);
+    return json;
+  }
+
+  @GetMapping("/{id}/comments")
+  String getCommentsOfTask(@PathVariable Integer id) throws SQLException, JsonProcessingException {
+    List list = taskService.getCommentsOfTask(id);
+    String json = objectMapper.writeValueAsString(list);
+    return json;
+  }
+
+  @GetMapping("/{id}/subtasks")
+  String getSubtasks(@PathVariable Integer id) throws SQLException, JsonProcessingException {
+    List list = taskService.getSubtasks(id);
+    String json = objectMapper.writeValueAsString(list);
+    return json;
   }
 
 
@@ -70,25 +95,14 @@ public class TaskController {
    * @GetMapping("/status/{id}") List<Task> tasksByStatus(@PathVariable int id) { return
    * taskService.getTaskByStatus(id); }
    * 
-   * @GetMapping("/today") List<Task> tasksForToday() { return taskService.getTasksForToday(); }
-   * 
    * @GetMapping("/assign_to/{id}") List<Task> assignTo(@PathVariable int id) { return
    * taskService.getTasksAssignToUser(id); }
    * 
    * @GetMapping("/created_by/{id}") List<Task> createdBy(@PathVariable int id) { return
    * taskService.getTasksCreatedByUser(id); }
    * 
-   * @GetMapping("/tree_of/{id}") List<Task> treeOfTasks(@PathVariable int id) { return
-   * taskService.treeOfTasks(id); }
-   * 
    * @GetMapping("/author_of_task/{id}") User authorOfTssk(@PathVariable int id) { return
    * taskService.getAuthorOfTask(id); }
-   * 
-   * @GetMapping("/tags_of/{id}") List<Tag> tagsOfTask(@PathVariable int id) { return
-   * taskService.getTagsOfTask(id); }
-   * 
-   * @GetMapping("/comments_of/{id}") List<Comment> commentsOfTask(@PathVariable int id) { return
-   * taskService.getCommentsOfTask(id); }
    */
 
 }

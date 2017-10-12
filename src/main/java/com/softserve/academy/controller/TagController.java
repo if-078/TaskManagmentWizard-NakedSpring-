@@ -16,18 +16,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("tags")
+@RequestMapping("users/{uid}/tags")
 public class TagController {
 
   @Autowired
   private TagService tagService;
 
-  @GetMapping("/all/{id}")
-  List<Tag> getTagsByUserId(@PathVariable Integer Id) throws SQLException {
-    return tagService.getAllByUserId(Id);
+  @GetMapping("/all")
+  List<Tag> getTagsByUserId(@PathVariable Integer uid) throws SQLException {
+    return tagService.getAllByUserId(uid);
   }
 
-  @PostMapping("/")
+  @PostMapping()
   public Tag createTag(@RequestBody Tag tag) throws SQLException {
     return tagService.create(tag);
   }
@@ -37,18 +37,18 @@ public class TagController {
     return tagService.findOne(id);
   }
 
-  @PutMapping("/")
+  @PutMapping()
   public boolean updateTag(@RequestBody Tag tag) {
     return tagService.update(tag);
   }
 
-  @DeleteMapping("/{tId}")
-  public boolean deleteTag(@PathVariable Integer tId) {
-    return tagService.delete(tId);
+  @DeleteMapping("/{tid}")
+  public boolean deleteTag(@PathVariable Integer tid) {
+    return tagService.delete(tid);
   }
 
-  @DeleteMapping("/")
-  public boolean deleteAllUserTags(@PathVariable Integer tId) {
-    return tagService.deleleAllByUserId(tId);
+  @DeleteMapping("/all")
+  public boolean deleteAllUserTags(@PathVariable Integer uid) {
+    return tagService.deleleAllByUserId(uid);
   }
 }

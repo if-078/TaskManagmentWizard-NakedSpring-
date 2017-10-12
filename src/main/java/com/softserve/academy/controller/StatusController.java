@@ -3,23 +3,23 @@ package com.softserve.academy.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.softserve.academy.entity.Status;
-import com.softserve.academy.service.interfaces.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
+import com.softserve.academy.service.interfaces.EntityServiceInterface;
 
 @RestController
 @RequestMapping("status")
 public class StatusController {
 
-  Service<Status> service;
+  EntityServiceInterface<Status> service;
 
   ObjectMapper objectMapper;
 
   @Autowired
-  public StatusController(Service<Status> service, ObjectMapper objectMapper) {
+  public StatusController(EntityServiceInterface<Status> service, ObjectMapper objectMapper) {
     this.service = service;
     this.objectMapper = objectMapper;
   }

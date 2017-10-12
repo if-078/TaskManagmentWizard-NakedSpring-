@@ -1,8 +1,6 @@
 package com.softserve.academy.dao.implementation;
 
 import com.softserve.academy.entity.Comment;
-import com.softserve.academy.entity.User;
-import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
@@ -14,9 +12,9 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @PropertySource("classpath:tables.properties")
-public class CommentDaoImpl extends Dao<Comment>{
+public class CommentDao extends Dao<Comment>{
 
-    public CommentDaoImpl() {
+    public CommentDao() {
     }
 
     @Override
@@ -28,7 +26,7 @@ public class CommentDaoImpl extends Dao<Comment>{
         param.addValue("created_date", entity.getCreatedDate());
         param.addValue("task_id", entity.getTaskId());
         param.addValue("user_id", entity.getUserId());
-        operations.update(sql, param, keyHolder);
+        jdbcTemplate.update(sql, param, keyHolder);
         entity.setId(keyHolder.getKey().intValue());
 
         return entity;
@@ -42,7 +40,7 @@ public class CommentDaoImpl extends Dao<Comment>{
         param.addValue("comment", entity.getCommentText());
         param.addValue("id", entity.getId());
 
-        return operations.update(sql, param) == 1;
+        return jdbcTemplate.update(sql, param) == 1;
 
     }
 

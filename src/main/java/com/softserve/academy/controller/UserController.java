@@ -16,43 +16,47 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.http.HttpStatus;
 
 import com.softserve.academy.entity.User;
-import com.softserve.academy.service.interfaces.UserService;
+import com.softserve.academy.service.interfaces.UserServiceInterface;
 
 @RestController
 @RequestMapping("users")
 public class UserController {
   
   @Autowired
-  UserService userService;
+  UserServiceInterface userService;
   
-	@GetMapping("/")
+	@GetMapping("/all")
+	@ResponseStatus(HttpStatus.OK)
 	List<User> getAllUsers() throws SQLException {
 		return userService.getAll();
 	}
 
-	@PostMapping("/")
-	@ResponseStatus(HttpStatus.OK)
+	@PostMapping("/add/")
+	@ResponseStatus(HttpStatus.CREATED)
 	User createUser(@RequestBody User user)throws SQLException {
 		return userService.create(user);
 	}
 
-	@GetMapping("/{id}")
+	@GetMapping("/id/{id}")
+	@ResponseStatus(HttpStatus.OK)
 	User getUser(@PathVariable Integer id)throws SQLException {
 		return userService.findOne(id);
 	}
 	
 	@GetMapping("/email/{email}")
+	@ResponseStatus(HttpStatus.OK)
 	User getUser(@PathVariable String email)throws SQLException {
 		return userService.findByEmail(email);
 	}
 
-	@PutMapping("/")
-	@ResponseStatus(HttpStatus.OK)
+	@PutMapping("/update")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
 	boolean updateUser(@RequestBody User user)throws SQLException {
 		return userService.update(user);
 	}
 
-	@DeleteMapping("/{id}")
+	@DeleteMapping("/del/{id}")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
 	boolean deleteUser(@PathVariable Integer id) throws SQLException {
 		return userService.delete(id);
 	}

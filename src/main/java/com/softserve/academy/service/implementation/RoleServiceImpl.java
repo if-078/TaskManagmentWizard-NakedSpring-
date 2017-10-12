@@ -6,6 +6,7 @@ import com.softserve.academy.entity.Role;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -20,7 +21,12 @@ public class RoleServiceImpl implements RoleServiceInterface {
 
   @Override
   public Role findOne(int id) {
-    return dao.findOne(id);
+    try {
+      return dao.findOne(id);
+    } catch (EmptyResultDataAccessException e) {
+      e.printStackTrace();
+      return new Role();
+    }
   }
 
   @Override

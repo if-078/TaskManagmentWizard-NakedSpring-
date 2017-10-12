@@ -1,8 +1,6 @@
 package dao;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
-import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.ArrayList;
@@ -10,7 +8,7 @@ import java.util.List;
 import com.softserve.academy.entity.Comment;
 import com.softserve.academy.entity.Task;
 import com.softserve.academy.entity.User;
-import com.softserve.academy.service.implementation.CommentServiceImpl;
+import com.softserve.academy.service.interfaces.CommentServiceInterface;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +22,7 @@ import utility.Populator;
 public class CommentDaoTest {
 
   @Autowired
-  public CommentServiceImpl commentService;
+  public CommentServiceInterface commentService;
   @Autowired
   public Populator<User> populatorUser;
   @Autowired
@@ -35,14 +33,6 @@ public class CommentDaoTest {
     populatorUser.createDefaultEntity();
     populatorTask.createDefaultEntity();
 
-  }
-
-
-  @Test
-  public void iTShoudExecuteNegativeTest() throws SQLException {
-    int testId = 50;
-    assertThat(commentService.getAll().isEmpty());
-    assertThat(commentService.delete(testId)).isFalse();
   }
 
   @Test
@@ -87,7 +77,6 @@ public class CommentDaoTest {
   }
 
   @Test
-
   public void iTShouldCreateAndReadAllAndDeleteComment() throws Exception {
   // Given
   Comment comment;
@@ -128,6 +117,5 @@ public class CommentDaoTest {
   assertEquals(0, commentsActual.size());
 
   }
-
 
 }

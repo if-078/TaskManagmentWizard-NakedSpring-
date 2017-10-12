@@ -33,7 +33,7 @@ public class RoleDaoTest {
   }
 
   @Test
-  public void testCreateAndUpdateAndFind() throws Exception {
+  public void ShouldCreateAndUpdateAndFind() throws Exception {
     Role role = roleService.create(rolePopulator.initOneEntity("asdf"));
     assertEquals("asdf", roleService.findOne(role.getId()).getName());
     role.setName("fdsa");
@@ -41,8 +41,8 @@ public class RoleDaoTest {
     assertEquals("fdsa", roleService.findOne(role.getId()).getName());
   }
 
-  @Test(expected = EmptyResultDataAccessException.class)
-  public void testCreateAndFindAndDeleteAndFindEmpty() throws Exception {
+  @Test
+  public void ShouldCreateAndFindAndDeleteAndFindEmpty() throws Exception {
     Role role = roleService.create(rolePopulator.initOneEntity("asdf"));
     assertNotNull(roleService.findOne(role.getId()));
     roleService.delete(role.getId());
@@ -50,7 +50,7 @@ public class RoleDaoTest {
   }
 
   @Test
-  public void testCreateAndGetAllAndDeleteAll() throws Exception {
+  public void ShouldCreateAndGetAllAndDeleteAll() throws Exception {
     List<Role> list = roleService.addBatch(rolePopulator.initOneEntity("zxcv1"),
         rolePopulator.initOneEntity("zxcv2"), rolePopulator.initOneEntity("zxcv3"));
     assertEquals(3, list.size());

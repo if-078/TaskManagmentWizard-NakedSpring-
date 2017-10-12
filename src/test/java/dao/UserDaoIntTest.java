@@ -22,7 +22,7 @@ public class UserDaoIntTest {
   private UserPopulator populator;
 
   @Test
-  public void iTshouldInsertAndGetOneAndDelete() throws SQLException {
+  public void shouldInsertAndGetOneAndDelete() throws SQLException {
     // Given
     User userNew = new User();
     userNew.setName("if-078");
@@ -38,7 +38,7 @@ public class UserDaoIntTest {
   }
 
   @Test
-  public void iTshouldInsertAndGetByEmailAndGetAll() throws SQLException {
+  public void shouldInsertAndGetByEmailAndGetAll() throws SQLException {
     // Given
     User userByEmail;
     User userNew = populator.createCustomUser("Academy", "soft@serve.com");

@@ -1,7 +1,7 @@
 #
 # Project specific excludes
 #
-
+META-INF
 tomcat
 
 #

@@ -21,6 +21,14 @@
  INSERT INTO `tmw`.`task` (`name`, `created_date`, `start_date`, `end_date`, `estimate_time`, `assign_to`, `status_id`, `priority_id`, `parent_id`) VALUES ('add smth 6', '2017-09-17', '2017-09-22 00:00:00', '2017-09-26 00:00:00', '02:00:00', '1', '3', '1', '0');
  INSERT INTO `tmw`.`task` (`name`, `created_date`, `start_date`, `end_date`, `estimate_time`, `assign_to`, `status_id`, `priority_id`, `parent_id`) VALUES ('add smth 7', '2017-09-23', '2017-09-25 00:00:00', '2017-09-27 00:00:00', '04:00:00', '1', '1', '2', '0');
  INSERT INTO `tmw`.`task` (`name`, `created_date`, `start_date`, `end_date`, `estimate_time`, `assign_to`, `status_id`, `priority_id`, `parent_id`) VALUES ('add smth 8', '2017-09-18', '2017-09-21 00:00:00', '2017-09-22 00:00:00', '05:00:00', '1', '2', '2', '0');
+ INSERT INTO `tmw`.`task` (`name`, `created_date`, `start_date`, `end_date`, `estimate_time`, `assign_to`, `status_id`, `priority_id`, `parent_id`) VALUES ('today1', '2017-09-18 00:00:00', '2017-10-12 00:00:00', '2017-10-12 00:00:00', '02:00:00', '1', '1', '3', '0');
+ INSERT INTO `tmw`.`task` (`name`, `created_date`, `start_date`, `end_date`, `estimate_time`, `assign_to`, `status_id`, `priority_id`, `parent_id`) VALUES ('today2', '2017-09-18 00:00:00', '2017-10-13 00:00:00', '2017-10-12 00:00:00', '02:00:00', '1', '2', '2', '0');
+ INSERT INTO `tmw`.`task` (`name`, `created_date`, `start_date`, `end_date`, `estimate_time`, `assign_to`, `status_id`, `priority_id`, `parent_id`) VALUES ('task1', '2017-09-18 00:00:00', '2017-10-09 00:00:00', '2017-10-12 00:00:00', '02:00:00', '1', '3', '1', '0');
+ INSERT INTO `tmw`.`task` (`name`, `created_date`, `start_date`, `end_date`, `estimate_time`, `assign_to`, `status_id`, `priority_id`, `parent_id`) VALUES ('task2', '2017-09-18 00:00:00', '2017-10-10 00:00:00', '2017-10-12 00:00:00', '02:00:00', '1', '1', '3', '0');
+ INSERT INTO `tmw`.`task` (`name`, `created_date`, `start_date`, `end_date`, `estimate_time`, `assign_to`, `status_id`, `priority_id`, `parent_id`) VALUES ('task3', '2017-09-18 00:00:00', '2017-10-11 00:00:00', '2017-10-12 00:00:00', '02:00:00', '1', '2', '2', '0');
+ INSERT INTO `tmw`.`task` (`name`, `created_date`, `start_date`, `end_date`, `estimate_time`, `assign_to`, `status_id`, `priority_id`, `parent_id`) VALUES ('task4', '2017-09-18 00:00:00', '2017-10-12 00:00:00', '2017-10-12 00:00:00', '02:00:00', '1', '3', '1', '0');
+ INSERT INTO `tmw`.`task` (`name`, `created_date`, `start_date`, `end_date`, `estimate_time`, `assign_to`, `status_id`, `priority_id`, `parent_id`) VALUES ('task5', '2017-10-12 00:00:00', '2017-10-16 00:00:00', '2017-10-12 00:00:00', '02:00:00', '1', '1', '1', '0');
+
 
 
  INSERT INTO `tmw`.`tag` (`name`, `user_id`) VALUES ('tag1', '1');

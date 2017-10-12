@@ -14,8 +14,20 @@
         })
         $("#sprint-btn").click(function () {
             clearContent();
+            $(".task").remove();
+            getSprintTasks();
             $("#sprint-container").show();
         })
+        $("#showForm").click(function (event) {
+            showForm();  
+            event.preventDefault(); 
+            $("#showForm").submit(function(event){
+            hideForm();
+            event.preventDefault(); 
+        });
+                 
+        });
+
     });
 
     function getTasks() {
@@ -66,4 +78,39 @@
             $("#today-container").append("<div id='" + id + "' class='task'></div>");
             $(searchId).html("<p class='name'>" + name + "</p><p class='priority'>" + priority + "</p><p class='createdday'>" + createdDate + "</p><div class='task-nav'><button class='tag-btn'>tag</button><button class='priority-btn'>priority</button> <button class='status-btn'>status</button></div>");
         }
+    }
+
+    function getSprintTasks() {
+        $.ajax({
+            url: "tasks/sprint",
+            type: "GET",
+            success: function (data) {
+                var list = JSON.parse(data);
+                renderSprintTasks(list);
+            }
+        });
+    }
+    function renderSprintTasks(list) {
+
+        for (var task = 0; task < list.length; task++) {
+            var id = "task" + list[task].id;
+            var searchId = "#" + id;
+            var name = list[task].name;
+            var priority = list[task].priority;
+            var createdDate = list[task].created_date;
+            $("#sprint-container").append("<div id='" + id + "' class='task'></div>");
+            $(searchId).html("<p class='name'>" + name + "</p><p class='priority'>" + priority + "</p><p class='createdday'>" + createdDate + "</p><div class='task-nav'><button class='tag-btn'>tag</button><button class='priority-btn'>priority</button> <button class='status-btn'>status</button></div>");
+        }
+    }
+    function showForm() {
+        $("#taskForm").show(500, function () {
+            $("#showForm").hide();
+        });
+    }
+
+    function hideForm() {
+        $("#showForm").show(500, function () {
+            $("#taskForm").fadeOut();
+        });
+
     }

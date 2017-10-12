@@ -17,7 +17,7 @@ public class StatusDaoTest {
   public StatusDao statusDao;
 
   @Test
-  public void itShouldCreateFindOneUpdateGetAllDelete() {
+  public void shouldCreateFindOneUpdateGetAllDelete() {
     Status st1 = new Status();
     st1.setName("InProgrss");
     Status st2 = new Status();

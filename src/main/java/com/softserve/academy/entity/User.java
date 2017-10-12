@@ -1,7 +1,8 @@
 package com.softserve.academy.entity;
 
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
+
+import org.hibernate.validator.constraints.NotBlank;
 
 import com.softserve.academy.validator.UniqUserEmail;
 

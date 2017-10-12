@@ -8,6 +8,8 @@ import com.softserve.academy.service.interfaces.TaskServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 import org.springframework.stereotype.Service;
+import org.springframework.dao.DataAccessException;
+import org.springframework.dao.EmptyResultDataAccessException;
 
 @Service
 public class TaskService implements TaskServiceInterface {
@@ -22,7 +24,11 @@ public class TaskService implements TaskServiceInterface {
 
   @Override
   public Task findOne(int id) {
-    return taskDao.findOne(id);
+    try {
+      return taskDao.findOne(id);
+    } catch (EmptyResultDataAccessException e) {
+      return new Task();
+    }
   }
 
   @Override
@@ -37,12 +43,21 @@ public class TaskService implements TaskServiceInterface {
 
   @Override
   public Task create(Task task) {
-    return taskDao.create(task);
+    try {
+      return taskDao.create(task);
+    } catch (DataAccessException e) {
+      return new Task();
+    }
   }
 
   @Override
   public List<Task> getTasksForToday() {
     return taskDao.getTasksForToday();
+  }
+
+  @Override
+  public List<Task> getSprint() {
+    return taskDao.getSprint();
   }
 
   @Override

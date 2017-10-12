@@ -13,23 +13,21 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link href="static/css/mystyle.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="../../static/css/mystyle.css" type="text/css"/>
-
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="static/js/script.js"></script>
 </head>
 
 <body>
 <div class="main-container">
     <header>
+
         <div id="header-logo-container"><a href="/"><img id="logo" src="static/imgs/logo.png" height="50"
-                                                         width="50"></a>
-            <p>Task Managment Wizard</p></div>
+                                                         width="50"></a><p>Task Managment Wizard</p></div>
         <div id="search-container"><input type="search" >
             <button type="button" class="btn">Go!</button>
         </div>
+
         <div id="auth-container"><a href="#">Sign Up</a>|<a>Sign In</a></div>
     </header>
     <div class="data-container">
@@ -44,12 +42,15 @@
         <article class="content-container">
             <div id="welcome-container" class="content"><h1>Welcome!</h1></div>
             <div id="task-container" class="content">
-                <div id="task-container-nav"><button>add new task</button>
-                <form>
-                    <input/>
+                <button id="showForm">Add Task</button>
+                <form id="taskForm" style="display:none">
+                <p>Insert TaskName Name:</p>
+                <input id="statusName" type="text">
+                </br>
+                <input type="submit" value="Add">
+                </form></br>
+            </div>
 
-                </form>
-                </div>
             <div id="today-container" class="content">
                 <h2>Tasks For Today</h2>
             </div>

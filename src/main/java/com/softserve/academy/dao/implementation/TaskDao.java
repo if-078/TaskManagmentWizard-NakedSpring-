@@ -13,7 +13,12 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
+
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -24,14 +29,6 @@ public class TaskDao extends Dao<Task> implements TaskDaoInterface {
   public TaskDao(@Value("${task}") String table) {
     super(table, new TaskMapper());
   }
-
-
-  /*
-   * @Autowired DataSource datasource;
-   * 
-   * @Autowired public TaskDao(@Value("${task}") String taskTable, @Autowired RowMapper<Task>
-   * taskMapper) { super(taskTable, taskMapper); }
-   */
 
   @Override
   public List<Task> getAll() {
@@ -58,10 +55,34 @@ public class TaskDao extends Dao<Task> implements TaskDaoInterface {
   @Override
   public boolean update(Task task) {
     MapSqlParameterSource param = new MapSqlParameterSource();
-    java.sql.Timestamp created = new java.sql.Timestamp(task.getCreated_date().getTime());
-    java.sql.Timestamp start = new java.sql.Timestamp(task.getStart_date().getTime());
-    java.sql.Timestamp end = new java.sql.Timestamp(task.getEnd_date().getTime());
-    java.sql.Time estimate = new java.sql.Time(task.getEstimate_time().getTime());
+    java.sql.Timestamp created, start, end;
+    java.sql.Time estimate;
+    Date date = new Date();
+
+    if (task.getCreatedDate() == null) {
+      created = new java.sql.Timestamp(date.getTime());
+    } else {
+      created = new java.sql.Timestamp(task.getCreatedDate().getTime());
+    }
+
+    if(task.getStartDate() == null) {
+      start = new java.sql.Timestamp(date.getTime());
+    } else {
+      start = new java.sql.Timestamp(task.getStartDate().getTime());
+    }
+
+    if(task.getEndDate() == null) {
+      end = new java.sql.Timestamp(date.getTime());
+    } else {
+      end = new java.sql.Timestamp(task.getEndDate().getTime());
+    }
+
+    if(task.getEstimateTime() == null) {
+      estimate = new java.sql.Time(date.getTime());
+    } else {
+      estimate = new java.sql.Time(task.getEstimateTime().getTime());
+    }
+
     String sql =
         "UPDATE " + table + " SET name=:name, created_date=:created_date, start_date=:start_date, "
             + "end_date=:end_date, estimate_time=:estimate_time, assign_to=:assign_to, status_id=:status_id, "
@@ -72,10 +93,10 @@ public class TaskDao extends Dao<Task> implements TaskDaoInterface {
     param.addValue("start_date", start);
     param.addValue("end_date", end);
     param.addValue("estimate_time", estimate);
-    param.addValue("assign_to", task.getAssign_to());
-    param.addValue("status_id", task.getStatus_id());
-    param.addValue("priority_id", task.getPriority_id());
-    param.addValue("parent_id", task.getParent_id());
+    param.addValue("assign_to", task.getAssignTo());
+    param.addValue("status_id", task.getStatusId());
+    param.addValue("priority_id", task.getPriorityId());
+    param.addValue("parent_id", task.getParentId());
     param.addValue("id", task.getId());
 
     return jdbcTemplate.update(sql, param) == 1;
@@ -92,10 +113,34 @@ public class TaskDao extends Dao<Task> implements TaskDaoInterface {
   public Task create(Task task) {
     MapSqlParameterSource param = new MapSqlParameterSource();
     KeyHolder keyHolder = new GeneratedKeyHolder();
-    java.sql.Timestamp created = new java.sql.Timestamp(task.getCreated_date().getTime());
-    java.sql.Timestamp start = new java.sql.Timestamp(task.getStart_date().getTime());
-    java.sql.Timestamp end = new java.sql.Timestamp(task.getEnd_date().getTime());
-    java.sql.Time estimate = new java.sql.Time(task.getEstimate_time().getTime());
+
+    java.sql.Timestamp created, start, end;
+    java.sql.Time estimate;
+    Date date = new Date();
+
+    if (task.getCreatedDate() == null) {
+      created = new java.sql.Timestamp(date.getTime());
+    } else {
+      created = new java.sql.Timestamp(task.getCreatedDate().getTime());
+    }
+
+    if(task.getStartDate() == null) {
+      start = new java.sql.Timestamp(date.getTime());
+    } else {
+      start = new java.sql.Timestamp(task.getStartDate().getTime());
+    }
+
+    if(task.getEndDate() == null) {
+      end = new java.sql.Timestamp(date.getTime());
+    } else {
+      end = new java.sql.Timestamp(task.getEndDate().getTime());
+    }
+
+    if(task.getEstimateTime() == null) {
+      estimate = new java.sql.Time(date.getTime());
+    } else {
+      estimate = new java.sql.Time(task.getEstimateTime().getTime());
+    }
 
     String sql = "INSERT INTO " + table
         + " (name, created_date, start_date, end_date, estimate_time, assign_to, status_id, "
@@ -107,13 +152,14 @@ public class TaskDao extends Dao<Task> implements TaskDaoInterface {
     param.addValue("start_date", start);
     param.addValue("end_date", end);
     param.addValue("estimate_time", estimate);
-    param.addValue("assign_to", 1);
-    param.addValue("status_id", 1);
-    param.addValue("priority_id", 1);
-    param.addValue("parent_id", 0);
+    param.addValue("assign_to", task.getAssignTo());
+    param.addValue("status_id", task.getStatusId());
+    param.addValue("priority_id", task.getPriorityId());
+    param.addValue("parent_id", task.getParentId());
+    param.addValue("id", task.getId());
 
     jdbcTemplate.update(sql, param, keyHolder);
-    task.setId((int) keyHolder.getKey());
+    task.setId(keyHolder.getKey().intValue());
 
     return task;
   }
@@ -121,10 +167,23 @@ public class TaskDao extends Dao<Task> implements TaskDaoInterface {
   @Override
   public List<Task> getTasksForToday() {
     LocalDateTime date = LocalDateTime.now();
-    System.out.println(date.toLocalDate());
     String sql = "SELECT id, name, created_date, start_date, end_date, estimate_time, "
         + "assign_to, status_id, priority_id, parent_id FROM task WHERE date(start_date) = '"
         + date.toLocalDate() + "'";
+
+    List<Task> tasks = jdbcTemplate.query(sql, new TaskMapper());
+
+    return tasks;
+  }
+
+  @Override
+  public List<Task> getSprint() {
+    LocalDateTime date = LocalDateTime.now();
+    LocalDate monday = date.with(DayOfWeek.MONDAY).toLocalDate();
+    LocalDate sunday = date.with(DayOfWeek.SUNDAY).toLocalDate();
+    String sql = "SELECT id, name, created_date, start_date, end_date, estimate_time, "
+            + "assign_to, status_id, priority_id, parent_id FROM task WHERE date(start_date) " +
+            "BETWEEN '" + monday + "' AND '" + sunday + "'";
 
     List<Task> tasks = jdbcTemplate.query(sql, new TaskMapper());
 
@@ -162,10 +221,20 @@ public class TaskDao extends Dao<Task> implements TaskDaoInterface {
     return tasks;
   }
 
+  @Override
+  public List<Task> getPageOfTasks(int page, int amount) {
+    String sql = "SELECT id, name, created_date, start_date, end_date, estimate_time, "
+            + "assign_to, status_id, priority_id, parent_id FROM task LIMIT " + (page-1) + ", " + amount;
+    List<Task> tasks = jdbcTemplate.query(sql, new TaskMapper());
+
+    return tasks;
+  }
 
 
-  /*
-   * /@Override public ArrayList<Task> getTaskByStatus(int statusId) { String query =
+
+
+
+  /* * /@Override public ArrayList<Task> getTaskByStatus(int statusId) { String query =
    * "SELECT task_id, name, created_date, start_date, end_date, estimate_time, " +
    * "assign_to, status_id, priority_id, parent_id " + "FROM task WHERE status_id=" + statusId;
    *
@@ -214,5 +283,6 @@ public class TaskDao extends Dao<Task> implements TaskDaoInterface {
    *
    * return user; }
    */
+
 
 }

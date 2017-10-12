@@ -25,7 +25,7 @@ public class CommentPopulator implements Populator<Comment>{
         Comment comment = new Comment();
         comment.setCommentText("Default comment text.txt");
         Task task = taskPopulator.createDefaultEntity();
-        comment.setUserId(task.getAssign_to());
+        comment.setUserId(task.getAssignTo());
         comment.setTaskId(task.getId());
         return dao.create(comment);
     }

@@ -62,6 +62,13 @@ public class TaskController {
     return json;
   }
 
+  @GetMapping("/sprint")
+  String getSprint() throws SQLException, JsonProcessingException {
+    List list = taskService.getSprint();
+    String json = objectMapper.writeValueAsString(list);
+    return json;
+  }
+
   @GetMapping("/{id}/tags")
   String getTagsOfTask(@PathVariable Integer id) throws SQLException, JsonProcessingException {
     List list = taskService.getTagsOfTask(id);

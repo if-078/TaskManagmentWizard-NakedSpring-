@@ -27,6 +27,19 @@ public class TaskController {
     this.taskService = taskService;
   }
 
+  @GetMapping//("/")
+  String getAllTasks() throws SQLException, JsonProcessingException {
+    List list = taskService.getAll();
+    String json = objectMapper.writeValueAsString(list);
+    System.out.println("---------------");
+    return json;
+  }
+  
+ /* @GetMapping//("/")
+  List<Task> getAllTasks() throws SQLException, JsonProcessingException {
+	  return taskService.getAll();
+  }
+  */
   @PostMapping
   public Task createTask(@RequestBody Task task) throws SQLException {
     return  taskService.create(task);
@@ -43,13 +56,6 @@ public class TaskController {
     Task task = new Task();
     task = objectMapper.readValue(json, Task.class);
     return taskService.delete(task.getId());
-  }
-
-  @GetMapping//("/")
-  String getAllTasks() throws SQLException, JsonProcessingException {
-    List list = taskService.getAll();
-    String json = objectMapper.writeValueAsString(list);
-    return json;
   }
 
   @GetMapping("/one")

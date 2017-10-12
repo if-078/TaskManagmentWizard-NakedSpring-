@@ -8,17 +8,36 @@
     <meta name="author" content="RO">
     <link rel="shortcut icon" href="../../assets/ico/favicon.ico">
     <title>Tmw</title>
+    
+    <!-- Bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    
+     <!-- Bootstrap Data table css-->
+    <link href="static/dist/bootstrap-dataTables/css/dataTables.bootstrap.min.css" rel="stylesheet" type="text/css">
+    
+     <!-- Main CSS -->
     <link href="static/css/mystyle.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="../../static/css/mystyle.css" type="text/css"/>
-
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    
+    
+    <!-- jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="static/js/script.js"></script>
+    
+     <!-- Main script -->
+     <script src="static/js/script.js"></script>
+     
+     <!-- Bootstrap JS -->
+     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+     
+     <!-- Bootstrap Data table js-->
+     <script src=" https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    
+     <!-- <script src="static/dist/bootstrap-dataTables/js/jquery.dataTables.min.js"></script> -->
+    <script src="static/dist/bootstrap-dataTables/js/dataTables.bootstrap.min.js"></script>
+
+<!--     
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script> -->
+        
 </head>
 
 <body>
@@ -43,13 +62,30 @@
 
         <article class="content-container">
             <div id="welcome-container" class="content"><h1>Welcome!</h1></div>
+           
             <div id="task-container" class="content">
                 <div id="task-container-nav"><button>add new task</button>
-                <form>
-                    <input/>
-
-                </form>
+	                <form>
+	                    <input/>
+	
+	                </form>
                 </div>
+                <table id="task-table" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                	<thead>
+			            <tr>
+			                <th>Name</th>
+			                <th>Created date</th>
+			                <th>Start date</th>
+			                <th>End date</th>
+			                <th>Assigned</th>
+			                <th>Status</th>
+ 			                <th>Priority</th>
+			                <th>Parent</th>
+			            </tr>
+			        </thead>
+			        <tbody id="task-table-body"></tbody>
+                </table>
+            </div>    
             <div id="today-container" class="content">
                 <h2>Tasks For Today</h2>
             </div>

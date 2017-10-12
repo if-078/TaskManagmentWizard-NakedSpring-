@@ -9,7 +9,9 @@ public interface TaskServiceInterface extends EntityServiceInterface<Task> {
 
   public List<Task> getTasksForToday();
 
-  public List<Tag> getTagsOfTask(int taskId);
+    List<Task> getSprint();
+
+    public List<Tag> getTagsOfTask(int taskId);
 
   public List<Comment> getCommentsOfTask(int taskId);
 

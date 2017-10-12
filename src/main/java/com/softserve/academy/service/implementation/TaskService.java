@@ -56,6 +56,11 @@ public class TaskService implements TaskServiceInterface {
   }
 
   @Override
+  public List<Task> getSprint() {
+    return taskDao.getSprint();
+  }
+
+  @Override
   public List<Tag> getTagsOfTask(int taskId) {
     return taskDao.getTagsOfTask(taskId);
   }

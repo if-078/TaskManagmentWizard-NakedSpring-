@@ -1,7 +1,6 @@
 package dao;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
 import java.sql.SQLException;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,12 +39,13 @@ public class UserDaoIntTest {
   @Test
   public void shouldInsertAndGetByEmailAndGetAll() throws SQLException {
     // Given
+	int countUser = 1;
     User userByEmail;
     User userNew = populator.createCustomUser("Academy", "soft@serve.com");
     // When
     userByEmail = userDao.findByEmail(userNew.getEmail());
     // Then
     assertThat(userNew.getEmail()).isEqualTo(userByEmail.getEmail());
-    assertEquals(true, userDao.getAll().size() >= 1);
+    assertThat(userDao.getAll().size() >= countUser);
   }
 }

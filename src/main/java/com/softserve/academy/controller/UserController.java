@@ -52,7 +52,7 @@ public class UserController {
 
 	@PutMapping("/update")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	boolean updateUser(@RequestBody User user)throws SQLException {
+	boolean updateUser(@Validated @RequestBody User user)throws SQLException {
 		return userService.update(user);
 	}
 

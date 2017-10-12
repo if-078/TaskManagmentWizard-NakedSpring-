@@ -18,4 +18,6 @@ public interface TaskDaoInterface extends EntityDaoInterface<Task>{
 
     public List<Task> getPageOfTasks(int page, int amount);
 
+    public List<Task> getSprint();
+
 }

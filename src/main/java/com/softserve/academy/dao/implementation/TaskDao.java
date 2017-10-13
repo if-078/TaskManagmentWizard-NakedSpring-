@@ -83,6 +83,16 @@ public class TaskDao extends Dao<Task> implements TaskDaoInterface {
       estimate = new java.sql.Time(task.getEstimateTime().getTime());
     }
 
+    if(task.getAssignTo() == 0) {
+      task.setAssignTo(1);
+    }
+    if(task.getStatusId() == 0) {
+      task.setStatusId(1);
+    }
+    if(task.getPriorityId() == 0) {
+      task.setPriorityId(1);
+    }
+
     String sql =
         "UPDATE " + table + " SET name=:name, created_date=:created_date, start_date=:start_date, "
             + "end_date=:end_date, estimate_time=:estimate_time, assign_to=:assign_to, status_id=:status_id, "

@@ -29,10 +29,15 @@ public class TaskController {
     return  taskService.create(task);
   }
 
-  @PutMapping("/update")
+  /*@PutMapping("/update")
   boolean updateTask(@RequestBody String json) throws SQLException, IOException {
     Task taskObj = objectMapper.readValue(json, Task.class);
     return taskService.update(taskObj);
+  }*/
+
+  @PutMapping("/update")
+  boolean updateTask(@RequestBody Task task) throws SQLException {
+    return taskService.update(task);
   }
 
   @DeleteMapping("/delete")

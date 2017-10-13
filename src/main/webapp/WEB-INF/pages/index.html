@@ -17,6 +17,9 @@
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <script src="static/js/script.js"></script>
 
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+      <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
 </head>
 
 <body>
@@ -49,11 +52,11 @@
                 <form id="addTaskForm" style="display:none">
 
                     <div>Name: </div>
-                    <input id="name" type="text" border-radius: 10px>
+                    <input id="name" type="text" />
                     <div>Start</div>
-                    <input id="startDate" type="text" border-radius: 10px>
+                    <input id="startDate" type="text" type="datetime" class="data"/>
                     <div>End</div>
-                    <input id="endDate" type="text" border-radius: 10px>
+                    <input id="endDate" type="text" type="datetime" class="data"/>
 
                     </br>
                     </br>
@@ -68,6 +71,32 @@
                 <h2>Sprint</h2>
             </div>
 
+            <div id="update-container" class="content">
+
+                <form id="updateTaskForm">
+
+                    <div>Name: </div>
+                    <input id="name" type="text" border-radius: 10px/>
+                    <div>Start</div>
+                    <input id="startDate" type="text" border-radius: 10px/>
+                    <div>End</div>
+                    <input id="endDate" type="text" border-radius: 10px/>
+                    <div>Estimate time: </div>
+                    <input id="estimateTime" type="text" border-radius: 10px/>
+                    <div>Assign to: </div>
+                    <input id="assignTo" type="text" border-radius: 10px/>
+                    <div>Priority</div>
+                    <input id="priority" type="text" border-radius: 10px/>
+                    <div>Status</div>
+                    <input id="status" type="text" border-radius: 10px/>
+                    
+
+                    </br>
+                    </br>
+                    <input id="updateTaskSubmit" type="submit" value="Update task">
+                </form>
+            </div>
+
         </article>
     </div>
 
@@ -76,6 +105,14 @@
     </footer>
 </div>
 
+<script>
+        $(function () {
+            $("#date").datepicker({
+                dateFormat: "yy-mm-dd"
+            });
+        });
+        $("#date").datepicker("option", "dateFormat", "yy-mm-dd");
 
+    </script>
 </body>
 </html>

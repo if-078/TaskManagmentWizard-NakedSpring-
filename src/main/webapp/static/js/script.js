@@ -18,6 +18,18 @@
             getSprintTasks();
             $("#sprint-container").show();
         })
+
+
+
+        /*$(document.getElementById("update")).click(function () {
+            clearContent();
+            $(".task").remove();
+            $("#update-container").show();
+        })*/
+
+
+
+
         $("#showForm").click(function (event) {
             showForm();  
             event.preventDefault(); 
@@ -64,9 +76,22 @@
             var status = list[task].statusId;
             var createdDate = list[task].createdDate;
             $("#task-container").append("<div id='" + id + "' class='task'></div>");
-            $(searchId).html("<p class='name'>" + name + "</p><p class='priority'>Priority: " + getPriority(priority) + "</p><p class='status'>Status: " + getStatus(status) + "</p><p class='createdday'>" + createdDate + "</p>");
+            $(searchId).html("<p class='name'>" + name + "</p><p class='priority'>Priority: " + getPriority(priority) + "</p><p class='status'>Status: " + getStatus(status) + "</p><p class='createdday'>" + createdDate + "</p><p><button id=\"update\">Update</button></p>");
         }
+
+
+        $("#update").click(function () {
+            clearContent();
+            $(".task").remove();
+            $("#update-container").show();
+            $("#updateTaskSubmit").click(function(event){
+                updateTask();
+                event.preventDefault(); 
+            })
+
+        })
     }
+
     function getTodayTasks() {
         $.ajax({
             url: "tasks/today",
@@ -77,6 +102,7 @@
             }
         });
     }
+
     function renderForTodayTasks(list) {
 
         for (var task = 0; task < list.length; task++) {
@@ -87,7 +113,7 @@
             var status = list[task].statusId;
             var createdDate = list[task].createdDate;
             $("#today-container").append("<div id='" + id + "' class='task'></div>");
-            $(searchId).html("<p class='name'>" + name + "</p><p class='priority'>Priority: " + getPriority(priority) + "</p><p class='status'>Status: " + getStatus(status) + "</p><p class='createdday'>" + createdDate + "</p>");
+            $(searchId).html("<p class='name'>" + name + "</p><p class='priority'>Priority: " + getPriority(priority) + "</p><p class='status'>Status: " + getStatus(status) + "</p><p class='createdday'>" + createdDate + "</p><p><button id=\"update\">Update</button></p>");
         }
     }
 
@@ -111,7 +137,7 @@
             var status = list[task].statusId;
             var createdDate = list[task].createdDate;
             $("#sprint-container").append("<div id='" + id + "' class='task'></div>");
-            $(searchId).html("<p class='name'>" + name + "</p><p class='priority'>Priority: " + getPriority(priority) + "</p><p class='status'>Status: " + getStatus(status) + "</p><p class='createdday'>" + createdDate + "</p>");
+            $(searchId).html("<p class='name'>" + name + "</p><p class='priority'>Priority: " + getPriority(priority) + "</p><p class='status'>Status: " + getStatus(status) + "</p><p class='createdday'>" + createdDate + "</p><p><button id=\"update\">Update</button></p>");
         }
     }
     function showForm() {
@@ -187,3 +213,28 @@
         });
         return list;
     }
+
+    function updateTask(task) {
+        
+        var list = {
+            name: $('#name').val(),
+            startDate: $('#startDate').val(),
+            endDate: $('#endDate').val(),
+            assignTo: $('#assignTo').val(),
+            //estimateTime: $('#estimateTime').val(),
+            priorityId: $('#priority').val(),
+            statusId: $('#status').val()
+        }
+        console.log(JSON.stringify(list));
+        $.ajax({
+            url:'tasks/update', 
+            type:'PUT',
+            contentType: 'application/json',
+            dataType: 'json',
+            data: JSON.stringify(list), 
+            success: function(data) {
+                console.log("good");
+            }
+        });
+    }
+    

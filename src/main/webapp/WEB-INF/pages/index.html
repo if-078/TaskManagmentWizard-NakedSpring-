@@ -16,6 +16,7 @@
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <script src="static/js/script.js"></script>
+
 </head>
 
 <body>
@@ -42,13 +43,22 @@
         <article class="content-container">
             <div id="welcome-container" class="content"><h1>Welcome!</h1></div>
             <div id="task-container" class="content">
-                <button id="showForm">Add Task</button>
-                <form id="taskForm" style="display:none">
-                <p>Insert TaskName Name:</p>
-                <input id="statusName" type="text">
+                <button id="showAddTaskForm">Add task</button>
                 </br>
-                <input type="submit" value="Add">
-                </form></br>
+
+                <form id="addTaskForm" style="display:none">
+
+                    <div>Name: </div>
+                    <input id="name" type="text" border-radius: 10px>
+                    <div>Start</div>
+                    <input id="startDate" type="text" border-radius: 10px>
+                    <div>End</div>
+                    <input id="endDate" type="text" border-radius: 10px>
+
+                    </br>
+                    </br>
+                    <input id="addTaskSubmit" type="submit" value="Add task">
+                </form>
             </div>
 
             <div id="today-container" class="content">
@@ -57,6 +67,7 @@
             <div id="sprint-container" class="content">
                 <h2>Sprint</h2>
             </div>
+
         </article>
     </div>
 

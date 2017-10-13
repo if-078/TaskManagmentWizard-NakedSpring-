@@ -38,4 +38,11 @@ public class PriorityController {
     return service.findOne(id);
   }
 
+  @GetMapping(value = "/{id}")
+  String getPriorityById(@PathVariable Integer id) throws SQLException, IOException {
+    Priority priority = service.findOne(id);
+    String json = objectMapper.writeValueAsString(priority);
+    return json;
+  }
+
 }

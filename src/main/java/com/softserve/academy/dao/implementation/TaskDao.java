@@ -142,6 +142,16 @@ public class TaskDao extends Dao<Task> implements TaskDaoInterface {
       estimate = new java.sql.Time(task.getEstimateTime().getTime());
     }
 
+    if(task.getAssignTo() == 0) {
+      task.setAssignTo(1);
+    }
+    if(task.getStatusId() == 0) {
+      task.setStatusId(1);
+    }
+    if(task.getPriorityId() == 0) {
+      task.setPriorityId(1);
+    }
+
     String sql = "INSERT INTO " + table
         + " (name, created_date, start_date, end_date, estimate_time, assign_to, status_id, "
         + "priority_id, parent_id) VALUES (:name, :created_date, :start_date, :end_date, :estimate_time, "

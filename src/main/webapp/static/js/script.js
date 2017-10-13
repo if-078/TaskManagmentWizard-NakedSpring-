@@ -26,6 +26,15 @@
             event.preventDefault(); 
         });
                  
+        })
+
+        $('#showAddTaskForm').click(function (event) {
+            showAddForm();  
+            event.preventDefault(); 
+            $("#addTaskSubmit").click(function(event){
+            addTask();
+            event.preventDefault(); 
+        });
         });
 
     });
@@ -51,10 +60,11 @@
             var id = "task" + list[task].id;
             var searchId = "#" + id;
             var name = list[task].name;
-            var priority = list[task].priority;
-            var createdDate = list[task].created_date;
+            var priority = list[task].priorityId;
+            var status = list[task].statusId;
+            var createdDate = list[task].createdDate;
             $("#task-container").append("<div id='" + id + "' class='task'></div>");
-            $(searchId).html("<p class='name'>" + name + "</p><p class='priority'>" + priority + "</p><p class='createdday'>" + createdDate + "</p><div class='task-nav'><button class='tag-btn'>tag</button><button class='priority-btn'>priority</button> <button class='status-btn'>status</button></div>");
+            $(searchId).html("<p class='name'>" + name + "</p><p class='priority'>Priority: " + getPriority(priority) + "</p><p class='status'>Status: " + getStatus(status) + "</p><p class='createdday'>" + createdDate + "</p>");
         }
     }
     function getTodayTasks() {
@@ -73,10 +83,11 @@
             var id = "task" + list[task].id;
             var searchId = "#" + id;
             var name = list[task].name;
-            var priority = list[task].priority;
-            var createdDate = list[task].created_date;
+            var priority = list[task].priorityId;
+            var status = list[task].statusId;
+            var createdDate = list[task].createdDate;
             $("#today-container").append("<div id='" + id + "' class='task'></div>");
-            $(searchId).html("<p class='name'>" + name + "</p><p class='priority'>" + priority + "</p><p class='createdday'>" + createdDate + "</p><div class='task-nav'><button class='tag-btn'>tag</button><button class='priority-btn'>priority</button> <button class='status-btn'>status</button></div>");
+            $(searchId).html("<p class='name'>" + name + "</p><p class='priority'>Priority: " + getPriority(priority) + "</p><p class='status'>Status: " + getStatus(status) + "</p><p class='createdday'>" + createdDate + "</p>");
         }
     }
 
@@ -96,10 +107,11 @@
             var id = "task" + list[task].id;
             var searchId = "#" + id;
             var name = list[task].name;
-            var priority = list[task].priority;
-            var createdDate = list[task].created_date;
+            var priority = list[task].priorityId;
+            var status = list[task].statusId;
+            var createdDate = list[task].createdDate;
             $("#sprint-container").append("<div id='" + id + "' class='task'></div>");
-            $(searchId).html("<p class='name'>" + name + "</p><p class='priority'>" + priority + "</p><p class='createdday'>" + createdDate + "</p><div class='task-nav'><button class='tag-btn'>tag</button><button class='priority-btn'>priority</button> <button class='status-btn'>status</button></div>");
+            $(searchId).html("<p class='name'>" + name + "</p><p class='priority'>Priority: " + getPriority(priority) + "</p><p class='status'>Status: " + getStatus(status) + "</p><p class='createdday'>" + createdDate + "</p>");
         }
     }
     function showForm() {
@@ -113,4 +125,65 @@
             $("#taskForm").fadeOut();
         });
 
+    }
+
+
+
+    function showAddForm() {
+        $("#addTaskForm").show(500, function () {
+            $("#showAddTaskForm").hide();
+        });
+    }
+
+    function hideAddForm() {
+        $("#showAddTaskForm").show(500, function () {
+            $("#addTaskForm").fadeOut();
+        });
+
+    }
+
+
+    function addTask() {
+        var list = {
+            name: $('#name').val(),
+            startDate: $('#startDate').val(),
+            endDate: $('#endDate').val()
+        }
+        console.log(JSON.stringify(list));
+        $.ajax({
+            url:'tasks/', 
+            type:'POST',
+            contentType: 'application/json',
+            dataType: 'json',
+            data: JSON.stringify(list), 
+            success: function(data) {
+                hideAddForm();
+            }
+        });
+    }
+
+    function getPriority(id) {
+        var list;
+        $.ajax({
+            url: "priority/" + id,
+            type: "GET",
+            async: false,
+            success: function (data) {
+                list = JSON.parse(data).name;
+            }
+        });
+        return list;
+    }
+
+     function getStatus(id) {
+        var list;
+        $.ajax({
+            url: "status/" + id,
+            type: "GET",
+            async: false,
+            success: function (data) {
+                list = JSON.parse(data).name;
+            }
+        });
+        return list;
     }

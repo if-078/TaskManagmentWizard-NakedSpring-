@@ -175,7 +175,6 @@
             startDate: $('#startDate').val(),
             endDate: $('#endDate').val()
         }
-        console.log(JSON.stringify(list));
         $.ajax({
             url:'tasks/', 
             type:'POST',
@@ -217,7 +216,7 @@
     function updateTask(task) {
         
         var list = {
-            name: $('#name').val(),
+            name: $('#nameU').val(),
             startDate: $('#startDate').val(),
             endDate: $('#endDate').val(),
             assignTo: $('#assignTo').val(),
@@ -234,6 +233,7 @@
             data: JSON.stringify(list), 
             success: function(data) {
                 console.log("good");
+                console.log(data);
             }
         });
     }

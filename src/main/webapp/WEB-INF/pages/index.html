@@ -54,9 +54,9 @@
                     <div>Name: </div>
                     <input id="name" type="text" />
                     <div>Start</div>
-                    <input id="startDate" type="text" type="datetime" class="data"/>
+                    <input id="startDate" type="datetime" class="data"/>
                     <div>End</div>
-                    <input id="endDate" type="text" type="datetime" class="data"/>
+                    <input id="endDate"  type="datetime" class="data"/>
 
                     </br>
                     </br>
@@ -76,13 +76,13 @@
                 <form id="updateTaskForm">
 
                     <div>Name: </div>
-                    <input id="name" type="text" border-radius: 10px/>
+                    <input id="nameU" type="text" border-radius: 10px/>
                     <div>Start</div>
-                    <input id="startDate" type="text" border-radius: 10px/>
+                    <input id="startDate" type="datetime" class="data"/>
                     <div>End</div>
-                    <input id="endDate" type="text" border-radius: 10px/>
-                    <div>Estimate time: </div>
-                    <input id="estimateTime" type="text" border-radius: 10px/>
+                    <input id="endDate" type="datetime" class="data"/>
+                    <!-- <div>Estimate time: </div>
+                    <input id="estimateTime" type="text" border-radius: 10px/> -->
                     <div>Assign to: </div>
                     <input id="assignTo" type="text" border-radius: 10px/>
                     <div>Priority</div>
@@ -107,11 +107,11 @@
 
 <script>
         $(function () {
-            $("#date").datepicker({
+            $(".data").datepicker({
                 dateFormat: "yy-mm-dd"
             });
         });
-        $("#date").datepicker("option", "dateFormat", "yy-mm-dd");
+        $(".data").datepicker("option", "dateFormat", "yy-mm-dd");
 
     </script>
 </body>

@@ -2,6 +2,7 @@ package com.softserve.academy.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -24,6 +25,13 @@ public class ErrorController {
     FieldError error = ex.getBindingResult().getFieldErrors().get(FIRST_FIELD_NOT_PASSED_VALIDATION);
     
     return messageSource.getMessage(error.getCode() + "." + error.getObjectName() + "." + error.getField(), null, FALLBACKOPTION, null);
+  }
+
+  @ExceptionHandler(EmptyResultDataAccessException.class)
+  public String emptyResultDataAccessHandler(EmptyResultDataAccessException ex) {
+    System.out.println(ex.toString());
+
+    return null;
   }
 
 }

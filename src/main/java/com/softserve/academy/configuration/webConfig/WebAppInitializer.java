@@ -17,6 +17,7 @@ public class WebAppInitializer implements WebApplicationInitializer {
 		context.register(WebAppConfig.class);
 		context.setServletContext(servletContext);
 		servletContext.addListener(new ContextLoaderListener(context));
+
 		ServletRegistration.Dynamic servlet = servletContext.addServlet("MainServlet", new DispatcherServlet(context));
 		servlet.addMapping("/");
 		servlet.setLoadOnStartup(1);

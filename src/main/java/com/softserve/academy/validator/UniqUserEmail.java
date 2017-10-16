@@ -16,7 +16,7 @@ import javax.validation.Payload;
 @Retention(RetentionPolicy.RUNTIME)
 public  @interface UniqUserEmail {
 	
-	String message() default "{UniqUserEmail}";
+	String message() default "{Not unique email}";
 	
 	Class<?>[] groups() default {};
 	

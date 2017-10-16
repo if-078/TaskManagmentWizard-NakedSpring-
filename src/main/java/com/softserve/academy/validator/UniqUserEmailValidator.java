@@ -12,7 +12,7 @@ public class UniqUserEmailValidator implements ConstraintValidator <UniqUserEmai
 	
 	@Autowired
 	UserServiceInterface userService;
-	
+
 	int equal;
 
 	@Override

@@ -47,5 +47,4 @@ public class WebAppConfig extends WebMvcConfigurerAdapter {
         configurer.setUseSuffixPatternMatch(false);
     }
 
-
 }

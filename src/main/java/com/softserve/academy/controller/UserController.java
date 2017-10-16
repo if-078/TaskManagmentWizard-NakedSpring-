@@ -17,14 +17,14 @@ public class UserController {
   
   @Autowired
   UserServiceInterface userService;
-  
-	@GetMapping("/")
+
+	@GetMapping
 	@ResponseStatus(HttpStatus.OK)
 	List<User> getAllUsers() {
 		return userService.getAll();
 	}
 
-	@PostMapping("/")
+	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	User createUser(@Validated @RequestBody User user) {
 		return userService.create(user);

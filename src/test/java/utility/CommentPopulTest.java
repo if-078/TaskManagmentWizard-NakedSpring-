@@ -13,7 +13,7 @@ import org.springframework.test.context.ContextConfiguration;
 public class CommentPopulTest {
 
     @Test
-    public void commentCreatedAndInserted (){
+    public void commentCreatedAndInserted() {
         ApplicationContext context = new AnnotationConfigApplicationContext(TestConfig.class);
         CommentPopulator populator = context.getBean(CommentPopulator.class);
         CommentDao dao = context.getBean(CommentDao.class);

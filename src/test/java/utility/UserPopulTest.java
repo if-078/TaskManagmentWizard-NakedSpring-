@@ -15,11 +15,11 @@ import java.sql.SQLException;
 public class UserPopulTest {
 
     @Test
-    public void defaultUserCreated () throws SQLException {
+    public void defaultUserCreated() throws SQLException {
         ApplicationContext applicationContext =
                 new AnnotationConfigApplicationContext(TestConfig.class);
         UserPopulator populator = applicationContext.getBean(UserPopulator.class);
-        User user= populator.createDefaultEntity();
-        Assert.assertTrue(user.getId()>0);
+        User user = populator.createDefaultEntity();
+        Assert.assertTrue(user.getId() > 0);
     }
 }

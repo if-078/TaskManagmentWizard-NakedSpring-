@@ -3,7 +3,7 @@ package com.softserve.academy.entity;
 import java.sql.Time;
 import java.util.Date;
 
-public class Task implements NamedEntity{
+public class Task implements NamedEntity {
 
     private int id;
     private String name;

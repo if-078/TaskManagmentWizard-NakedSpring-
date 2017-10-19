@@ -1,4 +1,3 @@
-
 package com.softserve.academy.dao.implementation;
 
 import com.softserve.academy.dao.mappers.PriorityMapper;
@@ -13,28 +12,28 @@ import java.util.List;
 @PropertySource("classpath:tables.properties")
 public class PriorityDao extends Dao<Priority> {
 
-  public PriorityDao(@Value("${priority}") String table) {
-    super(table, new PriorityMapper());
-  }
-
-  @Override
-  public Priority create(Priority entity) {
-    throw new UnsupportedOperationException("create operation not available for priority table");
-  }
-
-  @Override
-  public boolean update(Priority entity) {
-    throw new UnsupportedOperationException("update operation not available for priority table");
-  }
-
-  public Priority findByName (Priority target){
-    List<Priority> priorities = getAll();
-    for (Priority p : priorities){
-      if (p.getName().contains(target.getName())){
-        return p;
-      }
+    public PriorityDao(@Value("${priority}") String table) {
+        super(table, new PriorityMapper());
     }
-    return new Priority();
-  }
+
+    @Override
+    public Priority create(Priority entity) {
+        throw new UnsupportedOperationException("create operation not available for priority table");
+    }
+
+    @Override
+    public boolean update(Priority entity) {
+        throw new UnsupportedOperationException("update operation not available for priority table");
+    }
+
+    public Priority findByName(Priority target) {
+        List<Priority> priorities = getAll();
+        for (Priority p : priorities) {
+            if (p.getName().contains(target.getName())) {
+                return p;
+            }
+        }
+        return new Priority();
+    }
 
 }

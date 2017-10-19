@@ -51,26 +51,26 @@ public class SearchingTransferObject {
         return priorities;
     }
 
-    public List<Tag> getTargetTags (){
-        List <Tag> res = getEntitiesFromNames(Tag.class, tags);
-        res.forEach(tag->tag.setUserId(id));
+    public List<Tag> getTargetTags() {
+        List<Tag> res = getEntitiesFromNames(Tag.class, tags);
+        res.forEach(tag -> tag.setUserId(id));
         return res;
     }
 
     @JsonIgnore
-    public List<Status> getTargetStatuses (){
+    public List<Status> getTargetStatuses() {
         return getEntitiesFromNames(Status.class, statuses);
     }
 
     @JsonIgnore
-    public List<Priority> getTargetPriorities (){
+    public List<Priority> getTargetPriorities() {
         return getEntitiesFromNames(Priority.class, priorities);
     }
 
     @JsonIgnore
-    private   <T extends NamedEntity> List<T> getEntitiesFromNames(Class<T> tClass, String[] strings){
+    private <T extends NamedEntity> List<T> getEntitiesFromNames(Class<T> tClass, String[] strings) {
         List<T> res = new ArrayList<>();
-        for (String s : strings){
+        for (String s : strings) {
             T t = null;
             try {
                 t = tClass.newInstance();

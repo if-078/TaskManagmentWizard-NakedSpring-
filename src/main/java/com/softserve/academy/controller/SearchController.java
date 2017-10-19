@@ -17,7 +17,7 @@ import java.util.List;
 public class SearchController {
 
     @PostMapping("/")
-    public List<Task> serchTaskByResponse (@RequestBody String json) throws IOException {
+    public List<Task> serchTaskByResponse(@RequestBody String json) throws IOException {
         SearchingTransferObject sto;
         ObjectMapper mapper = new ObjectMapper();
         sto = mapper.readValue(json, SearchingTransferObject.class);

@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @PropertySource("classpath:tables.properties")
-public class CommentDao extends Dao<Comment>{
+public class CommentDao extends Dao<Comment> {
 
     public CommentDao() {
     }
@@ -45,7 +45,7 @@ public class CommentDao extends Dao<Comment>{
     }
 
     @Autowired
-    public void setTable(@Value("${comment}")String table) {
+    public void setTable(@Value("${comment}") String table) {
         this.table = table;
     }
 

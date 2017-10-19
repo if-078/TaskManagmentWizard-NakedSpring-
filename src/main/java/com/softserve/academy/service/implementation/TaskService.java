@@ -6,70 +6,70 @@ import com.softserve.academy.entity.Tag;
 import com.softserve.academy.entity.Task;
 import com.softserve.academy.service.interfaces.TaskServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
-import org.springframework.stereotype.Service;
 
 @Service
 public class TaskService implements TaskServiceInterface {
 
-  @Autowired
-  TaskDaoInterface taskDao;
+    @Autowired
+    TaskDaoInterface taskDao;
 
-  @Override
-  public List<Task> getAll() {
-    return taskDao.getAll();
-  }
+    @Override
+    public List<Task> getAll() {
+        return taskDao.getAll();
+    }
 
-  @Override
-  public Task findOne(int id) {
-    return taskDao.findOne(id);
-  }
+    @Override
+    public Task findOne(int id) {
+        return taskDao.findOne(id);
+    }
 
-  @Override
-  public boolean update(Task task) {
-    return taskDao.update(task);
-  }
+    @Override
+    public boolean update(Task task) {
+        return taskDao.update(task);
+    }
 
-  @Override
-  public boolean delete(int id) {
-    return taskDao.delete(id);
-  }
+    @Override
+    public boolean delete(int id) {
+        return taskDao.delete(id);
+    }
 
-  @Override
-  public Task create(Task task) {
-    return taskDao.create(task);
-  }
+    @Override
+    public Task create(Task task) {
+        return taskDao.create(task);
+    }
 
-  @Override
-  public List<Task> getTasksForToday() {
-    return taskDao.getTasksForToday();
-  }
+    @Override
+    public List<Task> getTasksForToday() {
+        return taskDao.getTasksForToday();
+    }
 
-  @Override
-  public List<Tag> getTagsOfTask(int taskId) {
-    return taskDao.getTagsOfTask(taskId);
-  }
+    @Override
+    public List<Tag> getTagsOfTask(int taskId) {
+        return taskDao.getTagsOfTask(taskId);
+    }
 
-  @Override
-  public List<Comment> getCommentsOfTask(int taskId) {
-    return taskDao.getCommentsOfTask(taskId);
-  }
+    @Override
+    public List<Comment> getCommentsOfTask(int taskId) {
+        return taskDao.getCommentsOfTask(taskId);
+    }
 
-  @Override
-  public List<Task> getSubtasks(int id) {
-    return taskDao.getSubtasks(id);
-  }
+    @Override
+    public List<Task> getSubtasks(int id) {
+        return taskDao.getSubTasks(id);
+    }
 
-  public List<Task> getUserTask(int userId){  //todo: make impl of this method in dao with sql query
-    return getAll().stream().filter(s-> s.getAssign_to() == userId).collect(Collectors.toList());
-  }
+    public List<Task> getUserTask(int userId) {  //todo: make impl of this method in dao with sql query
+        return getAll().stream().filter(s -> s.getAssign_to() == userId).collect(Collectors.toList());
+    }
 
-  @Override
-  public List<Task> getTasksByTag(int tagId) {
-    return taskDao.getTasksByTag(tagId);
-  }
+    @Override
+    public List<Task> getTasksByTag(int tagId) {
+        return taskDao.getTasksByTag(tagId);
+    }
 
 
   /*

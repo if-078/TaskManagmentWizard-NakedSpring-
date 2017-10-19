@@ -3,13 +3,13 @@ package com.softserve.academy.service.interfaces;
 import java.util.List;
 
 public interface EntityServiceInterface<E> {
-  List<E> getAll();
+    List<E> getAll();
 
-  E findOne(int id);
+    E findOne(int id);
 
-  boolean update(E entity);
+    boolean update(E entity);
 
-  boolean delete(int id);
+    boolean delete(int id);
 
-  E create(E entity);
+    E create(E entity);
 }

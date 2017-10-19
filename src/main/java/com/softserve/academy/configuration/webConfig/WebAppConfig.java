@@ -13,10 +13,10 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 @ComponentScan("com.softserve.academy")
 public class WebAppConfig extends WebMvcConfigurerAdapter {
 
-  @Override
-  public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
-    configurer.enable();
-  }
+    @Override
+    public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
+        configurer.enable();
+    }
 
     @Bean
     public InternalResourceViewResolver viewResolver() {

@@ -1,6 +1,6 @@
 package com.softserve.academy.entity;
 
-public class Priority implements NamedEntity{
+public class Priority implements NamedEntity {
     private int id;
     private String name;
 

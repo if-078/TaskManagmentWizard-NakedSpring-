@@ -1,6 +1,6 @@
 package utility;
 
-public interface Populator <E>{
+public interface Populator<E> {
 
     E createDefaultEntity();
 }

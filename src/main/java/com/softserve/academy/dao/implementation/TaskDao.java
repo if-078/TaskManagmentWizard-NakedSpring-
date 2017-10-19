@@ -23,7 +23,7 @@ import java.util.List;
 
 @Repository
 @PropertySource("classpath:tables.properties")
-public class TaskDao extends Dao<Task> implements TaskDaoInterface {
+public class TaskDao extends EntityDao<Task> implements TaskDaoInterface {
 
 
   public TaskDao(@Value("${task}") String table) {

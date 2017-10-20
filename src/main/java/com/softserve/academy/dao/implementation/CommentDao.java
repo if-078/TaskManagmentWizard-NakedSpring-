@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @PropertySource("classpath:tables.properties")
-public class CommentDao extends Dao<Comment> {
+public class CommentDao extends EntityDao<Comment> {
 
   public CommentDao(@Value("${comment}") String table) {
     super(table, new CommentMapper());

@@ -1,0 +1,70 @@
+/*HEADER*/
+
+#header {
+    background: #2d3e50;
+}
+
+#brand p,
+#user-profile p {
+    font-family: fantasy;
+    color: white;
+    font-size: 25px;
+    display: table-cell;
+    vertical-align: middle;
+}
+
+#brand p {
+    font-size: 70px;
+}
+
+#logo {
+    width: 100px;
+    height: 100px;
+    filter: invert(100%);
+}
+
+
+#user-profile {
+    display: flex;
+    color: darkcyan;
+}
+
+/*NAVBAR CONTENT BLOCK CONTAINER*/
+
+#data-container {
+    margin-top: 10px;
+}
+
+/*NAVIGABLE BAR*/
+
+#nav {
+    background-color: white;
+}
+
+#nav span {
+    font-family: monospace;
+    font-size: 20px;
+}
+
+/*CONTENT*/
+
+#slogan span {
+    font-size: 70px;
+    font-family: sans-serif;
+}
+
+/*FOOTER*/
+
+#footer {
+    background: #2d3e50;
+}
+
+#footer span {
+    color: white;
+    font-size: 20px;
+    font-family: fantasy;
+}
+
+#footer i {
+    color: white;
+}

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Bootstrap DataTable test</title>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css">
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
+</head>
+<body>
+<h2>Basic CRUD Application</h2>
+<p>Click the buttons on datagrid toolbar to do crud actions.</p>
+
+<button id="button">button delete</button>
+
+<table id="example"  class="table table-striped table-bordered" cellspacing="0" width="100%">
+    <thead class="thead-inverse">
+    <tr>
+        <th>Name</th>
+        <th>Pass</th>
+        <th>Email</th>
+        <th>id</th>
+    </tr>
+    </thead>
+    <tfoot>
+    <tr>
+        <th>Name</th>
+        <th>Pass</th>
+        <th>Email</th>
+        <th>id</th>
+    </tr>
+    </tfoot>
+</table>
+
+<script type="text/javascript">
+
+    $(document).ready(function() {
+        getAllUser();
+    } );
+
+
+    function getAllUser() {
+        $.ajax({
+            type: 'GET',
+            url: 'users',
+            contentType: 'application/json',
+            async: true,
+
+            success: function(data) {
+                var table = $('#example').DataTable({
+                    "aaData": data,
+                    "aoColumns": [
+                        {"mDataProp": "name"},
+                        {"mDataProp": "pass"},
+                        {"mDataProp": "email"},
+                        {"mDataProp": "id"},
+                    ]
+                });
+
+                $('#example tbody').on( 'click', 'tr', function () {
+                    if ( $(this).hasClass('selected') ) {
+                        $(this).removeClass('selected');
+                    }
+                    else {
+                        table.$('tr.selected').removeClass('selected');
+                        $(this).addClass('selected');
+                    }
+                } );
+
+                $('#button').click( function () {
+                    var userId = $('tr.selected td:last-child').text();
+                    deleteUser(userId);
+                    table.row('.selected').remove().draw( false );
+                } );
+
+            },
+            error: function(jqXHR) {
+                console.log(jqXHR.status)
+            }
+        });
+    }
+
+    function deleteUser(userId){
+        $.ajax({
+            type: 'DELETE',
+            url: 'users/' + userId,
+            contentType: 'application/json',
+            error: function(jqXHR) {
+                console.log(jqXHR.status)
+            }
+        });
+    }
+
+</script>
+</body>
+</html>

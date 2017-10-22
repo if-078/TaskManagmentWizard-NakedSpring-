@@ -14,7 +14,7 @@ import java.util.List;
 
 @Repository
 @PropertySource("classpath:tables.properties")
-public class RoleDao extends Dao<Role> implements RoleDaoInterface {
+public class RoleDao extends EntityDao<Role> implements RoleDaoInterface {
 
     public RoleDao(@Value("${role}") String table) {
       super(table, new RoleMapper());

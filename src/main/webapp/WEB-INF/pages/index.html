@@ -1,118 +1,121 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="time managment tool">
-    <meta name="author" content="RO">
-    <link rel="shortcut icon" href="../../assets/ico/favicon.ico">
-    <title>Tmw</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link href="static/css/mystyle.css" rel="stylesheet" type="text/css">
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <script src="static/js/script.js"></script>
-
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-      <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-
+    <meta charset="UTF-8">
+    <title>TaskManagmentWizard</title>
+    <link rel="stylesheet" href="/static/css/custom.css">
+    <!--  local dev lib  -->
+    <!--
+    <link rel="stylesheet" href="static/dev_pack/bs4/css/bootstrap.css">
+    <script src="static/dev_pack/jquery-3.2.1.js"></script>
+    <script src="static/dev_pack/bs4/js/bootstrap.js"></script>
+    <script src="static/dev_pack/bs4/js/"></script>
+    <script src="static/dev_pack/bs4/css/"></script>
+-->
+    <!--  cdn servers  -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
 </head>
 
 <body>
-<div class="main-container">
-    <header>
+    <div class="container-fluid" id="main-container">
+        <div id="header" class="row align-items-center">
+            <div class="col-md-1 ">
+                <img id="logo" src="/static/imgs/logo.png" alt="logo">
+            </div>
+            <div id="brand" class="col-md-4 ">
+                <p>TaskManagmentWizard</p>
+            </div>
+            <div class="col-md-4 offset-md-2">
 
-        <div id="header-logo-container"><a href="/"><img id="logo" src="static/imgs/logo.png" height="50"
-                                                         width="50"></a><p>Task Managment Wizard</p></div>
-        <div id="search-container"><input type="search" >
-            <button type="button" class="btn">Go!</button>
+                <div id="user-profile" class="row align-items-center justify-content-end">
+                    <div class="col-1">
+                        <i class="fa fa-user-circle fa-2x" aria-hidden="true"></i>
+                    </div>
+                    <div class="col-2">
+                        <p>User</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="row " id="data-container">
+            <div class="col-md-2 offset-md-1" id="nav">
+                <div class="row ">
+                    <div class="col-0"><i class="fa fa-calendar" aria-hidden="true"></i>
+                        <span>Date Filters Block</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-0 nav-item"><i class="fa fa-filter" aria-hidden="true"></i>
+                        <span>Advanced Fileters Block</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-0 nav-item"><i class="fa fa-bars" aria-hidden="true"></i>
+                        <span>Tree Block</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-9" id="content-data">
+                <div class="row justify-content-center" id="slogan">
+                    <div class="col* align-self-center">
+                        <i class="fa fa-quote-left fa-2x" aria-hidden="true"></i>
+                        <span>we will take care of your time</span>
+                        <i class="fa fa-quote-right fa-2x" aria-hidden="true"></i>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-md-0">
+                        <p>
+                            <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rerum expedita necessitatibus facilis incidunt dolore quae recusandae sit, repudiandae accusantium aliquid, voluptatibus dolores iusto vitae tenetur natus possimus. Harum, deleniti, earum!</span>
+                            <span>Rem sit aspernatur ducimus corporis, officia pariatur debitis nam dicta, ea tempora id nesciunt repellat. Vel ducimus velit asperiores quo tenetur ea consequuntur repudiandae enim tempore error odio, adipisci, nesciunt?</span>
+                            <span>Explicabo corporis soluta, ut sunt consectetur ea doloribus sed, accusamus autem expedita omnis non quia dolores, odit. Error dolor, possimus repellat natus asperiores molestias veniam aperiam reiciendis, in tenetur, quos?</span>
+                            <span>Recusandae, vitae corporis quisquam, provident delectus sint necessitatibus ducimus, est modi commodi tempora consequuntur qui nam autem neque iure et doloribus vero? Inventore sequi cum odio eius quam aut dolorem.</span>
+                            <span>Non sunt, tempore quo iusto deleniti inventore possimus deserunt! Aliquam consequuntur debitis ducimus perspiciatis et, totam eaque adipisci. Enim ducimus mollitia, nisi sed adipisci dignissimos blanditiis, incidunt sit dolor? Quidem.</span>
+                            <span>Quos voluptatibus voluptas autem dolorem accusantium impedit. Inventore porro, incidunt libero. Pariatur illum, cumque iusto. Cumque alias cupiditate ea quos atque ab labore omnis at, sint, corporis! Nemo, totam, esse.</span>
+                            <span>Quas ipsum, cum dolor magni enim harum. Officiis iure ut praesentium incidunt quaerat, quibusdam numquam dolore recusandae nesciunt quam explicabo sunt, error perspiciatis. Ex sint consectetur provident dolorem aut eos.</span>
+                            <span>Perspiciatis fugit odio eos tenetur obcaecati blanditiis rem, reprehenderit in, tempore labore neque quasi aperiam sit officia minima. Vel totam nemo eveniet consequuntur omnis odio reprehenderit sit expedita voluptates impedit.</span>
+                            <span>Voluptas possimus id qui veniam quaerat nobis est explicabo quis eos inventore ratione sint, maxime a eum ea ullam praesentium, provident numquam. Dicta sint ipsam eligendi eum dignissimos incidunt vero?</span>
+                            <span>Quia harum, delectus. Nesciunt quia, exercitationem perspiciatis nam veritatis assumenda! Dolorum, voluptatibus iste quasi! Rem exercitationem quis minus incidunt dicta ipsam fuga, inventore doloremque ipsum, voluptates tempora, animi. Illo, cumque?</span>
+                            <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rerum expedita necessitatibus facilis incidunt dolore quae recusandae sit, repudiandae accusantium aliquid, voluptatibus dolores iusto vitae tenetur natus possimus. Harum, deleniti, earum!</span>
+                            <span>Rem sit aspernatur ducimus corporis, officia pariatur debitis nam dicta, ea tempora id nesciunt repellat. Vel ducimus velit asperiores quo tenetur ea consequuntur repudiandae enim tempore error odio, adipisci, nesciunt?</span>
+                            <span>Explicabo corporis soluta, ut sunt consectetur ea doloribus sed, accusamus autem expedita omnis non quia dolores, odit. Error dolor, possimus repellat natus asperiores molestias veniam aperiam reiciendis, in tenetur, quos?</span>
+                            <span>Recusandae, vitae corporis quisquam, provident delectus sint necessitatibus ducimus, est modi commodi tempora consequuntur qui nam autem neque iure et doloribus vero? Inventore sequi cum odio eius quam aut dolorem.</span>
+                            <span>Non sunt, tempore quo iusto deleniti inventore possimus deserunt! Aliquam consequuntur debitis ducimus perspiciatis et, totam eaque adipisci. Enim ducimus mollitia, nisi sed adipisci dignissimos blanditiis, incidunt sit dolor? Quidem.</span>
+                            <span>Quos voluptatibus voluptas autem dolorem accusantium impedit. Inventore porro, incidunt libero. Pariatur illum, cumque iusto. Cumque alias cupiditate ea quos atque ab labore omnis at, sint, corporis! Nemo, totam, esse.</span><span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rerum expedita necessitatibus facilis incidunt dolore quae recusandae sit, repudiandae accusantium aliquid, voluptatibus dolores iusto vitae tenetur natus possimus. Harum, deleniti, earum!</span>
+                            <span>Rem sit aspernatur ducimus corporis, officia pariatur debitis nam dicta, ea tempora id nesciunt repellat. Vel ducimus velit asperiores quo tenetur ea consequuntur repudiandae enim tempore error odio, adipisci, nesciunt?</span>
+                            <span>Explicabo corporis soluta, ut sunt consectetur ea doloribus sed, accusamus autem expedita omnis non quia dolores, odit. Error dolor, possimus repellat natus asperiores molestias veniam aperiam reiciendis, in tenetur, quos?</span>
+                            <span>Explicabo corporis soluta, ut sunt consectetur ea doloribus sed, accusamus autem expedita omnis non quia dolores, odit. Error dolor, possimus repellat natus asperiores molestias veniam aperiam reiciendis, in tenetur, quos?</span><span>Explicabo corporis soluta, ut sunt consectetur ea doloribus sed, accusamus autem expedita omnis non quia dolores, odit. Error dolor, possimus repellat natus asperiores molestias veniam aperiam reiciendis, in tenetur, quos?</span>
+
+                        </p>
+                    </div>
+                </div>
+
+            </div>
         </div>
 
-        <div id="auth-container"><a href="#">Sign Up</a>|<a>Sign In</a></div>
-    </header>
-    <div class="data-container">
-        <aside class="btn-group-vertical">
-            <button id="tasks-btn" type="button" class="btn btn-default">Tasks<span class="counter"></span></button>
-            <button id="for-today-btn" type="button" class="btn btn-default">For Today <span class="counter"></span>
-            </button>
-            <button id="sprint-btn" type="button" class="btn btn-default">Sprint<span class="counter"></span></button>
 
-        </aside>
-
-        <article class="content-container">
-            <div id="welcome-container" class="content"><h1>Welcome!</h1></div>
-            <div id="task-container" class="content">
-                <button id="showAddTaskForm">Add task</button>
-                </br>
-
-                <form id="addTaskForm" style="display:none">
-
-                    <div>Name: </div>
-                    <input id="name" type="text" />
-                    <div>Start</div>
-                    <input id="startDate" type="datetime" class="data"/>
-                    <div>End</div>
-                    <input id="endDate"  type="datetime" class="data"/>
-
-                    </br>
-                    </br>
-                    <input id="addTaskSubmit" type="submit" value="Add task">
-                </form>
+        <div class="row align-items-center" id="footer">
+            <div class="col-2 offset-1">
+                <div class="row align-items-cente">
+                    <div class="col-md-1"><i class="fa fa-copyright fa-2x" aria-hidden="true"></i></div>
+                    <div class="col-md-7"><span>if-078</span></div>
+                </div>
             </div>
-
-            <div id="today-container" class="content">
-                <h2>Tasks For Today</h2>
+            <div class="col-md-2" id="info">
+                <span>INFO</span>
             </div>
-            <div id="sprint-container" class="content">
-                <h2>Sprint</h2>
+            <div class="col-md-2" id="contacts">
+                <span>CONTACT US</span>
             </div>
+        </div>
 
-            <div id="update-container" class="content">
-
-                <form id="updateTaskForm">
-
-                    <div>Name: </div>
-                    <input id="nameU" type="text" border-radius: 10px/>
-                    <div>Start</div>
-                    <input id="startDate" type="datetime" class="data"/>
-                    <div>End</div>
-                    <input id="endDate" type="datetime" class="data"/>
-                    <!-- <div>Estimate time: </div>
-                    <input id="estimateTime" type="text" border-radius: 10px/> -->
-                    <div>Assign to: </div>
-                    <input id="assignTo" type="text" border-radius: 10px/>
-                    <div>Priority</div>
-                    <input id="priority" type="text" border-radius: 10px/>
-                    <div>Status</div>
-                    <input id="status" type="text" border-radius: 10px/>
-                    
-
-                    </br>
-                    </br>
-                    <input id="updateTaskSubmit" type="submit" value="Update task">
-                </form>
-            </div>
-
-        </article>
-    </div>
-
-    <footer>
-        <h3>© 2017 if-078</h3>
-    </footer>
-</div>
-
-<script>
-        $(function () {
-            $(".data").datepicker({
-                dateFormat: "yy-mm-dd"
-            });
-        });
-        $(".data").datepicker("option", "dateFormat", "yy-mm-dd");
-
-    </script>
 </body>
+
 </html>

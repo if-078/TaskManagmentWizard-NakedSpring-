@@ -58,6 +58,7 @@
                                 <input class="easyui-tagbox" style="width:100%;padding:2px 2px;" data-options="
                                        url: 'tagbox_data1.json',
                                        method: 'get',
+                                        mode: 'remote',
                                        valueField: 'id',
                                        textField: 'text',
                                        multiple:true,
@@ -70,6 +71,7 @@
                                 <input class="easyui-tagbox" style="width:100%;padding:2px 2px;" data-options="
                                        url: 'tagbox_data1.json',
                                        method: 'get',
+                                        mode: 'remote',
                                        valueField: 'id',
                                        textField: 'text',
                                        multiple:true,
@@ -80,8 +82,9 @@
                             </div>
                             <div style="padding:2px 0px;">
                                 <input class="easyui-tagbox" style="width:100%;" data-options="
-                                       url: 'users/1/tags',
+                                       url: 'users/1/tags/all',
                                        method: 'get',
+                                       mode: 'remote',
                                        valueField: 'id',
                                        textField: 'name',
                                        multiple:true,

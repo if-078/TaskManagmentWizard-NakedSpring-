@@ -135,14 +135,15 @@ $('.root-document').click(function(e) {
                 $("#t" + id).html("<a href = '' class='ion-document'>" + name + " " + id + " " + parent + "</a>");
                 }
             else {
-                var par_name = $("#t" + parent + " a").text();
+                var par_name = $("#t" + parent + " a:first").text();
                 if (par_name!="●") {
                 $("#t" + parent).html("<a href='' class='trigger'>●</a>" +
                 "<a href='' class='ion-document'>" + par_name + "</a><ul class='tree-parent'>" +
                 "<li id='t" + id + "' class='tree-item'><a href='' class='ion-document'>" + name + "</a></li></ul>");
                 }
                 else {
-                $("#t" + parent).after("<li id='t" + id + "' class='tree-item'><a href='' class='ion-document'>" +
+                $("#t"+parent+" ul").append("<li id='t" + id +
+                "' class='tree-item'><a href='' class='ion-document'>" +
                 name + "</a></li>");
                 }
                 if (par_name=="") list.push(list[task]);

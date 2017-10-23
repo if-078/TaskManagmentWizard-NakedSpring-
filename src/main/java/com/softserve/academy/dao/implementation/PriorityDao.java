@@ -23,6 +23,7 @@ public class PriorityDao extends EntityDao<Priority> {
   @Override
   public boolean update(Priority entity) {
     throw new UnsupportedOperationException("update operation not available for priority table");
+
   }
 
 }

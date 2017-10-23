@@ -8,15 +8,15 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
-
-import java.util.ArrayList;
+import org.springframework.web.servlet.NoHandlerFoundException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@RestControllerAdvice
+@ControllerAdvice
 public class ErrorController {
  
   private static final String FALLBACKOPTION = "Error of validation";
@@ -25,6 +25,7 @@ public class ErrorController {
   private MessageSource messageSource;
 
   @ExceptionHandler(MethodArgumentNotValidException.class)
+  @ResponseBody
   @ResponseStatus(HttpStatus.BAD_REQUEST)
   public ErrorResource validationErrorHandler(MethodArgumentNotValidException ex) {
     List<FieldError> fieldErrors = ex.getBindingResult().getFieldErrors();
@@ -44,9 +45,18 @@ public class ErrorController {
 
   @ExceptionHandler(EmptyResultDataAccessException.class)
   public String emptyResultDataAccessHandler(EmptyResultDataAccessException ex) {
-    System.out.println(ex.toString());
 
     return null;
   }
+    @ExceptionHandler(Exception.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public String error500Default(Exception e) {
+        return "500";
+    }
 
+    @ExceptionHandler(NoHandlerFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public String error404Default(NoHandlerFoundException ex) {
+        return "404";
+    }
 }

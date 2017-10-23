@@ -14,8 +14,4 @@ public class MainController {
     public String getLoginPage(){
         return "login";
     }
-    @RequestMapping("/test")
-    public String getTestPage(){
-        return "test";
-    }
 }

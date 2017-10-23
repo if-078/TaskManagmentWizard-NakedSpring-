@@ -52,9 +52,7 @@
 /*makar. tree*/
 $('.trigger').click(function(e){
   e.preventDefault();
-
   var childUl = $(this).siblings("ul.tree-parent");
-
   if( childUl.hasClass('open') ){
     $(this).text("●");
     childUl.removeClass('open');
@@ -79,6 +77,11 @@ $('.root-document').click(function(e) {
      $(this).attr("id", "full");
      getTreeTasks();
      }
+     else {
+     $('a.trigger').text("●");
+     $('.open').find("a.trigger").text("●");
+     $('.open').removeClass('open');
+     }
 });
 
 
@@ -97,8 +100,9 @@ $('.root-document').click(function(e) {
     function renderTasksFromTree(list, id) {
 
         for (var task = 0; task < list.length; task++) {
-        if (list[task].id==id) {
-            var idTask = "task" + list[task].id;
+        var idT = list[task].id;
+        if (idT==id) {
+            var idTask = "task" + idT;
             var searchId = "#" + id;
             var name = list[task].name;
             var priority = list[task].priorityId;
@@ -132,18 +136,19 @@ $('.root-document').click(function(e) {
             var parent = list[task].parentId;
             if (parent==0) {
                 $(".tree").append("<li id='t" + id + "' class='tree-item'></li>");
-                $("#t" + id).html("<a href = '' class='ion-document'>" + name + " " + id + " " + parent + "</a>");
+                $("#t" + id).html("<a href = '" + id + "' class='ion-document'>" + name + "</a>");
                 }
             else {
                 var par_name = $("#t" + parent + " a:first").text();
                 if (par_name!="●") {
                 $("#t" + parent).html("<a href='' class='trigger'>●</a>" +
-                "<a href='' class='ion-document'>" + par_name + "</a><ul class='tree-parent'>" +
-                "<li id='t" + id + "' class='tree-item'><a href='' class='ion-document'>" + name + "</a></li></ul>");
+                "<a href='" + id + "' class='ion-document'>" + par_name + "</a><ul class='tree-parent'>" +
+                "<li id='t" + id + "' class='tree-item'><a href='" + id + "' class='ion-document'>" +
+                name + "</a></li></ul>");
                 }
                 else {
                 $("#t"+parent+" ul").append("<li id='t" + id +
-                "' class='tree-item'><a href='' class='ion-document'>" +
+                "' class='tree-item'><a href='" + id + "' class='ion-document'>" +
                 name + "</a></li>");
                 }
                 if (par_name=="") list.push(list[task]);
@@ -151,9 +156,7 @@ $('.root-document').click(function(e) {
         }
         $('.trigger').click(function(e){
           e.preventDefault();
-
           var childUl = $(this).siblings("ul.tree-parent");
-
           if( childUl.hasClass('open') ){
             $(this).text("●");
             childUl.removeClass('open');
@@ -161,13 +164,12 @@ $('.root-document').click(function(e) {
             $(this).text("...");
             childUl.addClass('open');
           }
-
         })
             $('.ion-document').click(function(e) {
                  e.preventDefault();
                  clearContent();
                  $(".task").remove();
-                 getOneTask($($(this).parent()).attr("id").slice(1));
+                 getOneTask($(this).attr("href"));
                  $("#task-container").show();
             })
     }

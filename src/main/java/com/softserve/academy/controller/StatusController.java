@@ -55,4 +55,11 @@ public class StatusController {
     return service.update(statusObj);
   }
 
+  @GetMapping(value = "/{id}")
+  String getStatusById(@PathVariable Integer id) throws SQLException, IOException {
+    Status status = service.findOne(id);
+    String json = objectMapper.writeValueAsString(status);
+    return json;
+  }
+
 }

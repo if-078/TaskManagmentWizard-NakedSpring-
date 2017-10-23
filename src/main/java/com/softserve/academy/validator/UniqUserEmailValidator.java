@@ -12,20 +12,18 @@ public class UniqUserEmailValidator implements ConstraintValidator <UniqUserEmai
 	
 	@Autowired
 	UserServiceInterface userService;
-	
-	int equal = 0;
+
+	int equal;
 
 	@Override
     public void initialize(UniqUserEmail userEmail) { }
 	
 	@Override
 	public boolean isValid(String userEmail, ConstraintValidatorContext context) {
-		
-		if(userEmail == null) {
-			return false;
-		}
-		
-		userService.getAll().stream().forEach(user -> {if(user.getEmail().equals(userEmail)){equal++;}});
+		equal = 0;
+
+		if(userEmail == null)return false;
+		userService.getAll().stream().forEach(user -> {if(user.getEmail().equals(userEmail)){equal++; return;}});
 		
 		return equal == 0;
 	}

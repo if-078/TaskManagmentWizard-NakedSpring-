@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @PropertySource("classpath:tables.properties")
-public class UserDao extends Dao<User> implements UserDaoInterface {
+public class UserDao extends EntityDao<User> implements UserDaoInterface {
 
   public UserDao(@Value("${uuser}") String table) {
     super(table, new UserMapper());

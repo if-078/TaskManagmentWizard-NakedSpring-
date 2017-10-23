@@ -1,23 +1,29 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <title>Bootstrap DataTable test</title>
-    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css">
 
-    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap DataTable test</title>
+    <!--<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css">
+    <link href="static/css/mystyle.css" rel="stylesheet" type="text/css">
+
+    <!--<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.js"></script>-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
 </head>
 <body>
-<h2>Basic CRUD Application</h2>
-<p>Click the buttons on datagrid toolbar to do crud actions.</p>
+<h2>Basic CRUD USER</h2>
+<button id="delete-user">button delete</button>
+<button id ="btn-modal-user" type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#modal-new-user">create</button>
 
-<button id="button">button delete</button>
-
-<table id="example"  class="table table-striped table-bordered" cellspacing="0" width="100%">
-    <thead class="thead-inverse">
+<table id="user-table"  class="table table-striped table-hover" cellspacing="0" width="100%">
+    <thead>
     <tr>
         <th>Name</th>
         <th>Pass</th>
@@ -25,20 +31,82 @@
         <th>id</th>
     </tr>
     </thead>
-    <tfoot>
-    <tr>
-        <th>Name</th>
-        <th>Pass</th>
-        <th>Email</th>
-        <th>id</th>
-    </tr>
-    </tfoot>
 </table>
+
+<!--MODAL WINDOW-->
+<div class="modal fade" id="modal-new-user" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <button type="button" class="close"
+                        data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    Create user
+                </h4>
+            </div>
+
+            <!-- Modal Body -->
+            <div class="modal-body">
+
+                <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <label  class="col-sm-2 control-label"
+                                for="input-email">Email</label>
+                        <div class="col-sm-10">
+                            <input type="email" class="form-control" id="input-email" placeholder="Email"/>
+                            <p id="error-user-email"></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label"
+                               for="input-pass" >Password</label>
+                        <div class="col-sm-10">
+                            <input type="password" class="form-control" id="input-pass" placeholder="Password"/>
+                            <div id="error-user-pass"></div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label  class="col-sm-2 control-label"
+                                for="input-name">Name</label>
+                        <div class="col-sm-10">
+                            <input type="name" class="form-control" id="input-name" placeholder="Name"/>
+                            <div id="error-user-name"></div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!-- Modal Footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default"
+                        data-dismiss="modal">
+                    Close
+                </button>
+                <button id="create-user" type="button" class="btn btn-primary">
+                    Save changes
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END MODAL WINDOW END-->
 
 <script type="text/javascript">
 
     $(document).ready(function() {
+
+        var user = {};
+
+        $('#btn-modal-user').click( function () {
+            clearInputUser();
+        } );
+
         getAllUser();
+
     } );
 
 
@@ -50,7 +118,7 @@
             async: true,
 
             success: function(data) {
-                var table = $('#example').DataTable({
+               var table = $('#user-table').DataTable({
                     "aaData": data,
                     "aoColumns": [
                         {"mDataProp": "name"},
@@ -60,20 +128,50 @@
                     ]
                 });
 
-                $('#example tbody').on( 'click', 'tr', function () {
-                    if ( $(this).hasClass('selected') ) {
-                        $(this).removeClass('selected');
-                    }
-                    else {
-                        table.$('tr.selected').removeClass('selected');
-                        $(this).addClass('selected');
-                    }
-                } );
+                // delete user and row
+                $("tr").click(function(){
+                    $(this).addClass("selected").siblings().removeClass("selected");
+                });
 
-                $('#button').click( function () {
+                $('#delete-user').click( function () {
                     var userId = $('tr.selected td:last-child').text();
                     deleteUser(userId);
                     table.row('.selected').remove().draw( false );
+                } );
+
+                // create user and add row
+                /*$('#create-user').on( 'click',function () {
+                    user={};
+
+                    console.log(user);
+                    createOrUpdateUser(table, user);
+                } );*/
+
+
+                // update user and row
+                $('#user-table tbody').on( 'dblclick', 'tr', function () {
+                    $(this).addClass("selected").siblings().removeClass("selected");
+
+                    user={};
+                    user = table.row( this ).data();
+                    var userId = $('tr.selected td:last-child').text();
+
+                    //fill data
+                    $('#input-name').val(user.name);
+                    $('#input-pass').val(user.pass);
+                    $('#input-email').val(user.email);
+
+                    $('#modal-new-user').modal('show');
+
+                    console.log("in method");
+                    console.log(user);
+                    console.log("in method");
+                    //table.row(this).data(data).draw();
+                } );
+
+                $('#create-user').on( 'click',function () {
+
+                    createOrUpdateUser(table, window.user);
                 } );
 
             },
@@ -93,6 +191,131 @@
             }
         });
     }
+
+    function createOrUpdateUser(table, user){
+
+        if ($.isEmptyObject(user))
+        {
+            user =
+            {
+                "name": $('#input-name').val(),
+                "pass": $('#input-pass').val(),
+                "email": $('#input-email').val()
+            }
+            console.log("create");
+            createUser(table, user);
+        }else{
+            user.name  =  $('#input-name').val();
+            user.email =  $('#input-email').val();
+            user.pass  =  $('#input-pass').val();
+            console.log("update");
+            console.log(user);
+            updateUser(table, user);
+        }
+
+    }
+
+    function createUser(table, user){
+
+        $.ajax({
+            url: 'users',
+            data: JSON.stringify(user),
+            type: 'POST',
+            contentType: 'application/json',
+            success: function (data) {
+                clearErrorUser();
+
+                // add row to table
+                table.row.add( {
+                    "name" :  data.name,
+                    "pass" :  data.pass,
+                    "email":  data.email,
+                    "id"   :  data.id
+                } ).draw();
+
+                $('#modal-new-user').modal('hide');
+                clearInputUser();
+            },
+            cache: false
+        }).fail(function ($xhr) {
+            clearErrorUser();
+
+            if($xhr.status == 400){
+                var data = $xhr.responseJSON;
+
+                showErrorsOfForm(data);
+            }
+        });
+
+    }
+
+    function updateUser(table, user){
+        $.ajax({
+            url: 'users',
+            data: JSON.stringify(user),
+            type: 'PUT',
+            contentType: 'application/json',
+            success: function () {
+                clearErrorUser();
+
+                // update row of table
+                table.row(this).data(user).draw();
+                $('#modal-new-user').modal('hide');
+                clearInputUser();
+            },
+            cache: false
+        }).fail(function ($xhr) {
+            clearErrorUser();
+
+            if($xhr.status == 400){
+                var data = $xhr.responseJSON;
+
+                showErrorsOfForm(data);
+            }
+        });
+    }
+
+    function clearErrorUser(){
+
+        $('#input-pass').css({"border-color": "","border-width":"","border-style":""});
+        $('#input-name').css({"border-color": "","border-width":"","border-style":""});
+        $('#input-email').css({"border-color": "","border-width":"","border-style":""});
+
+        $('#error-user-name').empty();
+        $('#error-user-pass').empty();
+        $('#error-user-email').empty();
+    }
+
+    function clearInputUser(){
+
+        $('#input-pass').val('');
+        $('#input-name').val('');
+        $('#input-email').val('');
+
+    }
+
+    function showErrorsOfForm(data){
+        for(var i = 0; i < data.fieldErrors.length; i++) {
+            if (data.fieldErrors[i].field == 'email') {
+
+                $('#input-email').css({"border-color": "#FF0000","border-width":"1px","border-style":"solid"});
+                $('#error-user-email').text(data.fieldErrors[i].message).css('color', 'red');
+            }
+
+            if (data.fieldErrors[i].field == 'name') {
+
+                $('#input-name').css({"border-color": "#FF0000","border-width":"1px","border-style":"solid"});
+                $('#error-user-name').text(data.fieldErrors[i].message).css('color', 'red');
+            }
+
+            if (data.fieldErrors[i].field == 'pass') {
+
+                $('#input-pass').css({"border-color": "#FF0000","border-width":"1px","border-style":"solid"});
+                $('#error-user-pass').text(data.fieldErrors[i].message).css('color', 'red');
+            }
+        }
+    }
+
 
 </script>
 </body>

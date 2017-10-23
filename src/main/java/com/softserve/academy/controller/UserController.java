@@ -42,7 +42,7 @@ public class UserController {
 		return userService.findByEmail(email);
 	}
 
-	@PutMapping("/")
+	@PutMapping
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	boolean updateUser(@Validated @RequestBody User user) {
 		return userService.update(user);

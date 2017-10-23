@@ -113,3 +113,69 @@ footer h3 {
     margin-top: 5px;;
     margin-left: 20px;
 }
+
+/*makar. tree*/
+/*body {
+  padding: 5rem;
+  font-family: sans-serif;
+  font-weight: 100;
+  font-size: 1.2rem;
+}*/
+
+.trigger {
+  text-decoration: none;
+  color: black;
+  display: inline-block;
+  height: 100%;
+}
+
+.tree {
+  padding-left: 0.75rem;
+}
+
+.tree-parent {
+  margin: none;
+  display: none;
+}
+
+.tree-parent.open {
+  padding-left: 0.5rem;
+  display: block;
+}
+
+.tree-item {
+  position: relative;
+  margin-left: 0.5rem;
+  line-height: 2rem;
+}
+.tree-item:last-child {
+  border: none;
+}
+.tree-item:before {
+  content: '';
+  display: block;
+  border-top: 1px solid #bdc3c7;
+  border-left: 1px solid #bdc3c7;
+  height: 100%;
+  width: 1rem;
+  position: absolute;
+  bottom: -1.1rem;
+  left: -0.9rem;
+  left: -1.3rem;
+  z-index: -1;
+}
+.tree-item:last-child:before {
+  border-left: none;
+}
+.tree-item:first-child:after {
+  content: '';
+  display: block;
+  border-left: 1px solid #bdc3c7;
+  height: 100%;
+  width: 1rem;
+  position: absolute;
+  bottom: 0.9rem;
+  left: -0.9rem;
+  left: -1.3rem;
+  z-index: -1;
+}

@@ -75,6 +75,11 @@ public class TaskService implements TaskServiceInterface {
     return taskDao.getSubtasks(id);
   }
 
+  @Override
+  public List<Task> getTasksAssignToUser(int userId) {
+    return taskDao.getTasksAssignToUser(userId);
+  }
+
   /*
    * /@Override public ArrayList<Task> getTaskByStatus(int statusId) { return
    * taskDao.getTaskByStatus(statusId); }
@@ -84,9 +89,6 @@ public class TaskService implements TaskServiceInterface {
    * 
    * //@Override public ArrayList<Task> getTasksCreatedByUser(int userId) { return
    * taskDao.getTasksCreatedByUser(userId); }
-   * 
-   * //@Override public ArrayList<Task> getTasksAssignToUser(int userId) { return
-   * taskDao.getTasksAssignToUser(userId); }
    * 
    * //@Override public ArrayList<Task> getTasksByTag(int tagId) { return
    * taskDao.getTasksByTag(tagId); }

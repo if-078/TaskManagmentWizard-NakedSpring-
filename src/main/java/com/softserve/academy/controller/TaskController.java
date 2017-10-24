@@ -95,6 +95,13 @@ public class TaskController {
     return json;
   }
 
+  @GetMapping("/assign_to/{id}")
+  String assignTo(@PathVariable Integer id) throws JsonProcessingException {
+    List list = taskService.getTasksAssignToUser(id);
+    String json = objectMapper.writeValueAsString(list);
+    return json;
+  }
+
 
 
   /*

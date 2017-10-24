@@ -22,12 +22,12 @@ public class TagController {
   @Autowired
   private TagService tagService;
 
-  @GetMapping("/all")
+  @GetMapping
   List<Tag> getTagsByUserId(@PathVariable Integer uid) throws SQLException {
     return tagService.getAllByUserId(uid);
   }
 
-  @PostMapping()
+  @PostMapping
   public Tag createTag(@RequestBody Tag tag) throws SQLException {
     return tagService.create(tag);
   }
@@ -37,17 +37,17 @@ public class TagController {
     return tagService.findOne(id);
   }
 
-  @PutMapping()
+  @PutMapping
   public boolean updateTag(@RequestBody Tag tag) {
     return tagService.update(tag);
   }
 
-  @DeleteMapping("/{tid}")
-  public boolean deleteTag(@PathVariable Integer tid) {
-    return tagService.delete(tid);
+  @DeleteMapping("/{id}")
+  public boolean deleteTag(@PathVariable Integer id) {
+    return tagService.delete(id);
   }
 
-  @DeleteMapping("/all")
+  @DeleteMapping
   public boolean deleteAllUserTags(@PathVariable Integer uid) {
     return tagService.deleleAllByUserId(uid);
   }

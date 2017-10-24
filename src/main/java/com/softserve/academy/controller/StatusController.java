@@ -24,32 +24,26 @@ public class StatusController {
     this.objectMapper = objectMapper;
   }
 
-  @GetMapping(value = "/all")
+  @GetMapping
   public String getStatuses() throws SQLException, JsonProcessingException {
     List list = service.getAll();
     String json = objectMapper.writeValueAsString(list);
     return json;
   }
 
-  @PostMapping()
+  @PostMapping
   public Status createStatus(@RequestBody Status status) throws SQLException {
     return service.create(status);
   }
 
-  @GetMapping(value = "/one")
-  Status getStatus(@RequestBody String json) throws SQLException, IOException {
-    int id = objectMapper.readValue(json, Integer.class);
-    return service.findOne(id);
-  }
-
-  @DeleteMapping("/del")
+  @DeleteMapping
   boolean deleteStatus(@RequestBody String json) throws SQLException, IOException {
     Status status = new Status();
     status = objectMapper.readValue(json, Status.class);
     return service.delete(status.getId());
   }
 
-  @PutMapping(value = "/update")
+  @PutMapping
   boolean updateStatus(@RequestBody String json) throws SQLException, IOException {
     Status statusObj = objectMapper.readValue(json, Status.class);
     return service.update(statusObj);

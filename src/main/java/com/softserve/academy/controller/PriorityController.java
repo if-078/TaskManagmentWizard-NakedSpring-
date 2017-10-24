@@ -25,20 +25,14 @@ public class PriorityController {
     this.objectMapper = objectMapper;
   }
 
-  @GetMapping(value = "/all")
+  @GetMapping
   public String getPriorities() throws SQLException, JsonProcessingException {
     List list = service.getAll();
     String json = objectMapper.writeValueAsString(list);
     return json;
   }
 
-  @GetMapping(value = "/one")
-  Priority getPriority(@RequestBody String json) throws SQLException, IOException {
-    int id = objectMapper.readValue(json, Integer.class);
-    return service.findOne(id);
-  }
-
-  @GetMapping(value = "/{id}")
+  @GetMapping(("/{id}"))
   String getPriorityById(@PathVariable Integer id) throws SQLException, IOException {
     Priority priority = service.findOne(id);
     String json = objectMapper.writeValueAsString(priority);

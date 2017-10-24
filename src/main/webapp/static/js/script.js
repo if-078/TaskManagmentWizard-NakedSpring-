@@ -40,7 +40,7 @@
             event.preventDefault(); 
             $("#showForm").submit(function(event){
             hideForm();
-            event.preventDefault(); 
+            event.preventDefault();
         });
                  
         })
@@ -54,8 +54,148 @@
         });
         });
 
+/*makar. tree*/
+$('.trigger').click(function(e){
+  e.preventDefault();
+  var childUl = $(this).siblings("ul.tree-parent");
+  if( childUl.hasClass('open') ){
+    $(this).text("●");
+    childUl.removeClass('open');
+  } else {
+    $(this).text("...");
+    childUl.addClass('open');
+  }
+
+});
+
+$('.ion-document').click(function(e) {
+     e.preventDefault();
+     clearContent();
+     $(".task").remove();
+     getTasks();
+     $("#task-container").show();
+});
+
+$('.root-document').click(function(e) {
+     e.preventDefault();
+     if (this.id=="empty") {
+     $(this).attr("id", "full");
+     var user_id = 1;
+     getTreeTasks(user_id);
+     }
+     else {
+     $('a.trigger').text("●");
+     $('.open').find("a.trigger").text("●");
+     $('.open').removeClass('open');
+     }
+});
+
+
     });
 
+    function getOneTask(id) {
+            $.ajax({
+                url: "tasks/",
+                type: "GET",
+                success: function (data) {
+                    var list = [JSON.parse(data)];
+                    renderTasksFromTree(list[0], id);
+                }
+            });
+    }
+    function renderTasksFromTree(list, id) {
+        for (var task = 0; task < list.length; task++) {
+        if (list[task].id==id) {
+            var idTask = "task" + id;
+            var searchId = "#" + id;
+            var name = list[task].name;
+            var priority = list[task].priorityId;
+            var status = list[task].statusId;
+            var createdDate = list[task].createdDate;
+            $("#task-container").append("<div id='" + id + "' class='task'></div>");
+            $(searchId).html("<p class='name'>" + name + "</p><p class='priority'>Priority: " +
+            getPriority(priority) + "</p><p class='status'>Status: " + getStatus(status) +
+            "</p><p class='createdday'>" + createdDate + "</p><p><button id=\"update\">Update</button></p>");
+        }
+        }
+
+
+        $("#update").click(function () {
+            clearContent();
+            $(".task").remove();
+            $("#update-container").show();
+            $("#updateTaskSubmit").click(function(event){
+                updateTask();
+                event.preventDefault();
+            })
+
+        })
+    }
+
+    function renderTreeTasks(list, user_id) {
+        var list1 = [];
+        for (var task = 0; task < list.length; task++) {
+            if (list[task].assignTo==user_id) {
+                list1.push(list[task]);
+            }
+        }
+        list1.sort(function(a, b){return a.parentId - b.parentId});
+        list=list1;
+        for (var task = 0; task < list.length; task++) {
+            var id = list[task].id;
+            var name = list[task].name;
+            var parent = list[task].parentId;
+            if (parent==0) {
+                $(".tree").append("<li id='t" + id + "' class='tree-item'></li>");
+                $("#t" + id).html("<a href = '" + id + "' class='ion-document'>" + name + "</a>");
+                }
+            else {
+                var par_name = $("#t" + parent + " a:first").text();
+                if (par_name!="●") {
+                $("#t" + parent).html("<a href='' class='trigger'>●</a>" +
+                "<a href='" + id + "' class='ion-document'>" + par_name + "</a><ul class='tree-parent'>" +
+                "<li id='t" + id + "' class='tree-item'><a href='" + id + "' class='ion-document'>" +
+                name + "</a></li></ul>");
+                }
+                else {
+                $("#t"+parent+" ul").append("<li id='t" + id +
+                "' class='tree-item'><a href='" + id + "' class='ion-document'>" +
+                name + "</a></li>");
+                }
+                if (par_name=="") list.push(list[task]);
+            }
+        }
+        $('.trigger').click(function(e){
+          e.preventDefault();
+          var childUl = $(this).siblings("ul.tree-parent");
+          if( childUl.hasClass('open') ){
+            $(this).text("●");
+            childUl.removeClass('open');
+          } else {
+            $(this).text("...");
+            childUl.addClass('open');
+          }
+        })
+            $('.ion-document').click(function(e) {
+                 e.preventDefault();
+                 clearContent();
+                 $(".task").remove();
+                 getOneTask($(this).attr("href"));
+                 $("#task-container").show();
+            })
+    }
+
+    function getTreeTasks(user_id) {
+        $.ajax({
+            url: "tasks/",
+            type: "GET",
+            success: function (data) {
+                var list = JSON.parse(data);
+                renderTreeTasks(list, user_id);
+            }
+        });
+    }
+    //makar.tree.end
     function getTasks() {
         $.ajax({
             url: "tasks/",
@@ -66,6 +206,8 @@
             }
         });
     }
+
+
 
     function clearContent() {
         $(".content").hide();
@@ -81,7 +223,9 @@
             var status = list[task].statusId;
             var createdDate = list[task].createdDate;
             $("#task-container").append("<div id='" + id + "' class='task'></div>");
-            $(searchId).html("<p class='name'>" + name + "</p><p class='priority'>Priority: " + getPriority(priority) + "</p><p class='status'>Status: " + getStatus(status) + "</p><p class='createdday'>" + createdDate + "</p><p><button id=\"update\">Update</button></p>");
+            $(searchId).html("<p class='name'>" + name + "</p><p class='priority'>Priority: " +
+            getPriority(priority) + "</p><p class='status'>Status: " + getStatus(status) +
+            "</p><p class='createdday'>" + createdDate + "</p><p><button id=\"update\">Update</button></p>");
         }
 
 
@@ -118,7 +262,9 @@
             var status = list[task].statusId;
             var createdDate = list[task].createdDate;
             $("#today-container").append("<div id='" + id + "' class='task'></div>");
-            $(searchId).html("<p class='name'>" + name + "</p><p class='priority'>Priority: " + getPriority(priority) + "</p><p class='status'>Status: " + getStatus(status) + "</p><p class='createdday'>" + createdDate + "</p><p><button id=\"update\">Update</button></p>");
+            $(searchId).html("<p class='name'>" + name + "</p><p class='priority'>Priority: " +
+            getPriority(priority) + "</p><p class='status'>Status: " + getStatus(status) +
+            "</p><p class='createdday'>" + createdDate + "</p><p><button id=\"update\">Update</button></p>");
         }
     }
 

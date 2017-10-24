@@ -17,15 +17,15 @@ public interface TaskServiceInterface extends EntityServiceInterface<Task> {
 
   public List<Task> getSubtasks(int id);
 
+  public List<Task> getTasksAssignToUser(int userId);
+
   /*
    * public ArrayList<Task> getTaskByStatus(int statusId);
    * 
    * public ArrayList<Task> getTaskByPriority(int priorityId);
    * 
    * public ArrayList<Task> getTasksCreatedByUser(int userId);
-   * 
-   * public ArrayList<Task> getTasksAssignToUser(int userId);
-   * 
+   *
    * public ArrayList<Task> getTasksForToday();
    * 
    * public ArrayList<Task> getTasksByTag(int tagId);

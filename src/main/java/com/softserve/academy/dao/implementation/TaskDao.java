@@ -249,6 +249,17 @@ public class TaskDao extends EntityDao<Task> implements TaskDaoInterface {
     return tasks;
   }
 
+  @Override
+  public List<Task> getTasksAssignToUser(int userId) {
+    String query = "SELECT id, name, created_date, start_date, end_date, estimate_time, " +
+            "assign_to, status_id, priority_id, parent_id FROM task WHERE assign_to= :assign_to";
+
+    List<Task> tasks =
+            jdbcTemplate.query(query, new MapSqlParameterSource("assign_to", userId), new TaskMapper());
+
+    return tasks;
+  }
+
 
 
   /*

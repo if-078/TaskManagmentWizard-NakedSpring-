@@ -224,8 +224,7 @@
             success: function () {
                 clearErrorUser();
                 // update row of table
-                table.row(this).data(user).draw();
-               /* table.row('.selected').remove().draw( false );*/
+                table.row('.selected').data(user).draw();
                 $('#modal-new-user').modal('hide');
                 clearInputUser();
             },

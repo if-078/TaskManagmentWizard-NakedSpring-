@@ -75,7 +75,8 @@ $('.root-document').click(function(e) {
      e.preventDefault();
      if (this.id=="empty") {
      $(this).attr("id", "full");
-     getTreeTasks();
+     var user_id = 1;
+     getTreeTasks(user_id);
      }
      else {
      $('a.trigger').text("●");
@@ -93,22 +94,20 @@ $('.root-document').click(function(e) {
                 type: "GET",
                 success: function (data) {
                     var list = [JSON.parse(data)];
-                    renderTasksFromTree(list, id);
+                    renderTasksFromTree(list[0], id);
                 }
             });
     }
     function renderTasksFromTree(list, id) {
-
         for (var task = 0; task < list.length; task++) {
-        var idT = list[task].id;
-        if (idT==id) {
-            var idTask = "task" + idT;
+        if (list[task].id==id) {
+            var idTask = "task" + id;
             var searchId = "#" + id;
             var name = list[task].name;
             var priority = list[task].priorityId;
             var status = list[task].statusId;
             var createdDate = list[task].createdDate;
-            $("#task-container").append("<div id='" + idTask + "' class='task'></div>");
+            $("#task-container").append("<div id='" + id + "' class='task'></div>");
             $(searchId).html("<p class='name'>" + name + "</p><p class='priority'>Priority: " +
             getPriority(priority) + "</p><p class='status'>Status: " + getStatus(status) +
             "</p><p class='createdday'>" + createdDate + "</p><p><button id=\"update\">Update</button></p>");
@@ -128,8 +127,15 @@ $('.root-document').click(function(e) {
         })
     }
 
-    function renderTreeTasks(list) {
-        list.sort(function(a, b){return a.parentId - b.parentId});
+    function renderTreeTasks(list, user_id) {
+        var list1 = [];
+        for (var task = 0; task < list.length; task++) {
+            if (list[task].assignTo==user_id) {
+                list1.push(list[task]);
+            }
+        }
+        list1.sort(function(a, b){return a.parentId - b.parentId});
+        list=list1;
         for (var task = 0; task < list.length; task++) {
             var id = list[task].id;
             var name = list[task].name;
@@ -174,13 +180,13 @@ $('.root-document').click(function(e) {
             })
     }
 
-    function getTreeTasks() {
+    function getTreeTasks(user_id) {
         $.ajax({
             url: "tasks/",
             type: "GET",
             success: function (data) {
                 var list = JSON.parse(data);
-                renderTreeTasks(list);
+                renderTreeTasks(list, user_id);
             }
         });
     }

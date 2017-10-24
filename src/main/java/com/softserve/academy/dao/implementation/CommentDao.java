@@ -2,10 +2,8 @@ package com.softserve.academy.dao.implementation;
 
 import com.softserve.academy.dao.mappers.CommentMapper;
 import com.softserve.academy.entity.Comment;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;

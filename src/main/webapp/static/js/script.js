@@ -17,9 +17,14 @@
             $(".task").remove();
             getSprintTasks();
             $("#sprint-container").show();
-        })
+        });
 
-
+        $("#user-btn").click(function () {
+            clearContent();
+            $(".task").remove();
+            $("#user-container").load('/static/load-pages/user.html');
+            $("#user-container").show();
+        });
 
         /*$(document.getElementById("update")).click(function () {
             clearContent();

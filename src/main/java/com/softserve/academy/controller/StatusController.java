@@ -24,7 +24,7 @@ public class StatusController {
     this.objectMapper = objectMapper;
   }
 
-  @GetMapping()
+  @GetMapping(value = "/all")
   public String getStatuses() throws SQLException, JsonProcessingException {
     List list = service.getAll();
     String json = objectMapper.writeValueAsString(list);

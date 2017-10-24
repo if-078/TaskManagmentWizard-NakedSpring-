@@ -25,7 +25,7 @@ public class PriorityController {
     this.objectMapper = objectMapper;
   }
 
-  @GetMapping()
+  @GetMapping(value = "/all")
   public String getPriorities() throws SQLException, JsonProcessingException {
     List list = service.getAll();
     String json = objectMapper.writeValueAsString(list);

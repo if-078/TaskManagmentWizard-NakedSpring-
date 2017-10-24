@@ -5,13 +5,13 @@
             $(".task").remove();
             getTasks();
             $("#task-container").show();
-        })
+        });
         $("#for-today-btn").click(function () {
             clearContent();
             $(".task").remove();
             getTodayTasks();
             $("#today-container").show();
-        })
+        });
         $("#sprint-btn").click(function () {
             clearContent();
             $(".task").remove();

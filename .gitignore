@@ -1,23 +1,16 @@
-# Maven ###
-log/
-target/
-!.mvn/wrapper/maven-wrapper.jar
-.mvn/timing.properties
+#
+# Project specific excludes
+#
+META-INF
+tomcat
 
-### STS ###
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings
-.springBeans
+#
+# Default excludes
+#
 
-### IntelliJ IDEA ###
-.idea
-*.iws
-*.iml
-*.ipr
-
+<<<<<<< HEAD
+# Binaries
+=======
 ### NetBeans ###
 nbproject/private/
 build/
@@ -25,6 +18,13 @@ nbbuild/
 dist/
 nbdist/
 .nb-gradle/
+nbactions
+nb-configuration
+nbactions.
+nb-configuration.
+.nbactions
+.nb-configuration
+README
 
 ### Eclipse ###
 .classpath
@@ -32,6 +32,7 @@ nbdist/
 .settings/
 
 ### Binaries ###
+>>>>>>> oleg
 *.7z
 *.dmg
 *.gz
@@ -45,16 +46,36 @@ nbdist/
 *.sar
 *.class
 
-### Git ###
-.git/
-git/
-.git
-*.log
+# Maven 
+target/
 
-*.DS_Store
-Thumbs.db
-*.sw?
-.#*
-*#
-*~
-*.sublime-*
+# IntelliJ project files 
+*.iml
+*.iws
+*.ipr
+.idea/
+
+# eclipse project file
+.settings/
+.classpath
+.project
+
+# NetBeans specific
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+nbactions.xml
+nb-configuration.xml
+
+
+# OS
+.DS_Store
+
+# Misc
+*.swp
+release.properties
+pom.xml.releaseBackup
+pom.xml.tag
+/bin/

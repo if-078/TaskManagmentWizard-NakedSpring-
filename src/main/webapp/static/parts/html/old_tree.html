@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="time managment tool">
+    <meta name="author" content="RO">
+    <link rel="shortcut icon" href="static/imgs/favicon-32x32.png">
+    <title>Tmw</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link href="static/css/mystyle.css" rel="stylesheet" type="text/css">
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <script src="static/js/script.js"></script>
+
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+      <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+    <!--makar. tree--
+    <link href="static/parts/css/style_tree.css" rel="stylesheet" type="text/css">--
+    <link href="static/parts/css/demo.css" rel="stylesheet" type="text/css">
+    <link href="static/parts/css/easyui.css" rel="stylesheet" type="text/css">
+    <link href="static/parts/css/icon.css" rel="stylesheet" type="text/css">
+    <script src="static/parts/js/easyloader.js"></script>
+    <script src="static/parts/js/jquery.easyui.min.js"></script>
+    <script src="static/parts/js/jquery.easyui.mobile.js"></script>
+    <script src="static/parts/js/jquery.min.js"></script>
+
+
+<!--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+    <link rel='stylesheet prefetch' href='https://code.ionicframework.com/ionicons/1.5.2/css/ionicons.min.css'>
+-->
+
+</head>
+
+<body>
+<div class="main-container">
+    <header>
+
+        <div id="header-logo-container"><a href="/"><img id="logo" src="static/imgs/logo.png" height="50"
+                                                         width="50"></a><p>Task Managment Wizard</p></div>
+        <div id="search-container"><input type="search" >
+            <button type="button" class="btn">Go!</button>
+        </div>
+
+        <div id="auth-container"><a href="#">Sign Up</a>|<a>Sign In</a></div>
+    </header>
+    <div class="data-container">
+        <aside class="btn-group-vertical">
+            <button id="tasks-btn" type="button" class="btn btn-default">Tasks<span class="counter"></span></button>
+            <button id="for-today-btn" type="button" class="btn btn-default">For Today <span class="counter"></span>
+            </button>
+            <button id="sprint-btn" type="button" class="btn btn-default">Sprint<span class="counter"></span></button>
+
+            <!--makar. tree-->
+            <ul class="tree">
+
+                <li class="tree-item">
+                    <a href="" class="ion-document">ROOT</a>
+                </li>
+                <li class="tree-item">
+                    <a href="" class="trigger">●</a>
+                    <a href="" class="ion-document">Parent1</a>
+
+                    <ul class="tree-parent">
+
+                        <li class="tree-item view">
+                            <a href="" class="ion-document">Child</a>
+                        </li>
+
+                        <li class="tree-item view">
+                            <a href="" class="trigger">●</a>
+                            <a href="" class="ion-document">ChildTest</a>
+                            <ul class="tree-parent">
+                                <li class="tree-item view">
+                                    <a href="" class="ion-document">ChildTest1</a>
+                                </li>
+                                <li class="tree-item view">
+                                    <a href="" class="trigger">●</a>
+                                    <a href="" class="ion-document">ChildTest2</a>
+                                    <ul class="tree-parent">
+                                        <li class="tree-item view">
+                                            <a href="" class="ion-document">ChildTest2.1</a>
+                                        </li>
+                                        <li class="tree-item view">
+                                            <a href="" class="ion-document">ChildTest2.2</a>
+                                        </li>
+                                        <li class="tree-item view">
+                                            <a href="" class="ion-document">ChildTest2.3</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="tree-item view">
+                                    <a href="" class="ion-document">ChildTest3</a>
+                                </li>
+                            </ul>
+                        </li>
+
+
+                        <li class="tree-item tree-views-item">
+                            <a href="" class="ion-document">Child</a>
+                        </li>
+                        <li class="tree-item view">
+                            <a href="" class="ion-document">Child</a>
+                        </li>
+                        <li class="tree-item view">
+                            <a href="" class="ion-document">Child</a>
+                        </li>
+                    </ul>
+
+                </li>
+
+                <li class="tree-item">
+                    <a href="" class="trigger">●</a>
+                    <a href="" class="ion-document">Parent2</a>
+
+                    <ul class="tree-parent">
+
+                        <li class="tree-item view">
+                            <a href="" class="ion-document">Child</a>
+                        </li>
+                    </ul>
+
+                </li>
+
+            </ul>
+
+
+        </aside>
+
+        <article class="content-container">
+            <div id="welcome-container" class="content"><h1>Welcome!</h1></div>
+            <div id="task-container" class="content">
+                <button id="showAddTaskForm">Add task</button>
+                </br>
+
+                <form id="addTaskForm" style="display:none">
+
+                    <div>Name: </div>
+                    <input id="name" type="text" />
+                    <div>Start</div>
+                    <input id="startDate" type="datetime" class="data"/>
+                    <div>End</div>
+                    <input id="endDate"  type="datetime" class="data"/>
+
+                    </br>
+                    </br>
+                    <input id="addTaskSubmit" type="submit" value="Add task">
+                </form>
+            </div>
+
+            <div id="today-container" class="content">
+                <h2>Tasks For Today</h2>
+            </div>
+            <div id="sprint-container" class="content">
+                <h2>Sprint</h2>
+            </div>
+
+            <div id="update-container" class="content">
+
+                <form id="updateTaskForm">
+
+                    <div>Name: </div>
+                    <input id="nameU" type="text" border-radius: 10px/>
+                    <div>Start</div>
+                    <input id="startDate" type="datetime" class="data"/>
+                    <div>End</div>
+                    <input id="endDate" type="datetime" class="data"/>
+                    <!-- <div>Estimate time: </div>
+                    <input id="estimateTime" type="text" border-radius: 10px/> -->
+                    <div>Assign to: </div>
+                    <input id="assignTo" type="text" border-radius: 10px/>
+                    <div>Priority</div>
+                    <input id="priority" type="text" border-radius: 10px/>
+                    <div>Status</div>
+                    <input id="status" type="text" border-radius: 10px/>
+                    
+
+                    </br>
+                    </br>
+                    <input id="updateTaskSubmit" type="submit" value="Update task">
+                </form>
+            </div>
+
+        </article>
+    </div>
+
+    <footer>
+        <h3>© 2017 if-078</h3>
+    </footer>
+</div>
+
+<script>
+        $(function () {
+            $(".data").datepicker({
+                dateFormat: "yy-mm-dd"
+            });
+        });
+        $(".data").datepicker("option", "dateFormat", "yy-mm-dd");
+
+    </script>
+</body>
+</html>

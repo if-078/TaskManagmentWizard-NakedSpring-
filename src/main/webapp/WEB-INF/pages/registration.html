@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>SignUp</title>
+    <link rel="shortcut icon" href="../../static/imgs/favicon-32x32.png">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+    <style>
+        body,
+        html {
+            height: 100%;
+             background-color: #2d3e50;
+        }
+
+        .body {
+            /* The image used */
+            background-color: aqua;
+
+            /* Full height */
+            height: 100%;
+
+            /* Center and scale the image nicely */
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        input{
+            border-radius: 10px;
+        }
+        legend{
+           font-family: fantasy; 
+            font-size:50px;
+        }
+        p, pre,label,legend{
+            color:white
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-5">
+                <form class=" form-horizontal " action='' method="POST ">
+                    <fieldset>
+                        <div id="legend ">
+                            <legend class=" ">Register</legend>
+                        </div>
+                        <div class="control-group ">
+                            <!-- Username -->
+                            <label class="control-label " for="username ">User name</label>
+                            <div style="margin-bottom: 25px" class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-user" aria-hidden="true"></i></span>
+                                <input id="login-username" type="text" class="form-control" name="username" value="" placeholder="email">
+                            </div>
+                        </div>
+
+                        <div class="control-group ">
+                            <!-- E-mail -->
+                            <label class="control-label " for="email ">E-mail</label>
+                            <div style="margin-bottom: 25px" class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-envelope" aria-hidden="true"></i></i></span>
+                                <input id="login-password" type="password" class="form-control" name="password" placeholder="password">
+                            </div>
+                        </div>
+
+                        <div class="control-group ">
+                            <!-- Password-->
+                            <label class="control-label " for="password ">Password</label>
+                            <div style="margin-bottom: 25px" class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-unlock-alt" aria-hidden="true"></i></span>
+                                <input id="login-password" type="password" class="form-control" name="password" placeholder="password">
+                            </div>
+                        </div>
+
+                        <div class="control-group ">
+                            <!-- Password -->
+                            <label class="control-label " for="password_confirm ">Password (Confirm)</label>
+                            <div style="margin-bottom: 25px" class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-unlock-alt" aria-hidden="true"></i></span>
+                                <input id="login-password" type="password" class="form-control" name="password" placeholder="password">
+                            </div>
+                        </div>
+
+                        <div class="control-group ">
+                            <!-- Button -->
+                            <div class="controls ">
+                                <button class="btn btn-success ">Sign Up</button>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
+</body>
+
+</html>

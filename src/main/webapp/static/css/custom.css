@@ -1,3 +1,7 @@
+/*BODY*/
+html, body{
+    background-color:#f2f2f2;
+}
 /*HEADER*/
 
 #header {
@@ -5,7 +9,7 @@
 }
 
 #brand p,
-#user-profile p {
+#user-profile  {
     font-family: fantasy;
     color: white;
     font-size: 25px;
@@ -18,27 +22,34 @@
 }
 
 #logo {
-    width: 100px;
-    height: 100px;
+    width: 130px;
+    height: 130px;
     filter: invert(100%);
 }
 
 
 #user-profile {
     display: flex;
-    color: darkcyan;
+    color: white;
+    
+}
+#user-profile:hover{
+    color:#990073;
 }
 
 /*NAVBAR CONTENT BLOCK CONTAINER*/
-
+#main-container{
+    background-color:#e3e3e3;
+}
 #data-container {
     margin-top: 10px;
+      
 }
 
 /*NAVIGABLE BAR*/
 
 #nav {
-    background-color: white;
+  
 }
 
 #nav span {
@@ -56,7 +67,7 @@
 /*FOOTER*/
 
 #footer {
-    background: #2d3e50;
+    background:#2d3e50;
 }
 
 #footer span {

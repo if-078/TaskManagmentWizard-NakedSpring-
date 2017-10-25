@@ -13,10 +13,14 @@
 
     </head>
     <body>
-
-
-        <div >
-            <input id="filterButton" type="submit" value="Set filter options  "/>
+    <div id="filterButtomBlock">
+        <input id="filterButton" class="easyui-linkbutton" type="submit" value="Set filter options  "/>
+    </div>
+        <div id="dateBlock1">
+          <label for="Fr">Fr</label>  <input id="Fr" class="easyui-datebox" >
+        </div>
+            <div id="dateBlock2">
+            <label for="To">To</label>   <input id="To" class="easyui-datebox"  >
         </div>
         <div >
             <input id="statusBox" class="easyui-tagbox"  style="width:100%;padding:2px 2px;" data-options="
@@ -60,8 +64,8 @@
         <script type="text/javascript">
             $("#filterButton").on("click", function () {
                 var mass1 = $("#tagBox").val();
-                console.log = mass1;
-                alert1("kyky");
+                console.log(mass1);
+                alert("kyky_test");
             });
         </script>
     </body>

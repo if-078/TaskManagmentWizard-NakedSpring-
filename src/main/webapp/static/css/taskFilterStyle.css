@@ -1,20 +1,23 @@
 #leftPanel {
     overflow:scroll;
     overflow-x:hidden;
-    height:100%;
-    max-height:150px;
+    height: 33%;
+    max-height:190px;
     width:100%;
-    max-width:250px;
+    /*max-width:250px;*/
     padding:15px 15px;
     position:relative;
+
 }
 
 #leftPanel > div{
-    padding:2px 2px;
+    padding:1px 1px;
 }
 
 #leftPanel > div > input.easyui-linkbutton{
-   font-size: 15px;
-   letter-spacing:0.7px;
+   font-size: 14px;
+   letter-spacing:0.5px;
    text-indent:16px;
+   position: relative;
+    left: 5px;
 }

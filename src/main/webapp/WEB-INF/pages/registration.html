@@ -10,31 +10,27 @@
     <style>
         body,
         html {
-            height: 100%;
-             background-color: #2d3e50;
+
+            background-color: #2d3e50;
         }
 
-        .body {
-            /* The image used */
-            background-color: aqua;
-
-            /* Full height */
-            height: 100%;
-
-            /* Center and scale the image nicely */
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: cover;
-        }
-        input{
+        input {
             border-radius: 10px;
         }
-        legend{
-           font-family: fantasy; 
-            font-size:50px;
+
+        legend {
+            font-family: fantasy;
+            font-size: 50px;
         }
-        p, pre,label,legend{
-            color:white
+
+        p,
+        pre,
+        label,
+        legend {
+            color: white
+        }
+        #register-box{
+            margin-top: 50px;
         }
     </style>
 </head>
@@ -42,7 +38,7 @@
 <body>
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-5">
+            <div id="register-box"class="col-md-5">
                 <form class=" form-horizontal " action='' method="POST ">
                     <fieldset>
                         <div id="legend ">
@@ -51,7 +47,7 @@
                         <div class="control-group ">
                             <!-- Username -->
                             <label class="control-label " for="username ">User name</label>
-                            <div style="margin-bottom: 25px" class="input-group">
+                            <div style="margin-bottom: 10px" class="input-group">
                                 <span class="input-group-addon"><i class="fa fa-user" aria-hidden="true"></i></span>
                                 <input id="login-username" type="text" class="form-control" name="username" value="" placeholder="email">
                             </div>
@@ -60,16 +56,16 @@
                         <div class="control-group ">
                             <!-- E-mail -->
                             <label class="control-label " for="email ">E-mail</label>
-                            <div style="margin-bottom: 25px" class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-envelope" aria-hidden="true"></i></i></span>
-                                <input id="login-password" type="password" class="form-control" name="password" placeholder="password">
+                            <div style="margin-bottom: 10px" class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-envelope" aria-hidden="true"></i></span>
+                                <input id="login-password" type="password" class="form-control" name="password" placeholder="E-mail">
                             </div>
                         </div>
 
                         <div class="control-group ">
                             <!-- Password-->
                             <label class="control-label " for="password ">Password</label>
-                            <div style="margin-bottom: 25px" class="input-group">
+                            <div style="margin-bottom: 10px" class="input-group">
                                 <span class="input-group-addon"><i class="fa fa-unlock-alt" aria-hidden="true"></i></span>
                                 <input id="login-password" type="password" class="form-control" name="password" placeholder="password">
                             </div>
@@ -78,9 +74,9 @@
                         <div class="control-group ">
                             <!-- Password -->
                             <label class="control-label " for="password_confirm ">Password (Confirm)</label>
-                            <div style="margin-bottom: 25px" class="input-group">
+                            <div style="margin-bottom: 10px" class="input-group">
                                 <span class="input-group-addon"><i class="fa fa-unlock-alt" aria-hidden="true"></i></span>
-                                <input id="login-password" type="password" class="form-control" name="password" placeholder="password">
+                                <input id="login-password" type="password" class="form-control" name="password" placeholder="confirm password">
                             </div>
                         </div>
 

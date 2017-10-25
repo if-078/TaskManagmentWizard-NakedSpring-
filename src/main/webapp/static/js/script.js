@@ -3,7 +3,8 @@
         $("#tasks-btn").click(function () {
             clearContent();
             $(".task").remove();
-            getTasks();
+            //getTasks();
+            $("#task-container").load('/static/load-pages/task.html');
             $("#task-container").show();
         })
         $("#for-today-btn").click(function () {
@@ -35,7 +36,7 @@
 
 
 
-        $("#showForm").click(function (event) {
+       /* $("#showForm").click(function (event) {
             showForm();  
             event.preventDefault(); 
             $("#showForm").submit(function(event){
@@ -43,16 +44,16 @@
             event.preventDefault();
         });
                  
-        })
+        })*/
 
-        $('#showAddTaskForm').click(function (event) {
+/*        $('#showAddTaskForm').click(function (event) {
             showAddForm();  
             event.preventDefault(); 
             $("#addTaskSubmit").click(function(event){
             addTask();
             event.preventDefault(); 
         });
-        });
+        });*/
 
 /*makar. tree*/
 $('.trigger').click(function(e){
@@ -120,7 +121,7 @@ $('.root-document').click(function(e) {
         }
 
 
-        $("#update").click(function () {
+/*        $("#update").click(function () {
             clearContent();
             $(".task").remove();
             $("#update-container").show();
@@ -129,7 +130,7 @@ $('.root-document').click(function(e) {
                 event.preventDefault();
             })
 
-        })
+        })*/
     }
 
     function renderTreeTasks(list, user_id) {
@@ -320,7 +321,7 @@ $('.root-document').click(function(e) {
     }
 
 
-    function addTask() {
+    /*function addTask() {
         var list = {
             name: $('#name').val(),
             startDate: $('#startDate').val(),
@@ -336,7 +337,7 @@ $('.root-document').click(function(e) {
                 hideAddForm();
             }
         });
-    }
+    }*/
 
     function getPriority(id) {
         var list;
@@ -364,7 +365,7 @@ $('.root-document').click(function(e) {
         return list;
     }
 
-    function updateTask(task) {
+    /*function updateTask(task) {
         
         var list = {
             name: $('#nameU').val(),
@@ -388,4 +389,4 @@ $('.root-document').click(function(e) {
             }
         });
     }
-    
+    */

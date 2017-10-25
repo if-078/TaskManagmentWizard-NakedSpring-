@@ -24,10 +24,10 @@ public class TaskController {
     this.taskService = taskService;
   }
 
-  @PostMapping
+ /* @PostMapping
   public Task createTask(@RequestBody Task task) throws SQLException {
     return  taskService.create(task);
-  }
+  }*/
 
   /*@PutMapping("/update")
   boolean updateTask(@RequestBody String json) throws SQLException, IOException {
@@ -35,23 +35,47 @@ public class TaskController {
     return taskService.update(taskObj);
   }*/
 
-  @PutMapping("/update")
+  /*@PutMapping("/update")
   boolean updateTask(@RequestBody Task task) throws SQLException {
     return taskService.update(task);
   }
-
-  @DeleteMapping("/delete")
+*/
+ /* @DeleteMapping("/delete")
   boolean deleteTask(@RequestBody String json) throws SQLException, IOException {
     Task task = new Task();
     task = objectMapper.readValue(json, Task.class);
     return taskService.delete(task.getId());
+  }*/
+
+  @PostMapping
+  public Task createTask(@RequestBody Task task) {
+    System.out.println(" -- create task ---");
+    return  taskService.create(task);
   }
 
-  @GetMapping("/")
+  @PutMapping
+  boolean updateTask(@RequestBody Task task) {
+    System.out.println("-- update -- ");
+    return taskService.update(task);
+  }
+
+  @DeleteMapping("/{id}")
+  boolean deleteTask(@PathVariable Integer id){
+    System.out.println("-- delete task ---");
+    return taskService.delete(id);
+  }
+
+/*  @GetMapping("/")
   String getAllTasks() throws SQLException, JsonProcessingException {
     List list = taskService.getAll();
     String json = objectMapper.writeValueAsString(list);
     return json;
+  }*/
+
+  @GetMapping
+  List<Task> getAllTasks() {
+    System.out.println("task controller");
+    return taskService.getAll();
   }
 
   @GetMapping("/one")

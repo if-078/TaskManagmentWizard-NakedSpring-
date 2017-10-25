@@ -1,6 +1,5 @@
-
 <!DOCTYPE html>
-<html lang="en" xmlns:border-radius="http://www.w3.org/1999/xhtml">
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,37 +8,17 @@
     <meta name="author" content="RO">
     <link rel="shortcut icon" href="static/imgs/favicon-32x32.png">
     <title>Tmw</title>
-
-    <!--CSS-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
-    <!--EasyUI-->
-    <link rel="stylesheet" type="text/css" href="static/easyui/themes/default/easyui.css">
-    <link rel="stylesheet" type="text/css" href="static/easyui/themes/icon.css">
-
-    <!--Bootstrap data-table-->
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css">
-    <link href="static/css/mystyle.css" rel="stylesheet" type="text/css">
-
-    <!--JS-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
-    <!--EasyUI-->
-    <script type="text/javascript" src="static/easyui/jquery.min.js"></script>
-    <script type="text/javascript" src="static/easyui/jquery.easyui.min.js"></script>
-    
-
-    <!--Other-->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link href="static/css/mystyle.css" rel="stylesheet" type="text/css">
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-
-    <!--JS data-table -->
-    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
     <script src="static/js/script.js"></script>
+
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+      <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
     <!--makar. tree--
     <link href="static/parts/css/style_tree.css" rel="stylesheet" type="text/css">--
@@ -79,68 +58,82 @@
 
             <!--makar. tree-->
             <ul class="tree">
+
                 <li class="tree-item">
-                    <a id="empty" href="" class="root-document">ROOT</a>
+                    <a href="" class="ion-document">ROOT</a>
                 </li>
+                <li class="tree-item">
+                    <a href="" class="trigger">●</a>
+                    <a href="" class="ion-document">Parent1</a>
+
+                    <ul class="tree-parent">
+
+                        <li class="tree-item view">
+                            <a href="" class="ion-document">Child</a>
+                        </li>
+
+                        <li class="tree-item view">
+                            <a href="" class="trigger">●</a>
+                            <a href="" class="ion-document">ChildTest</a>
+                            <ul class="tree-parent">
+                                <li class="tree-item view">
+                                    <a href="" class="ion-document">ChildTest1</a>
+                                </li>
+                                <li class="tree-item view">
+                                    <a href="" class="trigger">●</a>
+                                    <a href="" class="ion-document">ChildTest2</a>
+                                    <ul class="tree-parent">
+                                        <li class="tree-item view">
+                                            <a href="" class="ion-document">ChildTest2.1</a>
+                                        </li>
+                                        <li class="tree-item view">
+                                            <a href="" class="ion-document">ChildTest2.2</a>
+                                        </li>
+                                        <li class="tree-item view">
+                                            <a href="" class="ion-document">ChildTest2.3</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="tree-item view">
+                                    <a href="" class="ion-document">ChildTest3</a>
+                                </li>
+                            </ul>
+                        </li>
+
+
+                        <li class="tree-item tree-views-item">
+                            <a href="" class="ion-document">Child</a>
+                        </li>
+                        <li class="tree-item view">
+                            <a href="" class="ion-document">Child</a>
+                        </li>
+                        <li class="tree-item view">
+                            <a href="" class="ion-document">Child</a>
+                        </li>
+                    </ul>
+
+                </li>
+
+                <li class="tree-item">
+                    <a href="" class="trigger">●</a>
+                    <a href="" class="ion-document">Parent2</a>
+
+                    <ul class="tree-parent">
+
+                        <li class="tree-item view">
+                            <a href="" class="ion-document">Child</a>
+                        </li>
+                    </ul>
+
+                </li>
+
             </ul>
-            <!--makar.tree-->
 
-            <button id="user-btn" type="button" class="btn btn-default">Users<span class="counter"></span></button>
 
-            <div class="easyui-panel" style="overflow:scroll;overflow-x:hidden;
-                         height:100%;max-height:150px;width:100%;max-width:250px;padding:15px 15px;">
-
-                <form id="TagFilter" method="get">
-                    <div style="padding:2px 2px;">
-                        <input class="easyui-linkbutton" type="submit" style="font-size: 15px;letter-spacing:0.7px;text-indent:16px;"
-                               name="Set filter options" value="Set filter options    "/>
-                    </div>
-                    <div style="padding:2px 0px;">
-                        <input class="easyui-tagbox" style="width:100%;padding:2px 2px;" data-options="
-                                       url: 'status/all',
-                                       method: 'get',
-                                        mode: 'remote',
-                                       valueField: 'id',
-                                       textField: 'name',
-                                       multiple:true,
-                                       limitToList: true,
-                                       hasDownArrow: true,
-                                       prompt: 'Select status/es'
-                                       "/>
-                    </div>
-                    <div style="padding:2px 0px;">
-                        <input class="easyui-tagbox" style="width:100%;padding:2px 2px;" data-options="
-                                       url: 'priority/all',
-                                       method: 'get',
-                                        mode: 'remote',
-                                       valueField: 'id',
-                                       textField: 'name',
-                                       multiple:true,
-                                       limitToList: true,
-                                       hasDownArrow: true,
-                                       prompt: 'Select priority/s'
-                                       "/>
-                    </div>
-                    <div style="padding:2px 0px;">
-                        <input class="easyui-tagbox" style="width:100%;" data-options="
-                                       url: 'users/1/tags/all',
-                                       method: 'get',
-                                       mode: 'remote',
-                                       valueField: 'id',
-                                       textField: 'name',
-                                       multiple:true,
-                                       limitToList: true,
-                                       hasDownArrow: true,
-                                       prompt: 'Select a tag/s'
-                                       "/>
-                    </div>
-                </form>
-            </div>
         </aside>
 
         <article class="content-container">
             <div id="welcome-container" class="content"><h1>Welcome!</h1></div>
-            <div id="user-container" class="content"></div>
             <div id="task-container" class="content">
                 <button id="showAddTaskForm">Add task</button>
                 </br>
@@ -169,7 +162,7 @@
 
             <div id="update-container" class="content">
 
-    <!--            <form id="updateTaskForm">
+                <form id="updateTaskForm">
 
                     <div>Name: </div>
                     <input id="nameU" type="text" border-radius: 10px/>
@@ -177,20 +170,20 @@
                     <input id="startDate" type="datetime" class="data"/>
                     <div>End</div>
                     <input id="endDate" type="datetime" class="data"/>
-                    &lt;!&ndash; <div>Estimate time: </div>
-                    <input id="estimateTime" type="text" border-radius: 10px/> &ndash;&gt;
+                    <!-- <div>Estimate time: </div>
+                    <input id="estimateTime" type="text" border-radius: 10px/> -->
                     <div>Assign to: </div>
                     <input id="assignTo" type="text" border-radius: 10px/>
                     <div>Priority</div>
                     <input id="priority" type="text" border-radius: 10px/>
                     <div>Status</div>
                     <input id="status" type="text" border-radius: 10px/>
-
+                    
 
                     </br>
                     </br>
                     <input id="updateTaskSubmit" type="submit" value="Update task">
-                </form>-->
+                </form>
             </div>
 
         </article>
@@ -202,12 +195,13 @@
 </div>
 
 <script>
-    /*$(function () {
-        $(".data").datepicker({
-            dateFormat: "yy-mm-dd"
+        $(function () {
+            $(".data").datepicker({
+                dateFormat: "yy-mm-dd"
+            });
         });
-    });
-    $(".data").datepicker("option", "dateFormat", "yy-mm-dd");*/
-</script>
+        $(".data").datepicker("option", "dateFormat", "yy-mm-dd");
+
+    </script>
 </body>
 </html>

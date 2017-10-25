@@ -99,14 +99,18 @@ $('.root-document').click(function(e) {
                 url: "tasks/",
                 type: "GET",
                 success: function (data) {
-                    var list = [JSON.parse(data)];
-                    renderTasksFromTree(list[0], id);
+                    //var list = [JSON.parse(data)];
+                    renderTasksFromTree(data, id);
                 }
             });
     }
     function renderTasksFromTree(list, id) {
+        console.log("---list---");
+        console.log(list);
+        console.log("---list---");
+
         for (var task = 0; task < list.length; task++) {
-        if (list[task].id==id) {
+        if (list[task].id == id) {
             var idTask = "task" + id;
             var searchId = "#" + id;
             var name = list[task].name;
@@ -134,6 +138,7 @@ $('.root-document').click(function(e) {
     }
 
     function renderTreeTasks(list, user_id) {
+        console.log(list);
         var list1 = [];
         for (var task = 0; task < list.length; task++) {
             if (list[task].assignTo==user_id) {
@@ -188,22 +193,24 @@ $('.root-document').click(function(e) {
 
     function getTreeTasks(user_id) {
         $.ajax({
-            url: "tasks/",
+            url: "tasks",
             type: "GET",
+            contentType: 'application/json',
             success: function (data) {
-                var list = JSON.parse(data);
-                renderTreeTasks(list, user_id);
+                //var list = JSON.parse(data);
+                renderTreeTasks(data, user_id);
             }
         });
     }
     //makar.tree.end
     function getTasks() {
         $.ajax({
-            url: "tasks/",
+            url: "tasks",
             type: "GET",
+            contentType: 'application/json',
             success: function (data) {
-                var list = JSON.parse(data);
-                renderTasks(list);
+                //var list = JSON.parse(data);
+                renderTasks(data);
             }
         });
     }

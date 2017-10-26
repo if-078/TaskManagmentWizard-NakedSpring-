@@ -17,10 +17,10 @@
         <input id="filterButton" class="easyui-linkbutton" type="submit" value="Set filter options  "/>
     </div>
         <div id="dateBlock1">
-          <label for="Fr">Fr</label>  <input id="Fr" class="easyui-datebox" >
+          <label for="start">Fr</label>  <input id="start" class="easyui-datebox" >
         </div>
             <div id="dateBlock2">
-            <label for="To">To</label>   <input id="To" class="easyui-datebox"  >
+            <label for="end">To</label>   <input id="end" class="easyui-datebox"  >
         </div>
         <div >
             <input id="statusBox" class="easyui-tagbox"  style="width:100%;padding:2px 2px;" data-options="
@@ -62,11 +62,37 @@
                    "/>
         </div>
         <script type="text/javascript">
-            $("#filterButton").on("click", function () {
-                var mass1 = $("#tagBox").val();
-                console.log(mass1);
-                alert("kyky_test");
+
+            function Filter(startDate, endDate) {
+                this.startDate=startDate;
+                this.endDate=endDate;
+            };
+
+            Filter.prototype = {
+               setStatus : function (status) {
+                   this.status=status;
+               },
+                setPriority : function (priority) {
+                    this.priority=priority;
+                },
+                setTag : function (tag) {
+                    this.tag=tag;
+                }
+            }
+
+            var myFilter;
+
+            $("#filterButton").on("click", function setFilerValues() {
+                myFilter = new Filter($("#start").val(), $("#end").val());
+                myFilter.setPriority($("#priorityBox").val().split(","));
+                myFilter.setStatus($("#statusBox").val().split(","));
+                myFilter.setTag($("#tagBox").val().split(","));
+                console.log(myFilter);
             });
+
+
+
+
         </script>
     </body>
 </html>

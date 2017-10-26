@@ -142,20 +142,20 @@ $('.root-document').click(function(e) {
             var parent = list[task].parentId;
             if (parent==0) {
                 $(".tree").append("<li id='t" + id + "' class='tree-item'></li>");
-                $("#t" + id).html("<a href = '" + id + "' class='ion-document'>" + name + "</a>");
+                $("#t" + id).append("<a href = '" + id + "' class='ion-document'>" + name + "</a>");
                 }
             else {
                 var par_name = $("#t" + parent + " a:first").text();
                 if (par_name!="●") {
                 $("#t" + parent).html("<a href='' class='trigger'>●</a>" +
-                "<a href='" + id + "' class='ion-document'>" + par_name + "</a><ul class='tree-parent'>" +
-                "<li id='t" + id + "' class='tree-item'><a href='" + id + "' class='ion-document'>" +
-                name + "</a></li></ul>");
+                "<a href='" + id + "' class='ion-document'>" + par_name + "</a><ul class='tree-parent'></ul>");
+                $("#t"+parent+" ul:first").append("<li id='t" + id + "' class='tree-item view'></li>");
+                $("#t"+parent+" ul:first li:first").append("<a href='" + id + "' class='ion-document'>" +
+                name + "</a>");
                 }
                 else {
-                $("#t"+parent+" ul").append("<li id='t" + id +
-                "' class='tree-item'><a href='" + id + "' class='ion-document'>" +
-                name + "</a></li>");
+                $("#t"+parent+" ul:first").append("<li id='t" + id + "' class='tree-item view'></li>");
+                $("#t"+parent+" ul:first li:first").append("<a href='" + id + "' class='ion-document'>" + name + "</a>");
                 }
                 if (par_name=="") list.push(list[task]);
             }

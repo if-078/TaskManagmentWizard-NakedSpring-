@@ -14,4 +14,9 @@ public class MainController {
     public String getLoginPage(){
         return "login";
     }
+
+    @RequestMapping("/task")
+    public String getTaskPage(){
+        return "task";
+    }
 }

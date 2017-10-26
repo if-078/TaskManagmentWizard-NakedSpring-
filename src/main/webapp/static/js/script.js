@@ -50,7 +50,7 @@
         });
 
 /*makar. tree*/
-$('.trigger').click(function(e){
+/*$('.trigger').click(function(e){
   e.preventDefault();
   var childUl = $(this).siblings("ul.tree-parent");
   if( childUl.hasClass('open') ){
@@ -61,7 +61,7 @@ $('.trigger').click(function(e){
     childUl.addClass('open');
   }
 
-});
+});*/
 
 $('.ion-document').click(function(e) {
      e.preventDefault();
@@ -141,21 +141,21 @@ $('.root-document').click(function(e) {
             var name = list[task].name;
             var parent = list[task].parentId;
             if (parent==0) {
-                $(".tree").append("<li id='t" + id + "' class='tree-item'></li>");
-                $("#t" + id).append("<a href = '" + id + "' class='ion-document'>" + name + "</a>");
+                $(".tree").append("<li id='t" + id + "' class='tree-item'><a href = '" + id +
+                "' class='ion-document'>" + name + "</a></li>");
                 }
             else {
                 var par_name = $("#t" + parent + " a:first").text();
                 if (par_name!="●") {
                 $("#t" + parent).html("<a href='' class='trigger'>●</a>" +
-                "<a href='" + id + "' class='ion-document'>" + par_name + "</a><ul class='tree-parent'></ul>");
-                $("#t"+parent+" ul:first").append("<li id='t" + id + "' class='tree-item view'></li>");
-                $("#t"+parent+" ul:first li:first").append("<a href='" + id + "' class='ion-document'>" +
+                "<a href='" + parent + "' class='ion-document'>" + par_name + "</a><ul class='tree-parent'></ul>");
+                $("#t"+parent+" ul").append("<li id='t" + id + "' class='tree-item view'></li>");
+                $("#t"+parent+" ul li").append("<a href='" + id + "' class='ion-document'>" +
                 name + "</a>");
                 }
                 else {
-                $("#t"+parent+" ul:first").append("<li id='t" + id + "' class='tree-item view'></li>");
-                $("#t"+parent+" ul:first li:first").append("<a href='" + id + "' class='ion-document'>" + name + "</a>");
+                $("#t"+parent+" ul").append("<li id='t" + id + "' class='tree-item view'><a href='" + id +
+                "' class='ion-document'>" + name + "</a></li>");
                 }
                 if (par_name=="") list.push(list[task]);
             }

@@ -1,9 +1,12 @@
     $(document).ready(function () {
+        $("#task-container").load('/static/load-pages/task.html');
+
         $("#welcome-container").show();
         $("#tasks-btn").click(function () {
             clearContent();
             $(".task").remove();
-            getTasks();
+            var urlAllTaks = 'tasks';
+            initialTableOftasks(urlAllTaks);
             $("#task-container").show();
         });
         $("#for-today-btn").click(function () {
@@ -26,52 +29,149 @@
             $("#user-container").show();
         });
 
-        /*$(document.getElementById("update")).click(function () {
+
+        /*makar. tree*/
+        $('.trigger').click(function(e){
+            e.preventDefault();
+            var childUl = $(this).siblings("ul.tree-parent");
+            if( childUl.hasClass('open') ){
+                $(this).text("●");
+                childUl.removeClass('open');
+            } else {
+                $(this).text("...");
+                childUl.addClass('open');
+            }
+
+        });
+
+        $('.ion-document').click(function(e) {
+            e.preventDefault();
             clearContent();
             $(".task").remove();
-            $("#update-container").show();
-        })*/
-
-
-
-
-        $("#showForm").click(function (event) {
-            showForm();  
-            event.preventDefault(); 
-            $("#showForm").submit(function(event){
-            hideForm();
-            event.preventDefault(); 
+            getTasks();
+            $("#task-container").show();
         });
-                 
-        })
 
-        $('#showAddTaskForm').click(function (event) {
-            showAddForm();  
-            event.preventDefault(); 
-            $("#addTaskSubmit").click(function(event){
-            addTask();
-            event.preventDefault(); 
-        });
+        $('.root-document').click(function(e) {
+            e.preventDefault();
+            if (this.id=="empty") {
+                $(this).attr("id", "full");
+                var user_id = 1;
+                getTreeTasks(user_id);
+            }
+            else {
+                $('a.trigger').text("●");
+                $('.open').find("a.trigger").text("●");
+                $('.open').removeClass('open');
+            }
         });
 
     });
 
+    function getOneTask(id) {
+
+        // it bug it must fix bug in render tree, tree gets bad if of task
+        id -= 1;
+        var url = "tasks/" + id + "/subtasks";
+        console.log(url);
+        initialTableOftasks(url);
+    }
+
+    function renderTreeTasks(list, user_id) {
+        console.log(list);
+        var list1 = [];
+        for (var task = 0; task < list.length; task++) {
+            if (list[task].assignTo == user_id) {
+                list1.push(list[task]);
+            }
+        }
+        list1.sort(function(a, b){return a.parentId - b.parentId});
+        list = list1;
+        for (var task = 0; task < list.length; task++) {
+            var id = list[task].id;
+            var name = list[task].name;
+            var parent = list[task].parentId;
+            if (parent == 0) {
+
+                console.log("in sort");
+                console.log(id);
+
+                $(".tree").append("<li id='t" + id + "' class='tree-item'></li>");
+                $("#t" + id).html("<a href = '" + id + "' class='ion-document'>" + name + "</a>");
+
+                console.log("after sort");
+                console.log(id);
+            }
+            else {
+                var par_name = $("#t" + parent + " a:first").text();
+                if (par_name != "●") {
+                    $("#t" + parent).html("<a href='' class='trigger'>●</a>" +
+                    "<a href='" + id + "' class='ion-document'>" + par_name + "</a><ul class='tree-parent'>" +
+                    "<li id='t" + id + "' class='tree-item'><a href='" + id + "' class='ion-document'>" +
+                    name + "</a></li></ul>");
+
+                    console.log("if parName");
+                    console.log(id);
+                }
+                else {
+                    $("#t"+parent+" ul").append("<li id='t" + id +
+                    "' class='tree-item'><a href='" + id + "' class='ion-document'>" +
+                    name + "</a></li>");
+                    console.log("else parName");
+                    console.log(id);
+                }
+                if (par_name == "") list.push(list[task]);
+            }
+        }
+        $('.trigger').click(function(e){
+            e.preventDefault();
+            var childUl = $(this).siblings("ul.tree-parent");
+            if( childUl.hasClass('open') ){
+                $(this).text("●");
+                childUl.removeClass('open');
+            } else {
+                $(this).text("...");
+                childUl.addClass('open');
+            }
+        })
+        $('.ion-document').click(function(e) {
+            e.preventDefault();
+            clearContent();
+            $(".task").remove();
+
+
+            getOneTask($(this).attr("href"));
+            $("#task-container").show();
+        })
+    }
+
+    function getTreeTasks(user_id) {
+        $.ajax({
+            url: "tasks",
+            type: "GET",
+            contentType: 'application/json',
+            success: function (data) {
+                renderTreeTasks(data, user_id);
+            }
+        });
+    }
+/*
     function getTasks() {
         $.ajax({
             url: "tasks/",
             type: "GET",
+            contentType: 'application/json',
             success: function (data) {
-                var list = JSON.parse(data);
-                renderTasks(list);
+                renderTasks(data);
             }
         });
-    }
+    }*/
 
     function clearContent() {
         $(".content").hide();
     }
 
-    function renderTasks(list) {
+/*    function renderTasks(list) {
 
         for (var task = 0; task < list.length; task++) {
             var id = "task" + list[task].id;
@@ -95,9 +195,9 @@
             })
 
         })
-    }
+    }*/
 
-    function getTodayTasks() {
+/*    function getTodayTasks() {
         $.ajax({
             url: "tasks/today",
             type: "GET",
@@ -106,9 +206,9 @@
                 renderForTodayTasks(list);
             }
         });
-    }
+    }*/
 
-    function renderForTodayTasks(list) {
+ /*   function renderForTodayTasks(list) {
 
         for (var task = 0; task < list.length; task++) {
             var id = "task" + list[task].id;
@@ -120,9 +220,9 @@
             $("#today-container").append("<div id='" + id + "' class='task'></div>");
             $(searchId).html("<p class='name'>" + name + "</p><p class='priority'>Priority: " + getPriority(priority) + "</p><p class='status'>Status: " + getStatus(status) + "</p><p class='createdday'>" + createdDate + "</p><p><button id=\"update\">Update</button></p>");
         }
-    }
+    }*/
 
-    function getSprintTasks() {
+/*    function getSprintTasks() {
         $.ajax({
             url: "tasks/sprint",
             type: "GET",
@@ -131,8 +231,8 @@
                 renderSprintTasks(list);
             }
         });
-    }
-    function renderSprintTasks(list) {
+    }*/
+/*    function renderSprintTasks(list) {
 
         for (var task = 0; task < list.length; task++) {
             var id = "task" + list[task].id;
@@ -144,7 +244,7 @@
             $("#sprint-container").append("<div id='" + id + "' class='task'></div>");
             $(searchId).html("<p class='name'>" + name + "</p><p class='priority'>Priority: " + getPriority(priority) + "</p><p class='status'>Status: " + getStatus(status) + "</p><p class='createdday'>" + createdDate + "</p><p><button id=\"update\">Update</button></p>");
         }
-    }
+    }*/
     function showForm() {
         $("#taskForm").show(500, function () {
             $("#showForm").hide();
@@ -174,7 +274,7 @@
     }
 
 
-    function addTask() {
+/*    function addTask() {
         var list = {
             name: $('#name').val(),
             startDate: $('#startDate').val(),
@@ -190,9 +290,9 @@
                 hideAddForm();
             }
         });
-    }
+    }*/
 
-    function getPriority(id) {
+    /*function getPriority(id) {
         var list;
         $.ajax({
             url: "priority/" + id,
@@ -240,6 +340,5 @@
                 console.log("good");
                 console.log(data);
             }
-        });
-    }
+        });*/
     

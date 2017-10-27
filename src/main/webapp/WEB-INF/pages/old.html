@@ -28,8 +28,8 @@
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
         <!--EasyUI-->
-        <script type="text/javascript" src="static/easyui/jquery.min.js"></script>
-        <script type="text/javascript" src="static/easyui/jquery.easyui.min.js"></script>
+ <!--       <script type="text/javascript" src="static/easyui/jquery.min.js"></script>-->
+<!--        <script type="text/javascript" src="static/easyui/jquery.easyui.min.js"></script>-->
 
 
         <!--Other-->
@@ -49,7 +49,8 @@
     </head>
 
     <body>
-        <div class="main-container">
+
+    <div class="main-container">
             <header>
 
                 <div id="header-logo-container"><a href="/"><img id="logo" src="static/imgs/logo.png" height="50"
@@ -78,11 +79,147 @@
                 <article class="content-container">
                     <div id="welcome-container" class="content"><h1>Welcome!</h1></div>
                     <div id="user-container" class="content"></div>
-                    <div id="task-container" class="content"></div>
+                    <div id="task-container" class="content">
+
+                        <div style="padding-bottom: 10px;">
+                            <button type="button" id="delete-task" class="btn btn-danger btn-sm"> <span class="glyphicon glyphicon-remove"></span> delete task </button>
+                            <button type="button" id ="btn-modal-task" class="btn btn btn-info btn-sm" data-toggle="modal" data-target="#modal-new-task"><span class="glyphicon glyphicon-list-alt"></span> create task </button>
+                        </div>
+
+                        <div id = 'task-table-container'>
+                        <table id="task-table"  class="table table-bordered" cellspacing="0" width="100%">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>CreatedDate</th>
+                                <th>StartDate</th>
+                                <th>EndDate</th>
+                                <th>EstimateTime</th>
+                                <th>AssignTo</th>
+                                <th>StatusId</th>
+                                <th>PriorityId</th>
+                                <th>ParentId</th>
+                            </tr>
+                            </thead>
+                        </table>
+                        </div>
+
+                    </div>
                     <div id="today-container" class="content"></div>
                     <div id="sprint-container" class="content"></div>
                 </article>
             </div>
+
+        <!--MODAL WINDOW-->
+        <div class="modal fade" id="modal-new-task" tabindex="-1" role="dialog"
+             aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <button type="button" class="close"
+                                data-dismiss="modal">
+                            <span aria-hidden="true">&times;</span>
+                            <span class="sr-only">Close</span>
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">
+                            Create/Update task
+                        </h4>
+                    </div>
+
+                    <!-- Modal Body -->
+                    <div class="modal-body">
+                        <form class="form-horizontal" role="form">
+
+                            <div class="form-group">
+                                <label  class="col-sm-2 control-label"
+                                        for="input-name">Name</label>
+                                <div class="col-sm-10">
+                                    <input type="name" class="form-control" id="input-name" placeholder="Name"/>
+                                    <div id="error-task-name"></div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label  class="col-sm-2 control-label"
+                                        for="input-createdDate">Created Date</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="input-createdDate"/>
+                                    <p id="error-task-input-createdDate"></p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label"
+                                       for="input-startDate" >Start Date</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="input-startDate"/>
+                                    <div id="error-task-startDate"></div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label"
+                                       for="input-estimateTime" >Estimate Time</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="input-estimateTime"/>
+                                    <div id="error-task-estimateTime"></div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label"
+                                       for="input-endDate" >End Date</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="input-endDate"/>
+                                    <div id="error-task-endDate"></div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label"
+                                       for="input-assignTo" >Assign To</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="input-assignTo"/>
+                                    <div id="error-task-assignTo"></div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label"
+                                       for="input-statusId" >Status Id</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="input-statusId"/>
+                                    <div id="error-task-statusId"></div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label"
+                                       for="input-priorityId" >Priority Id</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="input-priorityId"/>
+                                    <div id="error-task-priorityId"></div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label"
+                                       for="input-parentId" >Parent Id</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="input-parentId"/>
+                                    <div id="error-task-parentId"></div>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                    <!-- Modal Footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default"
+                                data-dismiss="modal">
+                            Close
+                        </button>
+                        <button type="button"  id="create-task" class="btn btn-success"> <span class="glyphicon glyphicon-ok"></span> Save </button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
             <footer>
                 <h3>© 2017 if-078</h3>

@@ -171,11 +171,22 @@
 <script type="text/javascript">
     $(document).ready(function() {
         var task = {};
+        var table = null;
         $('#btn-modal-task').click( function () {clearInputtask()});
-
         var url = 'tasks' //default URL
         initialTableOftasks(url);
+
+        if(table != null){
+            console.log("not null table");
+            table.clear().draw();
+        } else {
+            console.log("table empty")
+        }
+
+        console.log("table no else")
     } );
+
+
     function initialTableOftasks(URL) {
         $.ajax({
             type: 'GET',
@@ -183,7 +194,13 @@
             contentType: 'application/json',
             async: true,
             success: function(data) {
-                var table = $('#task-table').DataTable({
+                if(table != null){
+                    console.log("not null table");
+                    table.clear().draw();
+                } else {
+                    console.log("table empty")
+                }
+                table = $('#task-table').DataTable({
                     "destroy": true,
                     "aaData": data,
                     "aoColumns": [

@@ -1,5 +1,5 @@
     $(document).ready(function () {
-        $("#task-container").load('/static/load-pages/task.html');
+    $("#task-container").load('/static/load-pages/task.html');
 
         $("#welcome-container").show();
         $("#tasks-btn").click(function () {
@@ -48,7 +48,7 @@
             e.preventDefault();
             clearContent();
             $(".task").remove();
-            getTasks();
+            //getTasks();
             $("#task-container").show();
         });
 
@@ -69,58 +69,42 @@
     });
 
     function getOneTask(id) {
-
-        // it bug it must fix bug in render tree, tree gets bad if of task
-        id -= 1;
         var url = "tasks/" + id + "/subtasks";
         console.log(url);
         initialTableOftasks(url);
     }
 
     function renderTreeTasks(list, user_id) {
-        console.log(list);
         var list1 = [];
         for (var task = 0; task < list.length; task++) {
-            if (list[task].assignTo == user_id) {
+            if (list[task].assignTo==user_id) {
                 list1.push(list[task]);
             }
         }
         list1.sort(function(a, b){return a.parentId - b.parentId});
-        list = list1;
+        list=list1;
         for (var task = 0; task < list.length; task++) {
             var id = list[task].id;
             var name = list[task].name;
             var parent = list[task].parentId;
-            if (parent == 0) {
-
-                console.log("in sort");
-                console.log(id);
-
-                $(".tree").append("<li id='t" + id + "' class='tree-item'></li>");
-                $("#t" + id).html("<a href = '" + id + "' class='ion-document'>" + name + "</a>");
-
-                console.log("after sort");
-                console.log(id);
+            if (parent==0) {
+                $(".tree").append("<li id='t" + id + "' class='tree-item'><a href = '" + id +
+                "' class='ion-document'>" + name + "</a></li>");
             }
             else {
                 var par_name = $("#t" + parent + " a:first").text();
-                if (par_name != "●") {
+                if (par_name!="●") {
                     $("#t" + parent).html("<a href='' class='trigger'>●</a>" +
-                    "<a href='" + id + "' class='ion-document'>" + par_name + "</a><ul class='tree-parent'>" +
-                    "<li id='t" + id + "' class='tree-item'><a href='" + id + "' class='ion-document'>" +
-                    name + "</a></li></ul>");
-
-                    console.log("if parName");
-                    console.log(id);
+                    "<a href='" + parent + "' class='ion-document'>" + par_name + "</a><ul class='tree-parent'></ul>");
+                    $("#t"+parent+" ul").append("<li id='t" + id + "' class='tree-item view'></li>");
+                    $("#t"+parent+" ul li").append("<a href='" + id + "' class='ion-document'>" +
+                    name + "</a>");
                 }
                 else {
-                    $("#t"+parent+" ul").append("<li id='t" + id +
-                    "' class='tree-item'><a href='" + id + "' class='ion-document'>" +
-                    name + "</a></li>");
-                    console.log("else parName");
-                    console.log(id);
+                    $("#t"+parent+" ul").append("<li id='t" + id + "' class='tree-item view'><a href='" + id +
+                    "' class='ion-document'>" + name + "</a></li>");
                 }
-                if (par_name == "") list.push(list[task]);
+                if (par_name=="") list.push(list[task]);
             }
         }
         $('.trigger').click(function(e){
@@ -138,8 +122,6 @@
             e.preventDefault();
             clearContent();
             $(".task").remove();
-
-
             getOneTask($(this).attr("href"));
             $("#task-container").show();
         })
@@ -191,7 +173,7 @@
             $("#update-container").show();
             $("#updateTaskSubmit").click(function(event){
                 updateTask();
-                event.preventDefault(); 
+                event.preventDefault();
             })
 
         })
@@ -281,11 +263,11 @@
             endDate: $('#endDate').val()
         }
         $.ajax({
-            url:'tasks/', 
+            url:'tasks/',
             type:'POST',
             contentType: 'application/json',
             dataType: 'json',
-            data: JSON.stringify(list), 
+            data: JSON.stringify(list),
             success: function(data) {
                 hideAddForm();
             }
@@ -319,7 +301,7 @@
     }
 
     function updateTask(task) {
-        
+
         var list = {
             name: $('#nameU').val(),
             startDate: $('#startDate').val(),
@@ -331,14 +313,14 @@
         }
         console.log(JSON.stringify(list));
         $.ajax({
-            url:'tasks/update', 
+            url:'tasks/update',
             type:'PUT',
             contentType: 'application/json',
             dataType: 'json',
-            data: JSON.stringify(list), 
+            data: JSON.stringify(list),
             success: function(data) {
                 console.log("good");
                 console.log(data);
             }
         });*/
-    
+

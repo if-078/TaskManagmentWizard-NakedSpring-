@@ -39,13 +39,47 @@ public class JooqSQLBuilder {
 //        return condition;
 //    }
 
-    public String buildSql (int[] priorities, int[] statuses, int[] tags, int UserId){
+    public SelectConditionStep buildSql (int[] priorities, int[] statuses, int[] tags, int UserId){
         SelectField selectField = id.concat(name, crDate, startDate, endDate, estimateTime);
-        Table table = table("task").join(table("tags_task")).on(field("task.id").eq(field("tags_tasks.task_id")))
-                .join(table("tag")).on(field("tags_tasks.tag_id").eq(field("tag.id")));
-        return select(selectField).from(table).where(field("tags_task.tag_id").in(tags)).groupBy(field("task_id"))
-                .having(field("tag_id").countDistinct().eq(tags.length))
-                .and(field("priority_id").in(priorities)).and(field("status_id").in(statuses)).getSQL();
+        Table table;
+        Condition condition = null;
+
+        if (statuses.length > 0 && priorities.length == 0){
+            condition = field("status_id").eq(statuses[0]);
+            for (int i = 1; i < statuses.length; i++) {
+                condition = condition.and(field("status_id").eq(statuses[i]));
+
+            }
+        }else if (statuses.length == 0 && priorities.length > 0){
+            condition = field("priority_id").eq(priorities[0]);
+            for (int i = 1; i <priorities.length ; i++) {
+                condition = condition.and(field("priority_id").eq(priorities[i]));
+            }
+
+        }else if (statuses.length > 0 && priorities.length > 0){
+            condition = field("status_id").eq(statuses[0]);
+            for (int i = 1; i <statuses.length ; i++) {
+                condition = condition.and(field("status_id").eq(statuses[i]));
+            }
+            for (int i = 0; i <priorities.length ; i++) {
+                condition = condition.and(field("priority_id").eq(priorities[i]));
+            }
+        }
+
+
+        if (tags.length > 1) {
+
+            table = table("task").join(table("tags_task")).on(field("task.id").eq(field("tags_tasks.task_id")))
+                    .join(table("tag")).on(field("tags_tasks.tag_id").eq(field("tag.id")));
+        }
+        else {
+            table = table("task");
+        }
+        return select(selectField).from(table).where(condition);
+
+//                .where(field("tags_task.tag_id").in(tags)).groupBy(field("task_id"))
+//                .having(field("tag_id").countDistinct().eq(tags.length))
+//                .and(field("priority_id").in(priorities)).and(field("status_id").in(statuses));
 
     }
 
@@ -58,12 +92,16 @@ public class JooqSQLBuilder {
 //        SelectConditionStep selectConditionStep = field("tag.name").in(tags);
 //    }
 
+
+
     public static void main(String[] args) {
         JooqSQLBuilder builder = new JooqSQLBuilder();
         int [] statuses = new int[]{1, 2};
         int [] priorities = new int[] {2};
-        int [] tags = new int[]{1,2,3,4};
-        System.out.println(builder.buildSql(priorities, statuses, tags, 1));
+        int [] tags = new int[]{1,2,3};
+        System.out.println(builder.buildSql(priorities, statuses, tags, 1).getSQL());
+
+        System.out.println(priorities + "PRIORITIES");
     }
 }
 /*

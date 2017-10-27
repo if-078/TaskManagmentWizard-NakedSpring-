@@ -3,6 +3,37 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<!--    &lt;!&ndash;CSS&ndash;&gt;
+    <link rel="stylesheet" type="text/css" href="static/css/taskFilterStyle.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+    &lt;!&ndash;EasyUI&ndash;&gt;
+    <link rel="stylesheet" type="text/css" href="static/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="static/easyui/themes/icon.css">
+
+    &lt;!&ndash;Bootstrap data-table&ndash;&gt;
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css">
+    <link href="static/css/mystyle.css" rel="stylesheet" type="text/css">
+
+    &lt;!&ndash;JS&ndash;&gt;
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    &lt;!&ndash;EasyUI&ndash;&gt;
+    <script type="text/javascript" src="static/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="static/easyui/jquery.easyui.min.js"></script>
+
+
+    &lt;!&ndash;Other&ndash;&gt;
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+
+    &lt;!&ndash;JS data-table &ndash;&gt;
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>-->
 </head>
 <body>
 <div style="padding-bottom: 10px;">
@@ -141,10 +172,11 @@
     $(document).ready(function() {
         var task = {};
         $('#btn-modal-task').click( function () {clearInputtask()});
-
         var url = 'tasks' //default URL
         initialTableOftasks(url);
     } );
+
+
     function initialTableOftasks(URL) {
         $.ajax({
             type: 'GET',
@@ -179,7 +211,7 @@
                         $(this).addClass('active').siblings().removeClass('active');
                     }
                 } );
-                $('#delete-task').on('click', function () {
+                $('#delete-task').on("click", function () {
                     var taskId = $('tr.selected td:first-child').text();
                     console.log("-================");
                     console.log(taskId);
@@ -305,14 +337,14 @@
     }
     function clearInputtask(){
         $('#input-name').val(''),
-        $('#input-createdDate').val(''),
-        $('#input-startDate').val(''),
-        $('#input-endDate').val(''),
-        $('#input-estimateTime').val(''),
-        $('#input-assignTo').val(''),
-        $('#input-statusId').val(''),
-        $('#input-priorityId').val(''),
-        $('#input-parentId').val('')
+                $('#input-createdDate').val(''),
+                $('#input-startDate').val(''),
+                $('#input-endDate').val(''),
+                $('#input-estimateTime').val(''),
+                $('#input-assignTo').val(''),
+                $('#input-statusId').val(''),
+                $('#input-priorityId').val(''),
+                $('#input-parentId').val('')
     }
 </script>
 </body>

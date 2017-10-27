@@ -31,15 +31,12 @@
             </div>
             <div class="col-0">
 
-                <div id="user-profile" class="row align-items-center justify-content-end">
+                <div id="auth-container" class="row align-items-center justify-content-end">
                     <div class="col-0">
-                        <i class="fa fa-user-circle fa-2x" aria-hidden="true"></i>
+                        <span id="sign-in">Sign in</span><span>|</span><span id="sign-up">Sign Up</span>
                     </div>
-                    <div class="col-0">
-                       <span id="user-name">User</span> 
-                    </div>
-                </div>
 
+                </div>
             </div>
         </div>
         <div class="row " id="data-container">
@@ -115,8 +112,9 @@
             </div>
         </div>
     </div>
-<script>
-        window.history.pushState("welcomepage","Title","/welcome");
+    <script>
+        window.history.pushState("welcomepage", "Title", "/welcome");
+
     </script>
 </body>
 

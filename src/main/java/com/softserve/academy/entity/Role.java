@@ -1,6 +1,8 @@
 package com.softserve.academy.entity;
 
-public class Role {
+import org.springframework.security.core.GrantedAuthority;
+
+public class Role implements GrantedAuthority {
     private int id;
     private String name;
 
@@ -27,5 +29,10 @@ public class Role {
 
     public void setName(String role) {
         this.name = role;
+    }
+
+    @Override
+    public String getAuthority() {
+        return name;
     }
 }

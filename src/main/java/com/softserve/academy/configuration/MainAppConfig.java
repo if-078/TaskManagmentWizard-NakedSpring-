@@ -12,8 +12,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @PropertySource("classpath:mysql_connection.properties")
 public class MainAppConfig {
 
-  @Value("${jdbc.schema}")
-  private String schema;
   @Value("${jdbc.driver}")
   private String driver;
   @Value("${jdbc.url}")
@@ -26,8 +24,6 @@ public class MainAppConfig {
   @Bean
   public DataSource getDataSource() {
     DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
-
-    driverManagerDataSource.setSchema(schema);
     driverManagerDataSource.setDriverClassName(driver);
     driverManagerDataSource.setUrl(url);
     driverManagerDataSource.setUsername(username);

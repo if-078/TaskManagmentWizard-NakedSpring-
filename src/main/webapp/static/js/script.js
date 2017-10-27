@@ -57,9 +57,12 @@
     });
 
     function getTasks() {
+        var id=window.sessionStorage.getItem("user_id");
+        var token = window.sessionStorage.getItem("token");
         $.ajax({
-            url: "tasks/",
+            url: "api/tasks/assign_to/"+id,
             type: "GET",
+            beforeSend: function(xhr){xhr.setRequestHeader('Authentication', token);},
             success: function (data) {
                 var list = JSON.parse(data);
                 renderTasks(list);
@@ -101,6 +104,10 @@
         $.ajax({
             url: "tasks/today",
             type: "GET",
+            beforeSend: function(request) {
+                var token=window.sessionStorage.getItem("token");
+                request.setRequestHeader("Authorization: Bearer", token);
+            },
             success: function (data) {
                 var list = JSON.parse(data);
                 renderForTodayTasks(list);

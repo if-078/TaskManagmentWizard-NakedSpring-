@@ -1,5 +1,5 @@
    $(function () {
-               $("#loginForm").submit(function (event) {
+               $("#loginform").submit(function (event) {
                    event.preventDefault();
 
                    var $form = $(this);
@@ -19,13 +19,15 @@
                        contentType: "application/json; charset=utf-8",
                        dataType: "json",
                        success: function (data, textStatus, jqXHR) {
-                           setJwtToken(data.token);                          
+                          var token= jqXHR.getResponseHeader('Authentication');
+                          window.sessionStorage.setItem("token",token);
+                          window.sessionStorage.setItem("user_id",data.id);
+                          window.location.href="index"
                        },
                        error: function (jqXHR, textStatus, errorThrown) {
                            if (jqXHR.status === 403) { 
-                               window.history.replace();
+                                $("#error").show().html("Bad user credentials.");
                            } else {
-                               throw new Error("an unexpected error occured: " + errorThrown);
                            }
                        }
                    });

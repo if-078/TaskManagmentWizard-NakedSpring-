@@ -20,4 +20,8 @@ public class MainController {
     public String getLoginPage() {
         return "login";
     }
+    @RequestMapping("/old")
+    public String getoldPage() {
+        return "old";
+    }
 }

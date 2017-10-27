@@ -14,7 +14,12 @@
     padding:1px 1px;
 }
 
-#leftPanel > div > input.easyui-linkbutton{
+/*#leftPanel > div #tagBox, #priorityBox, #statusBox{*/
+    /*width:100%;*/
+    /*padding:2px 2px;*/
+/*}*/
+
+#leftPanel > div > .easyui-linkbutton{
    font-size: 14px;
    letter-spacing:0.5px;
    text-indent:16px;

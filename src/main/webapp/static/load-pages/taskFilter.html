@@ -17,10 +17,11 @@
 
 
         <div id="filterButtomBlock">
-            <input id="filterButton" class="easyui-linkbutton" type="submit" value="Set filter options  "/>
+            <input id="filterButton" class="easyui-linkbutton" type="submit" value="Filter"/>
+            <input id="cleanButton" class="easyui-linkbutton" type="submit" value="Clean"/>
         </div>
         <div >
-            <input id="statusBox" class="easyui-tagbox"  style="width:100%;padding:2px 2px;" data-options="
+            <input id="statusBox" class="easyui-tagbox" style="width:100%;padding:2px 2px;" data-options="
                    url: 'status',
                    method: 'get',
                    mode: 'remote',
@@ -33,7 +34,7 @@
                    "/>
         </div>
         <div >
-            <input id="priorityBox" class="easyui-tagbox"  style="width:100%;padding:2px 2px;" data-options="
+            <input id="priorityBox" class="easyui-tagbox" style="width:100%;padding:2px 2px;"  data-options="
                    url: 'priority',
                    method: 'get',
                    mode: 'remote',
@@ -60,10 +61,10 @@
         </div>
 
         <div id="dateBlock1">
-            <label for="start">Fr</label>  <input id="start" class="easyui-datebox" >
+            <label for="start">Fr</label>  <input id="start" name="start" class="easyui-datebox" >
         </div>
         <div id="dateBlock2">
-            <label for="end">To</label>   <input id="end" class="easyui-datebox"  >
+            <label for="end">To</label>   <input id="end" name="end" class="easyui-datebox"  >
         </div>
 
     </body>

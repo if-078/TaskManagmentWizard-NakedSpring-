@@ -11,17 +11,17 @@
             $("#task-container").show();
         });
 
-        $("#for-today-btn").click(function () {
-            clearContent();
-            $(".task").remove();
-            getTodayTasks();
-            $("#today-container").show();
+        $("#today-task-btn").click(function () {
+            var urlForToDayTask = 'tasks/today'
+            initialTableOftasks(urlForToDayTask);
+
+            $("#task-container").show();
         });
-        $("#sprint-btn").click(function () {
-            clearContent();
-            $(".task").remove();
-            getSprintTasks();
-            $("#sprint-container").show();
+        $("#sprint-task-btn").click(function () {
+            var urlForSprint = 'tasks/sprint'
+            initialTableOftasks(urlForSprint);
+
+            $("#task-container").show();
         });
 
         /*makar. tree*/
@@ -42,7 +42,6 @@
             e.preventDefault();
             clearContent();
             $(".task").remove();
-            //getTasks();
             $("#task-container").show();
         });
 
@@ -133,33 +132,6 @@
 
         function clearContent() {
             $(".content").hide();
-        }
-
-        function showForm() {
-            $("#taskForm").show(500, function () {
-                $("#showForm").hide();
-            });
-        }
-
-        function hideForm() {
-            $("#showForm").show(500, function () {
-                $("#taskForm").fadeOut();
-            });
-
-        }
-
-
-        function showAddForm() {
-            $("#addTaskForm").show(500, function () {
-                $("#showAddTaskForm").hide();
-            });
-        }
-
-        function hideAddForm() {
-            $("#showAddTaskForm").show(500, function () {
-                $("#addTaskForm").fadeOut();
-            });
-
         }
     });
 

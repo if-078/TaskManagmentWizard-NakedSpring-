@@ -6,8 +6,8 @@
 </head>
 <body>
 <div style="padding-bottom: 10px;">
-    <button type="button" id="delete-task" class="btn btn-danger btn-sm"> <span class="glyphicon glyphicon-remove"></span> delete task </button>
-    <button type="button" id ="btn-modal-task" class="btn btn btn-info btn-sm" data-toggle="modal" data-target="#modal-new-task"><span class="glyphicon glyphicon-list-alt"></span> create task </button>
+    <button type="button" id="delete-task" class="btn btn-danger btn-sm"> delete task </button>
+    <button type="button" id ="btn-modal-task" class="btn btn btn-info btn-sm" data-toggle="modal" data-target="#modal-new-task"> create task </button>
 </div>
 
 <table id="task-table"  class="table table-striped">
@@ -51,8 +51,7 @@
                 <form class="form-horizontal" role="form">
 
                     <div class="form-group">
-                        <label  class="col-sm-2 control-label"
-                                for="input-name">Name</label>
+                        <label  class="col-sm-4 control-label" for="input-name">Name</label>
                         <div class="col-sm-10">
                             <input type="name" class="form-control" id="input-name" placeholder="Name"/>
                             <div id="error-task-name"></div>
@@ -60,15 +59,14 @@
                     </div>
 
                     <div class="form-group">
-                        <label  class="col-sm-2 control-label"
-                                for="input-createdDate">Created Date</label>
+                        <label  class="col-sm-6 control-label" for="input-createdDate">Created Date</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" id="input-createdDate"/>
                             <p id="error-task-input-createdDate"></p>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label"
+                        <label class="col-sm-6 control-label"
                                for="input-startDate" >Start Date</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" id="input-startDate"/>
@@ -76,7 +74,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label"
+                        <label class="col-sm-6 control-label"
                                for="input-estimateTime" >Estimate Time</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" id="input-estimateTime"/>
@@ -84,7 +82,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label"
+                        <label class="col-sm-6 control-label"
                                for="input-endDate" >End Date</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" id="input-endDate"/>
@@ -92,7 +90,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label"
+                        <label class="col-sm-6 control-label"
                                for="input-assignTo" >Assign To</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" id="input-assignTo"/>
@@ -101,7 +99,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label class="col-sm-2 control-label"
+                        <label class="col-sm-6 control-label"
                                for="input-statusId" >Status Id</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" id="input-statusId"/>
@@ -109,7 +107,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label"
+                        <label class="col-sm-6 control-label"
                                for="input-priorityId" >Priority Id</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" id="input-priorityId"/>
@@ -117,7 +115,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label"
+                        <label class="col-sm-6 control-label"
                                for="input-parentId" >Parent Id</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" id="input-parentId"/>
@@ -130,7 +128,7 @@
             <!-- Modal Footer -->
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button"  id="create-task" class="btn btn-success"> <span class="glyphicon glyphicon-ok"></span> Save </button>
+                <button type="button"  id="create-task" class="btn btn-success"> Save </button>
             </div>
         </div>
     </div>
@@ -138,6 +136,8 @@
 
 <script type="text/javascript">
     var task = {};
+    $('#btn-modal-task').on('click', function(){clearInputtask()});
+
     function initialTableOftasks(URL) {
         $("#task-table-body").empty();
         $.ajax({
@@ -200,7 +200,6 @@
         task.statusId     = $('tr.active').children('td:eq(7)').text(),
         task.priorityId   = $('tr.active').children('td:eq(8)').text(),
         task.parentId     = $('tr.active').children('td:eq(9)').text()
-        console.log(task);
 
         var taskId = $('tr.active td:first').text();
         //fill data

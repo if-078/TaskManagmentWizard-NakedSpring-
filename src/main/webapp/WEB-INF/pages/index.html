@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>TaskManagmentWizard</title>
-    <link rel="stylesheet" href="/static/css/custom.css">
+
     <!--  local dev lib  -->
     <!--
     <link rel="stylesheet" href="static/dev_pack/bs4/css/bootstrap.css">
@@ -19,6 +19,23 @@
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+
+    <!--CUSTOM CSS-->
+    <link rel="stylesheet" type="text/css" href="/static/css/custom.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/taskFilterStyle.css">
+
+    <!--EasyUI CSS-->
+    <link rel="stylesheet" type="text/css" href="static/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="static/easyui/themes/icon.css">
+
+    <!--Jquery-ui JS-->
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <!--EasyUI JS-->
+    <script type="text/javascript" src="static/easyui/jquery.easyui.min.js"></script>
+
+    <!-- JS taskFilter(by tags ...)-->
+    <script src="static/js/partsLoader.js"></script>
 
     <!--Main JS-->
     <script src="static/js/script.js"></script>
@@ -56,13 +73,17 @@
                 </div>
                 <div class="row">
                     <div class="col-0 nav-item"><i class="fa fa-filter" aria-hidden="true"></i>
-                        <span>Advanced Fileters Block</span>
+                        <span>Advanced Fileters</span>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-0 nav-item">
-                        <button id="tasks-btn" type="button" class="btn btn-primary btn-sm btn-block">Task all time</button>
-                    </div>
+                      <button id="tasks-btn" type="button" class="btn btn-secondary btn-sm btn-block">Task all time</button>
+                </div>
+                <div class="row">
+                    <button id="today-task-btn" type="button" class="btn btn-secondary btn-sm btn-block">Today</button>
+                </div>
+                <div class="row">
+                    <button id="sprint-task-btn" type="button" class="btn btn-secondary btn-sm btn-block">Sprint</button>
                 </div>
                 <div class="row">
                     <ul class="tree">
@@ -70,9 +91,7 @@
                     </ul>
                 </div>
                 <div class="row">
-                    <div class="col-0 nav-item"><i class="fa fa-bars" aria-hidden="true"></i>
-                        <span>Tree Block</span>
-                    </div>
+                    <div  id="leftPanel" class="easyui-panel" ></div>
                 </div>
             </div>
             <div class="col-md-9" id="content-data"><div class="row justify-content-center" id="slogan"></div>

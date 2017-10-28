@@ -1,26 +1,27 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <!--EasyUI-->
-        <link rel="stylesheet" type="text/css" href="static/easyui/themes/default/easyui.css">
-        <link rel="stylesheet" type="text/css" href="static/easyui/themes/icon.css">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--EasyUI-->
+    <link rel="stylesheet" type="text/css" href="static/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="static/easyui/themes/icon.css">
 
-       <!-- EasyUI-->
-        <script type="text/javascript" src="static/easyui/jquery.easyui.min.js"></script>
-        <script type="text/javascript" src="static/js/filter.js"></script>
+    <!--EasyUI-->
+    <script type="text/javascript" src="static/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="static/easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="static/js/filter.js"></script>
 
-    </head>
-    <body>
+</head>
+<body>
 
 
-        <div id="filterButtomBlock">
-            <input id="filterButton" class="easyui-linkbutton" type="submit" value="Filter   "/>
-            <input id="cleanButton" class="easyui-linkbutton" type="submit" value="Clean   "/>
-        </div>
-        <div >
-            <input id="statusBox" class="easyui-tagbox" style="width:100%;padding:2px 2px;" data-options="
+<div id="filterButtomBlock">
+    <input id="filterButton" class="easyui-linkbutton" type="submit" value="Filter   "/>
+    <input id="cleanButton" class="easyui-linkbutton" type="submit" value="Clean   "/>
+</div>
+<div >
+    <input id="statusBox" class="easyui-tagbox" style="width:100%;padding:2px 2px;" data-options="
                    url: 'status',
                    method: 'get',
                    mode: 'remote',
@@ -31,9 +32,9 @@
                    hasDownArrow: true,
                    prompt: 'Select status/es'
                    "/>
-        </div>
-        <div >
-            <input id="priorityBox" class="easyui-tagbox" style="width:100%;padding:2px 2px;"  data-options="
+</div>
+<div >
+    <input id="priorityBox" class="easyui-tagbox" style="width:100%;padding:2px 2px;"  data-options="
                    url: 'priority',
                    method: 'get',
                    mode: 'remote',
@@ -44,9 +45,9 @@
                    hasDownArrow: true,
                    prompt: 'Select priority/s'
                    "/>
-        </div>
-        <div >
-            <input id="tagBox" class="easyui-tagbox"  style="width:100%;padding:2px 2px;" data-options="
+</div>
+<div >
+    <input id="tagBox" class="easyui-tagbox"  style="width:100%;padding:2px 2px;" data-options="
                    url: 'users/1/tags',
                    method: 'get',
                    mode: 'remote',
@@ -57,14 +58,13 @@
                    hasDownArrow: true,
                    prompt: 'Select a tag/s'
                    "/>
-        </div>
+</div>
 
-        <div id="dateBlock1">
-            <label for="start">Fr</label>  <input id="start" name="start" class="easyui-datebox" data-options="formatter:myformatter" style="width:90%; >
+<div id="dateBlock1">
+    <label for="start">Fr</label>  <input id="start" name="start" class="easyui-datebox" data-options="formatter:myformatter" style="width:90%;" >
         </div>
-        <div id="dateBlock2>
-            <label for="end">To</label>   <input id="end" name="end" class="easyui-datebox" data-options="formatter:myformatter"  style="width:90%;" >
-        </div>
-
-    </body>
+        <div id="dateBlock2">
+    <label for="end">To</label>   <input id="end" name="end" class="easyui-datebox" data-options="formatter:myformatter"  style="width:90%;" >
+</div>
+</body>
 </html>

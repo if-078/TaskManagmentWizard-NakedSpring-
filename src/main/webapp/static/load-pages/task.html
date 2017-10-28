@@ -3,37 +3,6 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-
-<!--    &lt;!&ndash;CSS&ndash;&gt;
-    <link rel="stylesheet" type="text/css" href="static/css/taskFilterStyle.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-
-    &lt;!&ndash;EasyUI&ndash;&gt;
-    <link rel="stylesheet" type="text/css" href="static/easyui/themes/default/easyui.css">
-    <link rel="stylesheet" type="text/css" href="static/easyui/themes/icon.css">
-
-    &lt;!&ndash;Bootstrap data-table&ndash;&gt;
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css">
-    <link href="static/css/mystyle.css" rel="stylesheet" type="text/css">
-
-    &lt;!&ndash;JS&ndash;&gt;
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
-    &lt;!&ndash;EasyUI&ndash;&gt;
-    <script type="text/javascript" src="static/easyui/jquery.min.js"></script>
-    <script type="text/javascript" src="static/easyui/jquery.easyui.min.js"></script>
-
-
-    &lt;!&ndash;Other&ndash;&gt;
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-
-    &lt;!&ndash;JS data-table &ndash;&gt;
-    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>-->
 </head>
 <body>
 <div style="padding-bottom: 10px;">
@@ -41,9 +10,10 @@
     <button type="button" id ="btn-modal-task" class="btn btn btn-info btn-sm" data-toggle="modal" data-target="#modal-new-task"><span class="glyphicon glyphicon-list-alt"></span> create task </button>
 </div>
 
-<table id="task-table"  class="table table-bordered" cellspacing="0" width="100%">
-    <thead>
+<table id="task-table"  class="table table-striped">
+    <thead class="thead-inverse">
     <tr>
+        <th>#</th>
         <th>ID</th>
         <th>Name</th>
         <th>CreatedDate</th>
@@ -56,6 +26,7 @@
         <th>ParentId</th>
     </tr>
     </thead>
+    <tbody id ="task-table-body"></tbody>
 </table>
 
 <!--MODAL WINDOW-->
@@ -158,10 +129,7 @@
             </div>
             <!-- Modal Footer -->
             <div class="modal-footer">
-                <button type="button" class="btn btn-default"
-                        data-dismiss="modal">
-                    Close
-                </button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 <button type="button"  id="create-task" class="btn btn-success"> <span class="glyphicon glyphicon-ok"></span> Save </button>
             </div>
         </div>
@@ -169,85 +137,86 @@
 </div>
 
 <script type="text/javascript">
-    $(document).ready(function() {
-        var task = {};
-        $('#btn-modal-task').click( function () {clearInputtask()});
-        var url = 'tasks' //default URL
-        initialTableOftasks(url);
-    } );
-
-
+    var task = {};
     function initialTableOftasks(URL) {
+        $("#task-table-body").empty();
         $.ajax({
             type: 'GET',
             url: URL,
             contentType: 'application/json',
-            async: true,
             success: function(data) {
-                var table = $('#task-table').DataTable({
-                    "destroy": true,
-                    "aaData": data,
-                    "aoColumns": [
-                        {"mDataProp":"id"},
-                        {"mDataProp":"name"},
-                        {"mDataProp":"createdDate"},
-                        {"mDataProp":"startDate"},
-                        {"mDataProp":"endDate"},
-                        {"mDataProp":"estimateTime"},
-                        {"mDataProp":"assignTo"},
-                        {"mDataProp":"statusId"},
-                        {"mDataProp":"priorityId"},
-                        {"mDataProp":"parentId"},
-                    ]
+                $(function() {
+                    $.each(data, function(i, task) {
+                        var $tr = $('<tr>').append(
+                                $('<th scope="row">').text(i + 1),
+                                $('<td>').text(task.id),
+                                $('<td>').text(task.name),
+                                $('<td>').text(task.createdDate),
+                                $('<td>').text(task.startDate),
+                                $('<td>').text(task.endDate),
+                                $('<td>').text(task.estimateTime),
+                                $('<td>').text(task.assignTo),
+                                $('<td>').text(task.statusId),
+                                $('<td>').text(task.priorityId),
+                                $('<td>').text(task.parentId))
+                                .appendTo('#task-table-body');
+                    });
                 });
-                // delete task and row
-                $('#task-table tbody').on( 'click', 'tr', function () {
-                    if ( $(this).hasClass('selected') ) {
-                        $(this).removeClass('selected');
-                    }
-                    else {
-                        table.$('tr.selected').removeClass('selected');
-                        $(this).addClass('selected');
-                        $(this).addClass('active').siblings().removeClass('active');
-                    }
-                } );
-                $('#delete-task').on("click", function () {
-                    var taskId = $('tr.selected td:first-child').text();
-                    console.log("-================");
-                    console.log(taskId);
-                    console.log("-================");
-
-                    deletetask(taskId);
-                    table.row('.selected').remove().draw( false );
-                } );
-                // update task and row
-                $('#task-table tbody').on( 'dblclick', 'tr', function () {
-                    $(this).addClass("selected").siblings().removeClass("selected");
-                    task={};
-                    task = table.row( this ).data();
-                    var taskId = $('tr.selected td:first-child').text();
-                    //fill data
-                    $('#input-name').val(task.name);
-                    $('#input-createdDate').val(task.createdDate);
-                    $('#input-startDate').val(task.startDate);
-                    $('#input-endDate').val(task.endDate);
-                    $('#input-estimateTime').val(task.estimateTime);
-                    $('#input-assignTo').val(task.assignTo);
-                    $('#input-statusId').val(task.statusId);
-                    $('#input-priorityId').val(task.priorityId);
-                    $('#input-parentId').val(task.parentId);
-                    // open modal window
-                    $('#modal-new-task').modal('show');
-                } );
-                $('#create-task').on( 'click',function () {
-                    createOrUpdatetask(table, window.task);
-                } );
-            },
-            error: function(jqXHR) {
-                console.log(jqXHR.status)
             }
         });
     }
+
+    $('#task-table tbody').on( 'click', 'tr', function () {
+        $(this).addClass('active').siblings().removeClass('active');
+        $(this).css('background-color', 'powderblue').siblings().css('background-color', '');
+    } );
+
+    $('#delete-task').on("click", function () {
+        var taskId = $('tr.active td:first').text();
+
+        $('tr.active').remove();
+
+        deletetask(taskId);
+    } );
+
+    $('#create-task').on( 'click',function () {
+        createOrUpdatetask(task);
+    } );
+
+    // update task and row
+    $('#task-table tbody').on( 'dblclick', 'tr', function () {
+        $(this).addClass('active').siblings().removeClass('active');
+        $(this).css('background-color', 'powderblue').siblings().css('background-color', '');
+        task={};
+
+        //create json of task
+        task.id           = $('tr.active').children('td:eq(0)').text(),
+        task.name         = $('tr.active').children('td:eq(1)').text(),
+        task.createdDate  = $('tr.active').children('td:eq(2)').text(),
+        task.startDate    = $('tr.active').children('td:eq(3)').text(),
+        task.endDate      = $('tr.active').children('td:eq(4)').text(),
+        task.estimateTime = $('tr.active').children('td:eq(5)').text(),
+        task.assignTo     = $('tr.active').children('td:eq(6)').text(),
+        task.statusId     = $('tr.active').children('td:eq(7)').text(),
+        task.priorityId   = $('tr.active').children('td:eq(8)').text(),
+        task.parentId     = $('tr.active').children('td:eq(9)').text()
+        console.log(task);
+
+        var taskId = $('tr.active td:first').text();
+        //fill data
+        $('#input-name').val(task.name);
+        $('#input-createdDate').val(task.createdDate);
+        $('#input-startDate').val(task.startDate);
+        $('#input-endDate').val(task.endDate);
+        $('#input-estimateTime').val(task.estimateTime);
+        $('#input-assignTo').val(task.assignTo);
+        $('#input-statusId').val(task.statusId);
+        $('#input-priorityId').val(task.priorityId);
+        $('#input-parentId').val(task.parentId);
+        // open modal window
+        $('#modal-new-task').modal('show');
+    } );
+
     function deletetask(taskId){
         $.ajax({
             type: 'DELETE',
@@ -258,55 +227,62 @@
             }
         });
     }
-    function createOrUpdatetask(table, task){
+
+    function createOrUpdatetask(task){
         if ($.isEmptyObject(task)) {
             task =
             {
-                "name":$('#input-name').val(),
-                "createdDate":$('#input-createdDate').val(),
-                "startDate":$('#input-startDate').val(),
-                "endDate":$('#input-endDate').val(),
-                "estimateTime":$('#input-estimateTime').val(),
-                "assignTo":$('#input-assignTo').val(),
-                "statusId":$('#input-statusId').val(),
-                "priorityId":$('#input-priorityId').val(),
-                "parentId":$('#input-parentId').val()
+                "name"         :$('#input-name').val(),
+                "createdDate"  :$('#input-createdDate').val(),
+                "startDate"    :$('#input-startDate').val(),
+                "endDate"      :$('#input-endDate').val(),
+                "estimateTime" :$('#input-estimateTime').val(),
+                "assignTo"     :$('#input-assignTo').val(),
+                "statusId"     :$('#input-statusId').val(),
+                "priorityId"   :$('#input-priorityId').val(),
+                "parentId"     :$('#input-parentId').val()
             }
-            createtask(table, task);
+            createtask(task);
         }else{
-            task.name = $('#input-name').val(),
-            task.createdDate= $('#input-createdDate').val(),
-            task.startDate= $('#input-startDate').val(),
-            task.endDate= $('#input-endDate').val(),
-            task.estimateTime= $('#input-estimateTime').val(),
-            task.assignTo= $('#input-assignTo').val(),
-            task.statusId= $('#input-statusId').val(),
-            task.priorityId= $('#input-priorityId').val(),
-            task.parentId= $('#input-parentId').val()
-            updatetask(table, task);
+            task.name         = $('#input-name').val(),
+            task.createdDate  = $('#input-createdDate').val(),
+            task.startDate    = $('#input-startDate').val(),
+            task.endDate      = $('#input-endDate').val(),
+            task.estimateTime = $('#input-estimateTime').val(),
+            task.assignTo     = $('#input-assignTo').val(),
+            task.statusId     = $('#input-statusId').val(),
+            task.priorityId   = $('#input-priorityId').val(),
+            task.parentId     = $('#input-parentId').val()
+
+            updatetask(task);
         }
     }
-    function createtask(table, task){
+
+    function createtask(task){
         $.ajax({
             url: 'tasks',
             data: JSON.stringify(task),
             type: 'POST',
             contentType: 'application/json',
             success: function (data) {
+
                 // add row to table
-                table.row.add( {
-                    "id":data.id,
-                    "name":data.name,
-                    "createdDate":data.createdDate,
-                    "startDate":data.startDate,
-                    "endDate":data.endDate,
-                    "estimateTime":data.estimateTime,
-                    "assignTo":data.assignTo,
-                    "statusId":data.statusId,
-                    "priorityId":data.priorityId,
-                    "parentId":data.parentId
-                } ).draw();
+                var $tr = $('<tr>').append(
+                        $('<th scope="row">').text('new'),
+                        $('<td>').text(data.id),
+                        $('<td>').text(data.name),
+                        $('<td>').text(data.createdDate),
+                        $('<td>').text(data.startDate),
+                        $('<td>').text(data.endDate),
+                        $('<td>').text(data.estimateTime),
+                        $('<td>').text(data.assignTo),
+                        $('<td>').text(data.statusId),
+                        $('<td>').text(data.priorityId),
+                        $('<td>').text(data.parentId))
+                        .appendTo('#task-table-body');
+
                 $('#modal-new-task').modal('hide');
+
                 clearInputtask();
             },
             cache: false
@@ -316,7 +292,7 @@
             }
         });
     }
-    function updatetask(table, task){
+    function updatetask(task){
         $.ajax({
             url: 'tasks',
             data: JSON.stringify(task),
@@ -324,8 +300,19 @@
             contentType: 'application/json',
             success: function () {
                 // update row of table
-                table.row('.selected').data(task).draw();
+                $('tr.active').children('td:eq(0)').text(task.id),
+                $('tr.active').children('td:eq(1)').text(task.name),
+                $('tr.active').children('td:eq(2)').text(task.createdDate),
+                $('tr.active').children('td:eq(3)').text(task.startDate),
+                $('tr.active').children('td:eq(4)').text(task.endDate),
+                $('tr.active').children('td:eq(5)').text(task.estimateTime),
+                $('tr.active').children('td:eq(6)').text(task.assignTo),
+                $('tr.active').children('td:eq(7)').text(task.statusId),
+                $('tr.active').children('td:eq(8)').text(task.priorityId),
+                $('tr.active').children('td:eq(9)').text(task.parentId);
+
                 $('#modal-new-task').modal('hide');
+
                 clearInputtask();
             },
             cache: false
@@ -334,17 +321,18 @@
                 var data = $xhr.responseJSON;
             }
         });
-    }
+    };
+
     function clearInputtask(){
         $('#input-name').val(''),
-                $('#input-createdDate').val(''),
-                $('#input-startDate').val(''),
-                $('#input-endDate').val(''),
-                $('#input-estimateTime').val(''),
-                $('#input-assignTo').val(''),
-                $('#input-statusId').val(''),
-                $('#input-priorityId').val(''),
-                $('#input-parentId').val('')
+        $('#input-createdDate').val(''),
+        $('#input-startDate').val(''),
+        $('#input-endDate').val(''),
+        $('#input-estimateTime').val(''),
+        $('#input-assignTo').val(''),
+        $('#input-statusId').val(''),
+        $('#input-priorityId').val(''),
+        $('#input-parentId').val('')
     }
 </script>
 </body>

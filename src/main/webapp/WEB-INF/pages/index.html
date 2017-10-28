@@ -14,11 +14,15 @@
     <script src="static/dev_pack/bs4/css/"></script>
 -->
     <!--  cdn servers  -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+
+    <!--Main JS-->
+    <script src="static/js/script.js"></script>
+
 </head>
 
 <body>
@@ -56,50 +60,32 @@
                     </div>
                 </div>
                 <div class="row">
+                    <div class="col-0 nav-item">
+                        <button id="tasks-btn" type="button" class="btn btn-primary btn-sm btn-block">Task all time</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <ul class="tree">
+                        <li class="tree-item"><a id="empty" href="" class="root-document">ROOT</a></li>
+                    </ul>
+                </div>
+                <div class="row">
                     <div class="col-0 nav-item"><i class="fa fa-bars" aria-hidden="true"></i>
                         <span>Tree Block</span>
                     </div>
                 </div>
             </div>
-            <div class="col-md-9" id="content-data">
-                <div class="row justify-content-center" id="slogan">
-                    <div class="col* align-self-center">
-                        <i class="fa fa-quote-left fa-2x" aria-hidden="true"></i>
-                        <span>we will take care of your time</span>
-                        <i class="fa fa-quote-right fa-2x" aria-hidden="true"></i>
-                    </div>
-
-                </div>
+            <div class="col-md-9" id="content-data"><div class="row justify-content-center" id="slogan"></div>
                 <div class="row">
-                    <div class="col-md-0">
-                        <p>
-                            <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rerum expedita necessitatibus facilis incidunt dolore quae recusandae sit, repudiandae accusantium aliquid, voluptatibus dolores iusto vitae tenetur natus possimus. Harum, deleniti, earum!</span>
-                            <span>Rem sit aspernatur ducimus corporis, officia pariatur debitis nam dicta, ea tempora id nesciunt repellat. Vel ducimus velit asperiores quo tenetur ea consequuntur repudiandae enim tempore error odio, adipisci, nesciunt?</span>
-                            <span>Explicabo corporis soluta, ut sunt consectetur ea doloribus sed, accusamus autem expedita omnis non quia dolores, odit. Error dolor, possimus repellat natus asperiores molestias veniam aperiam reiciendis, in tenetur, quos?</span>
-                            <span>Recusandae, vitae corporis quisquam, provident delectus sint necessitatibus ducimus, est modi commodi tempora consequuntur qui nam autem neque iure et doloribus vero? Inventore sequi cum odio eius quam aut dolorem.</span>
-                            <span>Non sunt, tempore quo iusto deleniti inventore possimus deserunt! Aliquam consequuntur debitis ducimus perspiciatis et, totam eaque adipisci. Enim ducimus mollitia, nisi sed adipisci dignissimos blanditiis, incidunt sit dolor? Quidem.</span>
-                            <span>Quos voluptatibus voluptas autem dolorem accusantium impedit. Inventore porro, incidunt libero. Pariatur illum, cumque iusto. Cumque alias cupiditate ea quos atque ab labore omnis at, sint, corporis! Nemo, totam, esse.</span>
-                            <span>Quas ipsum, cum dolor magni enim harum. Officiis iure ut praesentium incidunt quaerat, quibusdam numquam dolore recusandae nesciunt quam explicabo sunt, error perspiciatis. Ex sint consectetur provident dolorem aut eos.</span>
-                            <span>Perspiciatis fugit odio eos tenetur obcaecati blanditiis rem, reprehenderit in, tempore labore neque quasi aperiam sit officia minima. Vel totam nemo eveniet consequuntur omnis odio reprehenderit sit expedita voluptates impedit.</span>
-                            <span>Voluptas possimus id qui veniam quaerat nobis est explicabo quis eos inventore ratione sint, maxime a eum ea ullam praesentium, provident numquam. Dicta sint ipsam eligendi eum dignissimos incidunt vero?</span>
-                            <span>Quia harum, delectus. Nesciunt quia, exercitationem perspiciatis nam veritatis assumenda! Dolorum, voluptatibus iste quasi! Rem exercitationem quis minus incidunt dicta ipsam fuga, inventore doloremque ipsum, voluptates tempora, animi. Illo, cumque?</span>
-                            <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rerum expedita necessitatibus facilis incidunt dolore quae recusandae sit, repudiandae accusantium aliquid, voluptatibus dolores iusto vitae tenetur natus possimus. Harum, deleniti, earum!</span>
-                            <span>Rem sit aspernatur ducimus corporis, officia pariatur debitis nam dicta, ea tempora id nesciunt repellat. Vel ducimus velit asperiores quo tenetur ea consequuntur repudiandae enim tempore error odio, adipisci, nesciunt?</span>
-                            <span>Explicabo corporis soluta, ut sunt consectetur ea doloribus sed, accusamus autem expedita omnis non quia dolores, odit. Error dolor, possimus repellat natus asperiores molestias veniam aperiam reiciendis, in tenetur, quos?</span>
-                            <span>Recusandae, vitae corporis quisquam, provident delectus sint necessitatibus ducimus, est modi commodi tempora consequuntur qui nam autem neque iure et doloribus vero? Inventore sequi cum odio eius quam aut dolorem.</span>
-                            <span>Non sunt, tempore quo iusto deleniti inventore possimus deserunt! Aliquam consequuntur debitis ducimus perspiciatis et, totam eaque adipisci. Enim ducimus mollitia, nisi sed adipisci dignissimos blanditiis, incidunt sit dolor? Quidem.</span>
-                            <span>Quos voluptatibus voluptas autem dolorem accusantium impedit. Inventore porro, incidunt libero. Pariatur illum, cumque iusto. Cumque alias cupiditate ea quos atque ab labore omnis at, sint, corporis! Nemo, totam, esse.</span><span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rerum expedita necessitatibus facilis incidunt dolore quae recusandae sit, repudiandae accusantium aliquid, voluptatibus dolores iusto vitae tenetur natus possimus. Harum, deleniti, earum!</span>
-                            <span>Rem sit aspernatur ducimus corporis, officia pariatur debitis nam dicta, ea tempora id nesciunt repellat. Vel ducimus velit asperiores quo tenetur ea consequuntur repudiandae enim tempore error odio, adipisci, nesciunt?</span>
-                            <span>Explicabo corporis soluta, ut sunt consectetur ea doloribus sed, accusamus autem expedita omnis non quia dolores, odit. Error dolor, possimus repellat natus asperiores molestias veniam aperiam reiciendis, in tenetur, quos?</span>
-                            <span>Explicabo corporis soluta, ut sunt consectetur ea doloribus sed, accusamus autem expedita omnis non quia dolores, odit. Error dolor, possimus repellat natus asperiores molestias veniam aperiam reiciendis, in tenetur, quos?</span><span>Explicabo corporis soluta, ut sunt consectetur ea doloribus sed, accusamus autem expedita omnis non quia dolores, odit. Error dolor, possimus repellat natus asperiores molestias veniam aperiam reiciendis, in tenetur, quos?</span>
-
-                        </p>
-                    </div>
+                    <article class="content-container">
+                        <div id="task-container" class="col-md-0 content"></div>
+                        <div id="today-container" class="col-md-0 content"></div>
+                        <div id="sprint-container" class="col-md-0 content"></div>
+                    </article>
                 </div>
 
             </div>
         </div>
-
 
         <div class="row align-items-center" id="footer">
             <div class="col-2 offset-1">
@@ -114,6 +100,7 @@
             <div class="col-md-2" id="contacts">
                 <span>CONTACT US</span>
             </div>
+        </div>
         </div>
 
 </body>

@@ -1,48 +1,16 @@
     $(document).ready(function () {
+
+        $("#task-container").hide();
         $("#task-container").load('static/load-pages/task.html');
         $('#btn-modal-task').click( function () {clearInputtask()});
-        var url = 'tasks' //default URL
-
-        $("#welcome-container").show();
 
         $("#tasks-btn").click(function () {
-            clearContent();
-            $(".task").remove();
-
-           // $(".task-container").empty();
             var urlAllTaks = 'tasks';
-
-            console.log("before initial Table");
-           //$("#task-container").load('static/load-pages/task.html');
-
-
-/*           $.ajax({
-                       url: "static/load-pages/task.html",
-                       context: document.body,
-                       success: function(responseText) {
-                           $("#task-container").html(responseText);
-                           $("#task-container").find("script").each(function(i) {
-                               console.log(eval($(this).text()));
-                               //eval($(this).text());
-                           });
-                       }
-                   });*/
-            $("#task-container").load('static/load-pages/task.html');
             initialTableOftasks(urlAllTaks);
 
-          /* $("#task-container").load('static/load-pages/task.html', function(responseTxt, statusTxt, xhr){
-                  var responseAsObject = $.parseJSON(responseTxt);
-                  //console.log(responseAsObject.initialTableOftasks(urlAllTaks));
-                  console.log(responseTxt);
-               });*/
-            //initialTableOftasks(urlAllTaks);
-
             $("#task-container").show();
-
-            console.log("after initial Table");
-            //$("#task-container").load('static/load-pages/task.html');
-             //initialTableOftasks(urlAllTaks);
         });
+
         $("#for-today-btn").click(function () {
             clearContent();
             $(".task").remove();
@@ -55,14 +23,6 @@
             getSprintTasks();
             $("#sprint-container").show();
         });
-
-        $("#user-btn").click(function () {
-            clearContent();
-            $(".task").remove();
-            $("#user-container").load('/static/load-pages/user.html');
-            $("#user-container").show();
-        });
-
 
         /*makar. tree*/
         $('.trigger').click(function(e){
@@ -103,9 +63,7 @@
         function getOneTask(id) {
             var url = "tasks/" + id + "/subtasks";
             console.log(url);
-
             console.log("table no else");
-
             initialTableOftasks(url);
         }
 

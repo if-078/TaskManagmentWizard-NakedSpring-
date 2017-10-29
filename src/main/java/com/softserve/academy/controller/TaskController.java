@@ -1,7 +1,5 @@
 package com.softserve.academy.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.softserve.academy.entity.Comment;
 import com.softserve.academy.entity.Tag;
 import com.softserve.academy.entity.Task;
@@ -9,8 +7,6 @@ import com.softserve.academy.service.interfaces.TaskServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
 
 @RestController
@@ -77,6 +73,7 @@ public class TaskController {
 
   @GetMapping("/assign_to/{id}")
   List<Task> assignTo(@PathVariable Integer id){
+    System.out.println("asigin_to");
     return taskService.getTasksAssignToUser(id);
   }
 

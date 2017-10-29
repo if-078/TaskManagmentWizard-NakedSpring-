@@ -1,13 +1,16 @@
-#leftPanel {
+#boxDiv{
     overflow:scroll;
     overflow-x:hidden;
+    max-height:130px;
+}
+
+#leftPanel {
+
     height: 34%;
-    max-height:190px;
     width:100%;
     position:relative;
 
 }
-
 #leftPanel > div{
     padding:1px 1px;
 }

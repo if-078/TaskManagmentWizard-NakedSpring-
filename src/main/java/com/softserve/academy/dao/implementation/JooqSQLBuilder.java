@@ -4,11 +4,13 @@ import org.jooq.*;
 import org.jooq.conf.ParamType;
 import org.jooq.conf.Settings;
 
+import java.util.*;
+
 import static org.jooq.impl.DSL.*;
 
 public class JooqSQLBuilder {
-    Settings s = new Settings().withParamType(ParamType.NAMED);
-    DSLContext creator = using(SQLDialect.MYSQL, s);
+    Settings settings = new Settings().withParamType(ParamType.NAMED);
+    DSLContext creator = using(SQLDialect.MYSQL, settings);
     Field id = field("task.id");
     Field name = field("task.name");
     Field crDate = field("task.created_date");
@@ -17,91 +19,65 @@ public class JooqSQLBuilder {
     Field estimateTime = field("task.estimate_time");
     Field statusId = field("task.status_id");
 
-    public SelectJoinStep initialCondition (){
-        SelectJoinStep s = select(name, crDate, startDate, endDate, estimateTime).from("task");
-        return s;
-    }
-
-    public SelectOnConditionStep addTagsJoin(SelectJoinStep selectSelectStep){
-        SelectOnConditionStep step = selectSelectStep.join("tags_tasks")
-                .on(field(id).eq(field("tags_tasks.task_id")));
-        return step;
-    }
-
-//    public Condition addPriorityCondition(int [] priorities){
-//
-//            Condition condition = field("priority_id").eq(priorities[0]);
-//
-//        for (int i = 1; i < priorities.length; i++) {
-//            int p = priorities[i];
-//            condition = condition.and(field("priority_id").eq(p));
-//        }
-//        return condition;
-//    }
-
-    public SelectConditionStep buildSql (int[] priorities, int[] statuses, int[] tags, int UserId){
-        SelectField selectField = id.concat(name, crDate, startDate, endDate, estimateTime);
+    public Select buildSql (int[] priorities, int[] statuses, int[] tags, int userId) {
         Table table;
-        Condition condition = null;
+        Condition condition = field("assign_to").eq(userId);
+        Select selectConditionStep;
+        if (statuses.length > 0 && priorities.length == 0) {
+            condition = and(field("status_id").in(statuses));
 
-        if (statuses.length > 0 && priorities.length == 0){
-            condition = field("status_id").eq(statuses[0]);
-            for (int i = 1; i < statuses.length; i++) {
-                condition = condition.and(field("status_id").eq(statuses[i]));
 
-            }
-        }else if (statuses.length == 0 && priorities.length > 0){
-            condition = field("priority_id").eq(priorities[0]);
-            for (int i = 1; i <priorities.length ; i++) {
-                condition = condition.and(field("priority_id").eq(priorities[i]));
-            }
+        } else if (statuses.length == 0 && priorities.length > 0) {
+            condition = and(field("priority_id").in(priorities));
 
-        }else if (statuses.length > 0 && priorities.length > 0){
-            condition = field("status_id").eq(statuses[0]);
-            for (int i = 1; i <statuses.length ; i++) {
-                condition = condition.and(field("status_id").eq(statuses[i]));
-            }
-            for (int i = 0; i <priorities.length ; i++) {
-                condition = condition.and(field("priority_id").eq(priorities[i]));
-            }
+
+        } else if (statuses.length > 0 && priorities.length > 0) {
+            condition = and(field("status_id").in(statuses).and(field("priority_id").in(priorities)));
+
         }
-
 
         if (tags.length > 1) {
 
-            table = table("task").join(table("tags_task")).on(field("task.id").eq(field("tags_tasks.task_id")))
+            table = table("task").join(table("tags_tasks")).on(field("task.id").eq(field("tags_tasks.task_id")))
                     .join(table("tag")).on(field("tags_tasks.tag_id").eq(field("tag.id")));
-        }
-        else {
+            selectConditionStep = creator.select(id, name, crDate, startDate, endDate, estimateTime, statusId).from(table).where(condition).and(field("tags_tasks.tag_id").in(tags)).groupBy(field("task_id"))
+                    .having(field("tag_id").countDistinct().eq(tags.length));
+        } else {
             table = table("task");
+            selectConditionStep =creator.select(id, name, crDate, startDate, endDate, estimateTime, statusId).from(table).where(condition);
+
         }
-        return select(selectField).from(table).where(condition);
-
-//                .where(field("tags_task.tag_id").in(tags)).groupBy(field("task_id"))
-//                .having(field("tag_id").countDistinct().eq(tags.length))
-//                .and(field("priority_id").in(priorities)).and(field("status_id").in(statuses));
-
+        return selectConditionStep;
     }
 
-//    public SelectConditionStep addWhereClause (SelectJoinStep selectJoinStep, int id){
-//        SelectConditionStep selectConditionStep = selectJoinStep.where(field("assign_to").eq(id)).and(addPriorityCondition(new int[]{1, 2,3}));
-//        return selectConditionStep;
-//    }
+    public Map getMappedValues (int[] priorities, int[] statuses, int[] tags, int userId){
+        Map<String, List> map = new HashMap();
+        map.put(":1", Arrays.asList(userId));
+        if (tags.length == 0 && priorities.length > 0 && statuses.length > 0) {
+            map.put(":2", Arrays.asList(statuses));
+            map.put(":3", Arrays.asList(priorities));
+        }
 
-//    public SelectConditionStep buildTagCondition (String [] tags){
-//        SelectConditionStep selectConditionStep = field("tag.name").in(tags);
-//    }
-
-
+        map.put(":4", Arrays.asList(tags));
+        map.put(":5", Arrays.asList(tags.length));
+        return map;
+    }
 
     public static void main(String[] args) {
         JooqSQLBuilder builder = new JooqSQLBuilder();
-        int [] statuses = new int[]{1, 2};
-        int [] priorities = new int[] {2};
-        int [] tags = new int[]{1,2,3};
-        System.out.println(builder.buildSql(priorities, statuses, tags, 1).getSQL());
+        int [] statuses = new int[]{};
+        int [] priorities = new int[] {1,2,3};
+        int [] tags = new int[]{9,6,34, 52};
+        Select sql = builder.buildSql(priorities, statuses, tags, 1);
+        Map<String, Param<?>> valuse =  sql.getParams();
+        Iterator<Map.Entry<String, Param<?>>> iterator = valuse.entrySet().iterator();
+        System.out.println(sql.getSQL());
+        while (iterator.hasNext()){
+            Map.Entry<String, Param<?>> pair = iterator.next();
+            System.out.println(pair.getKey() + " : " + pair.getValue().getName() + " ");
+        }
 
-        System.out.println(priorities + "PRIORITIES");
+
     }
 }
 /*

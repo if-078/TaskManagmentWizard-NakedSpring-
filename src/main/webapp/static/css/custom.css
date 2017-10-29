@@ -38,7 +38,7 @@
 /*NAVIGABLE BAR*/
 
 #nav {
-    background-color: white;
+    /*background-color: white;*/
 }
 
 #nav span {
@@ -77,13 +77,19 @@
     display: inline-block;
     height: 100%;
 }
+.trigger {
+    text-decoration: none;
+    color: black;
+    display: inline-block;
+    height: 100%;
+}
 
-.tree {
-    padding-left: 0.75rem;
+ul.tree {
+    padding-left: 0.8rem;
 }
 
 .tree-parent {
-    margin: none;
+   /* margin: none;*/
     display: none;
 }
 
@@ -116,7 +122,7 @@
 .tree-item:last-child:before {
     border-left: none;
 }
-.tree-item a:first-child:after {
+.tree-item:first-child:after {
     content: '';
     display: block;
     border-left: 1px solid #bdc3c7;

@@ -40,61 +40,25 @@
             }
         });
 
-        $('.trigger').click(function(e){
-            e.preventDefault();
-            var childUl = $(this).siblings("ul.tree-parent");
-            if( childUl.hasClass('open') ){
-                $(this).text("●");
-                childUl.removeClass('open');
-                $(this).find().hide();
-            } else {
-                $(this).text("...");
-                childUl.addClass('open');
-                $.ajax({
-                    url: "tasks",
-                    type: "GET",
-                    contentType: 'application/json',
-                    success: function (data) {
-                        var id = data.id;
-                        var name = data.name;
-                        var user = data.userId;
-                        var parent = data.parentId;
-                        $().append("<li id='t" + id + "' class='tree-item view'><a href='" + id +
-                        "' class='ion-document'>" + name + "</a><ul class='tree-parent'></ul></li>");
-                        getChildTasksByUser(user, id);
-                    }
-                });
-
-            }
-
-        });
-
-        $('.ion-document').click(function(e) {
-            e.preventDefault();
-            clearContent();
-            $(".task").remove();
-            $("#task-container").show();
-        });
-
         function getTasks(id) {
             var url = "tasks/" + id + "/subtasks";
             console.log(url);
             console.log("table no else");
             initialTableOftasks(url);
-        }
+        };
 
         function getChildTasksByUser(userId, parentId){
-        console.log("get started");
+//        console.log("get started");
             $.ajax({
                 url: "tasks/assign_to/" + userId + "/parent/" + parentId,
                 type: "GET",
                 contentType: "application/json",
                 success: function (data) {
-                    console.log("success")
+//                    console.log(data);
                     renderTreeTasks(data);
                 }
             });
-        }
+        };
 
         function renderTreeTasks(list) {
             /*var list1 = [];
@@ -150,29 +114,76 @@
         }*/
             for (var task = 0; task < list.length; task++) {
                 var id = list[task].id;
+//                console.log(id);
                 var name = list[task].name;
+                console.log(name);
                 var user = list[task].userId;
                 var parent = list[task].parentId;
-                    //function taskHasParent(id){
-                $.ajax({
+                builderMainBranch(list[task]);
+            }
+
+        function builderMainBranch(task) {
+                        $.ajax({
                         type: 'GET',
-                        url: 'tasks/child/' + id,
+                        url: 'tasks/child/' + task.id,
                         contentType: 'application/json',
                         success: function (data) {
+//                        console.log(data);
                         if (data) {
-                            $(".tree").append("<li id='t" + id + "' class='tree-item'><a href='' class='trigger'>●</a>" +
-                            "<a href = '" + id + "' class='ion-document'>" + name + "</a><ul class='tree-parent'></ul></li>");
+                            $(".tree").append("<li id='t" + task.id + "' class='tree-item'><a href='' class='trigger'>●</a>" +
+                            "<a href = '" + task.id + "' class='ion-document'>" + task.name + "</a><ul class='tree-parent'></ul></li>");
                         }
                         else {
-                            $(".tree").append("<li id='t" + id + "' class='tree-item'><a href = '" + id +
-                            "' class='ion-document'>" + name + "</a></li>");
+                            $(".tree").append("<li id='t" + task.id + "' class='tree-item'><a href = '" + task.id +
+                            "' class='ion-document'>" + task.name + "</a></li>");
                         }
                         }
+                        });
+
+            $('.ion-document').click(function(e) {
+                e.preventDefault();
+                clearContent();
+                $(".task").remove();
+                getTasks($(this).attr("href"));
+                $("#task-container").show();
+            })
+
+        $('.trigger').click(function(e){
+            e.preventDefault();
+            var childUl = $(this).siblings("ul.tree-parent");
+            if( childUl.hasClass('open') ){
+                $(this).text("●");
+                childUl.removeClass('open');
+//                $(this).find().hide();
+            } else {
+                console.log("trigger");
+                $(this).text("...");
+                childUl.addClass('open');
+                builderBranch();
+            };
+
+                function builderBranch() {
+                    console.log("builderBranch");
+                    $.ajax({
+                    url: "tasks/" + $(this).next().attr("href"),
+                    type: "GET",
+                    contentType: 'application/json',
+                    success: function (data) {
+                        var id = data.id;
+                        var name = data.name;
+                        var user = data.userId;
+                        var parent = data.parentId;
+                        $(this).append("<li id='t" + id + "' class='tree-item view'><a href='" + id +
+                        "' class='ion-document'>" + name + "</a><ul class='tree-parent'></ul></li>");
+                        getChildTasksByUser(user, id);
+                    }
                 });
+                }
+        });
+                };
 
+        };
 
-            }
-        }
 
         function getTreeTasks(user_id) {
             $.ajax({
@@ -183,7 +194,7 @@
                     renderTreeTasks(data, user_id);
                 }
             });
-        }
+        };
 
         function clearContent() {
             $(".content").hide();

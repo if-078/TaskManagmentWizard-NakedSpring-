@@ -21,5 +21,8 @@ public interface TaskDaoInterface extends EntityDaoInterface<Task>{
     public List<Task> getSprint();
 
     public List<Task> getTasksAssignToUser(int userId);
+//for tree
+    public List<Task> getTasksByUserAndParent(int userId, int parentId);
 
+    public boolean taskHasChild (int id);
 }

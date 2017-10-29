@@ -79,6 +79,16 @@ public class TaskService implements TaskServiceInterface {
   public List<Task> getTasksAssignToUser(int userId) {
     return taskDao.getTasksAssignToUser(userId);
   }
+  //for tree
+  @Override
+  public List<Task> getTasksByUserAndParent(int userId, int parentId) {
+    return taskDao.getTasksByUserAndParent(userId, parentId);
+  }
+
+  @Override
+  public boolean taskHasChild(int id) {
+    return taskDao.taskHasChild(id);
+  }
 
   /*
    * /@Override public ArrayList<Task> getTaskByStatus(int statusId) { return

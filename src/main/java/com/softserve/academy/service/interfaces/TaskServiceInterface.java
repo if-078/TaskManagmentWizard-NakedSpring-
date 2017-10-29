@@ -18,6 +18,10 @@ public interface TaskServiceInterface extends EntityServiceInterface<Task> {
   public List<Task> getSubtasks(int id);
 
   public List<Task> getTasksAssignToUser(int userId);
+//for tree
+  public List<Task> getTasksByUserAndParent(int userId, int parentId);
+
+  public boolean taskHasChild(int id);
 
   /*
    * public ArrayList<Task> getTaskByStatus(int statusId);

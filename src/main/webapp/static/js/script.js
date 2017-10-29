@@ -25,15 +25,46 @@
         });
 
         /*makar. tree*/
+        var userId = 1;
+
+        $('.root-document').click(function(e) {
+            e.preventDefault();
+            if (this.id=="empty") {
+                $(this).attr("id", "full");
+                getChildTasksByUser(userId, "0");
+            }
+            else {
+                $('a.trigger').text("●");
+                $('.open').find("a.trigger").text("●");
+                $('.open').removeClass('open');
+            }
+        });
+
         $('.trigger').click(function(e){
             e.preventDefault();
             var childUl = $(this).siblings("ul.tree-parent");
             if( childUl.hasClass('open') ){
                 $(this).text("●");
                 childUl.removeClass('open');
+                $(this).find().hide();
             } else {
                 $(this).text("...");
                 childUl.addClass('open');
+                $.ajax({
+                    url: "tasks",
+                    type: "GET",
+                    contentType: 'application/json',
+                    success: function (data) {
+                        var id = data.id;
+                        var name = data.name;
+                        var user = data.userId;
+                        var parent = data.parentId;
+                        $().append("<li id='t" + id + "' class='tree-item view'><a href='" + id +
+                        "' class='ion-document'>" + name + "</a><ul class='tree-parent'></ul></li>");
+                        getChildTasksByUser(user, id);
+                    }
+                });
+
             }
 
         });
@@ -45,29 +76,28 @@
             $("#task-container").show();
         });
 
-        $('.root-document').click(function(e) {
-            e.preventDefault();
-            if (this.id=="empty") {
-                $(this).attr("id", "full");
-                var user_id = 1;
-                getTreeTasks(user_id);
-            }
-            else {
-                $('a.trigger').text("●");
-                $('.open').find("a.trigger").text("●");
-                $('.open').removeClass('open');
-            }
-        });
-
-        function getOneTask(id) {
+        function getTasks(id) {
             var url = "tasks/" + id + "/subtasks";
             console.log(url);
             console.log("table no else");
             initialTableOftasks(url);
         }
 
-        function renderTreeTasks(list, user_id) {
-            var list1 = [];
+        function getChildTasksByUser(userId, parentId){
+        console.log("get started");
+            $.ajax({
+                url: "tasks/assign_to/" + userId + "/parent/" + parentId,
+                type: "GET",
+                contentType: "application/json",
+                success: function (data) {
+                    console.log("success")
+                    renderTreeTasks(data);
+                }
+            });
+        }
+
+        function renderTreeTasks(list) {
+            /*var list1 = [];
             for (var task = 0; task < list.length; task++) {
                 if (list[task].assignTo==user_id) {
                     list1.push(list[task]);
@@ -114,9 +144,34 @@
                 e.preventDefault();
                 clearContent();
                 $(".task").remove();
-                getOneTask($(this).attr("href"));
+                getTasks($(this).attr("href"));
                 $("#task-container").show();
             })
+        }*/
+            for (var task = 0; task < list.length; task++) {
+                var id = list[task].id;
+                var name = list[task].name;
+                var user = list[task].userId;
+                var parent = list[task].parentId;
+                    //function taskHasParent(id){
+                $.ajax({
+                        type: 'GET',
+                        url: 'tasks/child/' + id,
+                        contentType: 'application/json',
+                        success: function (data) {
+                        if (data) {
+                            $(".tree").append("<li id='t" + id + "' class='tree-item'><a href='' class='trigger'>●</a>" +
+                            "<a href = '" + id + "' class='ion-document'>" + name + "</a><ul class='tree-parent'></ul></li>");
+                        }
+                        else {
+                            $(".tree").append("<li id='t" + id + "' class='tree-item'><a href = '" + id +
+                            "' class='ion-document'>" + name + "</a></li>");
+                        }
+                        }
+                });
+
+
+            }
         }
 
         function getTreeTasks(user_id) {

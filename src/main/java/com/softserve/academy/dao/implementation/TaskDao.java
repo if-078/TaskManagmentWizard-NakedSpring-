@@ -259,9 +259,25 @@ public class TaskDao extends EntityDao<Task> implements TaskDaoInterface {
 
     return tasks;
   }
+//for tree
+  @Override
+  public List<Task> getTasksByUserAndParent(int userId, int parentId) {
+    MapSqlParameterSource param = new MapSqlParameterSource();
+    String query = "SELECT * FROM task WHERE assign_to= :assign_to AND parent_id= :parentId";
+    param.addValue("assign_to", userId);
+    param.addValue("parent_id", parentId);
+    List<Task> tasks =
+            jdbcTemplate.query(query, param, new TaskMapper());
+    return tasks;
+  }
 
-
-
+  @Override
+  public boolean taskHasChild(int id) {
+    String query = "select * from task where id in ( SELECT parent_id FROM task WHERE parent_id!=0) and id = :id";
+    List<Task> tasks =
+            jdbcTemplate.query(query, new MapSqlParameterSource("id", id), new TaskMapper());
+    return (tasks.size()!=0);
+  }
   /*
    * * /@Override public ArrayList<Task> getTaskByStatus(int statusId) { String query =
    * "SELECT task_id, name, created_date, start_date, end_date, estimate_time, " +

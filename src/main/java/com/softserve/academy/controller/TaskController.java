@@ -80,6 +80,17 @@ public class TaskController {
     return taskService.getTasksAssignToUser(id);
   }
 
+  //for tree
+  @GetMapping("/assign_to/{userId}/parent/{parentId}")
+  List<Task> getTasksByUserAndParent(@PathVariable Integer userId, @PathVariable Integer parentId){
+    return taskService.getTasksByUserAndParent(userId, parentId);
+  }
+
+  @GetMapping("/child/{id}")
+  boolean taskHasChild(@PathVariable Integer id) {
+    return taskService.taskHasChild(id);
+  }
+
   /*
    * @GetMapping("/tag/{id}") List<Task> tasksByTag(@PathVariable int id) { return
    * taskService.getTasksByTag(id); }

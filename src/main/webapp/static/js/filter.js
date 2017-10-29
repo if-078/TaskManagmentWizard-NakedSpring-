@@ -6,6 +6,19 @@ function myformatter(date){
     return y+'-'+(m<10?('0'+m):m)+'-'+(d<10?('0'+d):d);
 }
 
+function myparser(s){
+    if (!s) return new Date();
+    var ss = (s.split('-'));
+    var y = parseInt(ss[0],10);
+    var m = parseInt(ss[1],10);
+    var d = parseInt(ss[2],10);
+    if (!isNaN(y) && !isNaN(m) && !isNaN(d)){
+        return new Date(y,m-1,d);
+    } else {
+        return new Date();
+    }
+}
+
 function Filter(startDate, endDate) {
     this.startDate=startDate;
     this.endDate=endDate;
@@ -31,14 +44,6 @@ $("#filterButton").on("click", function () {
 $("#cleanButton").on("click", function () {
     clearFilterBlocks();
 });
-
-
-function resetForm($form) {
-
-    $form.find('input:text, input:password, input:span, select, textarea, a').val('');
-    $form.find('input:radio, input:checkbox')
-        .removeAttr('checked').removeAttr('selected');
-}
 
 function clearFilterBlocks(){
     $("#statusBox, #priorityBox, #tagBox").combobox('clear');

@@ -25,14 +25,14 @@
     <link rel="stylesheet" type="text/css" href="/static/css/taskFilterStyle.css">
 
     <!--EasyUI CSS-->
-    <link rel="stylesheet" type="text/css" href="static/easyui/themes/default/easyui.css">
-    <link rel="stylesheet" type="text/css" href="static/easyui/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="static/dev_pack/jqeasyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="static/dev_pack/jqeasyui/themes/icon.css">
 
     <!--Jquery-ui JS-->
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
     <!--EasyUI JS-->
-    <script type="text/javascript" src="static/easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="static/dev_pack/jqeasyui/jquery.easyui.min.js"></script>
 
     <!-- JS taskFilter(by tags ...)-->
     <script src="static/js/partsLoader.js"></script>
@@ -72,11 +72,6 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-0 nav-item"><i class="fa fa-filter" aria-hidden="true"></i>
-                        <span>Advanced Fileters</span>
-                    </div>
-                </div>
-                <div class="row">
                       <button id="tasks-btn" type="button" class="btn btn-secondary btn-sm btn-block">Task all time</button>
                 </div>
                 <div class="row">
@@ -90,7 +85,12 @@
                         <li class="tree-item"><a id="empty" href="" class="root-document">ROOT</a></li>
                     </ul>
                 </div>
-                    <div  id="leftPanel" class="easyui-panel" ></div>
+                <div class="row">
+                    <div class="col-0 nav-item"><i class="fa fa-filter" aria-hidden="true"></i>
+                        <span>Advanced Fileters</span>
+                    </div>
+                    <div  id="leftPanel" class="col-0 nav-item" ></div>
+                </div>
             </div>
             <div class="col-md-9" id="content-data"><div class="row justify-content-center" id="slogan"></div>
                 <div class="row">
@@ -102,6 +102,7 @@
                 </div>
 
             </div>
+
         </div>
 
         <div class="row align-items-center" id="footer">

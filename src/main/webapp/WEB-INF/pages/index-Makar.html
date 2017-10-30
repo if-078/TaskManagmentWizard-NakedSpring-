@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>TaskManagmentWizard</title>
+
+    <!--  local dev lib  -->
+    <!--
+    <link rel="stylesheet" href="static/dev_pack/bs4/css/bootstrap.css">
+    <script src="static/dev_pack/jquery-3.2.1.js"></script>
+    <script src="static/dev_pack/bs4/js/bootstrap.js"></script>
+    <script src="static/dev_pack/bs4/js/"></script>
+    <script src="static/dev_pack/bs4/css/"></script>
+-->
+    <!--  cdn servers  -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+
+    <!--CUSTOM CSS-->
+    <link rel="stylesheet" type="text/css" href="/static/css/custom.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/taskFilterStyle.css">
+
+    <!--EasyUI CSS-->
+    <link rel="stylesheet" type="text/css" href="static/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="static/easyui/themes/icon.css">
+
+    <!--Jquery-ui JS-->
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <!--EasyUI JS-->
+    <script type="text/javascript" src="static/easyui/jquery.easyui.min.js"></script>
+
+    <!-- JS taskFilter(by tags ...)-->
+    <script src="static/js/partsLoader.js"></script>
+
+    <!--Main JS-->
+    <script src="static/js/script.js"></script>
+
+</head>
+
+<body>
+    <div class="container-fluid" id="main-container">
+        <div id="header" class="row align-items-center">
+            <div class="col-md-1 ">
+                <img id="logo" src="/static/imgs/logo.png" alt="logo">
+            </div>
+            <div id="brand" class="col-md-4 ">
+                <p>TaskManagmentWizard</p>
+            </div>
+            <div class="col-md-4 offset-md-2">
+
+                <div id="user-profile" class="row align-items-center justify-content-end">
+                    <div class="col-1">
+                        <i class="fa fa-user-circle fa-2x" aria-hidden="true"></i>
+                    </div>
+                    <div class="col-2">
+                        <p>User</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="row " id="data-container">
+            <div class="col-md-2 offset-md-1" id="nav">
+                <div class="row ">
+                    <div class="col-0"><i class="fa fa-calendar" aria-hidden="true"></i>
+                        <span>Date Filters Block</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-0 nav-item"><i class="fa fa-filter" aria-hidden="true"></i>
+                        <span>Advanced Fileters</span>
+                    </div>
+                </div>
+                <div class="row">
+                      <button id="tasks-btn" type="button" class="btn btn-secondary btn-sm btn-block">Task all time</button>
+                </div>
+                <div class="row">
+                    <button id="today-task-btn" type="button" class="btn btn-secondary btn-sm btn-block">Today</button>
+                </div>
+                <div class="row">
+                    <button id="sprint-task-btn" type="button" class="btn btn-secondary btn-sm btn-block">Sprint</button>
+                </div>
+                <div class="row">
+                    <ul class="tree">
+                        <li class="tree-item"><a id="empty" href="" class="root-document">ROOT</a></li>
+                    </ul>
+                </div>
+                    <div  id="leftPanel" class="easyui-panel" ></div>
+            </div>
+            <div class="col-md-9" id="content-data"><div class="row justify-content-center" id="slogan"></div>
+                <div class="row">
+                    <article class="content-container" style="padding-left: 10px;" >
+                        <div id="task-container" class="col-md-0 content"></div>
+                        <div id="today-container" class="col-md-0 content"></div>
+                        <div id="sprint-container" class="col-md-0 content"></div>
+                    </article>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row align-items-center" id="footer">
+            <div class="col-2 offset-1">
+                <div class="row align-items-cente">
+                    <div class="col-md-1"><i class="fa fa-copyright fa-2x" aria-hidden="true"></i></div>
+                    <div class="col-md-7"><span>if-078</span></div>
+                </div>
+            </div>
+            <div class="col-md-2" id="info">
+                <span>INFO</span>
+            </div>
+            <div class="col-md-2" id="contacts">
+                <span>CONTACT US</span>
+            </div>
+        </div>
+        </div>
+
+</body>
+
+</html>

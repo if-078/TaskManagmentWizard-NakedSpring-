@@ -1,7 +1,8 @@
 package com.softserve.academy.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.softserve.academy.dto.dtoentity.TaskFullInfoDTO;
+import com.softserve.academy.dto.dtoentity.TaskTreeDTO;
+import com.softserve.academy.dto.dtoentity.TaskTableDTO;
 import com.softserve.academy.entity.Comment;
 import com.softserve.academy.entity.Tag;
 import com.softserve.academy.entity.Task;
@@ -9,8 +10,6 @@ import com.softserve.academy.service.interfaces.TaskServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
 
 @RestController
@@ -39,15 +38,36 @@ public class TaskController {
     return taskService.delete(id);
   }
 
+
+  //================================================================================
+
   @GetMapping
-  List<Task> getAllTasks() {
-    return taskService.getAll();
+  List<TaskTableDTO> getTasksByFilter(
+          @RequestParam(name="taskid", required=false) int taskId,
+          @RequestParam(name="date", required=false) String[] date,
+          @RequestParam(name="status", required=false) int[] status,
+          @RequestParam(name="priority", required=false) int[] priority,
+          @RequestParam(name="tag", required=false) int[] tag
+  ) {
+    return taskService.findTaskByFilter(taskId, date, status, priority, tag);
   }
 
+
+
+  //----------------------------------------------------------------------------------------------
+
   @GetMapping("/{id}")
-  Task getTask(@PathVariable Integer id) {
-    return taskService.findOne(id);
+  List<TaskTreeDTO> getTreeSubtask(@PathVariable Integer id){
+    return taskService.findTaskByTree(id);
   }
+
+  @GetMapping("/{id}/full")
+  TaskFullInfoDTO getFullInfoByUser(@PathVariable Integer id) {
+    System.out.println("In controller");
+    return taskService.getFullInfo(id);
+  }
+
+
 
   @GetMapping("/today")
   List<Task> getTasksForToday() {

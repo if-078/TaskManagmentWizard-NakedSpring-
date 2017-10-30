@@ -17,7 +17,7 @@ public class TagService implements TagServiceInterface {
 
   @Override
   public List<Tag> getAll() {
-    throw new UnsupportedOperationException("Not supported yet.");
+    return tagDao.getAll();
   }
 
 

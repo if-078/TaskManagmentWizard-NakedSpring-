@@ -1,16 +1,9 @@
-
 package com.softserve.academy.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.softserve.academy.entity.Priority;
-import com.softserve.academy.entity.Status;
 import com.softserve.academy.entity.Tag;
 import com.softserve.academy.service.implementation.TagService;
 import java.sql.SQLException;
 import java.util.List;
-
-import com.softserve.academy.service.interfaces.EntityServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,25 +15,39 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("tag")
+@RequestMapping("users/{uid}/tags")
 public class TagController {
 
-
-  EntityServiceInterface<Tag> service;
-
-  ObjectMapper objectMapper;
-
   @Autowired
-  public TagController(EntityServiceInterface<Tag> service, ObjectMapper objectMapper) {
-    this.service = service;
-    this.objectMapper = objectMapper;
-  }
+  private TagService tagService;
 
   @GetMapping
-  public String getTags() throws SQLException, JsonProcessingException {
-    List list = service.getAll();
-    String json = objectMapper.writeValueAsString(list);
-    return json;
+  List<Tag> getTagsByUserId(@PathVariable Integer uid) throws SQLException {
+    return tagService.getAllByUserId(uid);
   }
 
+  @PostMapping
+  public Tag createTag(@RequestBody Tag tag) throws SQLException {
+    return tagService.create(tag);
+  }
+
+  @GetMapping("/{id}")
+  Tag getTag(@PathVariable Integer id) throws SQLException {
+    return tagService.findOne(id);
+  }
+
+  @PutMapping
+  public boolean updateTag(@RequestBody Tag tag) {
+    return tagService.update(tag);
+  }
+
+  @DeleteMapping("/{id}")
+  public boolean deleteTag(@PathVariable Integer id) {
+    return tagService.delete(id);
+  }
+
+  @DeleteMapping
+  public boolean deleteAllUserTags(@PathVariable Integer uid) {
+    return tagService.deleleAllByUserId(uid);
+  }
 }

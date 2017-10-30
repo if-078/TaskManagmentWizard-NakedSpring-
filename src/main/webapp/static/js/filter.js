@@ -1,4 +1,3 @@
-
 function myformatter(date){
     var y = date.getFullYear();
     var m = date.getMonth()+1;
@@ -46,14 +45,14 @@ function clearFilterBlocks(){
 }
 
 function sendFilterOptions(filter){
-$.post('users/1/filter', JSON.stringify(filter))
-    .done(function () {
-        console.log('filter sended');
-    })
-    .fail(function () {
-        console.log('filter not sended');
-    })
-;
+    $.post('users/1/filter', JSON.stringify(filter))
+        .done(function () {
+            console.log('filter sended');
+        })
+        .fail(function () {
+            console.log('filter not sended');
+        })
+    ;
 }
 
 function setFilerValues() {
@@ -65,4 +64,3 @@ function setFilerValues() {
     console.log(JSON.stringify(myFilter));
     return myFilter
 }
-

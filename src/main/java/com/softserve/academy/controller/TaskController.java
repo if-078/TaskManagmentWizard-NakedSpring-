@@ -15,92 +15,74 @@ import java.util.List;
 @RequestMapping("tasks")
 public class TaskController {
 
-  ObjectMapper objectMapper;
-  TaskServiceInterface taskService;
+    ObjectMapper objectMapper;
+    TaskServiceInterface taskService;
 
-  @Autowired
-  public TaskController(ObjectMapper objectMapper, TaskServiceInterface taskService) {
-    this.objectMapper = objectMapper;
-    this.taskService = taskService;
-  }
+    @Autowired
+    public TaskController(ObjectMapper objectMapper, TaskServiceInterface taskService) {
+        this.objectMapper = objectMapper;
+        this.taskService = taskService;
+    }
 
-  @PostMapping
-  public Task createTask(@RequestBody Task task) throws SQLException {
-    return  taskService.create(task);
-  }
+    @PostMapping
+    public Task createTask(@RequestBody Task task) throws SQLException {
+        return taskService.create(task);
+    }
 
-  /*@PutMapping("/update")
-  boolean updateTask(@RequestBody String json) throws SQLException, IOException {
-    Task taskObj = objectMapper.readValue(json, Task.class);
-    return taskService.update(taskObj);
-  }*/
+    @PutMapping("/update")
+    boolean updateTask(@RequestBody String json) throws SQLException, IOException {
+        Task taskObj = objectMapper.readValue(json, Task.class);
+        return taskService.update(taskObj);
+    }
 
-  @PutMapping("/update")
-  boolean updateTask(@RequestBody Task task) throws SQLException {
-    return taskService.update(task);
-  }
+    @DeleteMapping("/delete")
+    boolean deleteTask(@RequestBody String json) throws SQLException, IOException {
+        Task task = new Task();
+        task = objectMapper.readValue(json, Task.class);
+        return taskService.delete(task.getId());
+    }
 
-  @DeleteMapping("/delete")
-  boolean deleteTask(@RequestBody String json) throws SQLException, IOException {
-    Task task = new Task();
-    task = objectMapper.readValue(json, Task.class);
-    return taskService.delete(task.getId());
-  }
+    @GetMapping
+//("/")
+    String getAllTasks() throws SQLException, JsonProcessingException {
+        List list = taskService.getAll();
+        String json = objectMapper.writeValueAsString(list);
+        return json;
+    }
 
-  @GetMapping("/")
-  String getAllTasks() throws SQLException, JsonProcessingException {
-    List list = taskService.getAll();
-    String json = objectMapper.writeValueAsString(list);
-    return json;
-  }
+    @GetMapping("/one")
+    Task getTask(@RequestBody String json) throws SQLException, IOException {
+        int id = objectMapper.readValue(json, Integer.class);
+        return taskService.findOne(id);
+    }
 
-  @GetMapping("/one")
-  Task getTask(@RequestBody String json) throws SQLException, IOException {
-    int id = objectMapper.readValue(json, Integer.class);
-    return taskService.findOne(id);
-  }
+    @GetMapping("/today")
+    String getTasksForToday() throws SQLException, JsonProcessingException {
+        List list = taskService.getTasksForToday();
+        String json = objectMapper.writeValueAsString(list);
+        return json;
+    }
 
-  @GetMapping("/today")
-  String getTasksForToday() throws SQLException, JsonProcessingException {
-    List list = taskService.getTasksForToday();
-    String json = objectMapper.writeValueAsString(list);
-    return json;
-  }
+    @GetMapping("/{id}/tags")
+    String getTagsOfTask(@PathVariable Integer id) throws SQLException, JsonProcessingException {
+        List list = taskService.getTagsOfTask(id);
+        String json = objectMapper.writeValueAsString(list);
+        return json;
+    }
 
-  @GetMapping("/sprint")
-  String getSprint() throws SQLException, JsonProcessingException {
-    List list = taskService.getSprint();
-    String json = objectMapper.writeValueAsString(list);
-    return json;
-  }
+    @GetMapping("/{id}/comments")
+    String getCommentsOfTask(@PathVariable Integer id) throws SQLException, JsonProcessingException {
+        List list = taskService.getCommentsOfTask(id);
+        String json = objectMapper.writeValueAsString(list);
+        return json;
+    }
 
-  @GetMapping("/{id}/tags")
-  String getTagsOfTask(@PathVariable Integer id) throws SQLException, JsonProcessingException {
-    List list = taskService.getTagsOfTask(id);
-    String json = objectMapper.writeValueAsString(list);
-    return json;
-  }
-
-  @GetMapping("/{id}/comments")
-  String getCommentsOfTask(@PathVariable Integer id) throws SQLException, JsonProcessingException {
-    List list = taskService.getCommentsOfTask(id);
-    String json = objectMapper.writeValueAsString(list);
-    return json;
-  }
-
-  @GetMapping("/{id}/subtasks")
-  String getSubtasks(@PathVariable Integer id) throws SQLException, JsonProcessingException {
-    List list = taskService.getSubtasks(id);
-    String json = objectMapper.writeValueAsString(list);
-    return json;
-  }
-
-  @GetMapping("/assign_to/{id}")
-  String assignTo(@PathVariable Integer id) throws JsonProcessingException {
-    List list = taskService.getTasksAssignToUser(id);
-    String json = objectMapper.writeValueAsString(list);
-    return json;
-  }
+    @GetMapping("/{id}/subtasks")
+    String getSubtasks(@PathVariable Integer id) throws SQLException, JsonProcessingException {
+        List list = taskService.getSubtasks(id);
+        String json = objectMapper.writeValueAsString(list);
+        return json;
+    }
 
 
 

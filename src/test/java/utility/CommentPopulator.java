@@ -5,7 +5,7 @@ import com.softserve.academy.entity.Comment;
 import com.softserve.academy.entity.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public class CommentPopulator implements Populator<Comment>{
+public class CommentPopulator implements Populator<Comment> {
 
     private TaskPopulator taskPopulator;
     private CommentDao dao;

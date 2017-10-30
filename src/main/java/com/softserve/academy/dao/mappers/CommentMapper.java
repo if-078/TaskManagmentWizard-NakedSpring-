@@ -1,10 +1,11 @@
 package com.softserve.academy.dao.mappers;
 
 import com.softserve.academy.entity.Comment;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 @Component
 public class CommentMapper implements RowMapper<Comment> {

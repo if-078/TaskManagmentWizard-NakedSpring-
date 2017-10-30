@@ -4,6 +4,7 @@ import com.softserve.academy.dao.implementation.TaskDao;
 import com.softserve.academy.entity.Task;
 import com.softserve.academy.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import java.sql.Time;
 import java.util.Date;
 
@@ -35,7 +36,7 @@ public class TaskPopulator implements Populator<Task> {
     }
 
     @Override
-    public Task createDefaultEntity(){
+    public Task createDefaultEntity() {
         int hourFromMillSecs = 1000 * 60 * 60;
         Task task = new Task();
         User defUser = userPopulator.createDefaultEntity();
@@ -53,7 +54,7 @@ public class TaskPopulator implements Populator<Task> {
     }
 
 
-    public Task createDefaultHeadTaskWithCustomUser(User user){
+    public Task createDefaultHeadTaskWithCustomUser(User user) {
         int hourFromMillSecs = 1000 * 60 * 60;
         Task task = new Task();
         task.setName("Default task name");

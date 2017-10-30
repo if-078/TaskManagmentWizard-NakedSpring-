@@ -1,56 +1,55 @@
 package com.softserve.academy.controller;
 
-
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.http.HttpStatus;
-import org.springframework.validation.annotation.Validated;
-
 import com.softserve.academy.entity.User;
 import com.softserve.academy.service.interfaces.UserServiceInterface;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+
+import java.sql.SQLException;
+import java.util.List;
 
 @RestController
 @RequestMapping("users")
 public class UserController {
-  
-  @Autowired
-  UserServiceInterface userService;
 
-	@GetMapping
-	@ResponseStatus(HttpStatus.OK)
-	List<User> getAllUsers() {
-		return userService.getAll();
-	}
+    @Autowired
+    UserServiceInterface userService;
 
-	@PostMapping
-	@ResponseStatus(HttpStatus.CREATED)
-	User createUser(@Validated @RequestBody User user) {
-		return userService.create(user);
-	}
+    @GetMapping("/all")
+    @ResponseStatus(HttpStatus.OK)
+    List<User> getAllUsers() throws SQLException {
+        return userService.getAll();
+    }
 
-	@GetMapping("/id/{id}")
-	@ResponseStatus(HttpStatus.OK)
-	User getUser(@PathVariable Integer id) {
-		return userService.findOne(id);
-	}
-	
-	@GetMapping("/{email}")
-	@ResponseStatus(HttpStatus.OK)
-	User getUser(@PathVariable String email) {
-		return userService.findByEmail(email);
-	}
+    @PostMapping("/add/")
+    @ResponseStatus(HttpStatus.CREATED)
+    User createUser(@RequestBody User user) throws SQLException {
+        return userService.create(user);
+    }
 
-	@PutMapping
-	@ResponseStatus(HttpStatus.NO_CONTENT)
-	boolean updateUser(@Validated @RequestBody User user) {
-		return userService.update(user);
-	}
+    @GetMapping("/id/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    User getUser(@PathVariable Integer id) throws SQLException {
+        return userService.findOne(id);
+    }
 
-	@DeleteMapping("/{id}")
-	@ResponseStatus(HttpStatus.NO_CONTENT)
-	boolean deleteUser(@PathVariable Integer id) {
-		return userService.delete(id);
-	}
+    @GetMapping("/email/{email}")
+    @ResponseStatus(HttpStatus.OK)
+    User getUser(@PathVariable String email) throws SQLException {
+        return userService.findByEmail(email);
+    }
+
+    @PutMapping("/update")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    boolean updateUser(@RequestBody User user) throws SQLException {
+        return userService.update(user);
+    }
+
+    @DeleteMapping("/del/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    boolean deleteUser(@PathVariable Integer id) throws SQLException {
+        return userService.delete(id);
+    }
+
 }

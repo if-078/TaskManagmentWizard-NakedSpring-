@@ -11,7 +11,7 @@ import org.springframework.jdbc.support.KeyHolder;
 import javax.sql.DataSource;
 
 
-public class PriorityPopulator implements Populator<Priority>{
+public class PriorityPopulator implements Populator<Priority> {
     private NamedParameterJdbcTemplate operations;
     private PriorityDao priorityDao;
 
@@ -19,12 +19,13 @@ public class PriorityPopulator implements Populator<Priority>{
     public void setOperations(DataSource dataSource) {
         this.operations = new NamedParameterJdbcTemplate(dataSource);
     }
+
     @Autowired
-    public void setPriorityDao(PriorityDao dao){
+    public void setPriorityDao(PriorityDao dao) {
         this.priorityDao = dao;
     }
 
-    public void initPriorityTable (){
+    public void initPriorityTable() {
         initOnePriority("NONE");
         initOnePriority("LOW");
         initOnePriority("NORMAL");
@@ -32,7 +33,7 @@ public class PriorityPopulator implements Populator<Priority>{
 
     }
 
-    public Priority initOnePriority(String name){
+    public Priority initOnePriority(String name) {
         MapSqlParameterSource param = new MapSqlParameterSource();
         KeyHolder keyHolder = new GeneratedKeyHolder();
         Priority priority = new Priority(-1, name);

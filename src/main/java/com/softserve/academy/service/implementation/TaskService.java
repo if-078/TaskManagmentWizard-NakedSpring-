@@ -6,79 +6,71 @@ import com.softserve.academy.entity.Tag;
 import com.softserve.academy.entity.Task;
 import com.softserve.academy.service.interfaces.TaskServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
-import java.util.List;
 import org.springframework.stereotype.Service;
-import org.springframework.dao.DataAccessException;
-import org.springframework.dao.EmptyResultDataAccessException;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class TaskService implements TaskServiceInterface {
 
-  @Autowired
-  TaskDaoInterface taskDao;
+    @Autowired
+    TaskDaoInterface taskDao;
 
-  @Override
-  public List<Task> getAll() {
-    return taskDao.getAll();
-  }
-
-  @Override
-  public Task findOne(int id) {
-    try {
-      return taskDao.findOne(id);
-    } catch (EmptyResultDataAccessException e) {
-      return new Task();
+    @Override
+    public List<Task> getAll() {
+        return taskDao.getAll();
     }
-  }
 
-  @Override
-  public boolean update(Task task) {
-    return taskDao.update(task);
-  }
-
-  @Override
-  public boolean delete(int id) {
-    return taskDao.delete(id);
-  }
-
-  @Override
-  public Task create(Task task) {
-    try {
-      return taskDao.create(task);
-    } catch (DataAccessException e) {
-      return new Task();
+    @Override
+    public Task findOne(int id) {
+        return taskDao.findOne(id);
     }
-  }
 
-  @Override
-  public List<Task> getTasksForToday() {
-    return taskDao.getTasksForToday();
-  }
+    @Override
+    public boolean update(Task task) {
+        return taskDao.update(task);
+    }
 
-  @Override
-  public List<Task> getSprint() {
-    return taskDao.getSprint();
-  }
+    @Override
+    public boolean delete(int id) {
+        return taskDao.delete(id);
+    }
 
-  @Override
-  public List<Tag> getTagsOfTask(int taskId) {
-    return taskDao.getTagsOfTask(taskId);
-  }
+    @Override
+    public Task create(Task task) {
+        return taskDao.create(task);
+    }
 
-  @Override
-  public List<Comment> getCommentsOfTask(int taskId) {
-    return taskDao.getCommentsOfTask(taskId);
-  }
+    @Override
+    public List<Task> getTasksForToday() {
+        return taskDao.getTasksForToday();
+    }
 
-  @Override
-  public List<Task> getSubtasks(int id) {
-    return taskDao.getSubtasks(id);
-  }
+    @Override
+    public List<Tag> getTagsOfTask(int taskId) {
+        return taskDao.getTagsOfTask(taskId);
+    }
 
-  @Override
-  public List<Task> getTasksAssignToUser(int userId) {
-    return taskDao.getTasksAssignToUser(userId);
-  }
+    @Override
+    public List<Comment> getCommentsOfTask(int taskId) {
+        return taskDao.getCommentsOfTask(taskId);
+    }
+
+    @Override
+    public List<Task> getSubtasks(int id) {
+        return taskDao.getSubTasks(id);
+    }
+
+    public List<Task> getUserTask(int userId) {  //todo: make impl of this method in dao with sql query
+        return getAll().stream().filter(s -> s.getAssign_to() == userId).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Task> getTasksByTag(int tagId) {
+        return taskDao.getTasksByTag(tagId);
+    }
+
 
   /*
    * /@Override public ArrayList<Task> getTaskByStatus(int statusId) { return
@@ -89,6 +81,9 @@ public class TaskService implements TaskServiceInterface {
    * 
    * //@Override public ArrayList<Task> getTasksCreatedByUser(int userId) { return
    * taskDao.getTasksCreatedByUser(userId); }
+   * 
+   * //@Override public ArrayList<Task> getTasksAssignToUser(int userId) { return
+   * taskDao.getTasksAssignToUser(userId); }
    * 
    * //@Override public ArrayList<Task> getTasksByTag(int tagId) { return
    * taskDao.getTasksByTag(tagId); }

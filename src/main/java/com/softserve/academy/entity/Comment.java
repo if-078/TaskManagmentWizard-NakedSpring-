@@ -18,23 +18,43 @@ public class Comment {
         this.userId = userId;
     }
 
-    public int getId() {return id;}
+    public int getId() {
+        return id;
+    }
 
-    public void setId(int id) {this.id = id;}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-    public String getCommentText() {return commentText;}
+    public String getCommentText() {
+        return commentText;
+    }
 
-    public void setCommentText(String commentText) {this.commentText = commentText;}
+    public void setCommentText(String commentText) {
+        this.commentText = commentText;
+    }
 
-    public LocalDateTime getCreatedDate() {return createdDate;}
+    public LocalDateTime getCreatedDate() {
+        return createdDate;
+    }
 
-    public void setCreatedDate(LocalDateTime createdDate) {this.createdDate = createdDate;}
+    public void setCreatedDate(LocalDateTime createdDate) {
+        this.createdDate = createdDate;
+    }
 
-    public int getTaskId() {return taskId;}
+    public int getTaskId() {
+        return taskId;
+    }
 
-    public void setTaskId(int taskId) {this.taskId = taskId;}
+    public void setTaskId(int taskId) {
+        this.taskId = taskId;
+    }
 
-    public int getUserId() {return userId;}
+    public int getUserId() {
+        return userId;
+    }
 
-    public void setUserId(int userId) {this.userId = userId;}
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
 }

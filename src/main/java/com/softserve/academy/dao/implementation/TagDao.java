@@ -14,7 +14,7 @@ import java.util.List;
 
 @Repository
 @PropertySource("classpath:tables.properties")
-public class TagDao extends Dao<Tag> implements TagDaoInterface {
+public class TagDao extends EntityDao<Tag> implements TagDaoInterface {
 
     public TagDao(@Value("${tag}") String table) {
         super(table, new TagMapper());

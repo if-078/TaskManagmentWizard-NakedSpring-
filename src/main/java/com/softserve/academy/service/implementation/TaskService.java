@@ -6,10 +6,10 @@ import com.softserve.academy.entity.Tag;
 import com.softserve.academy.entity.Task;
 import com.softserve.academy.service.interfaces.TaskServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
-import java.util.stream.Collectors;
+import org.springframework.stereotype.Service;
+import org.springframework.dao.DataAccessException;
+import org.springframework.dao.EmptyResultDataAccessException;
 
 @Service
 public class TaskService implements TaskServiceInterface {
@@ -24,7 +24,11 @@ public class TaskService implements TaskServiceInterface {
 
     @Override
     public Task findOne(int id) {
-        return taskDao.findOne(id);
+        try {
+            return taskDao.findOne(id);
+        } catch (EmptyResultDataAccessException e) {
+            return new Task();
+        }
     }
 
     @Override
@@ -39,12 +43,21 @@ public class TaskService implements TaskServiceInterface {
 
     @Override
     public Task create(Task task) {
-        return taskDao.create(task);
+        try {
+            return taskDao.create(task);
+        } catch (DataAccessException e) {
+            return new Task();
+        }
     }
 
     @Override
     public List<Task> getTasksForToday() {
         return taskDao.getTasksForToday();
+    }
+
+    @Override
+    public List<Task> getSprint() {
+        return taskDao.getSprint();
     }
 
     @Override
@@ -59,38 +72,30 @@ public class TaskService implements TaskServiceInterface {
 
     @Override
     public List<Task> getSubtasks(int id) {
-        return taskDao.getSubTasks(id);
-    }
-
-    public List<Task> getUserTask(int userId) {  //todo: make impl of this method in dao with sql query
-        return getAll().stream().filter(s -> s.getAssign_to() == userId).collect(Collectors.toList());
+        return taskDao.getSubtasks(id);
     }
 
     @Override
-    public List<Task> getTasksByTag(int tagId) {
-        return taskDao.getTasksByTag(tagId);
+    public List<Task> getTasksAssignToUser(int userId) {
+        return taskDao.getTasksAssignToUser(userId);
     }
-
 
   /*
    * /@Override public ArrayList<Task> getTaskByStatus(int statusId) { return
    * taskDao.getTaskByStatus(statusId); }
-   * 
+   *
    * //@Override public ArrayList<Task> getTaskByPriority(int priorityId) { return
    * taskDao.getTaskByPriority(priorityId); }
-   * 
+   *
    * //@Override public ArrayList<Task> getTasksCreatedByUser(int userId) { return
    * taskDao.getTasksCreatedByUser(userId); }
-   * 
-   * //@Override public ArrayList<Task> getTasksAssignToUser(int userId) { return
-   * taskDao.getTasksAssignToUser(userId); }
-   * 
+   *
    * //@Override public ArrayList<Task> getTasksByTag(int tagId) { return
    * taskDao.getTasksByTag(tagId); }
-   * 
+   *
    * //@Override public ArrayList<Task> treeOfTasks(int taskId) { return
    * taskDao.treeOfTasks(taskId); }
-   * 
+   *
    * //@Override public User getAuthorOfTask(int taskId) { return taskDao.getAuthorOfTask(taskId); }
    */
 

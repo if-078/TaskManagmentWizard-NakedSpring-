@@ -3,12 +3,12 @@ package com.softserve.academy.service.interfaces;
 import com.softserve.academy.entity.Comment;
 import com.softserve.academy.entity.Tag;
 import com.softserve.academy.entity.Task;
-
 import java.util.List;
 
 public interface TaskServiceInterface extends EntityServiceInterface<Task> {
-
     List<Task> getTasksForToday();
+
+    List<Task> getSprint();
 
     List<Tag> getTagsOfTask(int taskId);
 
@@ -16,7 +16,7 @@ public interface TaskServiceInterface extends EntityServiceInterface<Task> {
 
     List<Task> getSubtasks(int id);
 
-    List<Task> getTasksByTag(int tagId);
+    List<Task> getTasksAssignToUser(int userId);
 
   /*
    * public ArrayList<Task> getTaskByStatus(int statusId);
@@ -24,8 +24,6 @@ public interface TaskServiceInterface extends EntityServiceInterface<Task> {
    * public ArrayList<Task> getTaskByPriority(int priorityId);
    *
    * public ArrayList<Task> getTasksCreatedByUser(int userId);
-   *
-   * public ArrayList<Task> getTasksAssignToUser(int userId);
    *
    * public ArrayList<Task> getTasksForToday();
    *

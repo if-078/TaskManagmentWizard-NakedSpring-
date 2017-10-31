@@ -11,9 +11,10 @@ import org.springframework.jdbc.support.KeyHolder;
 
 @Repository
 @PropertySource("classpath:tables.properties")
-public class StatusDao extends Dao<Status> {
+public class StatusDao extends EntityDao<Status> {
 
     public StatusDao(@Value("${status}") String table) {
+
         super(table, new StatusMapper());
     }
 

@@ -10,7 +10,7 @@ import java.util.List;
 
 @Repository
 @PropertySource("classpath:tables.properties")
-public class PriorityDao extends Dao<Priority> {
+public class PriorityDao extends EntityDao<Priority> {
 
     public PriorityDao(@Value("${priority}") String table) {
         super(table, new PriorityMapper());

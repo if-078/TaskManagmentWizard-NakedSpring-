@@ -188,7 +188,7 @@ public class TaskService implements TaskServiceInterface {
   public TaskFullInfoDTO getFullInfo(int id){
     Task task = taskDao.findOne(id);
     TaskFullInfoDTO taskDTO = new TaskFullInfoDTO();
-    
+
     taskDTO.setId(task.getId());
     taskDTO.setName(task.getName());
     taskDTO.setCreatedDate(task.getCreatedDate());

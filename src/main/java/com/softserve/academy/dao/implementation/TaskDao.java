@@ -7,6 +7,9 @@ import com.softserve.academy.dao.mappers.TaskMapper;
 import com.softserve.academy.entity.Comment;
 import com.softserve.academy.entity.Tag;
 import com.softserve.academy.entity.Task;
+import org.jooq.Param;
+import org.jooq.Select;
+import org.jooq.SelectConnectByAfterStartWithConditionStep;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -16,6 +19,7 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 @PropertySource("classpath:tables.properties")
@@ -172,6 +176,14 @@ public class TaskDao extends Dao<Task> implements TaskDaoInterface {
         return tasks;
     }
 
+    @Override
+    public List<Task> getFilteredTasks(JooqSQLBuilder builder){
+        Select select = builder.buildSql();
+        String query = select.getSQL();
+        Map<String, Param<?>> values = select.getParams();
+        List<Task> tasks = jdbcTemplate.query(query, values, new TaskMapper());
+        return tasks;
+    }
 
 
   /*

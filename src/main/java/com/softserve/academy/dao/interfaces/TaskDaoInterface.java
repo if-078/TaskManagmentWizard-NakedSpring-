@@ -1,5 +1,6 @@
 package com.softserve.academy.dao.interfaces;
 
+import com.softserve.academy.dao.implementation.JooqSQLBuilder;
 import com.softserve.academy.entity.Comment;
 import com.softserve.academy.entity.Tag;
 import com.softserve.academy.entity.Task;
@@ -18,4 +19,5 @@ public interface TaskDaoInterface extends EntityDaoInterface<Task> {
 
     List<Task> getTasksByTag(int tagId);
 
+    List<Task> getFilteredTasks(JooqSQLBuilder builder);
 }

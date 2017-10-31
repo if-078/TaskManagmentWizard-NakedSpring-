@@ -39,7 +39,7 @@ public class TaskController {
   }
 
 
-  //================================================================
+  //============================================================
 
   @GetMapping
   List<TaskTableDTO> getTasksByFilter(

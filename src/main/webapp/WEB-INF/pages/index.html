@@ -1,0 +1,681 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>TMW</title>
+
+  <!-- jQuery v3.x -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+  <!-- Bootstrap v3.x -->
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+  <!-- Bootstrap Datepicker -->
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker3.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js"></script>
+
+  <!-- jsTree -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
+  
+  <!-- DataTables -->
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css">
+  <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
+
+	<!--EasyUI JS-->
+	<link rel="stylesheet" type="text/css" href="static/dev_pack/jqeasyui/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="static/dev_pack/jqeasyui/themes/icon.css">
+	<script type="text/javascript" src="static/dev_pack/jqeasyui/jquery.easyui.min.js"></script>
+
+	<!-- JS taskFilter(by tags ...)-->
+	<script src="static/js/partsLoader.js"></script>
+
+  <!-- Embeded CSS -->
+  <style>
+    .tmw-main, .tmw-sidebar {
+      display: flex;
+      flex-direction: column;
+      padding-top: 60px;
+      padding-bottom: 10px;
+      height: 100vh;
+    }
+	
+	.tmw-sidebar {
+		background: #fcfcfc;
+	}
+	
+    .tmw-main-table, .tmw-treeview {
+      flex-grow: 1;
+      overflow-y: scroll;
+    }
+	
+	.tmw-task-table tr {
+		cursor: pointer;
+	}
+
+	
+  </style>
+</head>
+
+<body>
+  <!-- HEADER -->
+  <nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">Time Managament Wizard</a>
+      </div>
+    </div>
+  </nav>
+  <!-- / HEADER -->
+
+  <div class="container-fluid">
+    <div class="row">
+
+      <!-- SIDEBAR -->
+      <div class="tmw-sidebar col-xs-3">
+        
+        <!-- TIME FILTERS -->
+        <div class="form-horizontal">
+          <div class="form-group">
+            <div id="tmw-time-btn-group" class="col-xs-12 btn-group-vertical">
+				<button id="tmw-time-all-btn" type="button" class="btn btn-default active ">All Time</button>
+				<button id="tmw-time-today-btn" type="button" class="btn btn-default">Today</button>
+				<button id="tmw-time-week-btn" type="button" class="btn btn-default">Week</button>
+			  
+			  <div class="btn-group">
+				<button id="tmw-time-custom-btn" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Custom</button>
+				
+				<div class="col-xs-12 dropdown-menu" style="padding-top: 10px; padding-bottom: 10px;">
+					<div class="row">
+						<div class="col-xs-12">
+							<form class="form-horizontal">
+								<div class="col-xs-12 form-gorup" style="margin-bottom: 10px;">
+									<div class="col-xs-6">
+										<input id="tmw-time-custom-from" type="text" class="form-control datepicker" placeholder="From" data-date-format="dd/mm/yyyy">
+									</div>
+									
+									<div class="col-xs-6">
+										<input id="tmw-time-custom-to" type="text" class="form-control datepicker" placeholder="To" data-date-format="dd/mm/yyyy">
+									</div>
+								</div>
+								
+								<div class="col-xs-12 form-gorup">
+									<div class="col-xs-6">
+										<button id="tmw-time-custom-apply-btn" class="btn btn-default btn-block" type="button">Apply</button>
+									</div>
+									
+									<div class="col-xs-6">
+										<button id="tmw-time-custom-cancel-btn" class="btn btn-default btn-block" type="button">Cancel</button>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			  </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- / TIME FILTERS -->
+
+        <!-- PRIORITY, STATUS AND TAG FILTERS -->
+        <div class="form-horizontal">
+          <div class="form-group">
+
+            <div id="leftPanel" class="col-xs-12 btn-group-vertical">
+				<!--loaded content-->
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="col-xs-6">
+              <button id="tmw-apply-btn" class="btn btn-default btn-block" type="button">Apply</button>
+            </div>
+            <div class="col-xs-6">
+              <button id="tmw-reset-btn" class="btn btn-default btn-block" type="button">Reset</button>
+            </div>
+          </div>
+        </div>
+        <!-- / STATUS AND TAG FILTERS -->
+
+        <!-- TREE VIEW -->
+        <div id="tmw-treeview" class="tmw-treeview"></div>
+        <!-- / TREE VIEW -->
+
+      </div>
+      <!-- / SIDEBAR -->
+	  
+	  <!-- MAIN -->
+	  <div class="col-xs-9">
+		<div class="tmw-main row">
+			<div class="tmw-main-header">
+				<div class="col-xs-6">
+					<div id="tmw-info-selected-time" class="well well-sm">Selected Time : All</div>
+				</div>
+				
+				<div class="col-xs-6">
+					<div id="tmw-info-selected-status" class="well well-sm">Selected Status : All</div>
+				</div>
+				
+				<div class="col-xs-6">
+					<div id="tmw-info-selected-priority" class="well well-sm">Selected Priority : All</div>
+				</div>
+				
+				<div class="col-xs-6">
+					<div id="tmw-info-selected-tag" class="well well-sm">Selected Tag : All</div>
+				</div>
+			</div>
+			
+			<div class="tmw-main-table col-xs-12">
+				<table id="tmw-task-table" class="tmw-task-table table table-striped table-bordered table-hover" cellspacing="0" style="width: 100%;"></table>
+			</div>
+		</div>
+	  </div>
+	  <!-- / MAIN -->
+
+    </div>
+  </div>
+
+	<div id="tmw-modal" class="modal fade">
+	  <div class="modal-dialog">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+			<h4 class="modal-title">Інформація про завдання</h4>
+		  </div>
+		  
+		  <div class="modal-body">
+			<p>Name</p>
+			<div id="tmw-user-field1" class="well well-sm"></div>
+			<p>CreatedDate</p>
+			<div id="tmw-user-field2" class="well well-sm"></div>
+			<p>StartDate</p>
+			<div id="tmw-user-field3" class="well well-sm"></div>
+			<p>EstimateTime</p>
+			<div id="tmw-user-field4" class="well well-sm"></div>
+			<p>AssignTo</p>
+			<div id="tmw-user-field5" class="well well-sm"></div>
+			<p>Status</p>
+			<div id="tmw-user-field6" class="well well-sm"></div>
+			<p>priority</p>
+			<div id="tmw-user-field7" class="well well-sm"></div>
+		  </div>
+		  
+		</div><!-- /.modal-content -->
+	  </div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+  
+  <!-- Embeded JS -->
+  <script>
+  
+	// State applaed filters ==================================================
+    var state = {
+		idActivTask : 0,
+		dateFrom : '',
+		dateTo : '',
+		status: [],
+		priority: [],
+		tag: []
+    };
+	// State applaed filters ==================================================
+	
+	
+	// ON CLICK - SELECTED TIME - ALL =========================================
+	$('#tmw-time-all-btn').click(function (){
+		$('#tmw-info-selected-time').html('Selected Time : All');
+		state.dateFrom = '';
+		state.dateTo = '';
+		taskTable();
+	});
+	// ON CLICK - SELECTED TIME - ALL =========================================
+	
+	
+	// ON CLICK - SELECTED TIME - TODAY =======================================
+	$('#tmw-time-today-btn').click(function (){
+		$('#tmw-info-selected-time').html('Selected Time : Today');
+		state.dateFrom = '30/10/2017';
+		state.dateTo = '30/10/2017';
+		taskTable();
+	});
+	// ON CLICK - SELECTED TIME - TODAY =======================================
+	
+	
+	// ON CLICK - SELECTED TIME - WEEK ========================================
+	$('#tmw-time-week-btn').click(function (){
+		$('#tmw-info-selected-time').html('Selected Time : Week');
+		state.dateFrom = '30/10/2017';
+		state.dateTo = '04/11/2017';
+		taskTable();
+	});
+	// ON CLICK - SELECTED TIME - WEEK ========================================
+	
+	
+	// ON CLICK - SELECTED TIME - CUSTOM ======================================
+	$('.datepicker').datepicker({
+		autoclose: true
+	});
+	
+	$('#tmw-time-btn-group > button').click(function (e) {
+		e.preventDefault();
+		$('#tmw-time-btn-group > button, #tmw-time-custom-btn').removeClass('active');
+		$(this).addClass('active');
+	});
+	
+	$('#tmw-time-custom-apply-btn').click(function (e) {
+		e.preventDefault();
+		
+		if (!$('#tmw-time-custom-from').val() || !$('#tmw-time-custom-to').val()) {
+			return;
+		}
+		
+		state.dateFrom = $('#tmw-time-custom-from').val();
+		state.dateTo = $('#tmw-time-custom-to').val();
+		
+		$('#tmw-info-selected-time').html('Selected Time : ' + state.dateFrom + " - " + state.dateTo);
+		
+		$('#tmw-time-btn-group > button, #tmw-time-custom-btn').removeClass('active');
+		$('#tmw-time-custom-btn').addClass('active');
+	});
+	
+	$('#tmw-time-custom-cancel-btn').click(function (e) {
+		
+	});
+	// ON CLICK - SELECTED TIME - CUSTOM ======================================
+	
+	
+	// ON CLICK AND SELECT STATUS =============================================
+	var stateStatus = [];
+	$('#tmw-status-btn').click(function () {
+	
+		// AJAX return response all STATUS
+		$.ajax({
+                url: 'status',
+                type: 'GET',
+                contentType: 'application/json',
+                success: function (data) {
+					var response = JSON.parse(data);
+					
+					var newStatuses = [];
+					
+					for (var i = 0; i < response.length; i++) {
+						var newStatus = {
+						  id: response[i].id,
+						  name: response[i].name,
+						  checked: false
+						};
+						
+						for (var j = 0; j < stateStatus.length; j++) {
+						  if (stateStatus[j].id === newStatus.id) {
+							newStatus.checked = stateStatus[j].checked;
+							break;
+						  }
+						}
+
+						newStatuses.push(newStatus);
+					}
+				  
+					stateStatus = newStatuses;
+					
+					$('#tmw-status-list').empty();
+
+					for (var i = 0; i < stateStatus.length; i++) {
+						$('#tmw-status-list').append($('<li class="col-xs-6"><a href="#"><input type="checkbox" value="' + stateStatus[i].id + '" ' + (stateStatus[i].checked ? 'checked' : '') + '> ' + stateStatus[i].name + '</a></li>'));
+					}
+                }
+		});
+		
+	});
+	
+	$('#tmw-status-list').on('change', 'input', function () {
+      for (var i = 0; i < stateStatus.length; i++) {
+        if (stateStatus[i].id == this.value) {
+          stateStatus[i].checked = this.checked;
+          break;
+        }
+      }
+    });
+	// ON CLICK AND SELECT STATUS =============================================
+	
+
+	// ON CLICK AND SELECT PRIORITY ===========================================
+	var statePriority = [];
+	$('#tmw-priority-btn').click(function () {
+	
+		// AJAX return response all PRIORITY
+		$.ajax({
+                url: 'priority',
+                type: 'GET',
+                contentType: 'application/json',
+                success: function (data) {
+					var response = JSON.parse(data);
+					var newPriorityes = [];
+		
+					for (var i = 0; i < response.length; i++) {
+						var newPriority = {
+						id: response[i].id,
+						name: response[i].name,
+						checked: false
+					};
+			
+					for (var j = 0; j < statePriority.length; j++) {
+						if (statePriority[j].id === newPriority.id) {
+							newPriority.checked = statePriority[j].checked;
+							break;
+						}
+					}
+
+					newPriorityes.push(newPriority);
+				}
+	  
+				
+				statePriority = newPriorityes;
+		
+				$('#tmw-priority-list').empty();
+
+				for (var i = 0; i < statePriority.length; i++) {
+					$('#tmw-priority-list').append($('<li><a href="#"><input type="checkbox" value="' + statePriority[i].id + '" ' + (statePriority[i].checked ? 'checked' : '') + '> ' + statePriority[i].name + '</a></li>'));
+				}
+			}
+		});
+	});
+	
+	$('#tmw-priority-list').on('change', 'input', function () {
+      for (var i = 0; i < statePriority.length; i++) {
+        if (statePriority[i].id == this.value) {
+          statePriority[i].checked = this.checked;
+          break;
+        }
+      }
+    });
+	// ON CLICK AND SELECT PRIORITY ===========================================
+    
+	
+	// ON CLICK AND SELECT TAG FILTER =========================================
+	var stateTags = [];
+    $('#tmw-tags-btn').click(function () {
+	
+		// AJAX return response all TAG
+	  $.ajax({
+                url: 'users/1/tags',
+                type: 'GET',
+                contentType: 'application/json',
+                success: function (data) {
+					var response = JSON.parse(data);
+
+					var newTags = [];
+
+					for (var i = 0; i < response.length; i++) {
+						var newTag = {
+						id: response[i].id,
+						name: response[i].name,
+						checked: false
+					};
+        
+					for (var j = 0; j < stateTags.length; j++) {
+						if (stateTags[j].id === newTag.id) {
+							newTag.checked = stateTags[j].checked;
+							break;
+						}
+					}
+
+					newTags.push(newTag);
+				}
+
+				stateTags = newTags;
+
+				$('#tmw-tags-list').empty();
+
+				for (var i = 0; i < stateTags.length; i++) {
+					$('#tmw-tags-list').append($('<li class="col-xs-6"><a href="#"><input type="checkbox" value="' + stateTags[i].id + '" ' + (stateTags[i].checked ? 'checked' : '') + '> ' + stateTags[i].name + '</a></li>'));
+				}
+			}
+		});
+    });
+
+	$('#tmw-tags-list').on('change', 'input', function () {
+      for (var i = 0; i < stateTags.length; i++) {
+        if (stateTags[i].id == this.value) {
+          stateTags[i].checked = this.checked;
+          break;
+        }
+      }
+    });
+	// ON CLICK AND SELECT TAG FILTER =========================================
+	
+	
+	//ON CLICK APPLY FILTERS --> STATUS, PRIORITY, TAG ========================
+	$('#tmw-apply-btn').click(function () {
+		
+		state.status = stateStatus;
+		state.priority = statePriority;
+		state.tag = stateTags;
+		
+		var infoSelectedStatus = 'Selected Status : ';
+		var isPresentSelectedStatus = false;
+		for (var i = 0; i < state.status.length; i++) {
+			if(state.status[i].checked) {
+				infoSelectedStatus += state.status[i].name + '; ';
+				isPresentSelectedStatus = true;
+			}
+		}
+		if(isPresentSelectedStatus){
+			$('#tmw-info-selected-status').html(infoSelectedStatus);
+		}else{
+			$('#tmw-info-selected-status').html('Selected Status : All');
+		}
+		
+		var infoSelectedPriority = 'Selected Priority : ';
+		var isPresentSelectedPriority = false;
+		for (var i = 0; i < state.priority.length; i++) {
+			if(state.priority[i].checked) {
+				infoSelectedPriority += state.priority[i].name + '; ';
+				isPresentSelectedPriority = true;
+			}
+		}
+		if(isPresentSelectedPriority){
+			$('#tmw-info-selected-priority').html(infoSelectedPriority);
+		}else{
+			$('#tmw-info-selected-priority').html('Selected Priority : All');
+		}
+		
+		var infoSelectedTag = 'Selected Tag : ';
+		var isPresentSelectedTag = false;
+		for (var i = 0; i < state.tag.length; i++) {
+			if(state.tag[i].checked) {
+				infoSelectedTag += state.tag[i].name + '; ';
+				isPresentSelectedTag = true;
+			}
+		}
+		if(isPresentSelectedTag){
+			$('#tmw-info-selected-tag').html(infoSelectedTag);
+		}else{
+			$('#tmw-info-selected-tag').html('Selected Tag : All');
+		}
+		
+		taskTable();
+	});
+	// ON CLICK APPLY FILTERS --> STATUS, PRIORITY, TAG =======================
+	
+	
+	// ON CLICK RESET FILTERS --> STATUS, PRIORITY, TAG =======================
+	$('#tmw-reset-btn').click(function () {
+        $("#statusBox, #priorityBox, #tagBox").combobox('clear');
+		state.status = [];
+		state.priority = [];
+		state.tag = [];
+		stateStatus = [];
+		statePriority = [];
+		stateTags = [];
+		$('#tmw-info-selected-status').html('Selected Status : All');
+		$('#tmw-info-selected-priority').html('Selected Priority : All');
+		$('#tmw-info-selected-tag').html('Selected Tag : All');
+
+		taskTable();
+	});
+	// ON CLICK RESET FILTERS --> STATUS, PRIORITY, TAG =======================
+	
+	
+	//======================================================================================================================
+	//======================================================================================================================
+
+		
+	//===============================================================================
+	$('#tmw-treeview').jstree({
+      core: {
+		data: {
+			url: function (node) {
+				switch (node.id) {
+					case '#':
+						var rootNode = {
+							id: '$',
+							text: 'All Projects',
+							children: true
+						};
+					
+						return 'data:application/json,' + encodeURIComponent(JSON.stringify(rootNode));
+					
+					case '$':
+						return 'tasks/0';
+					
+					default:
+						return 'tasks/' + node.id;
+				}
+			}
+		},
+		
+		dblclick_toggle: false
+	  }
+	 });
+	
+    $('#tmw-treeview').on('after_close.jstree', function (e, data) {
+      var tree = $('#tmw-treeview').jstree(true);
+      tree.delete_node(data.node.children);
+      tree._model.data[data.node.id].state.loaded = false;
+    });
+	
+	$('#tmw-treeview').on('select_node.jstree', function (event, data) {
+		var hasChildren = (data.node.children.length > 0 || !data.node.state.loaded);
+		if (hasChildren){
+			state.idActivTask = data.node.id !== '$' ? data.node.id : 0;
+			taskTable();
+		}else{
+			showFull(data.node.id);
+		}
+    });
+	
+	var generatedRequestParameters = function(){
+	
+		var parameters = '?taskid=' + state.idActivTask + '&date='+ state.dateFrom + ',' + state.dateTo;
+		
+		console.log(state.status);
+		
+		parameters = parameters + '&status=';
+		for (var i = 0; i < state.status.length; i++) {
+			if (state.status[i].checked){
+				parameters = parameters + state.status[i].id + ',';
+			}
+		}
+		parameters = parameters.slice(0,-1);
+		
+		parameters = parameters + '&priority=';
+		for (var i = 0; i < state.priority.length; i++) {
+			if (state.priority[i].checked){
+					parameters = parameters + state.priority[i].id + ',';
+			}
+		}
+		parameters = parameters.slice(0,-1);
+		
+		parameters = parameters + '&tag=';
+		for (var i = 0; i < state.tag.length; i++) {
+			if (state.tag[i].checked){
+					parameters = parameters + state.tag[i].id + ',';
+			}
+		}
+		parameters = parameters.slice(0,-1);
+		
+		return parameters;
+	}
+	
+	
+	var taskTableInit = false;
+	var taskTable = function () {
+		$.ajax({
+			url: 'tasks' + generatedRequestParameters(),
+			type: 'GET',
+			contentType: 'application/json',
+			
+			success: function (data) {
+				var rows = []
+				
+				for (var i = 0; i < data.length; i++) {
+					rows.push(Object.values(data[i]));
+				}
+				
+				if (taskTableInit) {
+					$('#tmw-task-table').DataTable().destroy();
+				}
+				
+				taskTableInit = true;
+				
+				if (rows.length > 0) {
+					$('#tmw-task-table').css('visibility', 'visible');
+					
+					$('#tmw-task-table').DataTable({
+						data: rows,
+						
+						columns: [
+							{title: "ID", visible: false},
+							{title: "Name"},
+							{title: "Created Date", visible: false},
+							{title: "Start Date"},
+							{title: "Est. Time"},
+							{title: "Assignee"},
+							{title: "Status"},
+							{title: "Priority"}
+						],
+						
+						paging: false,
+						info: false,
+						searching: false
+					});
+				} else {
+					$('#tmw-task-table').css('visibility', 'hidden');
+				}
+			}
+		});
+	}
+	
+	var showFull = function (id) {
+	
+		// AJAX return response full info one User
+		$.ajax({
+                url: 'tasks/' + id + '/full',
+                type: 'GET',
+                contentType: 'application/json',
+                success: function (data) {
+				
+					$('#tmw-user-field1').html(data.name);
+					$('#tmw-user-field2').html(data.createdDate);
+					$('#tmw-user-field3').html(data.startDate);
+					$('#tmw-user-field4').html(data.estimateTime);
+					$('#tmw-user-field5').html(data.assignTo);
+					$('#tmw-user-field6').html(data.status);
+					$('#tmw-user-field7').html(data.priority);
+				
+					$('#tmw-modal').modal('show');
+				}
+		});
+	};
+	
+	$('#tmw-task-table').on('click', 'tr', function () {
+		var table = $('#tmw-task-table').DataTable();
+		var taskId = table.row(this).data()[0];
+		showFull(taskId);
+	});
+  </script>
+</body>
+</html>

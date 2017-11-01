@@ -163,25 +163,24 @@ $(document).ready(function () {
 
         parameters = parameters + '&status=';
         for (var i = 0; i < state.status.length; i++) {
-            if (state.status[i].checked){
                 parameters = parameters + state.status[i].id + ',';
-            }
+
         }
         parameters = parameters.slice(0,-1);
 
         parameters = parameters + '&priority=';
         for (var i = 0; i < state.priority.length; i++) {
-            if (state.priority[i].checked){
+
                 parameters = parameters + state.priority[i].id + ',';
-            }
+
         }
         parameters = parameters.slice(0,-1);
 
         parameters = parameters + '&tag=';
         for (var i = 0; i < state.tag.length; i++) {
-            if (state.tag[i].checked){
+           
                 parameters = parameters + state.tag[i].id + ',';
-            }
+
         }
         parameters = parameters.slice(0,-1);
 

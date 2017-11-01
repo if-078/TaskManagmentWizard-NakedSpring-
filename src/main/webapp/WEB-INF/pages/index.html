@@ -43,12 +43,17 @@
       flex-grow: 1;
       overflow-y: scroll;
     }
-	
+
 	.tmw-task-table tr {
 		cursor: pointer;
 	}
 	
-	
+	ul.jstree-container-ul a.jstree-anchor {
+		width: 100px;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+
   </style>
 </head>
 
@@ -537,6 +542,7 @@
       core: {
 		data: {
 			url: function (node) {
+				$("ul.jstree-container-ul a.jstree-anchor").attr("title", "node.name");
 				switch (node.id) {
 					case '#':
 						var rootNode = {
@@ -544,7 +550,6 @@
 							text: 'All Projects',
 							children: true
 						};
-					
 						return 'data:application/json,' + encodeURIComponent(JSON.stringify(rootNode));
 					
 					case '$':
@@ -555,7 +560,7 @@
 				}
 			}
 		},
-		
+
 		dblclick_toggle: false
 	  }
 	 });
@@ -574,8 +579,17 @@
 		}else{
 			showFull(data.node.id);
 		}
+		$("ul.jstree-container-ul a.jstree-anchor").attr("title", "node.name_view");
     });
-	
+
+	$('i.jstree-ocl').click(function() {
+		$("ul.jstree-container-ul a.jstree-anchor").attr("title", "data.node.id");
+	});
+
+	$("ul.jstree-container-ul a.jstree-anchor").mouseenter(function() {
+	$("ul.jstree-container-ul a.jstree-anchor").css({"width": "100%", "overflow": "none", "color": "red"});
+	});
+
 	var generatedRequestParameters = function(){
 	
 		var parameters = '?taskid=' + state.idActivTask + '&date='+ state.dateFrom + ',' + state.dateTo;

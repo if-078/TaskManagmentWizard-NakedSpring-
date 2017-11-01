@@ -7,14 +7,14 @@
         $("#tasks-btn").click(function () {
             var urlAllTaks = 'tasks';
             initialTableOftasks(urlAllTaks);
-
+            $("#start, #end").datebox('clear');
             $("#task-container").show();
         });
 
         $("#today-task-btn").click(function () {
             var urlForToDayTask = 'tasks/today'
             initialTableOftasks(urlForToDayTask);
-
+          $("#start, #end").datebox('setValue', getCurrentFormatedDate ());
             $("#task-container").show();
         });
         $("#sprint-task-btn").click(function () {
@@ -133,6 +133,12 @@
         function clearContent() {
             $(".content").hide();
         }
+
+        function getCurrentFormatedDate () {
+            var d = new Date();
+            return d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
+        }
+
     });
 
 

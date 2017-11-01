@@ -33,6 +33,7 @@
 
 #data-container {
     margin-top: 10px;
+    min-height: 70%;
 }
 
 /*NAVIGABLE BAR*/
@@ -46,6 +47,11 @@
     font-size: 20px;
 }
 
+#treeContainer{
+    height: 33%;
+    /*min-height: 90%;*/
+}
+
 /*CONTENT*/
 
 #slogan span {
@@ -57,6 +63,8 @@
 
 #footer {
     background: #2d3e50;
+    position: relative;
+    top: 150px;
 }
 
 #footer span {
@@ -134,3 +142,4 @@ ul.tree {
     left: -1.3rem;
     z-index: -1;
 }
+

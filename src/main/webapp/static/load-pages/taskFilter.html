@@ -4,11 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!--EasyUI CSS-->
-    <link rel="stylesheet" type="text/css" href="static/easyui/themes/default/easyui.css">
-    <link rel="stylesheet" type="text/css" href="static/easyui/themes/icon.css">
-
+    <link rel="stylesheet" type="text/css" href="static/dev_pack/jqeasyui/themes/color.css">
     <!--EasyUI JS-->
-    <script type="text/javascript" src="static/easyui/jquery.easyui.min.js"></script>
+
+    <script type="text/javascript" src="static/dev_pack/jqeasyui/jquery.easyui.min.js"></script>
     <script type="text/javascript" src="static/js/filter.js"></script>
 
 </head>
@@ -16,9 +15,10 @@
 
 
 <div id="filterButtomBlock">
-    <input id="filterButton" class="easyui-linkbutton" type="submit" value="Filter   "/>
-    <input id="cleanButton" class="easyui-linkbutton" type="submit" value="Clean   "/>
+    <input id="filterButton" class="easyui-linkbutton c6" type="submit" value="Filter   "/>
+    <input id="cleanButton" class="easyui-linkbutton c2" type="submit" value="Clean   "/>
 </div>
+<div id="boxDiv" >
 <div >
     <input id="statusBox" class="easyui-tagbox" style="width:100%;padding:2px 2px;" data-options="
                    url: 'status',
@@ -58,12 +58,7 @@
                    prompt: 'Select a tag/s'
                    "/>
 </div>
-
-<div id="dateBlock1">
-    <label for="start">Fr</label>  <input id="start" name="start" class="easyui-datebox" data-options="formatter:myformatter" style="width:90%;" >
-        </div>
-        <div id="dateBlock2">
-    <label for="end">To</label>   <input id="end" name="end" class="easyui-datebox" data-options="formatter:myformatter"  style="width:90%;" >
 </div>
+
 </body>
 </html>

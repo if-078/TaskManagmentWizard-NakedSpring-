@@ -1,23 +1,24 @@
-#leftPanel {
+#boxDiv{
     overflow:scroll;
     overflow-x:hidden;
-    height: 33%;
-    max-height:190px;
+    max-height:130px;
+}
+
+#leftPanel {
+
+    height: 34%;
     width:100%;
-    /*max-width:250px;*/
-    padding:15px 15px;
     position:relative;
 
 }
-
 #leftPanel > div{
     padding:1px 1px;
 }
 
-/*#leftPanel > div #tagBox, #priorityBox, #statusBox{*/
-    /*width:100%;*/
-    /*padding:2px 2px;*/
-/*}*/
+#leftPanel > div #filterButton, #cleanButton{
+    width:45%;
+    padding:2px 2px;
+}
 
 #leftPanel > div > .easyui-linkbutton{
    font-size: 14px;

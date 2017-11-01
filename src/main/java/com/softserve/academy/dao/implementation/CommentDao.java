@@ -1,6 +1,6 @@
 package com.softserve.academy.dao.implementation;
 
-import com.softserve.academy.dao.mappers.CommentMapper;
+import com.softserve.academy.dao.mapper.CommentMapper;
 import com.softserve.academy.entity.Comment;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;

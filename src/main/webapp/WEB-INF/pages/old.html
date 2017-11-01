@@ -19,10 +19,6 @@
         <link rel="stylesheet" type="text/css" href="static/easyui/themes/default/easyui.css">
         <link rel="stylesheet" type="text/css" href="static/easyui/themes/icon.css">
 
-        <!--Bootstrap data-table-->
-        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css">
-        <link href="static/css/mystyle.css" rel="stylesheet" type="text/css">
-
         <!--JS-->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -37,9 +33,6 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 
-        <!--JS data-table -->
-        <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-        <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
         <script src="static/js/script.js"></script>
 
         <!--JS taskFilter(by tags ...) -->
@@ -48,7 +41,8 @@
     </head>
 
     <body>
-        <div class="main-container">
+
+    <div class="main-container">
             <header>
 
                 <div id="header-logo-container"><a href="/"><img id="logo" src="static/imgs/logo.png" height="50"
@@ -66,69 +60,22 @@
                     </button>
                     <button id="sprint-btn" type="button" class="btn btn-default">Sprint<span class="counter"></span></button>
                     <button id="user-btn" type="button" class="btn btn-default">Users<span class="counter"></span></button>
-                    <div  id="leftPanel" class="easyui-panel" >
-
-                    </div>
+                    <!--makar. tree-->
+                    <ul class="tree">
+                        <li class="tree-item"><a id="empty" href="" class="root-document">ROOT</a></li>
+                    </ul>
+                    <!--makar.tree-->
+                    <div  id="leftPanel" class="easyui-panel" ></div>
                 </aside>
 
                 <article class="content-container">
                     <div id="welcome-container" class="content"><h1>Welcome!</h1></div>
                     <div id="user-container" class="content"></div>
-                    <div id="task-container" class="content">
-                        <button id="showAddTaskForm">Add task</button>
-                        </br>
-
-                        <form id="addTaskForm" style="display:none">
-
-                            <div>Name: </div>
-                            <input id="name" type="text" />
-                            <div>Start</div>
-                            <input id="startDate" type="datetime" class="data"/>
-                            <div>End</div>
-                            <input id="endDate"  type="datetime" class="data"/>
-
-                            </br>
-                            </br>
-                            <input id="addTaskSubmit" type="submit" value="Add task">
-                        </form>
-                    </div>
-
-                    <div id="today-container" class="content">
-                        <h2>Tasks For Today</h2>
-                    </div>
-                    <div id="sprint-container" class="content">
-                        <h2>Sprint</h2>
-                    </div>
-
-                    <div id="update-container" class="content">
-
-                        <!--            <form id="updateTaskForm">
-                    
-                                        <div>Name: </div>
-                                        <input id="nameU" type="text" border-radius: 10px/>
-                                        <div>Start</div>
-                                        <input id="startDate" type="datetime" class="data"/>
-                                        <div>End</div>
-                                        <input id="endDate" type="datetime" class="data"/>
-                                        &lt;!&ndash; <div>Estimate time: </div>
-                                        <input id="estimateTime" type="text" border-radius: 10px/> &ndash;&gt;
-                                        <div>Assign to: </div>
-                                        <input id="assignTo" type="text" border-radius: 10px/>
-                                        <div>Priority</div>
-                                        <input id="priority" type="text" border-radius: 10px/>
-                                        <div>Status</div>
-                                        <input id="status" type="text" border-radius: 10px/>
-                    
-                    
-                                        </br>
-                                        </br>
-                                        <input id="updateTaskSubmit" type="submit" value="Update task">
-                                    </form>-->
-                    </div>
-
+                    <div id="task-container" class="content"></div>
+                    <div id="today-container" class="content"></div>
+                    <div id="sprint-container" class="content"></div>
                 </article>
             </div>
-
             <footer>
                 <h3>© 2017 if-078</h3>
             </footer>

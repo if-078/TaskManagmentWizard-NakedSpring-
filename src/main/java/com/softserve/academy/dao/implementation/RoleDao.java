@@ -1,7 +1,7 @@
 package com.softserve.academy.dao.implementation;
 
 import com.softserve.academy.dao.interfaces.RoleDaoInterface;
-import com.softserve.academy.dao.mappers.RoleMapper;
+import com.softserve.academy.dao.mapper.RoleMapper;
 import com.softserve.academy.entity.Role;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;

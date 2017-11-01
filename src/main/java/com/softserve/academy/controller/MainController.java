@@ -8,10 +8,15 @@ public class MainController {
 
     @RequestMapping("/")
     public String getIndexPage() {
-        return "old";
+        return "index";
     }
     @RequestMapping("/login")
     public String getLoginPage(){
         return "login";
+    }
+
+    @RequestMapping("/task")
+    public String getTaskPage(){
+        return "task";
     }
 }

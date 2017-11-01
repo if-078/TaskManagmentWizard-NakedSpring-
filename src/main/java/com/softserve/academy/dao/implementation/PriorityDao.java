@@ -1,6 +1,6 @@
 package com.softserve.academy.dao.implementation;
 
-import com.softserve.academy.dao.mappers.PriorityMapper;
+import com.softserve.academy.dao.mapper.PriorityMapper;
 import com.softserve.academy.entity.Priority;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;

@@ -1,7 +1,7 @@
 package com.softserve.academy.dao.implementation;
 
 import com.softserve.academy.dao.interfaces.UserDaoInterface;
-import com.softserve.academy.dao.mappers.UserMapper;
+import com.softserve.academy.dao.mapper.UserMapper;
 import com.softserve.academy.entity.User;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;

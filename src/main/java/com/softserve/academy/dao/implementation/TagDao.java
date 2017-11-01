@@ -1,7 +1,7 @@
 package com.softserve.academy.dao.implementation;
 
 import com.softserve.academy.dao.interfaces.TagDaoInterface;
-import com.softserve.academy.dao.mappers.TagMapper;
+import com.softserve.academy.dao.mapper.TagMapper;
 import com.softserve.academy.entity.Tag;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;

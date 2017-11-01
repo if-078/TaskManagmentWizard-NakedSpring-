@@ -1,4 +1,4 @@
-package com.softserve.academy.dao.mappers;
+package com.softserve.academy.dao.mapper;
 
 import com.softserve.academy.entity.Task;
 import org.springframework.jdbc.core.RowMapper;

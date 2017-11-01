@@ -1,6 +1,7 @@
 package com.softserve.academy.controller;
 
 import com.softserve.academy.entity.Comment;
+import com.softserve.academy.service.implementation.CommentServiceImpl;
 import com.softserve.academy.service.interfaces.CommentServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,7 +15,7 @@ import java.util.List;
 public class CommentController {
 
     @Autowired
-    public CommentServiceInterface commentService;
+    public CommentServiceImpl commentService;
 
     @GetMapping("/")
     List<Comment> getAllComment() throws SQLException {

@@ -1,76 +1,68 @@
 package com.softserve.academy.dao.implementation;
 
+import com.softserve.academy.DTO.FilterStateWrapper;
 import org.jooq.*;
 import org.jooq.conf.ParamType;
 import org.jooq.conf.Settings;
 
-import java.util.Iterator;
-import java.util.Map;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.jooq.impl.DSL.*;
 
 public class JooqSQLBuilder {
 
-    private Settings settings = new Settings().withParamType(ParamType.NAMED);
+    private Settings settings = new Settings().withParamType(ParamType.INLINED);
     private DSLContext creator = using(SQLDialect.MYSQL, settings);
     private Field id = field("task.id");
-    private Field name = field("task.name");
-    private Field crDate = field("task.created_date");
-    private Field startDate = field("task.start_date");
-    private Field endDate = field("task.end_date");
-    private Field estimateTime = field("task.estimate_time");
     private Field statusId = field("task.status_id");
+    private Field priorityId = field("priority_id");
+    private Field parentId = field("parent_id");
+    private FilterStateWrapper sto;
 
-    public Select buildSql(int[] priorities, int[] statuses, int[] tags, int userId) {
+    public JooqSQLBuilder(FilterStateWrapper sto) {
+        this.sto = sto;
+    }
+
+    public Select buildSql() {
 
         Table table;
-        Condition condition = field("assign_to").eq(userId);
+        Condition condition = field(parentId).eq(sto.getId());
         Select selectConditionStep;
 
-        if (statuses.length > 0) {
+        if (sto.getStatus().length > 0) {
+            List<Integer> list = Arrays.stream(sto.getStatus()).boxed().collect(Collectors.toList());
+            condition = condition.and(field(statusId).in(list));
+//
+        }
 
-            condition = condition.and(field("status_id").in(statuses));
+        if (sto.getPriority().length > 0) {
+
+            List<Integer> list = Arrays.stream(sto.getPriority()).boxed().collect(Collectors.toList());
+            condition = condition.and(field(priorityId).in(list));
 
         }
 
-        if (priorities.length > 0) {
+        if (sto.getTag().length > 0) {
 
-            condition = condition.and(field("priority_id").in(priorities));
-
-        }
-
-        if (tags.length > 1) {
-
-            table = table("task").join(table("tags_tasks")).on(field("task.id").eq(field("tags_tasks.task_id")))
+            List<Integer> list = Arrays.stream(sto.getTag()).boxed().collect(Collectors.toList());
+            table = table("task").join(table("tags_tasks")).on(field(id).eq(field("tags_tasks.task_id")))
                     .join(table("tag")).on(field("tags_tasks.tag_id").eq(field("tag.id")));
-            selectConditionStep = creator.select(id, name, crDate, startDate, endDate, estimateTime, statusId).from(table).where(condition).and(field("tags_tasks.tag_id").in(tags)).groupBy(field("task_id"))
-                    .having(field("tag_id").countDistinct().eq(tags.length));
+            selectConditionStep = creator.select().from(table)
+                    .where(condition).and(field("tags_tasks.tag_id").in(list))
+                    .groupBy(field("task_id"))
+                    .having(field("tag_id").countDistinct().eq(sto.getTag().length));
         } else {
 
             table = table("task");
-            selectConditionStep = creator.select(id, name, crDate, startDate, endDate, estimateTime, statusId).from(table).where(condition);
+            selectConditionStep = creator.select().from(table).where(condition);
 
         }
 
         return selectConditionStep;
     }
 
-    public static void main(String[] args) {
-        JooqSQLBuilder builder = new JooqSQLBuilder();
-        int[] statuses = new int[]{1,3,4};
-        int[] priorities = new int[]{};
-        int[] tags = new int[]{9, 6, 34, 52};
-        Select sql = builder.buildSql(priorities, statuses, tags, 1);
-        Map<String, Param<?>> valuse = sql.getParams();
-        Iterator<Map.Entry<String, Param<?>>> iterator = valuse.entrySet().iterator();
-        System.out.println(sql.getSQL());
-        while (iterator.hasNext()) {
-            Map.Entry<String, Param<?>> pair = iterator.next();
-            System.out.println(pair.getKey() + " : " + pair.getValue().getName() + " ");
-        }
-
-
-    }
 }
 
 /*

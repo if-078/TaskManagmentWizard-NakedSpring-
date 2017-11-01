@@ -180,8 +180,8 @@ public class TaskDao extends Dao<Task> implements TaskDaoInterface {
     public List<Task> getFilteredTasks(JooqSQLBuilder builder){
         Select select = builder.buildSql();
         String query = select.getSQL();
-        Map<String, Param<?>> values = select.getParams();
-        List<Task> tasks = jdbcTemplate.query(query, values, new TaskMapper());
+       // Map<String, Param<?>> values = select.getParams();
+        List<Task> tasks = jdbcTemplate.query(query, new TaskMapper());
         return tasks;
     }
 

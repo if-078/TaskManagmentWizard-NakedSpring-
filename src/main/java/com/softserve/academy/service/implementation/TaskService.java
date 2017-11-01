@@ -92,8 +92,8 @@ public class TaskService implements TaskServiceInterface {
         wrapper.setTag(tag);
         JooqSQLBuilder builder = new JooqSQLBuilder(wrapper);
 
-       // List<Task> list = taskDao.getFilteredTasks(builder);
-        List<Task> list = taskDao.getAll();
+        List<Task> list = taskDao.getFilteredTasks(builder);
+        //List<Task> list = taskDao.getAll();
         List<TaskTableDto> result = new ArrayList<>();
         List<User> users = userDaoInterface.getAll();
         List<Priority>priorities = priorityDao.getAll();

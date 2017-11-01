@@ -5,18 +5,18 @@ import org.jooq.*;
 import org.jooq.conf.ParamType;
 import org.jooq.conf.Settings;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import static org.jooq.impl.DSL.*;
 
 public class JooqSQLBuilder {
 
-    private Settings settings = new Settings().withParamType(ParamType.NAMED);
+    private Settings settings = new Settings().withParamType(ParamType.INLINED);
     private DSLContext creator = using(SQLDialect.MYSQL, settings);
     private Field id = field("task.id");
-    private Field name = field("task.name");
-    private Field crDate = field("task.created_date");
-    private Field startDate = field("task.start_date");
-    private Field endDate = field("task.end_date");
-    private Field estimateTime = field("task.estimate_time");
     private Field statusId = field("task.status_id");
     private Field priorityId = field("priority_id");
     private Field parentId = field("parent_id");
@@ -33,27 +33,31 @@ public class JooqSQLBuilder {
         Select selectConditionStep;
 
         if (sto.getStatus().length > 0) {
-
-            condition = condition.and(field(statusId).in(sto.getStatus()));
-
+            List<Integer> list = Arrays.stream(sto.getStatus()).boxed().collect(Collectors.toList());
+            condition = condition.and(field(statusId).in(list));
+//
         }
 
         if (sto.getPriority().length > 0) {
 
-            condition = condition.and(field(priorityId).in(sto.getPriority()));
+            List<Integer> list = Arrays.stream(sto.getPriority()).boxed().collect(Collectors.toList());
+            condition = condition.and(field(priorityId).in(list));
 
         }
 
         if (sto.getTag().length > 0) {
 
+            List<Integer> list = Arrays.stream(sto.getTag()).boxed().collect(Collectors.toList());
             table = table("task").join(table("tags_tasks")).on(field(id).eq(field("tags_tasks.task_id")))
                     .join(table("tag")).on(field("tags_tasks.tag_id").eq(field("tag.id")));
-            selectConditionStep = creator.select(id, name, crDate, startDate, endDate, estimateTime, statusId).from(table).where(condition).and(field("tags_tasks.tag_id").in(sto.getTag())).groupBy(field("task_id"))
+            selectConditionStep = creator.select().from(table)
+                    .where(condition).and(field("tags_tasks.tag_id").in(list))
+                    .groupBy(field("task_id"))
                     .having(field("tag_id").countDistinct().eq(sto.getTag().length));
         } else {
 
             table = table("task");
-            selectConditionStep = creator.select(id, name, crDate, startDate, endDate, estimateTime, statusId).from(table).where(condition);
+            selectConditionStep = creator.select().from(table).where(condition);
 
         }
 

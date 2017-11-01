@@ -1,12 +1,15 @@
 package com.softserve.academy.service.implementation;
-import com.softserve.academy.DTO.FilterStateWrapper;
-import com.softserve.academy.DTO.TaskTableDto;
+import com.softserve.academy.dto.FilterStateWrapper;
+import com.softserve.academy.dto.TaskTableDto;
 import com.softserve.academy.dao.implementation.JooqSQLBuilder;
 import com.softserve.academy.dao.implementation.PriorityDao;
 import com.softserve.academy.dao.implementation.StatusDao;
 import com.softserve.academy.dao.interfaces.TaskDaoInterface;
 import com.softserve.academy.dao.interfaces.UserDaoInterface;
+import com.softserve.academy.dto.dtoentity.TaskFullInfoDTO;
+import com.softserve.academy.dto.dtoentity.TaskTreeDTO;
 import com.softserve.academy.entity.*;
+import com.softserve.academy.service.interfaces.EntityServiceInterface;
 import com.softserve.academy.service.interfaces.TaskServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -19,14 +22,21 @@ import java.util.List;
 @Service
 public class TaskService implements TaskServiceInterface {
 
+
+
     @Autowired
     TaskDaoInterface taskDao;
+
     @Autowired
-    UserDaoInterface userDaoInterface;
+    UserDaoInterface userDao;
+
     @Autowired
-    PriorityDao priorityDao;
+    EntityServiceInterface<Status> serviceStatus;
+
     @Autowired
-    StatusDao statusDao;
+    EntityServiceInterface<Priority> servicePriority;
+
+
 
     @Override
     public List<Task> getAll() {
@@ -102,9 +112,9 @@ public class TaskService implements TaskServiceInterface {
 
         List<Task> list = taskDao.getFilteredTasks(builder);
         List<TaskTableDto> result = new ArrayList<>();
-        List<User> users = userDaoInterface.getAll();
-        List<Priority>priorities = priorityDao.getAll();
-        List<Status>statuses = statusDao.getAll();
+        List<User> users = userDao.getAll();
+        List<Priority>priorities = servicePriority.getAll();
+        List<Status>statuses =serviceStatus.getAll();
 
 
         for (Task t : list){
@@ -135,6 +145,85 @@ public class TaskService implements TaskServiceInterface {
         }
 
         return result;
+    }
+
+
+     @Override
+    public List<TaskTreeDTO> findTaskByTree(int id){
+
+        List<Task> allTask = taskDao.getAll();
+
+        List<Task> selectedTask = new ArrayList<Task>();
+        for (Task task : allTask){
+            if(task.getParentId() == id) selectedTask.add(task);
+        }
+
+        List<TaskTreeDTO> allTaskDTO = new ArrayList<>();
+        for(Task task : selectedTask){
+            TaskTreeDTO taskDTO = new TaskTreeDTO();
+            taskDTO.setId(task.getId());
+            taskDTO.setText(task.getName());
+            allTaskDTO.add(taskDTO);
+        }
+
+        for(TaskTreeDTO taskDTO : allTaskDTO){
+            for(Task task : allTask){
+                if (taskDTO.getId()==task.getParentId()){
+                    taskDTO.setChildren(true);
+                    break;
+                }
+            }
+        }
+
+        return allTaskDTO;
+    }
+
+    @Override
+    public TaskFullInfoDTO getFullInfo(int id){
+        Task task = taskDao.findOne(id);
+        TaskFullInfoDTO taskDTO = new TaskFullInfoDTO();
+
+        taskDTO.setId(task.getId());
+        taskDTO.setName(task.getName());
+        taskDTO.setCreatedDate(task.getCreatedDate());
+        taskDTO.setStartDate(task.getStartDate());
+        taskDTO.setEndDate(task.getEndDate());
+        taskDTO.setEstimateTime(task.getEstimateTime());
+        taskDTO.setAssignTo(""+task.getAssignTo());
+        taskDTO.setStatus("" + task.getStatusId());
+        taskDTO.setPriority("" + task.getPriorityId());
+
+        List<User> allUser = userDao.getAll();
+        for(int i=0; i<allUser.size(); i++){
+            User user = allUser.get(i);
+            if((""+user.getId()).equals(taskDTO.getAssignTo())){
+                String name = user.getName();
+                taskDTO.setAssignTo(name);
+            }
+        }
+
+        List<Status> allStatus = serviceStatus.getAll();
+        for(int i=0; i<allStatus.size(); i++){
+            Status stat = allStatus.get(i);
+            if((""+stat.getId()).equals(taskDTO.getStatus())){
+                String strStatus = stat.getName();
+                taskDTO.setStatus(strStatus);
+            }
+
+        }
+
+        List<Priority> allPriority = servicePriority.getAll();
+        for(int i=0; i<allPriority.size(); i++){
+            Priority prior = allPriority.get(i);
+            if((""+prior.getId()).equals(taskDTO.getPriority())){
+                String strPrior = prior.getName();
+                taskDTO.setPriority(strPrior);
+            }
+        }
+
+
+
+        return taskDTO;
     }
 
   /*

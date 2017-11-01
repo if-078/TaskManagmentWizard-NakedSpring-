@@ -1,6 +1,6 @@
 package com.softserve.academy.dao.implementation;
 
-import com.softserve.academy.dao.mappers.StatusMapper;
+import com.softserve.academy.dao.mapper.StatusMapper;
 import com.softserve.academy.entity.Status;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;

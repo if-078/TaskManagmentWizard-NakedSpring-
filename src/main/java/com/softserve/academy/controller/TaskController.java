@@ -2,7 +2,9 @@ package com.softserve.academy.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.softserve.academy.DTO.TaskTableDto;
+import com.softserve.academy.dto.TaskTableDto;
+import com.softserve.academy.dto.dtoentity.TaskFullInfoDTO;
+import com.softserve.academy.dto.dtoentity.TaskTreeDTO;
 import com.softserve.academy.entity.Task;
 import com.softserve.academy.service.interfaces.TaskServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -85,19 +87,33 @@ public class TaskController {
        return json;
     }
 
-    @GetMapping("/sa")
+    @GetMapping("/filter")
     public List<TaskTableDto> getFilteredTasks (
             @RequestParam(name="taskid", required = false) int taskId,
             @RequestParam(name="date", required = false) String[] date,
             @RequestParam(name="status", required = false) int[] status,
             @RequestParam(name="priority", required = false) int[] priority,
             @RequestParam(name="tag", required = false) int[] tag){
-        System.out.println("SEARCHING");
-        return taskService.getFilteredTasksForTable(taskId, date, status, priority, tag);
+        System.out.println("SEARCHING_filter");
+        List<TaskTableDto> nana = taskService.getFilteredTasksForTable(taskId, date, status, priority, tag);
+        for(TaskTableDto ent:nana){
+            System.out.println(ent);
+            System.out.println();
+        }
+        return nana;
 
     }
 
+    @GetMapping("/tree/{id}")
+    List<TaskTreeDTO> getTreeSubtask(@PathVariable Integer id){
+        return taskService.findTaskByTree(id);
+    }
 
+    @GetMapping("/view/{id}")
+    TaskFullInfoDTO getFullInfoByUser(@PathVariable Integer id) {
+        System.out.println("In controller");
+        return taskService.getFullInfo(id);
+    }
 
   /*
    * @GetMapping("/tag/{id}") List<Task> tasksByTag(@PathVariable int id) { return

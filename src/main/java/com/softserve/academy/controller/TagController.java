@@ -9,15 +9,16 @@ import java.sql.SQLException;
 import java.util.List;
 
 @RestController
-@RequestMapping("users/{uid}/tags")
+@RequestMapping("tags")
 public class TagController {
 
     @Autowired
     private TagService tagService;
 
-    @GetMapping("/all")
-    List<Tag> getTagsByUserId(@PathVariable Integer uid) throws SQLException {
-        return tagService.getAllByUserId(uid);
+    @GetMapping
+    List<Tag> getTagsByUserId() throws SQLException {
+       // return tagService.getAllByUserId(uid);
+        return tagService.getAll();
     }
 
     @PostMapping()

@@ -1,6 +1,6 @@
 package com.softserve.academy.dao.implementation;
 
-import com.softserve.academy.DTO.FilterStateWrapper;
+import com.softserve.academy.dto.FilterStateWrapper;
 import org.jooq.*;
 import org.jooq.conf.ParamType;
 import org.jooq.conf.Settings;

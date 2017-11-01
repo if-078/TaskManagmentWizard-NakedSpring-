@@ -1,4 +1,4 @@
-package com.softserve.academy.DTO;
+package com.softserve.academy.dto;
 
 import java.sql.Time;
 import java.util.Date;

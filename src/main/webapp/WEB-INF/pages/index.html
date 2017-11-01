@@ -415,11 +415,12 @@
 	
 		// AJAX return response all TAG
 	  $.ajax({
-                url: 'tag',
+                url: 'tags',
                 type: 'GET',
                 contentType: 'application/json',
                 success: function (data) {
-					var response = JSON.parse(data);
+
+					var response = data;
 
 					var newTags = [];
 
@@ -542,7 +543,7 @@
       core: {
 		data: {
 			url: function (node) {
-				$("ul.jstree-container-ul a.jstree-anchor").attr("title", "node.name");
+//				$("ul.jstree-container-ul a.jstree-anchor").attr("title", "node.name");
 				switch (node.id) {
 					case '#':
 						var rootNode = {
@@ -553,10 +554,10 @@
 						return 'data:application/json,' + encodeURIComponent(JSON.stringify(rootNode));
 					
 					case '$':
-						return 'tasks/0';
+						return 'tasks/tree/0';
 					
 					default:
-						return 'tasks/' + node.id;
+						return 'tasks/tree/' + node.id;
 				}
 			}
 		},
@@ -579,11 +580,11 @@
 		}else{
 			showFull(data.node.id);
 		}
-		$("ul.jstree-container-ul a.jstree-anchor").attr("title", "node.name_view");
+//		$("ul.jstree-container-ul a.jstree-anchor").attr("title", "node.name_view");
     });
 
 	$('i.jstree-ocl').click(function() {
-		$("ul.jstree-container-ul a.jstree-anchor").attr("title", "data.node.id");
+//		$("ul.jstree-container-ul a.jstree-anchor").attr("title", "data.node.id");
 	});
 
 	$("ul.jstree-container-ul a.jstree-anchor").mouseenter(function() {
@@ -627,13 +628,13 @@
 	var taskTableInit = false;
 	var taskTable = function () {
 		$.ajax({
-			url: 'tasks' + generatedRequestParameters(),
+			url: 'tasks/filter' + generatedRequestParameters(),
 			type: 'GET',
 			contentType: 'application/json',
 			
 			success: function (data) {
 				var rows = []
-				
+				console.log(data);
 				for (var i = 0; i < data.length; i++) {
 					rows.push(Object.values(data[i]));
 				}
@@ -653,7 +654,6 @@
 						columns: [
 							{title: "ID", visible: false},
 							{title: "Name"},
-							{title: "Created Date", visible: false},
 							{title: "Start Date"},
 							{title: "Est. Time"},
 							{title: "Assignee"},
@@ -676,7 +676,7 @@
 	
 		// AJAX return response full info one User
 		$.ajax({
-                url: 'tasks/' + id + '/full',
+                url: 'tasks/view/' + id,
                 type: 'GET',
                 contentType: 'application/json',
                 success: function (data) {

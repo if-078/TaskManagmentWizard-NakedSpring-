@@ -16,11 +16,15 @@ public class TagService implements TagServiceInterface {
     @Autowired
     private TagDao tagDao;
 
+//    @Override
+//    public List<Tag> getAll() {
+//        throw new UnsupportedOperationException("Not supported yet.");
+//    }
+
     @Override
     public List<Tag> getAll() {
-        throw new UnsupportedOperationException("Not supported yet.");
+     return   tagDao.getAll();
     }
-
 
     @Override
     public List<Tag> getAllByUserId(int userId) {

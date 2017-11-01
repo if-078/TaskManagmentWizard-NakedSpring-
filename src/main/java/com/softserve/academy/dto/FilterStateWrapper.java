@@ -1,4 +1,4 @@
-package com.softserve.academy.DTO;
+package com.softserve.academy.dto;
 
 public class FilterStateWrapper {
     private int id;

@@ -1,7 +1,8 @@
 package com.softserve.academy.service.interfaces;
 
-import com.softserve.academy.DTO.FilterStateWrapper;
-import com.softserve.academy.DTO.TaskTableDto;
+import com.softserve.academy.dto.TaskTableDto;
+import com.softserve.academy.dto.dtoentity.TaskFullInfoDTO;
+import com.softserve.academy.dto.dtoentity.TaskTreeDTO;
 import com.softserve.academy.entity.Comment;
 import com.softserve.academy.entity.Tag;
 import com.softserve.academy.entity.Task;
@@ -22,6 +23,9 @@ public interface TaskServiceInterface extends EntityServiceInterface<Task> {
 
     List<TaskTableDto> getFilteredTasksForTable(int parentId, String[] dates, int[] status, int[] priority, int[] tag);
 
+    List<TaskTreeDTO> findTaskByTree(int id);
+
+    TaskFullInfoDTO getFullInfo(int id);
   /*
    * public ArrayList<Task> getTaskByStatus(int statusId);
    *

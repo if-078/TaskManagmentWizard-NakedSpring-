@@ -1,7 +1,7 @@
 package it.com.softserve.academy.tmw.dao;
 
+import com.softserve.academy.tmw.dao.impl.CommentDao;
 import com.softserve.academy.tmw.entity.Comment;
-import com.softserve.academy.tmw.service.impl.CommentServiceImpl;
 import it.com.softserve.academy.tmw.dao.utility.TaskPopulator;
 import it.com.softserve.academy.tmw.dao.utility.UserPopulator;
 import org.junit.Before;
@@ -21,11 +21,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {TestConfig.class})
-public class CommentDaoTest {
+@ContextConfiguration(classes = {TestDaoConfig.class})
+public class CommentDaoIT {
 
     @Autowired
-    public CommentServiceImpl commentService;
+    public CommentDao commentDao;
     @Autowired
     public UserPopulator populatorUser;
     @Autowired
@@ -38,12 +38,11 @@ public class CommentDaoTest {
 
     }
 
-
     @Test
     public void iTShoudExecuteNegativeTest() throws SQLException {
         int testId = 50;
-        assertThat(commentService.getAll().isEmpty());
-        assertThat(commentService.delete(testId)).isFalse();
+        assertThat(commentDao.getAll().isEmpty());
+        assertThat(commentDao.delete(testId)).isFalse();
     }
 
     @Test
@@ -53,17 +52,17 @@ public class CommentDaoTest {
 
         comment.setCreatedDate(LocalDateTime.of(2015, Month.SEPTEMBER, 10, 10, 20, 30));
         // When
-        int id = commentService.create(comment).getId();
+        int id = commentDao.create(comment).getId();
         comment.setId(id);
 
-        Comment commentActual = commentService.findOne(id);
+        Comment commentActual = commentDao.findOne(id);
         // Then
         assertEquals(comment.getId(), commentActual.getId());
         assertEquals(comment.getCommentText(), commentActual.getCommentText());
         assertEquals(comment.getCreatedDate(), commentActual.getCreatedDate());
         assertEquals(comment.getTaskId(), commentActual.getTaskId());
         assertEquals(comment.getUserId(), commentActual.getUserId());
-        commentService.delete(id);
+        commentDao.delete(id);
     }
 
     @Test
@@ -72,19 +71,19 @@ public class CommentDaoTest {
         Comment comment = new Comment("Text comment", 1, 1);
         comment.setCreatedDate(LocalDateTime.of(2015, Month.SEPTEMBER, 20, 10, 20, 30));
         // When
-        int id = commentService.create(comment).getId();
+        int id = commentDao.create(comment).getId();
         comment.setId(id);
 
         comment.setCommentText("Text comment update");
-        commentService.update(comment);
-        Comment commentActual = commentService.findOne(id);
+        commentDao.update(comment);
+        Comment commentActual = commentDao.findOne(id);
         // Then
         assertEquals(comment.getId(), commentActual.getId());
         assertEquals(comment.getCommentText(), commentActual.getCommentText());
         assertEquals(comment.getCreatedDate(), commentActual.getCreatedDate());
         assertEquals(comment.getTaskId(), commentActual.getTaskId());
         assertEquals(comment.getUserId(), commentActual.getUserId());
-        commentService.delete(id);
+        commentDao.delete(id);
     }
 
     @Test
@@ -111,9 +110,9 @@ public class CommentDaoTest {
 
         // When
         for (int i = 0; i < comments.size(); i++) {
-            commentService.create(comments.get(i));
+            commentDao.create(comments.get(i));
         }
-        List<Comment> commentsActual = commentService.getAll();
+        List<Comment> commentsActual = commentDao.getAll();
 
         // Then
         assertEquals(comments.size(), commentsActual.size());
@@ -123,9 +122,9 @@ public class CommentDaoTest {
             assertEquals(comments.get(i).getCreatedDate(), commentsActual.get(i).getCreatedDate());
             assertEquals(comments.get(i).getTaskId(), commentsActual.get(i).getTaskId());
             assertEquals(comments.get(i).getUserId(), commentsActual.get(i).getUserId());
-            commentService.delete(commentsActual.get(i).getId());
+            commentDao.delete(commentsActual.get(i).getId());
         }
-        commentsActual = commentService.getAll();
+        commentsActual = commentDao.getAll();
         assertEquals(0, commentsActual.size());
 
     }

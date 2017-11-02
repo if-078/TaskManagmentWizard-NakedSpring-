@@ -15,8 +15,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {TestConfig.class})
-public class UserDaoIntTest {
+@ContextConfiguration(classes = {TestDaoConfig.class})
+public class UserDaoItTest {
 
     @Autowired
     private UserDaoInterface userDao;

@@ -12,8 +12,8 @@ import java.sql.SQLException;
 import java.util.Date;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {TestConfig.class})
-public class TaskDaoTest {
+@ContextConfiguration(classes = {TestDaoConfig.class})
+public class TaskDaoItTest {
 
     @Autowired
     private TaskDao dao;

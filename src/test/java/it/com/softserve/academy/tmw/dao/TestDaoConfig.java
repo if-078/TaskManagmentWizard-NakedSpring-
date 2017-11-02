@@ -11,7 +11,7 @@ import javax.sql.DataSource;
 
 @Configuration
 @ComponentScan(basePackages = {"com.softserve.academy.tmw.dao", "com.softserve.academy.tmw.service"})
-public class TestConfig {
+public class TestDaoConfig {
 
     @Bean
     public DataSource dataSource() {

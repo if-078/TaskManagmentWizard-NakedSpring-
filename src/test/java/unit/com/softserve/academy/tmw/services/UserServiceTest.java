@@ -44,7 +44,6 @@ public class UserServiceTest {
         persistedUser.setEmail(email);
 
         when(userDao.create(any(User.class))).thenReturn(persistedUser);
-
         User newUser = userService.create(persistedUser);
 
         assertThat(newUser).isNotNull();

@@ -1,49 +1,46 @@
 
 $(document).ready(function () {
 
-    // State applaed filters ==================================================
+    // STATE OF APPLIED FILTERS
     var state = {
-        idActivTask : 0,
+        parentid : 0,
         dateFrom : '',
         dateTo : '',
         status: [],
         priority: [],
         tag: []
     };
-    // State applaed filters ==================================================
+    // STATE OF APPLIED FILTERS
 
 
-    // ON CLICK - SELECTED TIME - ALL =========================================
+    // ON CLICK - SELECT TIME - ALL
     $('#tmw-time-all-btn').click(function (){
         $('#tmw-info-selected-time').html('Selected Time : All');
         state.dateFrom = '';
         state.dateTo = '';
-        taskTable();
+        //taskTable();
     });
-    // ON CLICK - SELECTED TIME - ALL =========================================
 
 
-    // ON CLICK - SELECTED TIME - TODAY =======================================
+    // ON CLICK - SELECT TIME - TODAY
     $('#tmw-time-today-btn').click(function (){
         $('#tmw-info-selected-time').html('Selected Time : Today');
-        state.dateFrom = '30/10/2017';
-        state.dateTo = '30/10/2017';
-        taskTable();
+        state.dateFrom = '';
+        state.dateTo = '';
+        //taskTable();
     });
-    // ON CLICK - SELECTED TIME - TODAY =======================================
 
 
-    // ON CLICK - SELECTED TIME - WEEK ========================================
+    // ON CLICK - SELECT TIME - WEEK
     $('#tmw-time-week-btn').click(function (){
         $('#tmw-info-selected-time').html('Selected Time : Week');
-        state.dateFrom = '30/10/2017';
-        state.dateTo = '04/11/2017';
-        taskTable();
+        state.dateFrom = '';
+        state.dateTo = '';
+        //taskTable();
     });
-    // ON CLICK - SELECTED TIME - WEEK ========================================
 
 
-    // ON CLICK - SELECTED TIME - CUSTOM ======================================
+    // ON CLICK - SELECT TIME - CUSTOM
     $('.datepicker').datepicker({
         autoclose: true
     });
@@ -63,9 +60,7 @@ $(document).ready(function () {
 
         state.dateFrom = $('#tmw-time-custom-from').val();
         state.dateTo = $('#tmw-time-custom-to').val();
-
         $('#tmw-info-selected-time').html('Selected Time : ' + state.dateFrom + " - " + state.dateTo);
-
         $('#tmw-time-btn-group > button, #tmw-time-custom-btn').removeClass('active');
         $('#tmw-time-custom-btn').addClass('active');
     });
@@ -73,10 +68,8 @@ $(document).ready(function () {
     $('#tmw-time-custom-cancel-btn').click(function (e) {
 
     });
-    // ON CLICK - SELECTED TIME - CUSTOM ======================================
 
-
-    // ON CLICK AND SELECT STATUS =============================================
+    // ON CLICK FILTER - STATUS
     var stateStatus = [];
     $('#tmw-status-btn').click(function () {
 
@@ -87,7 +80,6 @@ $(document).ready(function () {
             contentType: 'application/json',
             success: function (data) {
                 var response = JSON.parse(data);
-
                 var newStatuses = [];
 
                 for (var i = 0; i < response.length; i++) {
@@ -96,21 +88,18 @@ $(document).ready(function () {
                         name: response[i].name,
                         checked: false
                     };
-
                     for (var j = 0; j < stateStatus.length; j++) {
                         if (stateStatus[j].id === newStatus.id) {
                             newStatus.checked = stateStatus[j].checked;
                             break;
                         }
                     }
-
                     newStatuses.push(newStatus);
                 }
 
                 stateStatus = newStatuses;
 
                 $('#tmw-status-list').empty();
-
                 for (var i = 0; i < stateStatus.length; i++) {
                     $('#tmw-status-list').append($('<li class="col-xs-6"><a href="#"><input type="checkbox" value="' + stateStatus[i].id + '" ' + (stateStatus[i].checked ? 'checked' : '') + '> ' + stateStatus[i].name + '</a></li>'));
                 }
@@ -127,10 +116,8 @@ $(document).ready(function () {
             }
         }
     });
-    // ON CLICK AND SELECT STATUS =============================================
 
-
-    // ON CLICK AND SELECT PRIORITY ===========================================
+    // ON CLICK FILTER - PRIORITY
     var statePriority = [];
     $('#tmw-priority-btn').click(function () {
 
@@ -149,22 +136,18 @@ $(document).ready(function () {
                         name: response[i].name,
                         checked: false
                     };
-
                     for (var j = 0; j < statePriority.length; j++) {
                         if (statePriority[j].id === newPriority.id) {
                             newPriority.checked = statePriority[j].checked;
                             break;
                         }
                     }
-
                     newPriorityes.push(newPriority);
                 }
-
 
                 statePriority = newPriorityes;
 
                 $('#tmw-priority-list').empty();
-
                 for (var i = 0; i < statePriority.length; i++) {
                     $('#tmw-priority-list').append($('<li><a href="#"><input type="checkbox" value="' + statePriority[i].id + '" ' + (statePriority[i].checked ? 'checked' : '') + '> ' + statePriority[i].name + '</a></li>'));
                 }
@@ -180,10 +163,8 @@ $(document).ready(function () {
             }
         }
     });
-    // ON CLICK AND SELECT PRIORITY ===========================================
 
-
-    // ON CLICK AND SELECT TAG FILTER =========================================
+    // ON CLICK FILTER - TAG
     var stateTags = [];
     $('#tmw-tags-btn').click(function () {
 
@@ -193,9 +174,7 @@ $(document).ready(function () {
             type: 'GET',
             contentType: 'application/json',
             success: function (data) {
-
                 var response = data;
-
                 var newTags = [];
 
                 for (var i = 0; i < response.length; i++) {
@@ -204,21 +183,18 @@ $(document).ready(function () {
                         name: response[i].name,
                         checked: false
                     };
-
                     for (var j = 0; j < stateTags.length; j++) {
                         if (stateTags[j].id === newTag.id) {
                             newTag.checked = stateTags[j].checked;
                             break;
                         }
                     }
-
                     newTags.push(newTag);
                 }
 
                 stateTags = newTags;
 
                 $('#tmw-tags-list').empty();
-
                 for (var i = 0; i < stateTags.length; i++) {
                     $('#tmw-tags-list').append($('<li class="col-xs-6"><a href="#"><input type="checkbox" value="' + stateTags[i].id + '" ' + (stateTags[i].checked ? 'checked' : '') + '> ' + stateTags[i].name + '</a></li>'));
                 }
@@ -234,10 +210,8 @@ $(document).ready(function () {
             }
         }
     });
-    // ON CLICK AND SELECT TAG FILTER =========================================
 
-
-    //ON CLICK APPLY FILTERS --> STATUS, PRIORITY, TAG ========================
+    //ON CLICK APPLY FILTERS --> STATUS, PRIORITY, TAG
     $('#tmw-apply-btn').click(function () {
 
         state.status = stateStatus;
@@ -288,10 +262,8 @@ $(document).ready(function () {
 
         taskTable();
     });
-    // ON CLICK APPLY FILTERS --> STATUS, PRIORITY, TAG =======================
 
-
-    // ON CLICK RESET FILTERS --> STATUS, PRIORITY, TAG =======================
+    // ON CLICK RESET FILTERS --> STATUS, PRIORITY, TAG
     $('#tmw-reset-btn').click(function () {
         state.status = [];
         state.priority = [];
@@ -305,14 +277,10 @@ $(document).ready(function () {
 
         taskTable();
     });
-    // ON CLICK RESET FILTERS --> STATUS, PRIORITY, TAG =======================
 
 
-    //======================================================================================================================
-    //======================================================================================================================
 
-
-    //===============================================================================
+    // CREATION MAIN NODE AND CHILDREN IN TREE
     $('#tmw-treeview').jstree({
         core: {
             data: {
@@ -335,39 +303,32 @@ $(document).ready(function () {
                     }
                 }
             },
-
             dblclick_toggle: false
         }
     });
 
+    // REMOVE NODES IN A TREE
     $('#tmw-treeview').on('after_close.jstree', function (e, data) {
         var tree = $('#tmw-treeview').jstree(true);
         tree.delete_node(data.node.children);
         tree._model.data[data.node.id].state.loaded = false;
     });
 
+    // OUTPUT TABLE SUBTASKS FOR SELECTED ROOT-TASK
     $('#tmw-treeview').on('select_node.jstree', function (event, data) {
         var hasChildren = (data.node.children.length > 0 || !data.node.state.loaded);
         if (hasChildren){
-            state.idActivTask = data.node.id !== '$' ? data.node.id : 0;
+            state.parentid = data.node.id !== '$' ? data.node.id : 0;
             taskTable();
         }else{
             showFull(data.node.id);
         }
-//		$("ul.jstree-container-ul a.jstree-anchor").attr("title", "node.name_view");
     });
 
-    $('i.jstree-ocl').click(function() {
-//		$("ul.jstree-container-ul a.jstree-anchor").attr("title", "data.node.id");
-    });
-
-    $("ul.jstree-container-ul a.jstree-anchor").mouseenter(function() {
-        $("ul.jstree-container-ul a.jstree-anchor").css({"width": "100%", "overflow": "none", "color": "red"});
-    });
-
+    // GENERATION STRING PARAMETERS FOR GET REQUEST
     var generatedRequestParameters = function(){
 
-        var parameters = '?parentid=' + state.idActivTask + '&date='+ state.dateFrom + ',' + state.dateTo;
+        var parameters = '?parentid=' + state.parentid + '&date='+ state.dateFrom + ',' + state.dateTo;
 
         parameters = parameters + '&status=';
         for (var i = 0; i < state.status.length; i++) {
@@ -396,7 +357,7 @@ $(document).ready(function () {
         return parameters;
     }
 
-
+    // RECEIVING CHILDREN FOR ROOT-TASK AND CONCLUSION IN THE TABLE
     var taskTableInit = false;
     var taskTable = function () {
         $.ajax({
@@ -444,6 +405,7 @@ $(document).ready(function () {
         });
     }
 
+    // SHOW FULL INFORMATION ABOUT THE TASK
     var showFull = function (id) {
 
         // AJAX return response full info one User
@@ -466,6 +428,7 @@ $(document).ready(function () {
         });
     };
 
+    // GET FULL INFORMATION ABOUT THE TASK
     $('#tmw-task-table').on('click', 'tr', function () {
         var table = $('#tmw-task-table').DataTable();
         var taskId = table.row(this).data()[0];

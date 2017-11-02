@@ -349,7 +349,7 @@ $(document).ready(function () {
             updatetask(task);
         }
     }
-    
+
     function createtask(task){
         taskDTO = {};
         $.ajax({

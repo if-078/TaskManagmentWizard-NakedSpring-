@@ -92,7 +92,6 @@ $(document).ready(function () {
             state.tag = $("#tagBox").val().split(",");
         }else  state.tag =  [];
 
-        console.log(state);
         taskTable();
     });
     // ON CLICK APPLY FILTERS --> STATUS, PRIORITY, TAG =======================
@@ -155,7 +154,6 @@ $(document).ready(function () {
         if (hasChildren){
 
             state.parentid = data.node.id !== '$' ? data.node.id : 0;
-            console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"+state.parentid)
             taskTable();
         }else{
             showFull(data.node.id);
@@ -189,8 +187,6 @@ $(document).ready(function () {
 
         }
         parameters = parameters.slice(0,-1);
-
-        console.log("In method parameters   " + parameters);
 
         return parameters;
     }
@@ -290,7 +286,6 @@ $(document).ready(function () {
             type: 'GET',
             contentType: 'application/json',
             success: function (data) {
-                console.log(data);
 
                 $.each(data, function(i, user) {
                     $('#tmw-task-assignTo').append($('<option>', {
@@ -312,7 +307,6 @@ $(document).ready(function () {
             type: 'GET',
             contentType: 'application/json',
             success: function (data) {
-                console.log(data);
 
                 $.each(data, function(i, priority) {
                     $('#tmw-task-priority').append($('<option>', {
@@ -334,7 +328,6 @@ $(document).ready(function () {
             type: 'GET',
             contentType: 'application/json',
             success: function (data) {
-                console.log(data);
 
                 $.each(data, function(i, status) {
                     $('#tmw-task-status').append($('<option>', {

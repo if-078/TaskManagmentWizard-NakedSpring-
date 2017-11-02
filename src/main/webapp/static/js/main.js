@@ -74,219 +74,45 @@ $(document).ready(function () {
     $('#tmw-time-custom-cancel-btn').click(function (e) {
 
     });
+    // ON CLICK - SELECTED TIME - CUSTOM ======================================
 
-    // ON CLICK FILTER - STATUS
-    var stateStatus = [];
-    $('#tmw-status-btn').click(function () {
+    //ON CLICK APPLY FILTERS --> STATUS, PRIORITY, TAG ========================
 
-        // AJAX return response all STATUS
-        $.ajax({
-            url: 'status',
-            type: 'GET',
-            contentType: 'application/json',
-            success: function (data) {
-                var response = JSON.parse(data);
-                var newStatuses = [];
 
-                for (var i = 0; i < response.length; i++) {
-                    var newStatus = {
-                        id: response[i].id,
-                        name: response[i].name,
-                        checked: false
-                    };
-                    for (var j = 0; j < stateStatus.length; j++) {
-                        if (stateStatus[j].id === newStatus.id) {
-                            newStatus.checked = stateStatus[j].checked;
-                            break;
-                        }
-                    }
-                    newStatuses.push(newStatus);
-                }
 
-                stateStatus = newStatuses;
-
-                $('#tmw-status-list').empty();
-                for (var i = 0; i < stateStatus.length; i++) {
-                    $('#tmw-status-list').append($('<li class="col-xs-6"><a href="#"><input type="checkbox" value="' + stateStatus[i].id + '" ' + (stateStatus[i].checked ? 'checked' : '') + '> ' + stateStatus[i].name + '</a></li>'));
-                }
-            }
-        });
-
-    });
-
-    $('#tmw-status-list').on('change', 'input', function () {
-        for (var i = 0; i < stateStatus.length; i++) {
-            if (stateStatus[i].id == this.value) {
-                stateStatus[i].checked = this.checked;
-                break;
-            }
-        }
-    });
-
-    // ON CLICK FILTER - PRIORITY
-    var statePriority = [];
-    $('#tmw-priority-btn').click(function () {
-
-        // AJAX return response all PRIORITY
-        $.ajax({
-            url: 'priority',
-            type: 'GET',
-            contentType: 'application/json',
-            success: function (data) {
-                var response = JSON.parse(data);
-                var newPriorityes = [];
-
-                for (var i = 0; i < response.length; i++) {
-                    var newPriority = {
-                        id: response[i].id,
-                        name: response[i].name,
-                        checked: false
-                    };
-                    for (var j = 0; j < statePriority.length; j++) {
-                        if (statePriority[j].id === newPriority.id) {
-                            newPriority.checked = statePriority[j].checked;
-                            break;
-                        }
-                    }
-                    newPriorityes.push(newPriority);
-                }
-
-                statePriority = newPriorityes;
-
-                $('#tmw-priority-list').empty();
-                for (var i = 0; i < statePriority.length; i++) {
-                    $('#tmw-priority-list').append($('<li><a href="#"><input type="checkbox" value="' + statePriority[i].id + '" ' + (statePriority[i].checked ? 'checked' : '') + '> ' + statePriority[i].name + '</a></li>'));
-                }
-            }
-        });
-    });
-
-    $('#tmw-priority-list').on('change', 'input', function () {
-        for (var i = 0; i < statePriority.length; i++) {
-            if (statePriority[i].id == this.value) {
-                statePriority[i].checked = this.checked;
-                break;
-            }
-        }
-    });
-
-    // ON CLICK FILTER - TAG
-    var stateTags = [];
-    $('#tmw-tags-btn').click(function () {
-
-        // AJAX return response all TAG
-        $.ajax({
-            url: 'tags',
-            type: 'GET',
-            contentType: 'application/json',
-            success: function (data) {
-                var response = data;
-                var newTags = [];
-
-                for (var i = 0; i < response.length; i++) {
-                    var newTag = {
-                        id: response[i].id,
-                        name: response[i].name,
-                        checked: false
-                    };
-                    for (var j = 0; j < stateTags.length; j++) {
-                        if (stateTags[j].id === newTag.id) {
-                            newTag.checked = stateTags[j].checked;
-                            break;
-                        }
-                    }
-                    newTags.push(newTag);
-                }
-
-                stateTags = newTags;
-
-                $('#tmw-tags-list').empty();
-                for (var i = 0; i < stateTags.length; i++) {
-                    $('#tmw-tags-list').append($('<li class="col-xs-6"><a href="#"><input type="checkbox" value="' + stateTags[i].id + '" ' + (stateTags[i].checked ? 'checked' : '') + '> ' + stateTags[i].name + '</a></li>'));
-                }
-            }
-        });
-    });
-
-    $('#tmw-tags-list').on('change', 'input', function () {
-        for (var i = 0; i < stateTags.length; i++) {
-            if (stateTags[i].id == this.value) {
-                stateTags[i].checked = this.checked;
-                break;
-            }
-        }
-    });
-
-    //ON CLICK APPLY FILTERS --> STATUS, PRIORITY, TAG
     $('#tmw-apply-btn').click(function () {
+        if (!$("#statusBox").val()=="") {
+            state.status = $("#statusBox").val().split(",");
+        }else  state.status = [];
+        if (!$("#priorityBox").val()=="") {
+            state.priority = $("#priorityBox").val().split(",");
+        }else  state.priority = [];
+        if (!$("#tagBox").val()=="") {
+            state.tag = $("#tagBox").val().split(",");
+        }else  state.tag =  [];
 
-        state.status = stateStatus;
-        state.priority = statePriority;
-        state.tag = stateTags;
-
-        var infoSelectedStatus = 'Selected Status : ';
-        var isPresentSelectedStatus = false;
-        for (var i = 0; i < state.status.length; i++) {
-            if(state.status[i].checked) {
-                infoSelectedStatus += state.status[i].name + '; ';
-                isPresentSelectedStatus = true;
-            }
-        }
-        if(isPresentSelectedStatus){
-            $('#tmw-info-selected-status').html(infoSelectedStatus);
-        }else{
-            $('#tmw-info-selected-status').html('Selected Status : All');
-        }
-
-        var infoSelectedPriority = 'Selected Priority : ';
-        var isPresentSelectedPriority = false;
-        for (var i = 0; i < state.priority.length; i++) {
-            if(state.priority[i].checked) {
-                infoSelectedPriority += state.priority[i].name + '; ';
-                isPresentSelectedPriority = true;
-            }
-        }
-        if(isPresentSelectedPriority){
-            $('#tmw-info-selected-priority').html(infoSelectedPriority);
-        }else{
-            $('#tmw-info-selected-priority').html('Selected Priority : All');
-        }
-
-        var infoSelectedTag = 'Selected Tag : ';
-        var isPresentSelectedTag = false;
-        for (var i = 0; i < state.tag.length; i++) {
-            if(state.tag[i].checked) {
-                infoSelectedTag += state.tag[i].name + '; ';
-                isPresentSelectedTag = true;
-            }
-        }
-        if(isPresentSelectedTag){
-            $('#tmw-info-selected-tag').html(infoSelectedTag);
-        }else{
-            $('#tmw-info-selected-tag').html('Selected Tag : All');
-        }
-
+        console.log(state);
         taskTable();
     });
+    // ON CLICK APPLY FILTERS --> STATUS, PRIORITY, TAG =======================
 
-    // ON CLICK RESET FILTERS --> STATUS, PRIORITY, TAG
+
+    // ON CLICK RESET FILTERS --> STATUS, PRIORITY, TAG =======================
     $('#tmw-reset-btn').click(function () {
         state.status = [];
         state.priority = [];
         state.tag = [];
-        stateStatus = [];
-        statePriority = [];
-        stateTags = [];
-        $('#tmw-info-selected-status').html('Selected Status : All');
-        $('#tmw-info-selected-priority').html('Selected Priority : All');
-        $('#tmw-info-selected-tag').html('Selected Tag : All');
-
+        $("#statusBox, #priorityBox, #tagBox").combobox('clear');
         taskTable();
     });
+    // ON CLICK RESET FILTERS --> STATUS, PRIORITY, TAG =======================
 
 
+    //======================================================================================================================
+    //======================================================================================================================
 
-    // CREATION MAIN NODE AND CHILDREN IN TREE
+
+    //===============================================================================
     $('#tmw-treeview').jstree({
         core: {
             data: {
@@ -309,6 +135,7 @@ $(document).ready(function () {
                     }
                 }
             },
+
             dblclick_toggle: false
         }
     });
@@ -329,41 +156,50 @@ $(document).ready(function () {
         }else{
             showFull(data.node.id);
         }
+//		$("ul.jstree-container-ul a.jstree-anchor").attr("title", "node.name_view");
     });
 
-    // GENERATION STRING PARAMETERS FOR GET REQUEST
+    $('i.jstree-ocl').click(function() {
+//		$("ul.jstree-container-ul a.jstree-anchor").attr("title", "data.node.id");
+    });
+
+    $("ul.jstree-container-ul a.jstree-anchor").mouseenter(function() {
+        $("ul.jstree-container-ul a.jstree-anchor").css({"width": "100%", "overflow": "none", "color": "red"});
+    });
+
     var generatedRequestParameters = function(){
 
-        var parameters = '?parentid=' + state.parentid + '&date='+ state.dateFrom + ',' + state.dateTo;
+        var parameters = '?taskid=' + state.idActivTask + '&date='+ state.dateFrom + ',' + state.dateTo;
+          console.log(state.status);
+
 
         parameters = parameters + '&status=';
         for (var i = 0; i < state.status.length; i++) {
-            if (state.status[i].checked){
-                parameters = parameters + state.status[i].id + ',';
-            }
+                parameters = parameters + state.status[i] + ',';
+
         }
         parameters = parameters.slice(0,-1);
 
         parameters = parameters + '&priority=';
         for (var i = 0; i < state.priority.length; i++) {
-            if (state.priority[i].checked){
-                parameters = parameters + state.priority[i].id + ',';
-            }
+
+                parameters = parameters + state.priority[i] + ',';
+
         }
         parameters = parameters.slice(0,-1);
 
         parameters = parameters + '&tag=';
         for (var i = 0; i < state.tag.length; i++) {
-            if (state.tag[i].checked){
-                parameters = parameters + state.tag[i].id + ',';
-            }
+
+                parameters = parameters + state.tag[i] + ',';
+
         }
         parameters = parameters.slice(0,-1);
-
+        console.log(parameters);
         return parameters;
     }
 
-    // RECEIVING CHILDREN FOR ROOT-TASK AND CONCLUSION IN THE TABLE
+
     var taskTableInit = false;
     var taskTable = function () {
         $.ajax({

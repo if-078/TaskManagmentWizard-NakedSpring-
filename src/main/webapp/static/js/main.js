@@ -103,6 +103,7 @@ $(document).ready(function () {
         state.priority = [];
         state.tag = [];
         $("#statusBox, #priorityBox, #tagBox").combobox('clear');
+
         taskTable();
     });
     // ON CLICK RESET FILTERS --> STATUS, PRIORITY, TAG =======================
@@ -151,27 +152,19 @@ $(document).ready(function () {
     $('#tmw-treeview').on('select_node.jstree', function (event, data) {
         var hasChildren = (data.node.children.length > 0 || !data.node.state.loaded);
         if (hasChildren){
+
             state.parentid = data.node.id !== '$' ? data.node.id : 0;
+            console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"+state.parentid)
             taskTable();
         }else{
             showFull(data.node.id);
         }
-//		$("ul.jstree-container-ul a.jstree-anchor").attr("title", "node.name_view");
     });
 
-    $('i.jstree-ocl').click(function() {
-//		$("ul.jstree-container-ul a.jstree-anchor").attr("title", "data.node.id");
-    });
-
-    $("ul.jstree-container-ul a.jstree-anchor").mouseenter(function() {
-        $("ul.jstree-container-ul a.jstree-anchor").css({"width": "100%", "overflow": "none", "color": "red"});
-    });
 
     var generatedRequestParameters = function(){
 
-        var parameters = '?taskid=' + state.idActivTask + '&date='+ state.dateFrom + ',' + state.dateTo;
-          console.log(state.status);
-
+        var parameters = '?parentid=' + state.parentid + '&date='+ state.dateFrom + ',' + state.dateTo;
 
         parameters = parameters + '&status=';
         for (var i = 0; i < state.status.length; i++) {
@@ -195,7 +188,9 @@ $(document).ready(function () {
 
         }
         parameters = parameters.slice(0,-1);
-        console.log(parameters);
+
+        console.log("In method parameters   " + parameters);
+
         return parameters;
     }
 
@@ -256,8 +251,6 @@ $(document).ready(function () {
             type: 'GET',
             contentType: 'application/json',
             success: function (data) {
-
-                console.log(data);
 
                 $('#tmw-user-field1').html(data.name);
                 $('#tmw-user-field2').html(data.createdDate);

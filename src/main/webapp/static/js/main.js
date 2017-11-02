@@ -17,7 +17,7 @@ $(document).ready(function () {
     $('#tmw-time-all-btn').click(function (){
         $('#tmw-info-selected-time').html('Selected Time : All');
         state.dateFrom = 0;
-        state.dateTo = 10000000000000;
+        state.dateTo = 0;
         taskTable();
     });
 

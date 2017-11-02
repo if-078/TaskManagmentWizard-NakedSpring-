@@ -26,10 +26,8 @@ public class PriorityController {
   }
 
   @GetMapping
-  public String getPriorities() throws SQLException, JsonProcessingException {
-    List list = service.getAll();
-    String json = objectMapper.writeValueAsString(list);
-    return json;
+  public List<Priority> getPriorities() throws SQLException, JsonProcessingException {
+    return service.getAll();
   }
 
   @GetMapping(("/{id}"))

@@ -27,7 +27,6 @@ public class MainAppConfig {
     @Bean
     public DataSource getDataSource() {
         DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
-
         driverManagerDataSource.setSchema(schema);
         driverManagerDataSource.setDriverClassName(driver);
         driverManagerDataSource.setUrl(url);

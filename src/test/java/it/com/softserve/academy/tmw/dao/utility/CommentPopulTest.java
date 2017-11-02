@@ -2,19 +2,19 @@ package it.com.softserve.academy.tmw.dao.utility;
 
 import com.softserve.academy.tmw.dao.impl.CommentDao;
 import com.softserve.academy.tmw.entity.Comment;
-import it.com.softserve.academy.tmw.dao.TestConfig;
+import it.com.softserve.academy.tmw.dao.TestDaoConfig;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 
-@ContextConfiguration(classes = {TestConfig.class})
+@ContextConfiguration(classes = {TestDaoConfig.class})
 public class CommentPopulTest {
 
     @Test
     public void commentCreatedAndInserted() {
-        ApplicationContext context = new AnnotationConfigApplicationContext(TestConfig.class);
+        ApplicationContext context = new AnnotationConfigApplicationContext(TestDaoConfig.class);
         CommentPopulator populator = context.getBean(CommentPopulator.class);
         CommentDao dao = context.getBean(CommentDao.class);
         Comment actual = populator.createDefaultEntity();

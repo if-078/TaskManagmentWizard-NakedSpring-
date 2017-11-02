@@ -1,10 +1,10 @@
 package it.com.softserve.academy.tmw.dao.utility;
 
-import it.com.softserve.academy.tmw.dao.TestConfig;
+import it.com.softserve.academy.tmw.dao.TestDaoConfig;
 import org.junit.Test;
 import org.springframework.test.context.ContextConfiguration;
 
-@ContextConfiguration(classes = {TestConfig.class})
+@ContextConfiguration(classes = {TestDaoConfig.class})
 public class PriorityTest {
     private PriorityPopulator priorityPopulator;
 

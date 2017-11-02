@@ -1,4 +1,5 @@
 package com.softserve.academy.service.implementation;
+import com.softserve.academy.service.interfaces.UserServiceInterface;
 import com.softserve.academy.wrapper.FilterStateWrapper;
 import com.softserve.academy.dto.TaskTableDTO;
 import com.softserve.academy.dao.implementation.JooqSQLBuilder;
@@ -31,6 +32,9 @@ public class TaskService implements TaskServiceInterface {
 
     @Autowired
     EntityServiceInterface<Priority> servicePriority;
+
+    @Autowired
+    UserServiceInterface serviceUser;
 
 
 
@@ -188,37 +192,10 @@ public class TaskService implements TaskServiceInterface {
         taskDTO.setStartDate(task.getStartDate());
         taskDTO.setEndDate(task.getEndDate());
         taskDTO.setEstimateTime(task.getEstimateTime());
-        taskDTO.setAssignTo(""+task.getAssignTo());
-        taskDTO.setStatus("" + task.getStatusId());
-        taskDTO.setPriority("" + task.getPriorityId());
+        taskDTO.setAssignTo(serviceUser.findOne(task.getAssignTo()));
+        taskDTO.setStatus(serviceStatus.findOne(task.getStatusId()));
+        taskDTO.setPriority(servicePriority.findOne(task.getStatusId()));
 
-        List<User> allUser = userDao.getAll();
-        for(int i=0; i<allUser.size(); i++){
-            User user = allUser.get(i);
-            if((""+user.getId()).equals(taskDTO.getAssignTo())){
-                String name = user.getName();
-                taskDTO.setAssignTo(name);
-            }
-        }
-
-        List<Status> allStatus = serviceStatus.getAll();
-        for(int i=0; i<allStatus.size(); i++){
-            Status stat = allStatus.get(i);
-            if((""+stat.getId()).equals(taskDTO.getStatus())){
-                String strStatus = stat.getName();
-                taskDTO.setStatus(strStatus);
-            }
-
-        }
-
-        List<Priority> allPriority = servicePriority.getAll();
-        for(int i=0; i<allPriority.size(); i++){
-            Priority prior = allPriority.get(i);
-            if((""+prior.getId()).equals(taskDTO.getPriority())){
-                String strPrior = prior.getName();
-                taskDTO.setPriority(strPrior);
-            }
-        }
         return taskDTO;
     }
 

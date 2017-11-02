@@ -421,13 +421,15 @@ $(document).ready(function () {
             contentType: 'application/json',
             success: function (data) {
 
+                console.log(data);
+
                 $('#tmw-user-field1').html(data.name);
                 $('#tmw-user-field2').html(data.createdDate);
                 $('#tmw-user-field3').html(data.startDate);
                 $('#tmw-user-field4').html(data.estimateTime);
-                $('#tmw-user-field5').html(data.assignTo);
-                $('#tmw-user-field6').html(data.status);
-                $('#tmw-user-field7').html(data.priority);
+                $('#tmw-user-field5').html(data.assignTo.name);
+                $('#tmw-user-field6').html(data.status.name);
+                $('#tmw-user-field7').html(data.priority.name);
 
                 $('#tmw-modal').modal('show');
             }

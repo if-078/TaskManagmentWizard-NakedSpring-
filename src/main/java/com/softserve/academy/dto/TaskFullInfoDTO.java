@@ -1,5 +1,9 @@
 package com.softserve.academy.dto;
 
+import com.softserve.academy.entity.Priority;
+import com.softserve.academy.entity.Status;
+import com.softserve.academy.entity.User;
+
 import java.sql.Time;
 import java.util.Date;
 
@@ -11,9 +15,10 @@ public class TaskFullInfoDTO {
     private Date startDate;
     private Date endDate;
     private Time estimateTime;
-    private String assignTo;
-    private String status;
-    private String priority;
+    private User assignTo;
+    private Status status;
+    private Priority priority;
+
 
     public int getId() {
         return id;
@@ -63,27 +68,15 @@ public class TaskFullInfoDTO {
         this.estimateTime = estimateTime;
     }
 
-    public String getAssignTo() {
-        return assignTo;
-    }
+    public User getAssignTo() {return assignTo;}
 
-    public void setAssignTo(String assignTo) {
-        this.assignTo = assignTo;
-    }
+    public void setAssignTo(User assignTo) {this.assignTo = assignTo;}
 
-    public String getStatus() {
-        return status;
-    }
+    public Status getStatus() {return status;}
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
+    public void setStatus(Status status) {this.status = status;}
 
-    public String getPriority() {
-        return priority;
-    }
+    public Priority getPriority() {return priority;}
 
-    public void setPriority(String priority) {
-        this.priority = priority;
-    }
+    public void setPriority(Priority priority) {this.priority = priority;}
 }

@@ -76,11 +76,20 @@ $(document).ready(function () {
     // ON CLICK - SELECTED TIME - CUSTOM ======================================
 
     //ON CLICK APPLY FILTERS --> STATUS, PRIORITY, TAG ========================
-    $('#tmw-apply-btn').click(function () {
 
-        state.status = $("#statusBox").val().split(",");
-        state.priority = $("#priorityBox").val().split(",");
-        state.tag = $("#tagBox").val().split(",");
+
+
+    $('#tmw-apply-btn').click(function () {
+        if (!$("#statusBox").val()=="") {
+            state.status = $("#statusBox").val().split(",");
+        }else  state.status = [];
+        if (!$("#priorityBox").val()=="") {
+            state.priority = $("#priorityBox").val().split(",");
+        }else  state.priority = [];
+        if (!$("#tagBox").val()=="") {
+            state.tag = $("#tagBox").val().split(",");
+        }else  state.tag =  [];
+        
         console.log(state);
         taskTable();
     });
@@ -158,12 +167,12 @@ $(document).ready(function () {
     var generatedRequestParameters = function(){
 
         var parameters = '?taskid=' + state.idActivTask + '&date='+ state.dateFrom + ',' + state.dateTo;
+          console.log(state.status);
 
-        console.log(state.status);
 
         parameters = parameters + '&status=';
         for (var i = 0; i < state.status.length; i++) {
-                parameters = parameters + state.status[i].id + ',';
+                parameters = parameters + state.status[i] + ',';
 
         }
         parameters = parameters.slice(0,-1);
@@ -171,19 +180,19 @@ $(document).ready(function () {
         parameters = parameters + '&priority=';
         for (var i = 0; i < state.priority.length; i++) {
 
-                parameters = parameters + state.priority[i].id + ',';
+                parameters = parameters + state.priority[i] + ',';
 
         }
         parameters = parameters.slice(0,-1);
 
         parameters = parameters + '&tag=';
         for (var i = 0; i < state.tag.length; i++) {
-           
-                parameters = parameters + state.tag[i].id + ',';
+
+                parameters = parameters + state.tag[i] + ',';
 
         }
         parameters = parameters.slice(0,-1);
-
+        console.log(parameters);
         return parameters;
     }
 

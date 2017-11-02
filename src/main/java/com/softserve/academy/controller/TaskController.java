@@ -97,8 +97,7 @@ public class TaskController {
         System.out.println("SEARCHING_filter");
         List<TaskTableDto> nana = taskService.getFilteredTasksForTable(taskId, date, status, priority, tag);
         for(TaskTableDto ent:nana){
-            System.out.println(ent);
-            System.out.println();
+            System.out.println(ent.getPriority());
         }
         return nana;
 

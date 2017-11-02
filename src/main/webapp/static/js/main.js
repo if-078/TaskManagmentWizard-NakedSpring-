@@ -89,7 +89,7 @@ $(document).ready(function () {
         if (!$("#tagBox").val()=="") {
             state.tag = $("#tagBox").val().split(",");
         }else  state.tag =  [];
-        
+
         console.log(state);
         taskTable();
     });

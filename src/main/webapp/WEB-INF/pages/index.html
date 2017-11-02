@@ -170,20 +170,28 @@
 			  </div>
 			  <div class="modal-body">
 				  <form>
-					  <div class="form-row">
-
-						  <div class="form-group col-md-6">
-							  <label for="tmw-task-conteiner-createDate">Created Date</label>
-							  <div class="form-group">
-								  <div class='input-group date' id="tmw-task-conteiner-createDate">
-									  <input id="tmw-task-createDate" disabled type='text' class="form-control"/><span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-								  </div>
+					  <div class="form-group">
+						  <div class="form-row">
+							  <div class="form-group col-md-4">
+								  <label for="tmw-task-assignTo">Assign to</label>
+								  <select id="tmw-task-assignTo" class="form-control assignTo"></select>
+							  </div>
+							  <div class="form-group col-md-4">
+								  <label for="tmw-task-priority">Priority</label>
+								  <select id="tmw-task-priority" class="form-control"></select>
+							  </div>
+							  <div class="form-group col-md-4">
+								  <label for="tmw-task-status">Status</label>
+								  <select id="tmw-task-status" class="form-control"></select>
 							  </div>
 						  </div>
+					  </div>
 
-						  <div class="form-group col-md-6">
+
+					  <div class="form-row">
+						  <div class="form-group col-md-12">
 							  <label for="tmw-task-estimateTime">Estimate time</label>
-							  <input type="text" class="form-control" id="tmw-task-estimateTime">
+							  <input type="text" class="form-control" id="tmw-task-estimateTime" placeholder="estimate time">
 						  </div>
 					  </div>
 
@@ -192,7 +200,7 @@
 							  <label for="tmw-task-conteiner-startDate">Start Date</label>
 							  <div class="form-group">
 								  <div class='input-group date' id="tmw-task-conteiner-startDate">
-									  <input id="tmw-task-startDate" type='text' class="form-control datepicker" data-date-format="yyyy-mm-dd" /><span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+									  <input id="tmw-task-startDate" type='text' class="form-control datepicker" data-date-format="yyyy-mm-dd" placeholder="start date" /><span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
 								  </div>
 							  </div>
 						  </div>
@@ -200,32 +208,17 @@
 							  <label for="tmw-task-conteiner-endDate">End Date</label>
 							  <div class="form-group">
 								  <div class='input-group date' id="tmw-task-conteiner-endDate">
-									  <input id="tmw-task-endDate" type='text' class="form-control datepicker" data-date-format="yyyy-mm-dd" /><span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+									  <input id="tmw-task-endDate" type='text' class="form-control datepicker" data-date-format="yyyy-mm-dd" placeholder="end date" /><span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
 								  </div>
 							  </div>
 						  </div>
 					  </div>
-
-					  <div class="form-group">
-						  <textarea class="form-control" rows="2"  id="tmw-task-name" placeholder="Name"></textarea>
-					  </div>
-
-					  <div class="form-group">
 					  <div class="form-row">
-						  <div class="form-group col-md-4">
-							  <label for="tmw-task-assignTo">Assign to</label>
-							  <select id="tmw-task-assignTo" class="form-control assignTo"></select>
-						  </div>
-						  <div class="form-group col-md-4">
-							  <label for="tmw-task-priority">Priority</label>
-							  <select id="tmw-task-priority" class="form-control"></select>
-						  </div>
-						  <div class="form-group col-md-4">
-							  <label for="tmw-task-status">Status</label>
-							  <select id="tmw-task-status" class="form-control"></select>
+						  <div class="form-group col-md-12">
+							  <textarea class="form-control" rows="2"  id="tmw-task-name" placeholder="Name"></textarea>
 						  </div>
 					  </div>
-				  </div>
+
 				  </form>
 			  </div>
 			  <div class="modal-footer">

@@ -59,11 +59,9 @@ public class TaskController {
         return taskService.update(taskObj);
     }
 
-    @DeleteMapping("/delete")
-    boolean deleteTask(@RequestBody String json) throws SQLException, IOException {
-        Task task = new Task();
-        task = objectMapper.readValue(json, Task.class);
-        return taskService.delete(task.getId());
+    @DeleteMapping("/{id}")
+    boolean deleteTask(@PathVariable int id){
+        return taskService.delete(id);
     }
 
     @GetMapping

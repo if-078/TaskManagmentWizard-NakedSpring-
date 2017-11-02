@@ -11,6 +11,8 @@ $(document).ready(function () {
         tag: []
     };
 
+    var taskID = null;
+
     // STATE OF APPLIED FILTERS
 
 
@@ -244,7 +246,11 @@ $(document).ready(function () {
     }
 
     // SHOW FULL INFORMATION ABOUT THE TASK
+
+    var taskDTO = {};
+
     var showFull = function (id) {
+        taskDTO = {};
         clearTaskModal();
         // AJAX return response full info one User
         $.ajax({
@@ -252,14 +258,26 @@ $(document).ready(function () {
             type: 'GET',
             contentType: 'application/json',
             success: function (data) {
-                $('#tmw-task-name').val(data.name);
-                $('#tmw-task-createDate').val(data.createdDate);
-                $('#tmw-task-startDate').val(data.startDate);
-                $('#tmw-task-estimateTime').val(data.estimateTime);
+                taskDTO = data;
 
-                fillSelectUser(data.assignTo.id);
-                fillSelectPriority(data.priority.id);
-                fillSelectStatus(data.status.id);
+                $('#tmw-task-name').val(taskDTO.name);
+                $('#tmw-task-createDate').val(taskDTO.createdDate);
+                $('#tmw-task-startDate').val(taskDTO.startDate);
+                $('#tmw-task-endDate').val(taskDTO.endDate);
+                $('#tmw-task-estimateTime').val(taskDTO.estimateTime);
+
+                fillSelectUser(taskDTO.assignTo.id);
+                fillSelectPriority(taskDTO.priority.id);
+                fillSelectStatus(taskDTO.status.id);
+
+                $('#tmw-task-btn-save').on( 'click',function () {
+                    createOrUpdatetask(taskDTO);
+                } );
+
+                $('#tmw-task-table tbody').on( 'click', 'tr', function () {
+                    $(this).addClass('active').siblings().removeClass('active');
+                    $(this).css('background-color', 'red').siblings().css('background-color', '');
+                } );
 
                 $('#tmw-modal').modal('show');
             }
@@ -273,10 +291,137 @@ $(document).ready(function () {
         showFull(taskId);
     });
 
+    $('#tmw-task-table').on('click', 'tr', function () {
+        var table = $('#tmw-task-table').DataTable();
+        taskID = table.row(this).data()[0];
+    });
+
+    $('#tmw-delete-task').on("click", function () {
+        console.log(taskID);
+        deletetask(taskID);
+    } );
+
+    $('#tmw-task-btn-save').on('click', function () {
+        createOrUpdatetask(taskDTO);
+    });
+
+    $('#tmw-create-task').on('click', function () {
+        taskDTO = {}
+        clearTaskModal();
+
+        fillSelectUser(null);
+        fillSelectPriority(null);
+        fillSelectStatus(null);
+
+        $('#tmw-modal').modal('show');
+    });
+
+    function createOrUpdatetask(taskDTO){
+        var task = {};
+
+        if ($.isEmptyObject(taskDTO)) {
+            task =
+                {
+                    "name"         : $('#tmw-task-name').val(),
+                    "createdDate"  : $('#tmw-task-createDate').val(),
+                    "startDate"    : $('#tmw-task-startDate').val(),
+                    "endDate"      : $('#tmw-task-endDate').val(),
+                    "estimateTime" : $('#tmw-task-estimateTime').val(),
+                    "assignTo"     : $('#tmw-task-assignTo').find(":selected").val(),
+                    "statusId"     : $('#tmw-task-status').find(":selected").val(),
+                    "priorityId"   : $('#tmw-task-priority').find(":selected").val(),
+                    "parentId"     : state.parentid
+                }
+            createtask(task);
+        }else{
+            task =
+            {
+                "id"           : taskDTO.id,
+                 "name"        : $('#tmw-task-name').val(),
+                "createdDate"  : $('#tmw-task-createDate').val(),
+                "startDate"    : $('#tmw-task-startDate').val(),
+                "endDate"      : $('#tmw-task-endDate').val(),
+                "estimateTime" : $('#tmw-task-estimateTime').val(),
+                "assignTo"     : $('#tmw-task-assignTo').find(":selected").val(),
+                "statusId"     : $('#tmw-task-status').find(":selected").val(),
+                "priorityId"   : $('#tmw-task-priority').find(":selected").val(),
+                "parentId"     : state.parentid
+            }
+
+            updatetask(task);
+        }
+    }
+
+
+
+    function createtask(task){
+        taskDTO = {};
+        $.ajax({
+            url: 'tasks',
+            data: JSON.stringify(task),
+            type: 'POST',
+            contentType: 'application/json',
+            success: function (data) {
+
+                console.log("good create");
+                $('#tmw-modal').modal('hide');
+                clearTaskModal();
+                taskTable();
+            },
+            cache: false
+        }).fail(function ($xhr) {
+            console.log("bad")
+
+            if($xhr.status == 400){
+                var data = $xhr.responseJSON;
+                console.log(data);
+            }
+        });
+    }
+
+    function updatetask(task){
+        $.ajax({
+            url: 'tasks/update',
+            data: JSON.stringify(task),
+            type: 'PUT',
+            contentType: 'application/json',
+            success: function () {
+                console.log("update good");
+                $('#tmw-modal').modal('hide');
+                clearTaskModal();
+                taskTable();
+            },
+            cache: false
+        }).fail(function ($xhr) {
+            console.log("update bad");
+            if($xhr.status == 400){
+                var data = $xhr.responseJSON;
+                console.log(data);
+            }
+        });
+    };
+
+    function deletetask(taskId){
+        $.ajax({
+            type: 'DELETE',
+            url: 'tasks/' + taskId,
+            contentType: 'application/json',
+            success: function () {
+                console.log("all good");
+                taskTable();
+            },
+            error: function(jqXHR) {
+                console.log(jqXHR.status)
+            }
+        });
+    }
+
+
     function clearTaskModal(){
         $('#tmw-task-name').val('');
         $('#tmw-task-createDate').val('');
         $('#tmw-task-startDate').val('');
+        $('#tmw-task-endDate').val('');
         $('#tmw-task-estimateTime').val('');
         $('#tmw-task-assignTo').empty();
         $('#tmw-task-status').empty();
@@ -299,7 +444,7 @@ $(document).ready(function () {
                     }));
                 });
 
-                $('#tmw-task-assignTo').val(id);
+                if(id != null) $('#tmw-task-assignTo').val(id);
 
             }
         });
@@ -321,7 +466,7 @@ $(document).ready(function () {
                     }));
                 });
 
-                $('#tmw-task-priority').val(id);
+                if(id != null) $('#tmw-task-priority').val(id);
 
             }
         });
@@ -343,7 +488,7 @@ $(document).ready(function () {
                     }));
                 });
 
-                $('#tmw-task-status').val(id);
+                if(id != null) $('#tmw-task-status').val(id);
 
             }
         });

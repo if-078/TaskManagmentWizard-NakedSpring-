@@ -27,6 +27,9 @@
 
 	<link rel="stylesheet"  type="text/css" href="static/css/main.css">
 	<script src="static/js/main.js"></script>
+	<script src="static/js/partsLoader.js"></script>
+
+
 
 </head>
 
@@ -94,28 +97,8 @@
         <!-- PRIORITY, STATUS AND TAG FILTERS -->
         <div class="form-horizontal">
           <div class="form-group">
-            <div class="col-xs-12 btn-group-vertical">
-              
-              <div class="btn-group">
-                <button id="tmw-status-btn" class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
-                  Status <span class="caret"></span>
-                </button>
-                <ul id="tmw-status-list" class="col-xs-12 dropdown-menu"></ul>
-              </div>
-			  
-			  <div class="btn-group">
-                <button id="tmw-priority-btn" class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
-                  Priority <span class="caret"></span>
-                </button>
-				<ul id="tmw-priority-list" class="col-xs-12 dropdown-menu"></ul>
-              </div>
-
-              <div class="btn-group">
-                <button id="tmw-tags-btn" class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
-                  Tag <span class="caret"></span>
-                </button>
-                <ul id="tmw-tags-list" class="col-xs-12 dropdown-menu"></ul>
-              </div>
+			  <div id="leftPanel" class="col-xs-12 btn-group-vertical">
+				  <!--loaded content-->
             </div>
           </div>
 
@@ -136,7 +119,7 @@
 
       </div>
       <!-- / SIDEBAR -->
-	  
+
 	  <!-- MAIN -->
 	  <div class="col-xs-9">
 		<div class="tmw-main row">
@@ -166,7 +149,7 @@
 				</div>
 
 			</div>
-			
+
 			<div class="tmw-main-table col-xs-12">
 				<table id="tmw-task-table" class="tmw-task-table table table-striped table-bordered table-hover" cellspacing="0" style="width: 100%;"></table>
 			</div>

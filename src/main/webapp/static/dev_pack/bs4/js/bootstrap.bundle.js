@@ -326,7 +326,7 @@ var Alert = function () {
   }();
   /**
    * ------------------------------------------------------------------------
-   * Data Api implementation
+   * Data Api impl
    * ------------------------------------------------------------------------
    */
 
@@ -477,7 +477,7 @@ var Button = function () {
   }();
   /**
    * ------------------------------------------------------------------------
-   * Data Api implementation
+   * Data Api impl
    * ------------------------------------------------------------------------
    */
 
@@ -982,7 +982,7 @@ var Carousel = function () {
   }();
   /**
    * ------------------------------------------------------------------------
-   * Data Api implementation
+   * Data Api impl
    * ------------------------------------------------------------------------
    */
 
@@ -1341,7 +1341,7 @@ var Collapse = function () {
   }();
   /**
    * ------------------------------------------------------------------------
-   * Data Api implementation
+   * Data Api impl
    * ------------------------------------------------------------------------
    */
 
@@ -3501,7 +3501,7 @@ var modifiers = {
    *
    * Note that this modifier will not touch the DOM, it just prepares the styles
    * so that `applyStyle` modifier can apply it. This separation is useful
-   * in case you need to replace `applyStyle` with a custom implementation.
+   * in case you need to replace `applyStyle` with a custom impl.
    *
    * This modifier has `850` as `order` value to maintain backward compatibility
    * with previous versions of Popper.js. Expect the modifiers ordering method
@@ -4226,7 +4226,7 @@ var Dropdown = function () {
   }();
   /**
    * ------------------------------------------------------------------------
-   * Data Api implementation
+   * Data Api impl
    * ------------------------------------------------------------------------
    */
 
@@ -4779,7 +4779,7 @@ var Modal = function () {
   }();
   /**
    * ------------------------------------------------------------------------
-   * Data Api implementation
+   * Data Api impl
    * ------------------------------------------------------------------------
    */
 
@@ -5959,7 +5959,7 @@ var ScrollSpy = function () {
   }();
   /**
    * ------------------------------------------------------------------------
-   * Data Api implementation
+   * Data Api impl
    * ------------------------------------------------------------------------
    */
 
@@ -6218,7 +6218,7 @@ var Tab = function () {
   }();
   /**
    * ------------------------------------------------------------------------
-   * Data Api implementation
+   * Data Api impl
    * ------------------------------------------------------------------------
    */
 

@@ -36,7 +36,7 @@ public class TaskController {
     @GetMapping("/filter")
     public List<TaskTableDTO> getFilteredTasks (
             @RequestParam(name="parentid", required = false) int parentId,
-            @RequestParam(name="date", required = false) long[] date,
+            @RequestParam(name="date", required = false) String[] date,
             @RequestParam(name="status", required = false) int[] status,
             @RequestParam(name="priority", required = false) int[] priority,
             @RequestParam(name="tag", required = false) int[] tag){
@@ -104,8 +104,4 @@ public class TaskController {
        String json = objectMapper.writeValueAsString(list);
        return json;
     }
-
-
-
-
 }

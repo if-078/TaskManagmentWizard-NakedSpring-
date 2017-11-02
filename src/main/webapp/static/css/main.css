@@ -20,7 +20,7 @@
 }
 
 ul.jstree-container-ul a.jstree-anchor {
-    width: 100px;
+    width: 200px;
     overflow: hidden;
     text-overflow: ellipsis;
 }

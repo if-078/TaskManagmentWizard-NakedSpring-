@@ -104,21 +104,13 @@ public class TaskService implements TaskServiceInterface {
     }
 
     @Override
-    public List<TaskTableDTO> getFilteredTasksForTable(int parentId, long[] dates, int[] status, int[] priority, int[] tag){
-
-        // tag filter not implemented
-        tag = new int[0];
-
-        // time filter not implemented
-        Date dateFrom = new Date(dates[0]);
-        Date dateTo = new Date(dates[1]);
-
-
+    public List<TaskTableDTO> getFilteredTasksForTable(int parentId, String[] dates, int[] status, int[] priority, int[] tag){
         FilterStateWrapper wrapper = new FilterStateWrapper();
         wrapper.setId(parentId);
         wrapper.setPriority(priority);
         wrapper.setStatus(status);
         wrapper.setTag(tag);
+        wrapper.setDates(dates);
         JooqSQLBuilder builder = new JooqSQLBuilder(wrapper);
 
         List<Task> list = taskDao.getFilteredTasks(builder);

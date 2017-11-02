@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--EasyUI-->
+    <link rel="stylesheet" type="text/css" href="static/dev_pack/jqeasyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="static/dev_pack/jqeasyui/themes/icon.css">
+
+    <!--EasyUI-->
+    <script src="static/dev_pack/jqeasyui/jquery.easyui.min.js"></script>
+
+    <link rel="stylesheet" href="static/css/taskFilterStyle.css">
+    <script type="text/javascript" src="static/js/filter.js"></script>
+
+
+
+</head>
+<body>
+
+<div >
+    <input id="statusBox" class="easyui-tagbox" style="width:100%;" data-options="
+                   url: 'status',
+                   method: 'get',
+                   mode: 'remote',
+                   valueField: 'id',
+                   textField: 'name',
+                   multiple:true,
+                   limitToList: true,
+                   hasDownArrow: true,
+                   prompt: 'Select status/es',
+                   onLoadSuccess:boxMessage
+                   "/>
+</div>
+<div >
+    <input id="priorityBox" class="easyui-tagbox" style="width:100%;"  data-options="
+                   url: 'priority',
+                   method: 'get',
+                   mode: 'remote',
+                   valueField: 'id',
+                   textField: 'name',
+                   multiple:true,
+                   limitToList: true,
+                   hasDownArrow: true,
+                   prompt: 'Select priority/s',
+                   onLoadSuccess:boxMessage
+                   "/>
+</div>
+<div >
+    <input id="tagBox" class="easyui-tagbox"  style="width:100%;" data-options="
+                   url: 'tags',
+                   method: 'get',
+                   mode: 'remote',
+                   valueField: 'id',
+                   textField: 'name',
+                   multiple:true,
+                   limitToList: true,
+                   hasDownArrow: true,
+                   prompt: 'Select a tag/s',
+                   onLoadSuccess:boxMessage
+                   "/>
+
+</body>
+</html>

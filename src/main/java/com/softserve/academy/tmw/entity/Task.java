@@ -132,4 +132,19 @@ public class Task implements NamedEntity {
         taskStr += this.getId() + " | " + this.getName() + " | " + this.getCreatedDate() + " | " + this.getStartDate() + " | " + this.getEndDate() + " | " + this.getEstimateTime() + " | " + this.getAssignTo() + " | " + this.getStatusId() + " | " + this.getPriorityId();
         return taskStr;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Task task = (Task) o;
+
+        return id == task.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return id;
+    }
 }

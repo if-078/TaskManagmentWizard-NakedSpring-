@@ -99,7 +99,7 @@ public class TaskService implements TaskServiceInterface {
     }
 
     @Override
-    public List<TaskTableDTO> getFilteredTasksForTable(int parentId, String[] dates, int[] status, int[] priority, int[] tag){
+    public List<TaskTableDTO> getFilteredTasksForTable(int parentId, long[] dates, int[] status, int[] priority, int[] tag){
 
         // tag filter not implemented
         tag = new int[0];

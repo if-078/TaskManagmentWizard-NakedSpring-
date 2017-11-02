@@ -4,8 +4,8 @@ $(document).ready(function () {
     // STATE OF APPLIED FILTERS
     var state = {
         parentid : 0,
-        dateFrom : '',
-        dateTo : '',
+        dateFrom : 0,
+        dateTo : 0,
         status: [],
         priority: [],
         tag: []
@@ -16,27 +16,31 @@ $(document).ready(function () {
     // ON CLICK - SELECT TIME - ALL
     $('#tmw-time-all-btn').click(function (){
         $('#tmw-info-selected-time').html('Selected Time : All');
-        state.dateFrom = '';
-        state.dateTo = '';
-        //taskTable();
+        state.dateFrom = 0;
+        state.dateTo = 0;
+        taskTable();
     });
 
 
     // ON CLICK - SELECT TIME - TODAY
     $('#tmw-time-today-btn').click(function (){
         $('#tmw-info-selected-time').html('Selected Time : Today');
-        state.dateFrom = '';
-        state.dateTo = '';
-        //taskTable();
+        var currentData = new Date();
+        var numberDay = currentData.getDay();
+        state.dateFrom = currentData.setHours(0,0,0,0);
+        state.dateTo = currentData.setHours(23,59,59,0);
+        taskTable();
     });
 
 
     // ON CLICK - SELECT TIME - WEEK
     $('#tmw-time-week-btn').click(function (){
         $('#tmw-info-selected-time').html('Selected Time : Week');
-        state.dateFrom = '';
-        state.dateTo = '';
-        //taskTable();
+        var currentData = new Date();
+        var numberDay = currentData.getDay();
+        state.dateFrom = currentData.setHours(0,0,0,0) - (numberDay-1)*86400000;
+        state.dateTo = currentData.setHours(23,59,59,0) + (6-numberDay)*86400000;
+        taskTable();
     });
 
 
@@ -58,11 +62,13 @@ $(document).ready(function () {
             return;
         }
 
-        state.dateFrom = $('#tmw-time-custom-from').val();
-        state.dateTo = $('#tmw-time-custom-to').val();
-        $('#tmw-info-selected-time').html('Selected Time : ' + state.dateFrom + " - " + state.dateTo);
+        state.dateFrom = Date.parse( $('#tmw-time-custom-from').val() );
+        state.dateTo = Date.parse( $('#tmw-time-custom-to').val() );
+
+        $('#tmw-info-selected-time').html('Selected Time : ' + $('#tmw-time-custom-from').val() + " - " + $('#tmw-time-custom-to').val());
         $('#tmw-time-btn-group > button, #tmw-time-custom-btn').removeClass('active');
         $('#tmw-time-custom-btn').addClass('active');
+        taskTable();
     });
 
     $('#tmw-time-custom-cancel-btn').click(function (e) {

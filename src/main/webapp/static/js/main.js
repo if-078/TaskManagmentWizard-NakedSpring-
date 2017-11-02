@@ -349,9 +349,7 @@ $(document).ready(function () {
             updatetask(task);
         }
     }
-
-
-
+    
     function createtask(task){
         taskDTO = {};
         $.ajax({
@@ -405,7 +403,6 @@ $(document).ready(function () {
             url: 'tasks/' + taskId,
             contentType: 'application/json',
             success: function () {
-                console.log("all good");
                 taskTable();
             },
             error: function(jqXHR) {

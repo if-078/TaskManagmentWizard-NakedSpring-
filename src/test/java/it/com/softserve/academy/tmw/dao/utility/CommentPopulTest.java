@@ -1,8 +1,8 @@
-package com.softserve.academy.tmw.utility;
+package it.com.softserve.academy.tmw.dao.utility;
 
 import com.softserve.academy.tmw.dao.impl.CommentDao;
 import com.softserve.academy.tmw.entity.Comment;
-import com.softserve.academy.tmw.dao.TestConfig;
+import it.com.softserve.academy.tmw.dao.TestConfig;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;

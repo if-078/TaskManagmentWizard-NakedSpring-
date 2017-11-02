@@ -1,4 +1,4 @@
-package com.softserve.academy.tmw.dao;
+package it.com.softserve.academy.tmw.dao;
 
 import com.softserve.academy.tmw.dao.impl.StatusDao;
 import com.softserve.academy.tmw.entity.Status;

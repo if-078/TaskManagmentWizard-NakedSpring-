@@ -1,7 +1,8 @@
-package com.softserve.academy.tmw.dao;
+package it.com.softserve.academy.tmw.dao;
 
 import com.softserve.academy.tmw.entity.Role;
 import com.softserve.academy.tmw.service.api.RoleServiceInterface;
+import it.com.softserve.academy.tmw.dao.utility.RolePopulator;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -9,7 +10,6 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import com.softserve.academy.tmw.utility.RolePopulator;
 
 import java.sql.SQLException;
 import java.util.List;

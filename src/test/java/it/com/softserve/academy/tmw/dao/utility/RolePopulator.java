@@ -1,4 +1,4 @@
-package com.softserve.academy.tmw.utility;
+package it.com.softserve.academy.tmw.dao.utility;
 
 import com.softserve.academy.tmw.dao.impl.RoleDao;
 import com.softserve.academy.tmw.entity.Role;
@@ -11,7 +11,7 @@ import org.springframework.jdbc.support.KeyHolder;
 import javax.sql.DataSource;
 
 
-public class RolePopulator implements Populator<Role> {
+public class RolePopulator  {
 
     private NamedParameterJdbcTemplate jdbcTemplate;
     private RoleDao dao;
@@ -43,7 +43,6 @@ public class RolePopulator implements Populator<Role> {
     jdbcTemplate.update("DELETE FROM tmw.role", new MapSqlParameterSource());
     }
 
-    @Override
     public Role createDefaultEntity() {
         initTable();
         return dao.findOne(1);

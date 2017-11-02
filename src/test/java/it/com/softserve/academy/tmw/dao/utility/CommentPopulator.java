@@ -1,11 +1,11 @@
-package com.softserve.academy.tmw.utility;
+package it.com.softserve.academy.tmw.dao.utility;
 
 import com.softserve.academy.tmw.dao.impl.CommentDao;
 import com.softserve.academy.tmw.entity.Comment;
 import com.softserve.academy.tmw.entity.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public class CommentPopulator implements Populator<Comment> {
+public class CommentPopulator {
 
     private TaskPopulator taskPopulator;
     private CommentDao dao;
@@ -20,7 +20,7 @@ public class CommentPopulator implements Populator<Comment> {
         this.taskPopulator = taskPopulator;
     }
 
-    @Override
+
     public Comment createDefaultEntity() {
         Comment comment = new Comment();
         comment.setCommentText("Default comment text.txt");

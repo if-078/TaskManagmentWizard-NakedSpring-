@@ -1,13 +1,13 @@
-package com.softserve.academy.tmw.dao;
+package it.com.softserve.academy.tmw.dao;
 
 import com.softserve.academy.tmw.dao.api.UserDaoInterface;
 import com.softserve.academy.tmw.entity.User;
+import it.com.softserve.academy.tmw.dao.utility.UserPopulator;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import com.softserve.academy.tmw.utility.UserPopulator;
 
 import java.sql.SQLException;
 

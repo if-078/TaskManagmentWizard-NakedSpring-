@@ -1,15 +1,14 @@
-package com.softserve.academy.tmw.dao;
+package it.com.softserve.academy.tmw.dao;
 
 import com.softserve.academy.tmw.entity.Tag;
-import com.softserve.academy.tmw.entity.User;
 import com.softserve.academy.tmw.service.impl.TagService;
+import it.com.softserve.academy.tmw.dao.utility.UserPopulator;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import com.softserve.academy.tmw.utility.Populator;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -20,7 +19,7 @@ public class TagDaoTest {
     @Autowired
     public TagService tagService;
     @Autowired
-    public Populator<User> populator;
+    public UserPopulator populator;
 
     @Before
     public void createFewUsers() {

@@ -1,4 +1,4 @@
-package com.softserve.academy.tmw.utility;
+package it.com.softserve.academy.tmw.dao.utility;
 
 import com.softserve.academy.tmw.dao.impl.TaskDao;
 import com.softserve.academy.tmw.entity.Task;
@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.sql.Time;
 import java.util.Date;
 
-public class TaskPopulator implements Populator<Task> {
+public class TaskPopulator  {
 
     private TaskDao dao;
     private UserPopulator userPopulator;
@@ -35,7 +35,6 @@ public class TaskPopulator implements Populator<Task> {
         this.priorityPopulator = priorityPopulator;
     }
 
-    @Override
     public Task createDefaultEntity() {
         int hourFromMillSecs = 1000 * 60 * 60;
         Task task = new Task();

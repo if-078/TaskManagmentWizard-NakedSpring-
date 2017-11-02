@@ -1,16 +1,15 @@
-package com.softserve.academy.tmw.dao;
+package it.com.softserve.academy.tmw.dao;
 
 import com.softserve.academy.tmw.entity.Comment;
-import com.softserve.academy.tmw.entity.Task;
-import com.softserve.academy.tmw.entity.User;
 import com.softserve.academy.tmw.service.impl.CommentServiceImpl;
+import it.com.softserve.academy.tmw.dao.utility.TaskPopulator;
+import it.com.softserve.academy.tmw.dao.utility.UserPopulator;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import com.softserve.academy.tmw.utility.Populator;
 
 import java.sql.SQLException;
 import java.time.LocalDateTime;
@@ -28,9 +27,9 @@ public class CommentDaoTest {
     @Autowired
     public CommentServiceImpl commentService;
     @Autowired
-    public Populator<User> populatorUser;
+    public UserPopulator populatorUser;
     @Autowired
-    public Populator<Task> populatorTask;
+    public TaskPopulator populatorTask;
 
     @Before
     public void createFewUsers() {

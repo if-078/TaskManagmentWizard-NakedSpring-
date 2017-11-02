@@ -1,4 +1,4 @@
-package com.softserve.academy.tmw.utility;
+package it.com.softserve.academy.tmw.dao.utility;
 
 import com.softserve.academy.tmw.dao.impl.PriorityDao;
 import com.softserve.academy.tmw.entity.Priority;
@@ -11,7 +11,7 @@ import org.springframework.jdbc.support.KeyHolder;
 import javax.sql.DataSource;
 
 
-public class PriorityPopulator implements Populator<Priority> {
+public class PriorityPopulator  {
     private NamedParameterJdbcTemplate operations;
     private PriorityDao priorityDao;
 
@@ -43,7 +43,6 @@ public class PriorityPopulator implements Populator<Priority> {
         return priority;
     }
 
-    @Override
     public Priority createDefaultEntity() {
         initPriorityTable();
         return priorityDao.findOne(1);

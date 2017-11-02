@@ -1,10 +1,10 @@
-package com.softserve.academy.tmw.utility;
+package it.com.softserve.academy.tmw.dao.utility;
 
 import com.softserve.academy.tmw.dao.impl.UserDao;
 import com.softserve.academy.tmw.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public class UserPopulator implements Populator<User> {
+public class UserPopulator  {
 
     private UserDao userDao;
 
@@ -13,7 +13,6 @@ public class UserPopulator implements Populator<User> {
         this.userDao = userDao;
     }
 
-    @Override
     public User createDefaultEntity() {
         User user = new User();
         user.setName("default name");

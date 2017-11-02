@@ -1,6 +1,6 @@
-package com.softserve.academy.tmw.utility;
+package it.com.softserve.academy.tmw.dao.utility;
 
-import com.softserve.academy.tmw.dao.TestConfig;
+import it.com.softserve.academy.tmw.dao.TestConfig;
 import org.junit.Test;
 import org.springframework.test.context.ContextConfiguration;
 

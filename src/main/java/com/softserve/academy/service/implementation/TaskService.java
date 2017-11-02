@@ -16,6 +16,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -107,6 +108,11 @@ public class TaskService implements TaskServiceInterface {
 
         // tag filter not implemented
         tag = new int[0];
+
+        // time filter not implemented
+        Date dateFrom = new Date(dates[0]);
+        Date dateTo = new Date(dates[1]);
+
 
         FilterStateWrapper wrapper = new FilterStateWrapper();
         wrapper.setId(parentId);

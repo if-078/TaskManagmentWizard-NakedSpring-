@@ -17,7 +17,7 @@ $(document).ready(function () {
     $('#tmw-time-all-btn').click(function (){
         $('#tmw-info-selected-time').html('Selected Time : All');
         state.dateFrom = 0;
-        state.dateTo = 0;
+        state.dateTo = 10000000000000;
         taskTable();
     });
 
@@ -63,7 +63,7 @@ $(document).ready(function () {
         }
 
         state.dateFrom = Date.parse( $('#tmw-time-custom-from').val() );
-        state.dateTo = Date.parse( $('#tmw-time-custom-to').val() );
+        state.dateTo = Date.parse( $('#tmw-time-custom-to').val() ) + 86399999;
 
         $('#tmw-info-selected-time').html('Selected Time : ' + $('#tmw-time-custom-from').val() + " - " + $('#tmw-time-custom-to').val());
         $('#tmw-time-btn-group > button, #tmw-time-custom-btn').removeClass('active');

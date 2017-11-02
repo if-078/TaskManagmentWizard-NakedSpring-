@@ -1,28 +1,13 @@
 #leftPanel {
     overflow:scroll;
     overflow-x:hidden;
-    height: 33%;
-    max-height:190px;
-    width:100%;
-    /*max-width:250px;*/
-    padding:15px 15px;
+    height: 35%;
+    max-height:140px;
+    width:96.5%;
     position:relative;
 
 }
 
 #leftPanel > div{
-    padding:1px 1px;
-}
-
-/*#leftPanel > div #tagBox, #priorityBox, #statusBox{*/
-    /*width:100%;*/
-    /*padding:2px 2px;*/
-/*}*/
-
-#leftPanel > div > .easyui-linkbutton{
-   font-size: 14px;
-   letter-spacing:0.5px;
-   text-indent:16px;
-   position: relative;
-    left: 5px;
+    padding:2px 0px;
 }

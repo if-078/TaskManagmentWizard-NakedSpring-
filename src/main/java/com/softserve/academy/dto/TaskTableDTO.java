@@ -1,5 +1,4 @@
-package com.softserve.academy.dto.dtoentity;
-
+package com.softserve.academy.dto;
 
 import java.sql.Time;
 import java.util.Date;
@@ -7,14 +6,11 @@ import java.util.Date;
 public class TaskTableDTO {
     private int id;
     private String name;
-    private Date createdDate;
     private Date startDate;
     private Time estimateTime;
     private String assignTo;
     private String status;
     private String priority;
-
-    public TaskTableDTO(){}
 
     public int getId() {
         return id;
@@ -30,14 +26,6 @@ public class TaskTableDTO {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Date getCreatedDate() {
-        return createdDate;
-    }
-
-    public void setCreatedDate(Date createdDate) {
-        this.createdDate = createdDate;
     }
 
     public Date getStartDate() {

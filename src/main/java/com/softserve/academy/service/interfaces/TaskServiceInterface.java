@@ -1,8 +1,8 @@
 package com.softserve.academy.service.interfaces;
 
-import com.softserve.academy.dto.TaskTableDto;
-import com.softserve.academy.dto.dtoentity.TaskFullInfoDTO;
-import com.softserve.academy.dto.dtoentity.TaskTreeDTO;
+import com.softserve.academy.dto.TaskTableDTO;
+import com.softserve.academy.dto.TaskFullInfoDTO;
+import com.softserve.academy.dto.TaskTreeDTO;
 import com.softserve.academy.entity.Comment;
 import com.softserve.academy.entity.Tag;
 import com.softserve.academy.entity.Task;
@@ -21,7 +21,7 @@ public interface TaskServiceInterface extends EntityServiceInterface<Task> {
 
     List<Task> getTasksAssignToUser(int userId);
 
-    List<TaskTableDto> getFilteredTasksForTable(int parentId, String[] dates, int[] status, int[] priority, int[] tag);
+    List<TaskTableDTO> getFilteredTasksForTable(int parentId, String[] dates, int[] status, int[] priority, int[] tag);
 
     List<TaskTreeDTO> findTaskByTree(int id);
 

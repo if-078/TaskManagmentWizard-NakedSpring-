@@ -367,9 +367,7 @@ $(document).ready(function () {
 
     var generatedRequestParameters = function(){
 
-        var parameters = '?taskid=' + state.idActivTask + '&date='+ state.dateFrom + ',' + state.dateTo;
-
-        console.log(state.status);
+        var parameters = '?parentid=' + state.idActivTask + '&date='+ state.dateFrom + ',' + state.dateTo;
 
         parameters = parameters + '&status=';
         for (var i = 0; i < state.status.length; i++) {
@@ -408,7 +406,7 @@ $(document).ready(function () {
 
             success: function (data) {
                 var rows = []
-                console.log(data);
+
                 for (var i = 0; i < data.length; i++) {
                     rows.push(Object.values(data[i]));
                 }

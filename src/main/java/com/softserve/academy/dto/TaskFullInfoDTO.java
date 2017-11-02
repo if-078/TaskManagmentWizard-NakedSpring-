@@ -3,10 +3,13 @@ package com.softserve.academy.dto;
 import java.sql.Time;
 import java.util.Date;
 
-public class TaskTableDto {
+public class TaskFullInfoDTO {
+
     private int id;
     private String name;
+    private Date createdDate;
     private Date startDate;
+    private Date endDate;
     private Time estimateTime;
     private String assignTo;
     private String status;
@@ -28,12 +31,28 @@ public class TaskTableDto {
         this.name = name;
     }
 
+    public Date getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
+    }
+
     public Date getStartDate() {
         return startDate;
     }
 
     public void setStartDate(Date startDate) {
         this.startDate = startDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
     }
 
     public Time getEstimateTime() {

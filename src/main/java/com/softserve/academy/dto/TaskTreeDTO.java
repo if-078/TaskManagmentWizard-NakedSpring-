@@ -1,4 +1,4 @@
-package com.softserve.academy.dto.dtoentity;
+package com.softserve.academy.dto;
 
 public class TaskTreeDTO {
     private int id;

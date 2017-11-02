@@ -1,13 +1,11 @@
 package com.softserve.academy.service.implementation;
-import com.softserve.academy.dto.FilterStateWrapper;
-import com.softserve.academy.dto.TaskTableDto;
+import com.softserve.academy.wrapper.FilterStateWrapper;
+import com.softserve.academy.dto.TaskTableDTO;
 import com.softserve.academy.dao.implementation.JooqSQLBuilder;
-import com.softserve.academy.dao.implementation.PriorityDao;
-import com.softserve.academy.dao.implementation.StatusDao;
 import com.softserve.academy.dao.interfaces.TaskDaoInterface;
 import com.softserve.academy.dao.interfaces.UserDaoInterface;
-import com.softserve.academy.dto.dtoentity.TaskFullInfoDTO;
-import com.softserve.academy.dto.dtoentity.TaskTreeDTO;
+import com.softserve.academy.dto.TaskFullInfoDTO;
+import com.softserve.academy.dto.TaskTreeDTO;
 import com.softserve.academy.entity.*;
 import com.softserve.academy.service.interfaces.EntityServiceInterface;
 import com.softserve.academy.service.interfaces.TaskServiceInterface;
@@ -21,8 +19,6 @@ import java.util.List;
 
 @Service
 public class TaskService implements TaskServiceInterface {
-
-
 
     @Autowired
     TaskDaoInterface taskDao;
@@ -71,6 +67,7 @@ public class TaskService implements TaskServiceInterface {
         }
     }
 
+
     @Override
     public List<Task> getTasksForToday() {
         return taskDao.getTasksForToday();
@@ -102,7 +99,11 @@ public class TaskService implements TaskServiceInterface {
     }
 
     @Override
-    public List<TaskTableDto> getFilteredTasksForTable(int parentId, String[] dates, int[] status, int[] priority, int[] tag){
+    public List<TaskTableDTO> getFilteredTasksForTable(int parentId, String[] dates, int[] status, int[] priority, int[] tag){
+
+        // tag filter not implemented
+        tag = new int[0];
+
         FilterStateWrapper wrapper = new FilterStateWrapper();
         wrapper.setId(parentId);
         wrapper.setPriority(priority);
@@ -111,14 +112,13 @@ public class TaskService implements TaskServiceInterface {
         JooqSQLBuilder builder = new JooqSQLBuilder(wrapper);
 
         List<Task> list = taskDao.getFilteredTasks(builder);
-        List<TaskTableDto> result = new ArrayList<>();
+        List<TaskTableDTO> result = new ArrayList<>();
         List<User> users = userDao.getAll();
         List<Priority>priorities = servicePriority.getAll();
         List<Status>statuses =serviceStatus.getAll();
 
-
         for (Task t : list){
-            TaskTableDto dto = new TaskTableDto();
+            TaskTableDTO dto = new TaskTableDTO();
             dto.setId(t.getId());
             dto.setName(t.getName());
             dto.setStartDate(t.getStartDate());
@@ -143,7 +143,6 @@ public class TaskService implements TaskServiceInterface {
             }
             result.add(dto);
         }
-
         return result;
     }
 
@@ -174,9 +173,9 @@ public class TaskService implements TaskServiceInterface {
                 }
             }
         }
-
         return allTaskDTO;
     }
+
 
     @Override
     public TaskFullInfoDTO getFullInfo(int id){
@@ -220,29 +219,7 @@ public class TaskService implements TaskServiceInterface {
                 taskDTO.setPriority(strPrior);
             }
         }
-
-
-
         return taskDTO;
     }
-
-  /*
-   * /@Override public ArrayList<Task> getTaskByStatus(int statusId) { return
-   * taskDao.getTaskByStatus(statusId); }
-   *
-   * //@Override public ArrayList<Task> getTaskByPriority(int priorityId) { return
-   * taskDao.getTaskByPriority(priorityId); }
-   *
-   * //@Override public ArrayList<Task> getTasksCreatedByUser(int userId) { return
-   * taskDao.getTasksCreatedByUser(userId); }
-   *
-   * //@Override public ArrayList<Task> getTasksByTag(int tagId) { return
-   * taskDao.getTasksByTag(tagId); }
-   *
-   * //@Override public ArrayList<Task> treeOfTasks(int taskId) { return
-   * taskDao.treeOfTasks(taskId); }
-   *
-   * //@Override public User getAuthorOfTask(int taskId) { return taskDao.getAuthorOfTask(taskId); }
-   */
 
 }

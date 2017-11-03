@@ -10,8 +10,10 @@ import com.softserve.academy.tmw.entity.Tag;
 import com.softserve.academy.tmw.entity.Task;
 import com.softserve.academy.tmw.service.api.TaskServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
@@ -49,12 +51,15 @@ public class TaskController {
     }
 
     @PostMapping
-    public Task createTask(@RequestBody Task task) {
+    public Task createTask(@Validated @RequestBody Task task) {
+        System.out.println("create");
+        System.out.println(task);
+
         return taskService.create(task);
     }
 
     @PutMapping("/update")
-    boolean updateTask(@RequestBody Task task) {
+    boolean updateTask(@Validated @RequestBody Task task) {
         return taskService.update(task);}
 
     @DeleteMapping("/{id}")

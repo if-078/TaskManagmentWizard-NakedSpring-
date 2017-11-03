@@ -30,24 +30,29 @@ public class ErrorController {
   public ErrorResource validationErrorHandler(MethodArgumentNotValidException ex) {
     List<FieldError> fieldErrors = ex.getBindingResult().getFieldErrors();
 
-    List<FieldErrorResource> fieldErrorResources = fieldErrors.stream()
+    for (FieldError error:fieldErrors){
+        System.out.println(error.getField().replaceAll("(.)([A-Z])", "$1.$2"));
+    }
+      /*List<FieldErrorResource> fieldErrorResources = fieldErrors.stream()
             .map(error -> new FieldErrorResource(
                     error.getObjectName(),
                     error.getField(),
-                    messageSource.getMessage(error.getCode() + "." + error.getObjectName() + "." + error.getField(), null, FALLBACKOPTION, null)))
+                    messageSource.getMessage(error.getCode() + "." + error.getObjectName() + "." + error.getField().replaceAll("(.)([A-Z])", "$1.$2"), null, FALLBACKOPTION, null)))
             .collect(Collectors.toList());
 
     ErrorResource errorResource = new ErrorResource("ErrorValid");
-    errorResource.setFieldErrors(fieldErrorResources);
+    errorResource.setFieldErrors(fieldErrorResources);*/
 
-    return errorResource;
+    //return errorResource;
+
+      return new ErrorResource();
   }
 
   @ExceptionHandler(EmptyResultDataAccessException.class)
   public String emptyResultDataAccessHandler(EmptyResultDataAccessException ex) {
-
     return null;
   }
+
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public String error500Default(Exception e) {

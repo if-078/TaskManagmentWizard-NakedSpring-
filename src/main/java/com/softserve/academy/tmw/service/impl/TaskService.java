@@ -17,9 +17,12 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.sql.Time;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
+import java.util.*;
 
 @Service
 public class TaskService implements TaskServiceInterface {
@@ -80,9 +83,9 @@ public class TaskService implements TaskServiceInterface {
         task.setName(taskDTO.getName());
         task.setAssignTo(taskDTO.getAssignTo());
         task.setCreatedDate(new Date());
-        task.setStartDate(new Date());
-        task.setEndDate(new Date());
-        task.setEstimateTime(new Time(12, 50, 30));
+        task.setStartDate(getFormatDate(taskDTO.getStartDate()));
+        task.setEndDate(getFormatDate(taskDTO.getEndDate()));
+        task.setEstimateTime(getTimeFormat(taskDTO.getEstimateTime()));
         task.setPriorityId(taskDTO.getPriorityId());
         task.setParentId(taskDTO.getParentId());
         task.setStatusId(taskDTO.getStatusId());
@@ -97,14 +100,37 @@ public class TaskService implements TaskServiceInterface {
         task.setName(taskDTO.getName());
         task.setAssignTo(taskDTO.getAssignTo());
         task.setCreatedDate(new Date());
-        task.setStartDate(new Date());
-        task.setEndDate(new Date());
-        task.setEstimateTime(new Time(12, 50, 30));
+        task.setStartDate(getFormatDate(taskDTO.getStartDate()));
+        task.setEndDate(getFormatDate(taskDTO.getEndDate()));
+        task.setEstimateTime(getTimeFormat(taskDTO.getEstimateTime()));
         task.setPriorityId(taskDTO.getPriorityId());
         task.setParentId(taskDTO.getParentId());
         task.setStatusId(taskDTO.getStatusId());
 
         return taskDao.update(task);
+    }
+
+    private Date getFormatDate(String line){
+        try {
+            return new SimpleDateFormat( "yyyy-MM-dd" ).parse(line);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return new Date();
+    }
+
+    private Time getTimeFormat(String line){
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+        try {
+            Date date = sdf.parse(line);
+            Calendar calendar = GregorianCalendar.getInstance();
+            calendar.setTime(date);
+
+            return new Time(calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), calendar.get(Calendar.SECOND));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return new Time(00,00,00);
     }
 
 

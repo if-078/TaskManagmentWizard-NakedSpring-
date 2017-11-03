@@ -11,26 +11,29 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {TestConfig.class})
-public class StatusDaoTest {
+@ContextConfiguration(classes = {TestDaoConfig.class})
+public class StatusDaoItTest {
 
     @Autowired
     public StatusDao statusDao;
 
     @Test
-    public void itShouldCreateFindOneUpdateGetAllDelete() {
+    public void itShouldCreateFindOneUpdateGetAllandDelete() {
         Status st1 = new Status();
         st1.setName("InProgrss");
         Status st2 = new Status();
         st2.setName("Waiting");
+
         assertThat(statusDao.create(st1)).isEqualTo(st1);
         assertThat(statusDao.create(st2)).isEqualTo(st2);
+
         assertThat(statusDao.findOne(st1.getId()).getId()).isEqualTo(st1.getId());
         st2.setId(2);
         st2.setName("Stopped");
+
         assertThat(statusDao.update(st2)).isTrue();
         assertThat(statusDao.getAll()).isNotEmpty();
-        assertThat(statusDao.delete(5)).isTrue();
+        assertThat(statusDao.delete(2)).isTrue();
 
     }
 }

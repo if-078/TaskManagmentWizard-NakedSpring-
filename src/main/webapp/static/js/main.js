@@ -19,7 +19,8 @@
         tag: []
     };
 
-    // STATE OF APPLIED FILTERS
+    var taskID = null;
+    var taskDTO = {};
 
 
     // ON CLICK - SELECT TIME - ALL
@@ -35,9 +36,8 @@
     $('#tmw-time-today-btn').click(function (){
         $('#tmw-info-selected-time').html('Selected Time : Today');
         var currentData = new Date();
-        var numberDay = currentData.getDay();
         state.dateFrom = currentData.setHours(0,0,0,0);
-        state.dateTo = currentData.setHours(23,59,59,0);
+        state.dateTo = currentData.setHours(23,59,59,0) + 1000;
         taskTable();
     });
 
@@ -72,9 +72,8 @@
         }
 
         state.dateFrom = Date.parse( $('#tmw-time-custom-from').val() );
-        state.dateTo = Date.parse( $('#tmw-time-custom-to').val() ) + 86399999;
+        state.dateTo = Date.parse( $('#tmw-time-custom-to').val() ) + 86400000;
 
-        $('#tmw-info-selected-time').html('Selected Time : ' + $('#tmw-time-custom-from').val() + " - " + $('#tmw-time-custom-to').val());
         $('#tmw-time-btn-group > button, #tmw-time-custom-btn').removeClass('active');
         $('#tmw-time-custom-btn').addClass('active');
         taskTable();
@@ -83,12 +82,9 @@
     $('#tmw-time-custom-cancel-btn').click(function (e) {
 
     });
-    // ON CLICK - SELECTED TIME - CUSTOM ======================================
-
-    //ON CLICK APPLY FILTERS --> STATUS, PRIORITY, TAG ========================
 
 
-
+    //ON CLICK APPLY FILTERS --> STATUS, PRIORITY, TAG
     $('#tmw-apply-btn').click(function () {
         if (!$("#statusBox").val()=="") {
             state.status = $("#statusBox").val().split(",");
@@ -102,10 +98,9 @@
 
         taskTable();
     });
-    // ON CLICK APPLY FILTERS --> STATUS, PRIORITY, TAG =======================
 
 
-    // ON CLICK RESET FILTERS --> STATUS, PRIORITY, TAG =======================
+    // ON CLICK RESET FILTERS --> STATUS, PRIORITY, TAG
     $('#tmw-reset-btn').click(function () {
         state.status = [];
         state.priority = [];
@@ -114,14 +109,9 @@
 
         taskTable();
     });
-    // ON CLICK RESET FILTERS --> STATUS, PRIORITY, TAG =======================
 
 
-    //======================================================================================================================
-    //======================================================================================================================
-
-
-    //===============================================================================
+    // CREATE TREEVIEW
     $('#tmw-treeview').jstree({
         core: {
             data: {
@@ -149,6 +139,11 @@
         }
     });
 
+    var refreshTree = function () {
+        $.jstree.reference('#tmw-treeview').select_node(state.parentid);
+        $('#tmw-treeview').jstree(true).close_node(state.parentid);
+    }
+
     // REMOVE NODES IN A TREE
     $('#tmw-treeview').on('after_close.jstree', function (e, data) {
         var tree = $('#tmw-treeview').jstree(true);
@@ -168,34 +163,35 @@
         }
     });
 
+    // DOUBLE-CLICK ON ROOT-TASK
+    $('#tmw-treeview').on('dblclick.jstree',function (event, data) {
+
+        var node = $(event.target).closest('li');
+        var id = node[0].id;
+        if ((data==undefined)&&(id != '$')) {
+            showFull(id);
+        }
+
+    });
+
 
     var generatedRequestParameters = function(){
-
         var parameters = '?parentid=' + state.parentid + '&date='+ state.dateFrom + ',' + state.dateTo;
-
         parameters = parameters + '&status=';
         for (var i = 0; i < state.status.length; i++) {
                 parameters = parameters + state.status[i] + ',';
-
         }
         parameters = parameters.slice(0,-1);
-
         parameters = parameters + '&priority=';
         for (var i = 0; i < state.priority.length; i++) {
-
                 parameters = parameters + state.priority[i] + ',';
-
         }
         parameters = parameters.slice(0,-1);
-
         parameters = parameters + '&tag=';
         for (var i = 0; i < state.tag.length; i++) {
-
                 parameters = parameters + state.tag[i] + ',';
-
         }
         parameters = parameters.slice(0,-1);
-
         return parameters;
     }
 
@@ -238,6 +234,29 @@
                             {title: "Priority"}
                         ],
 
+                        "fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
+                            if ( aData[5] == "DONE" )
+                            {
+                                $('td', nRow).css('background-color', '#66ff66' );
+                            }
+                            else if ( aData[5] == "INPROGRESS" )
+                            {
+                                $('td', nRow).css('background-color', '#d2ff4d');
+                            }
+                            else if ( aData[5] == "NEW" )
+                            {
+                                $('td', nRow).css('background-color', '#b3d9ff');
+                            }
+                            else if ( aData[5] == "REVIEW" )
+                            {
+                                $('td', nRow).css('background-color', '#ffff99');
+                            }
+                            else
+                            {
+                                $('td', nRow).css('background-color', '#f2f2f2');
+                            }
+                        },
+
                         paging: false,
                         info: false,
                         searching: false
@@ -256,27 +275,37 @@
         });
     }
 
+
     // SHOW FULL INFORMATION ABOUT THE TASK
     var showFull = function (id) {
+        taskDTO = {};
         clearTaskModal();
+        clearErrorTask();
         // AJAX return response full info one User
         $.ajax({
             url: 'api/tasks/view/' + id,
             type: 'GET',
             contentType: 'application/json',
+
             headers:createAuthToken(),
             success: function (data, textStatus, jqXHR) {
                  var token= jqXHR.getResponseHeader('Authentication');
                  window.sessionStorage.setItem("token",token);
+ taskDTO = data;
 
-                $('#tmw-task-name').val(data.name);
-                $('#tmw-task-createDate').val(data.createdDate);
-                $('#tmw-task-startDate').val(data.startDate);
-                $('#tmw-task-estimateTime').val(data.estimateTime);
+                $('#tmw-task-name').val(taskDTO.name);
+                $('#tmw-task-createDate').val(taskDTO.createdDate);
+                $('#tmw-task-startDate').val(taskDTO.startDate);
+                $('#tmw-task-endDate').val(taskDTO.endDate);
+                $('#tmw-task-estimateTime').val(taskDTO.estimateTime);
+                fillSelectUser(taskDTO.assignTo.id);
+                fillSelectPriority(taskDTO.priority.id);
+                fillSelectStatus(taskDTO.status.id);
 
-                fillSelectUser(data.assignTo.id);
-                fillSelectPriority(data.priority.id);
-                fillSelectStatus(data.status.id);
+                $('#tmw-task-table tbody').on( 'click', 'tr', function () {
+                    $(this).addClass('active').siblings().removeClass('active');
+                    $(this).css('background-color', 'red').siblings().css('background-color', '');
+                } );
 
                 $('#tmw-modal').modal('show');
             },
@@ -290,17 +319,147 @@
         });
     };
 
+
     // GET FULL INFORMATION ABOUT THE TASK
+    $('#tmw-task-btn-save').on( 'click',function () {
+        createOrUpdatetask(taskDTO);
+    } );
+
     $('#tmw-task-table').on('dblclick', 'tr', function () {
         var table = $('#tmw-task-table').DataTable();
         var taskId = table.row(this).data()[0];
         showFull(taskId);
     });
 
+    $('#tmw-task-table').on('click', 'tr:first-child', function(e) {
+        e.stopPropagation();
+    });
+
+    $('#tmw-task-table').on('click', 'tr', function () {
+        var table = $('#tmw-task-table').DataTable();
+        if(table!= undefined) {
+            taskID = table.row(this).data()[0];
+        }
+    });
+
+    $('#tmw-delete-task').on("click", function () {
+        deletetask(taskID);
+    } );
+
+    $('#tmw-create-task').on('click', function () {
+        clearErrorTask();
+        taskDTO = {}
+        clearTaskModal();
+        fillSelectUser(null);
+        fillSelectPriority(null);
+        fillSelectStatus(null);
+
+        $('#tmw-modal').modal('show');
+    });
+
+    function createOrUpdatetask(taskDTO){
+        var task = {};
+
+        if ($.isEmptyObject(taskDTO)) {
+            task =
+                {
+                    "name"         : $('#tmw-task-name').val(),
+                    "createdDate"  : $('#tmw-task-createDate').val(),
+                    "startDate"    : $('#tmw-task-startDate').val(),
+                    "endDate"      : $('#tmw-task-endDate').val(),
+                    "estimateTime" : $('#tmw-task-estimateTime').val(),
+                    "assignTo"     : $('#tmw-task-assignTo').find(":selected").val(),
+                    "statusId"     : $('#tmw-task-status').find(":selected").val(),
+                    "priorityId"   : $('#tmw-task-priority').find(":selected").val(),
+                    "parentId"     : state.parentid
+                }
+
+            createtask(task);
+        }else {
+                task =
+                    {
+                        "id"           : taskDTO.id,
+                         "name"        : $('#tmw-task-name').val(),
+                        "createdDate"  : $('#tmw-task-createDate').val(),
+                        "startDate"    : $('#tmw-task-startDate').val(),
+                        "endDate"      : $('#tmw-task-endDate').val(),
+                        "estimateTime" : $('#tmw-task-estimateTime').val(),
+                        "assignTo"     : $('#tmw-task-assignTo').find(":selected").val(),
+                        "statusId"     : $('#tmw-task-status').find(":selected").val(),
+                        "priorityId"   : $('#tmw-task-priority').find(":selected").val(),
+                        "parentId"     : state.parentid
+                    }
+
+            updatetask(task);
+        }
+    }
+
+    function createtask(task){
+        clearErrorTask();
+        taskDTO = {};
+        $.ajax({
+            url: 'tasks',
+            data: JSON.stringify(task),
+            type: 'POST',
+            contentType: 'application/json',
+            success: function (data) {
+                $('#tmw-modal').modal('hide');
+                refreshTree();
+                clearTaskModal();
+                taskTable();
+            },
+            cache: false
+        }).fail(function ($xhr) {
+            if($xhr.status == 400){
+                var data = $xhr.responseJSON;
+                showErrorsOfForm(data)
+            }
+        });
+    }
+
+    function updatetask(task){
+        clearErrorTask();
+        $.ajax({
+            url: 'tasks/update',
+            data: JSON.stringify(task),
+            type: 'PUT',
+            contentType: 'application/json',
+            success: function () {
+                $('#tmw-modal').modal('hide');
+                refreshTree();
+                clearTaskModal();
+                taskTable();
+            },
+            cache: false
+        }).fail(function ($xhr) {
+            if($xhr.status == 400){
+                var data = $xhr.responseJSON;
+                showErrorsOfForm(data)
+            }
+        });
+    };
+
+    function deletetask(taskId){
+        $.ajax({
+            type: 'DELETE',
+            url: 'tasks/' + taskId,
+            contentType: 'application/json',
+            success: function () {
+                refreshTree();
+                taskTable();
+            },
+            error: function(jqXHR) {
+                console.log(jqXHR.status)
+            }
+        });
+    }
+
+
     function clearTaskModal(){
         $('#tmw-task-name').val('');
         $('#tmw-task-createDate').val('');
         $('#tmw-task-startDate').val('');
+        $('#tmw-task-endDate').val('');
         $('#tmw-task-estimateTime').val('');
         $('#tmw-task-assignTo').empty();
         $('#tmw-task-status').empty();
@@ -324,7 +483,7 @@
                     }));
                 });
 
-                $('#tmw-task-assignTo').val(id);
+                if(id != null) $('#tmw-task-assignTo').val(id);
 
             },
              error: function (jqXHR, textStatus, errorThrown) {
@@ -354,7 +513,7 @@
                     }));
                 });
 
-                $('#tmw-task-priority').val(id);
+                if(id != null) $('#tmw-task-priority').val(id);
 
             },
              error: function (jqXHR, textStatus, errorThrown) {
@@ -384,7 +543,7 @@
                     }));
                 });
 
-                $('#tmw-task-status').val(id);
+                if(id != null) $('#tmw-task-status').val(id);
 
             },
              error: function (jqXHR, textStatus, errorThrown) {
@@ -396,6 +555,7 @@
                                 }
         });
     }
+
 
     function createAuthToken(){
     var token=window.sessionStorage.getItem("token");
@@ -461,4 +621,39 @@
                 headers: createAuthToken()
             });
         }
+
+    function clearErrorTask(){
+
+        $('#tmw-task-name').css({"border-color": "","border-width":"","border-style":""});
+        $('#tmw-task-endDate').css({"border-color": "","border-width":"","border-style":""});
+        $('#tmw-task-startDate').css({"border-color": "","border-width":"","border-style":""});
+        $('#tmw-task-estimateTime').css({"border-color": "","border-width":"","border-style":""});
+
+        $('#tmw-task-name-error').empty();
+        $('#tmw-task-startDate-error').empty();
+        $('#tmw-task-endDate-error').empty();
+        $('#tmw-task-estimateTime-error').empty();
+    }
+
+    function showErrorsOfForm(data){
+        for(var i = 0; i < data.fieldErrors.length; i++) {
+            if (data.fieldErrors[i].field == 'name') {
+                $('#tmw-task-name').css({"border-color": "#FF0000","border-width":"1px","border-style":"solid"});
+                $('#tmw-task-name-error').text(data.fieldErrors[i].message).css('color', 'red');
+            }
+            if (data.fieldErrors[i].field == 'startDate') {
+                $('#tmw-task-startDate').css({"border-color": "#FF0000","border-width":"1px","border-style":"solid"});
+                $('#tmw-task-startDate-error').text(data.fieldErrors[i].message).css('color', 'red');
+            }
+            if (data.fieldErrors[i].field == 'endDate') {
+                $('#tmw-task-endDate').css({"border-color": "#FF0000","border-width":"1px","border-style":"solid"});
+                $('#tmw-task-endDate-error').text(data.fieldErrors[i].message).css('color', 'red');
+            }
+            if (data.fieldErrors[i].field == 'estimateTime') {
+                $('#tmw-task-estimateTime').css({"border-color": "#FF0000","border-width":"1px","border-style":"solid"});
+                $('#tmw-task-estimateTime-error').text(data.fieldErrors[i].message).css('color', 'red');
+            }
+        }
+    }
+
 });

@@ -1,5 +1,6 @@
 package com.softserve.academy.tmw.service.api;
 
+import com.softserve.academy.tmw.dto.TaskDTO;
 import com.softserve.academy.tmw.dto.TaskTableDTO;
 import com.softserve.academy.tmw.dto.TaskFullInfoDTO;
 import com.softserve.academy.tmw.dto.TaskTreeDTO;
@@ -26,18 +27,8 @@ public interface TaskServiceInterface extends EntityServiceInterface<Task> {
     List<TaskTreeDTO> findTaskByTree(int id);
 
     TaskFullInfoDTO getFullInfo(int id);
-  /*
-   * public ArrayList<Task> getTaskByStatus(int statusId);
-   *
-   * public ArrayList<Task> getTaskByPriority(int priorityId);
-   *
-   * public ArrayList<Task> getTasksCreatedByUser(int userId);
-   *
-   * public ArrayList<Task> getTasksForToday();
-   *
-   * public ArrayList<Task> getTasksByTag(int tagId);
-   *
-   * public User getAuthorOfTask(int taskId);
-   */
 
+    Task createTaskByDTO(TaskDTO taskDTO);
+
+    boolean updateTaskByDTO(TaskDTO taskDTO);
 }

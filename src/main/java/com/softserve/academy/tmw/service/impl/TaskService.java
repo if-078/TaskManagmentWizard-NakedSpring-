@@ -1,4 +1,5 @@
 package com.softserve.academy.tmw.service.impl;
+import com.softserve.academy.tmw.dto.TaskDTO;
 import com.softserve.academy.tmw.service.api.UserServiceInterface;
 import com.softserve.academy.tmw.wrapper.FilterStateWrapper;
 import com.softserve.academy.tmw.dto.TaskTableDTO;
@@ -15,9 +16,10 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.sql.Time;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Service
 public class TaskService implements TaskServiceInterface {
@@ -72,6 +74,62 @@ public class TaskService implements TaskServiceInterface {
         }
     }
 
+    @Override
+    public Task createTaskByDTO(TaskDTO taskDTO) {
+        Task task = new Task();
+        task.setName(taskDTO.getName());
+        task.setAssignTo(taskDTO.getAssignTo());
+        task.setCreatedDate(new Date());
+        task.setStartDate(getFormatDate(taskDTO.getStartDate()));
+        task.setEndDate(getFormatDate(taskDTO.getEndDate()));
+        task.setEstimateTime(getTimeFormat(taskDTO.getEstimateTime()));
+        task.setPriorityId(taskDTO.getPriorityId());
+        task.setParentId(taskDTO.getParentId());
+        task.setStatusId(taskDTO.getStatusId());
+
+        return taskDao.create(task);
+    }
+
+    @Override
+    public boolean updateTaskByDTO(TaskDTO taskDTO) {
+        Task task = new Task();
+        task.setId(taskDTO.getId());
+        task.setName(taskDTO.getName());
+        task.setAssignTo(taskDTO.getAssignTo());
+        task.setCreatedDate(new Date());
+        task.setStartDate(getFormatDate(taskDTO.getStartDate()));
+        task.setEndDate(getFormatDate(taskDTO.getEndDate()));
+        task.setEstimateTime(getTimeFormat(taskDTO.getEstimateTime()));
+        task.setPriorityId(taskDTO.getPriorityId());
+        task.setParentId(taskDTO.getParentId());
+        task.setStatusId(taskDTO.getStatusId());
+
+        return taskDao.update(task);
+    }
+
+    private Date getFormatDate(String line){
+        try {
+            return new SimpleDateFormat( "yyyy-MM-dd" ).parse(line);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return new Date();
+    }
+
+    private Time getTimeFormat(String line){
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+        try {
+            Date date = sdf.parse(line);
+            Calendar calendar = GregorianCalendar.getInstance();
+            calendar.setTime(date);
+
+            return new Time(calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), calendar.get(Calendar.SECOND));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return new Time(00,00,00);
+    }
+
 
     @Override
     public List<Task> getTasksForToday() {
@@ -113,47 +171,47 @@ public class TaskService implements TaskServiceInterface {
         wrapper.setDates(dates);
         JooqSQLBuilder builder = new JooqSQLBuilder(wrapper);
 
-        List<Task> list = taskDao.getFilteredTasks(builder);
-        List<TaskTableDTO> result = new ArrayList<>();
+        List<Task> tasksList = taskDao.getFilteredTasks(builder);
+        List<TaskTableDTO> tasksDTOList = new ArrayList<>();
+
         List<User> users = userDao.getAll();
         List<Priority>priorities = servicePriority.getAll();
         List<Status>statuses =serviceStatus.getAll();
 
-        for (Task t : list){
+        for (Task task : tasksList){
             TaskTableDTO dto = new TaskTableDTO();
-            dto.setId(t.getId());
-            dto.setName(t.getName());
-            dto.setStartDate(t.getStartDate());
-            dto.setEstimateTime(t.getEstimateTime());
+            dto.setId(task.getId());
+            dto.setName(task.getName());
+            dto.setStartDate(task.getStartDate());
+            dto.setEstimateTime(task.getEstimateTime());
             for (User user : users){
-                if (user.getId() == t.getAssignTo()) {
+                if (user.getId() == task.getAssignTo()) {
                     dto.setAssignTo(user.getName());
                     break;
                 }
             }
-            for (Priority p : priorities){
-                if (p.getId() == t.getPriorityId()){
-                    dto.setPriority(p.getName());
+            for (Priority priorit : priorities){
+                if (priorit.getId() == task.getPriorityId()){
+                    dto.setPriority(priorit.getName());
                     break;
                 }
             }
-            for (Status s : statuses){
-                if (t.getStatusId() == s.getId()){
-                    dto.setStatus(s.getName());
+            for (Status stat : statuses){
+                if (task.getStatusId() == stat.getId()){
+                    dto.setStatus(stat.getName());
                     break;
                 }
             }
-            result.add(dto);
+            tasksDTOList.add(dto);
         }
-        return result;
+        return tasksDTOList;
     }
 
 
-     @Override
+    @Override
     public List<TaskTreeDTO> findTaskByTree(int id){
 
         List<Task> allTask = taskDao.getAll();
-
         List<Task> selectedTask = new ArrayList<Task>();
         for (Task task : allTask){
             if(task.getParentId() == id) selectedTask.add(task);

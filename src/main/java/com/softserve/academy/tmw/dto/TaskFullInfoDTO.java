@@ -3,6 +3,7 @@ package com.softserve.academy.tmw.dto;
 import com.softserve.academy.tmw.entity.Priority;
 import com.softserve.academy.tmw.entity.Status;
 import com.softserve.academy.tmw.entity.User;
+import org.hibernate.validator.constraints.NotBlank;
 
 import java.sql.Time;
 import java.util.Date;

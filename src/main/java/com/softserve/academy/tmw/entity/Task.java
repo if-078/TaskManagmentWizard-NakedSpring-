@@ -1,5 +1,8 @@
 package com.softserve.academy.tmw.entity;
 
+import org.hibernate.validator.constraints.NotBlank;
+
+import javax.validation.constraints.Pattern;
 import java.sql.Time;
 import java.util.Date;
 
@@ -90,7 +93,6 @@ public class Task implements NamedEntity {
         return id;
     }
 
-    @Override
     public String getName() {
         return name;
     }
@@ -131,5 +133,20 @@ public class Task implements NamedEntity {
         String taskStr = "";
         taskStr += this.getId() + " | " + this.getName() + " | " + this.getCreatedDate() + " | " + this.getStartDate() + " | " + this.getEndDate() + " | " + this.getEstimateTime() + " | " + this.getAssignTo() + " | " + this.getStatusId() + " | " + this.getPriorityId();
         return taskStr;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Task task = (Task) o;
+
+        return id == task.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return id;
     }
 }

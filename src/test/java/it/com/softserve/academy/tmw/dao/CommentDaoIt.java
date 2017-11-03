@@ -4,6 +4,7 @@ import com.softserve.academy.tmw.dao.impl.CommentDao;
 import com.softserve.academy.tmw.entity.Comment;
 import it.com.softserve.academy.tmw.dao.utility.TaskPopulator;
 import it.com.softserve.academy.tmw.dao.utility.UserPopulator;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,7 +23,7 @@ import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {TestDaoConfig.class})
-public class CommentDaoIT {
+public class CommentDaoIt {
 
     @Autowired
     public CommentDao commentDao;
@@ -38,14 +39,14 @@ public class CommentDaoIT {
 
     }
 
-    @Test
+
     public void iTShoudExecuteNegativeTest() throws SQLException {
         int testId = 50;
         assertThat(commentDao.getAll().isEmpty());
         assertThat(commentDao.delete(testId)).isFalse();
     }
 
-    @Test
+
     public void iTShouldCreateAndGetOneComment() throws Exception {
         // Given
         Comment comment = new Comment("Text comment 1", 1, 1);
@@ -65,7 +66,7 @@ public class CommentDaoIT {
         commentDao.delete(id);
     }
 
-    @Test
+
     public void iTShouldCreateAndUpdateOneComment() throws Exception {
         // Given
         Comment comment = new Comment("Text comment", 1, 1);
@@ -86,7 +87,7 @@ public class CommentDaoIT {
         commentDao.delete(id);
     }
 
-    @Test
+
 
     public void iTShouldCreateAndReadAllAndDeleteComment() throws Exception {
         // Given

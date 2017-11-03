@@ -177,6 +177,7 @@
 						  <div class="form-group col-md-12">
 							  <label for="tmw-task-estimateTime">Estimate time</label>
 							  <input type="text" class="form-control" id="tmw-task-estimateTime" placeholder="estimate time">
+							  <div id="tmw-task-estimateTime-error"></div>
 						  </div>
 					  </div>
 
@@ -185,22 +186,25 @@
 							  <label for="tmw-task-conteiner-startDate">Start Date</label>
 							  <div class="form-group">
 								  <div class='input-group date' id="tmw-task-conteiner-startDate">
-									  <input id="tmw-task-startDate" type='text' class="form-control datepicker" data-date-format="yyyy-mm-dd" placeholder="start date" /><span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+									  <input id="tmw-task-startDate" type='text' class="form-control datepicker" data-date-format="yyyy-mm-dd" placeholder='YYYY-MM-DD' /><span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
 								  </div>
+								  <div id="tmw-task-startDate-error"></div>
 							  </div>
 						  </div>
 						  <div class="form-group col-md-6">
 							  <label for="tmw-task-conteiner-endDate">End Date</label>
 							  <div class="form-group">
 								  <div class='input-group date' id="tmw-task-conteiner-endDate">
-									  <input id="tmw-task-endDate" type='text' class="form-control datepicker" data-date-format="yyyy-mm-dd" placeholder="end date" /><span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+									  <input id="tmw-task-endDate" type='text' class="form-control datepicker" data-date-format="yyyy-mm-dd"  placeholder='YYYY-MM-DD' /><span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
 								  </div>
+								  <div id="tmw-task-endDate-error"></div>
 							  </div>
 						  </div>
 					  </div>
 					  <div class="form-row">
 						  <div class="form-group col-md-12">
 							  <textarea class="form-control" rows="2"  id="tmw-task-name" placeholder="Name"></textarea>
+							  <div id="tmw-task-name-error"></div>
 						  </div>
 					  </div>
 

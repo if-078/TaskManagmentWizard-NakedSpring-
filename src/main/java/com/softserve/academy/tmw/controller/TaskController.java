@@ -1,7 +1,6 @@
 package com.softserve.academy.tmw.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.softserve.academy.tmw.dto.TaskDTO;
 import com.softserve.academy.tmw.dto.TaskTableDTO;
 import com.softserve.academy.tmw.dto.TaskFullInfoDTO;
 import com.softserve.academy.tmw.dto.TaskTreeDTO;
@@ -13,9 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
 
 @RestController
@@ -51,16 +47,11 @@ public class TaskController {
     }
 
     @PostMapping
-    public Task createTask(@Validated @RequestBody Task task) {
-        System.out.println("create");
-        System.out.println(task);
-
-        return taskService.create(task);
-    }
+    public Task createTask(@Validated @RequestBody TaskDTO taskDTO) {return taskService.createTaskByDTO(taskDTO);}
 
     @PutMapping("/update")
-    boolean updateTask(@Validated @RequestBody Task task) {
-        return taskService.update(task);}
+    boolean updateTask(@Validated @RequestBody TaskDTO taskDTO) {
+        return taskService.updateTaskByDTO(taskDTO);}
 
     @DeleteMapping("/{id}")
     boolean deleteTask(@PathVariable int id){

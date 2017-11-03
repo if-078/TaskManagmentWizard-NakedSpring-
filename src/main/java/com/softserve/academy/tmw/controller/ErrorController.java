@@ -30,22 +30,17 @@ public class ErrorController {
   public ErrorResource validationErrorHandler(MethodArgumentNotValidException ex) {
     List<FieldError> fieldErrors = ex.getBindingResult().getFieldErrors();
 
-    for (FieldError error:fieldErrors){
-        System.out.println(error.getField().replaceAll("(.)([A-Z])", "$1.$2"));
-    }
-      /*List<FieldErrorResource> fieldErrorResources = fieldErrors.stream()
+      List<FieldErrorResource> fieldErrorResources = fieldErrors.stream()
             .map(error -> new FieldErrorResource(
                     error.getObjectName(),
                     error.getField(),
                     messageSource.getMessage(error.getCode() + "." + error.getObjectName() + "." + error.getField().replaceAll("(.)([A-Z])", "$1.$2"), null, FALLBACKOPTION, null)))
-            .collect(Collectors.toList());
+      .collect(Collectors.toList());
 
     ErrorResource errorResource = new ErrorResource("ErrorValid");
-    errorResource.setFieldErrors(fieldErrorResources);*/
+    errorResource.setFieldErrors(fieldErrorResources);
 
-    //return errorResource;
-
-      return new ErrorResource();
+    return errorResource;
   }
 
   @ExceptionHandler(EmptyResultDataAccessException.class)
@@ -56,6 +51,7 @@ public class ErrorController {
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public String error500Default(Exception e) {
+        System.out.println(e.getMessage());
         return "500";
     }
 

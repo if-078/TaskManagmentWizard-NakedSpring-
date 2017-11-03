@@ -1,4 +1,5 @@
 package com.softserve.academy.tmw.service.impl;
+import com.softserve.academy.tmw.dto.TaskDTO;
 import com.softserve.academy.tmw.service.api.UserServiceInterface;
 import com.softserve.academy.tmw.wrapper.FilterStateWrapper;
 import com.softserve.academy.tmw.dto.TaskTableDTO;
@@ -15,6 +16,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -70,6 +72,39 @@ public class TaskService implements TaskServiceInterface {
         } catch (DataAccessException e) {
             return new Task();
         }
+    }
+
+    @Override
+    public Task createTaskByDTO(TaskDTO taskDTO) {
+        Task task = new Task();
+        task.setName(taskDTO.getName());
+        task.setAssignTo(taskDTO.getAssignTo());
+        task.setCreatedDate(new Date());
+        task.setStartDate(new Date());
+        task.setEndDate(new Date());
+        task.setEstimateTime(new Time(12, 50, 30));
+        task.setPriorityId(taskDTO.getPriorityId());
+        task.setParentId(taskDTO.getParentId());
+        task.setStatusId(taskDTO.getStatusId());
+
+        return taskDao.create(task);
+    }
+
+    @Override
+    public boolean updateTaskByDTO(TaskDTO taskDTO) {
+        Task task = new Task();
+        task.setId(taskDTO.getId());
+        task.setName(taskDTO.getName());
+        task.setAssignTo(taskDTO.getAssignTo());
+        task.setCreatedDate(new Date());
+        task.setStartDate(new Date());
+        task.setEndDate(new Date());
+        task.setEstimateTime(new Time(12, 50, 30));
+        task.setPriorityId(taskDTO.getPriorityId());
+        task.setParentId(taskDTO.getParentId());
+        task.setStatusId(taskDTO.getStatusId());
+
+        return taskDao.update(task);
     }
 
 

@@ -93,14 +93,10 @@ public class Task implements NamedEntity {
         return id;
     }
 
-    @Override
-    @NotBlank
     public String getName() {
         return name;
     }
 
-    //@NotBlank
-    //@Pattern(regexp = "^\\d{4}-\\d{2}-\\d{2}$")
     public Date getCreatedDate() {
         return createdDate;
     }
@@ -109,14 +105,10 @@ public class Task implements NamedEntity {
         return startDate;
     }
 
-    //@Pattern(regexp = "^\\d{4}-\\d{2}-\\d{2}$")
-    @NotBlank
     public Date getEndDate() {
         return endDate;
     }
 
-    //@NotBlank
-    //@Pattern(regexp = "^(\\\\d\\\\d:\\\\d\\\\d:\\\\d\\\\d)")
     public Time getEstimateTime() {
         return estimateTime;
     }

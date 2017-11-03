@@ -144,6 +144,11 @@ $(document).ready(function () {
         }
     });
 
+    var refreshTree = function () {
+        $.jstree.reference('#tmw-treeview').select_node(state.parentid);
+        $('#tmw-treeview').jstree(true).close_node(state.parentid);
+    }
+
     // REMOVE NODES IN A TREE
     $('#tmw-treeview').on('after_close.jstree', function (e, data) {
         var tree = $('#tmw-treeview').jstree(true);
@@ -249,6 +254,7 @@ $(document).ready(function () {
     var showFull = function (id) {
         taskDTO = {};
         clearTaskModal();
+        clearErrorTask();
         // AJAX return response full info one User
         $.ajax({
             url: 'tasks/view/' + id,
@@ -280,10 +286,6 @@ $(document).ready(function () {
     // GET FULL INFORMATION ABOUT THE TASK
 
     $('#tmw-task-btn-save').on( 'click',function () {
-        console.log("-----------");
-        console.log(taskDTO);
-        console.log("-----------");
-
         createOrUpdatetask(taskDTO);
     } );
 
@@ -295,15 +297,17 @@ $(document).ready(function () {
 
     $('#tmw-task-table').on('click', 'tr', function () {
         var table = $('#tmw-task-table').DataTable();
-        taskID = table.row(this).data()[0];
+        if(table!= undefined) {
+            taskID = table.row(this).data()[0];
+        }
     });
 
     $('#tmw-delete-task').on("click", function () {
-        console.log(taskID);
         deletetask(taskID);
     } );
 
     $('#tmw-create-task').on('click', function () {
+        clearErrorTask();
         taskDTO = {}
         clearTaskModal();
         fillSelectUser(null);
@@ -351,6 +355,7 @@ $(document).ready(function () {
     }
 
     function createtask(task){
+        clearErrorTask();
         taskDTO = {};
         $.ajax({
             url: 'tasks',
@@ -358,41 +363,38 @@ $(document).ready(function () {
             type: 'POST',
             contentType: 'application/json',
             success: function (data) {
-
-                console.log("good create");
                 $('#tmw-modal').modal('hide');
+                refreshTree();
                 clearTaskModal();
                 taskTable();
             },
             cache: false
         }).fail(function ($xhr) {
-            console.log("bad")
-
             if($xhr.status == 400){
                 var data = $xhr.responseJSON;
-                console.log(data);
+                showErrorsOfForm(data)
             }
         });
     }
 
     function updatetask(task){
+        clearErrorTask();
         $.ajax({
             url: 'tasks/update',
             data: JSON.stringify(task),
             type: 'PUT',
             contentType: 'application/json',
             success: function () {
-                console.log("update good");
                 $('#tmw-modal').modal('hide');
+                refreshTree();
                 clearTaskModal();
                 taskTable();
             },
             cache: false
         }).fail(function ($xhr) {
-            console.log("update bad");
             if($xhr.status == 400){
                 var data = $xhr.responseJSON;
-                console.log(data);
+                showErrorsOfForm(data)
             }
         });
     };
@@ -403,6 +405,7 @@ $(document).ready(function () {
             url: 'tasks/' + taskId,
             contentType: 'application/json',
             success: function () {
+                refreshTree();
                 taskTable();
             },
             error: function(jqXHR) {
@@ -484,5 +487,39 @@ $(document).ready(function () {
 
             }
         });
+    }
+
+    function clearErrorTask(){
+
+        $('#tmw-task-name').css({"border-color": "","border-width":"","border-style":""});
+        $('#tmw-task-endDate').css({"border-color": "","border-width":"","border-style":""});
+        $('#tmw-task-startDate').css({"border-color": "","border-width":"","border-style":""});
+        $('#tmw-task-estimateTime').css({"border-color": "","border-width":"","border-style":""});
+
+        $('#tmw-task-name-error').empty();
+        $('#tmw-task-startDate-error').empty();
+        $('#tmw-task-endDate-error').empty();
+        $('#tmw-task-estimateTime-error').empty();
+    }
+
+    function showErrorsOfForm(data){
+        for(var i = 0; i < data.fieldErrors.length; i++) {
+            if (data.fieldErrors[i].field == 'name') {
+                $('#tmw-task-name').css({"border-color": "#FF0000","border-width":"1px","border-style":"solid"});
+                $('#tmw-task-name-error').text(data.fieldErrors[i].message).css('color', 'red');
+            }
+            if (data.fieldErrors[i].field == 'startDate') {
+                $('#tmw-task-startDate').css({"border-color": "#FF0000","border-width":"1px","border-style":"solid"});
+                $('#tmw-task-startDate-error').text(data.fieldErrors[i].message).css('color', 'red');
+            }
+            if (data.fieldErrors[i].field == 'endDate') {
+                $('#tmw-task-endDate').css({"border-color": "#FF0000","border-width":"1px","border-style":"solid"});
+                $('#tmw-task-endDate-error').text(data.fieldErrors[i].message).css('color', 'red');
+            }
+            if (data.fieldErrors[i].field == 'estimateTime') {
+                $('#tmw-task-estimateTime').css({"border-color": "#FF0000","border-width":"1px","border-style":"solid"});
+                $('#tmw-task-estimateTime-error').text(data.fieldErrors[i].message).css('color', 'red');
+            }
+        }
     }
 });

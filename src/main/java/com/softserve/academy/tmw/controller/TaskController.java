@@ -15,7 +15,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 @RestController
-@RequestMapping("tasks")
+@RequestMapping("api/tasks")
 public class TaskController {
 
     ObjectMapper objectMapper;

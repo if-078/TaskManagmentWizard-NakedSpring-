@@ -4,7 +4,7 @@
 
         var $form = $(this);
         var formData = {
-            username: $form.find('input[name="username"]').val(),
+            username: $form.find('input[name="email"]').val(),
             password: $form.find('input[name="password"]').val()
         };
 
@@ -13,17 +13,17 @@
 
     function doLogin(loginData) {
             $.ajax({
-                url: "/auth",
+                url: "/login",
                 type: "POST",
-                data: JSON.stringify(loginData),
+                data: loginData,
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (data, textStatus, jqXHR) {
-                    setJwtToken(data.token);
-                    $login.hide();
-                    $notLoggedIn.hide();
-                    showTokenInformation();
-                    showUserInformation();
+                    var token = jqXHR.getResponseHeader('Authentication');
+                    window.localStorage.setItem("token", token);
+                    window.localStorage.setItem("userId", data.id);
+                    $("#main").show();
+                    $("#login").show();
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     if (jqXHR.status === 401) {

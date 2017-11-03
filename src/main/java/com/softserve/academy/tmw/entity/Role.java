@@ -1,6 +1,9 @@
 package com.softserve.academy.tmw.entity;
 
-public class Role {
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.security.core.GrantedAuthority;
+
+public class Role implements GrantedAuthority{
     private int id;
     private String name;
 
@@ -30,5 +33,11 @@ public class Role {
 
     public void setName(String role) {
         this.name = role;
+    }
+
+    @Override
+    @JsonIgnore
+    public String getAuthority() {
+        return getName();
     }
 }

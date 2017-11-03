@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 @RestController
-@RequestMapping("comment")
+@RequestMapping("api/comment")
 public class CommentController {
 
     @Autowired

@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 @RestController
-@RequestMapping("status")
+@RequestMapping("api/status")
 public class StatusController {
 
     EntityServiceInterface<Status> service;

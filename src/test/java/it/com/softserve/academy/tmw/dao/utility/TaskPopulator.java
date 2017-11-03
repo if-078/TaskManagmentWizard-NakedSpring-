@@ -45,7 +45,6 @@ public class TaskPopulator  {
         task.setEndDate(new Date(System.currentTimeMillis() + (7 * hourFromMillSecs * 24))); //end date after one week
         task.setStartDate(new Date(System.currentTimeMillis() + (hourFromMillSecs)));
         task.setEstimateTime(new Time(2, 0, 0));
-        task.setId(-1);
         task.setParentId(0);
         task.setPriorityId(priorityPopulator.initOnePriority("HIGH").getId());
         task.setStatusId(statusPopulator.createDefaultEntity().getId());
@@ -62,7 +61,6 @@ public class TaskPopulator  {
         task.setEndDate(new Date(System.currentTimeMillis() + (7 * hourFromMillSecs * 24))); //end date after one week
         task.setStartDate(new Date(System.currentTimeMillis() + (hourFromMillSecs)));
         task.setEstimateTime(new Time(2, 0, 0));
-        task.setId(-1);
         task.setParentId(0);
         task.setPriorityId(priorityPopulator.initOnePriority("HIGH").getId());
         task.setStatusId(statusPopulator.createDefaultEntity().getId());

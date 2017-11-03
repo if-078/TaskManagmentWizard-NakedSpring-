@@ -3,7 +3,7 @@ package unit.com.softserve.academy.tmw.services;
 import com.softserve.academy.tmw.dao.impl.UserDao;
 import com.softserve.academy.tmw.entity.User;
 import com.softserve.academy.tmw.service.api.UserServiceInterface;
-import com.softserve.academy.tmw.service.impl.UserServiceImpl;
+import com.softserve.academy.tmw.service.impl.UserService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,7 +20,7 @@ import static org.mockito.Mockito.*;
 public class UserServiceTest {
 
     @InjectMocks
-    private UserServiceInterface userService = new UserServiceImpl();
+    private UserServiceInterface userService = new UserService();
 
     @Mock
     private UserDao userDao;

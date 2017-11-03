@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class UserServiceImpl implements UserServiceInterface {
+public class UserService implements UserServiceInterface {
 
     @Autowired
     UserDao userDao;

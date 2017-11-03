@@ -426,6 +426,7 @@
                     dataType: "json",
                     success: function (data, textStatus, jqXHR) {
                         setToken(jqXHR);
+                        $("#logout").show();
                         $("#login").hide();
                         $("#main").show();
                         $("#leftPanel").load("static/load-pages/taskFilter.html");
@@ -439,6 +440,14 @@
                     }
                 });
             }
+
+                $("#logout").click(function(){
+                $("#logout").hide();
+                $("#main").hide();
+                $("#login").show();
+                  resetToken();
+                });
+
 
         function resetToken() {
             window.sessionStorage.removeItem("token");

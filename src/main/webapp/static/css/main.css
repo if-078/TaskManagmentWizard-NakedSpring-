@@ -24,6 +24,9 @@ ul.jstree-container-ul a.jstree-anchor {
     overflow: hidden;
     text-overflow: ellipsis;
 }
+#logout{
+ display:none;
+}
 
 #main, #login, #registration{
 display:none;

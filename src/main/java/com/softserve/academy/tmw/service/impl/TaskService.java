@@ -113,47 +113,47 @@ public class TaskService implements TaskServiceInterface {
         wrapper.setDates(dates);
         JooqSQLBuilder builder = new JooqSQLBuilder(wrapper);
 
-        List<Task> list = taskDao.getFilteredTasks(builder);
-        List<TaskTableDTO> result = new ArrayList<>();
+        List<Task> tasksList = taskDao.getFilteredTasks(builder);
+        List<TaskTableDTO> tasksDTOList = new ArrayList<>();
+
         List<User> users = userDao.getAll();
         List<Priority>priorities = servicePriority.getAll();
         List<Status>statuses =serviceStatus.getAll();
 
-        for (Task t : list){
+        for (Task task : tasksList){
             TaskTableDTO dto = new TaskTableDTO();
-            dto.setId(t.getId());
-            dto.setName(t.getName());
-            dto.setStartDate(t.getStartDate());
-            dto.setEstimateTime(t.getEstimateTime());
+            dto.setId(task.getId());
+            dto.setName(task.getName());
+            dto.setStartDate(task.getStartDate());
+            dto.setEstimateTime(task.getEstimateTime());
             for (User user : users){
-                if (user.getId() == t.getAssignTo()) {
+                if (user.getId() == task.getAssignTo()) {
                     dto.setAssignTo(user.getName());
                     break;
                 }
             }
-            for (Priority p : priorities){
-                if (p.getId() == t.getPriorityId()){
-                    dto.setPriority(p.getName());
+            for (Priority priorit : priorities){
+                if (priorit.getId() == task.getPriorityId()){
+                    dto.setPriority(priorit.getName());
                     break;
                 }
             }
-            for (Status s : statuses){
-                if (t.getStatusId() == s.getId()){
-                    dto.setStatus(s.getName());
+            for (Status stat : statuses){
+                if (task.getStatusId() == stat.getId()){
+                    dto.setStatus(stat.getName());
                     break;
                 }
             }
-            result.add(dto);
+            tasksDTOList.add(dto);
         }
-        return result;
+        return tasksDTOList;
     }
 
 
-     @Override
+    @Override
     public List<TaskTreeDTO> findTaskByTree(int id){
 
         List<Task> allTask = taskDao.getAll();
-
         List<Task> selectedTask = new ArrayList<Task>();
         for (Task task : allTask){
             if(task.getParentId() == id) selectedTask.add(task);

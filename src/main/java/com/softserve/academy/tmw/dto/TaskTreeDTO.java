@@ -3,7 +3,7 @@ package com.softserve.academy.tmw.dto;
 public class TaskTreeDTO {
     private int id;
     private String text;
-    private boolean isChildren;
+    private boolean children;
 
     public TaskTreeDTO() {
 
@@ -17,19 +17,19 @@ public class TaskTreeDTO {
         this.id = id;
     }
 
-    public boolean isChildren() {
-        return isChildren;
-    }
-
-    public void setChildren(boolean children) {
-        isChildren = children;
-    }
-
     public String getText() {
         return text;
     }
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    public boolean isChildren() {
+        return children;
+    }
+
+    public void setChildren(boolean children) {
+        this.children = children;
     }
 }

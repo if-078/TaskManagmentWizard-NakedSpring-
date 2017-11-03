@@ -14,8 +14,6 @@ $(document).ready(function () {
     var taskID = null;
     var taskDTO = {};
 
-    // STATE OF APPLIED FILTERS
-
 
     // ON CLICK - SELECT TIME - ALL
     $('#tmw-time-all-btn').click(function (){
@@ -69,7 +67,6 @@ $(document).ready(function () {
         state.dateFrom = Date.parse( $('#tmw-time-custom-from').val() );
         state.dateTo = Date.parse( $('#tmw-time-custom-to').val() ) + 86399999;
 
-        $('#tmw-info-selected-time').html('Selected Time : ' + $('#tmw-time-custom-from').val() + " - " + $('#tmw-time-custom-to').val());
         $('#tmw-time-btn-group > button, #tmw-time-custom-btn').removeClass('active');
         $('#tmw-time-custom-btn').addClass('active');
         taskTable();
@@ -78,12 +75,9 @@ $(document).ready(function () {
     $('#tmw-time-custom-cancel-btn').click(function (e) {
 
     });
-    // ON CLICK - SELECTED TIME - CUSTOM ======================================
-
-    //ON CLICK APPLY FILTERS --> STATUS, PRIORITY, TAG ========================
 
 
-
+    //ON CLICK APPLY FILTERS --> STATUS, PRIORITY, TAG
     $('#tmw-apply-btn').click(function () {
         if (!$("#statusBox").val()=="") {
             state.status = $("#statusBox").val().split(",");
@@ -97,10 +91,9 @@ $(document).ready(function () {
 
         taskTable();
     });
-    // ON CLICK APPLY FILTERS --> STATUS, PRIORITY, TAG =======================
 
 
-    // ON CLICK RESET FILTERS --> STATUS, PRIORITY, TAG =======================
+    // ON CLICK RESET FILTERS --> STATUS, PRIORITY, TAG
     $('#tmw-reset-btn').click(function () {
         state.status = [];
         state.priority = [];
@@ -109,14 +102,9 @@ $(document).ready(function () {
 
         taskTable();
     });
-    // ON CLICK RESET FILTERS --> STATUS, PRIORITY, TAG =======================
 
 
-    //======================================================================================================================
-    //======================================================================================================================
-
-
-    //===============================================================================
+    // CREATE TREEVIEW
     $('#tmw-treeview').jstree({
         core: {
             data: {
@@ -163,34 +151,35 @@ $(document).ready(function () {
         }
     });
 
+    // DOUBLE-CLICK ON ROOT-TASK
+    $('#tmw-treeview').on('dblclick.jstree',function (event, data) {
+
+        var node = $(event.target).closest('li');
+        var id = node[0].id;
+        if ((data==undefined)&&(id != '$')) {
+            showFull(id);
+        }
+
+    });
+
 
     var generatedRequestParameters = function(){
-
         var parameters = '?parentid=' + state.parentid + '&date='+ state.dateFrom + ',' + state.dateTo;
-
         parameters = parameters + '&status=';
         for (var i = 0; i < state.status.length; i++) {
                 parameters = parameters + state.status[i] + ',';
-
         }
         parameters = parameters.slice(0,-1);
-
         parameters = parameters + '&priority=';
         for (var i = 0; i < state.priority.length; i++) {
-
                 parameters = parameters + state.priority[i] + ',';
-
         }
         parameters = parameters.slice(0,-1);
-
         parameters = parameters + '&tag=';
         for (var i = 0; i < state.tag.length; i++) {
-
                 parameters = parameters + state.tag[i] + ',';
-
         }
         parameters = parameters.slice(0,-1);
-
         return parameters;
     }
 
@@ -242,10 +231,8 @@ $(document).ready(function () {
         });
     }
 
+
     // SHOW FULL INFORMATION ABOUT THE TASK
-
-    //var taskDTO = {};
-
     var showFull = function (id) {
         taskDTO = {};
         clearTaskModal();
@@ -277,8 +264,8 @@ $(document).ready(function () {
         });
     };
 
-    // GET FULL INFORMATION ABOUT THE TASK
 
+    // GET FULL INFORMATION ABOUT THE TASK
     $('#tmw-task-btn-save').on( 'click',function () {
         console.log("-----------");
         console.log(taskDTO);

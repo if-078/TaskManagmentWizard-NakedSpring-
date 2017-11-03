@@ -224,6 +224,29 @@ $(document).ready(function () {
                             {title: "Priority"}
                         ],
 
+                        "fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
+                            if ( aData[5] == "DONE" )
+                            {
+                                $('td', nRow).css('background-color', '#66ff66' );
+                            }
+                            else if ( aData[5] == "INPROGRESS" )
+                            {
+                                $('td', nRow).css('background-color', '#d2ff4d');
+                            }
+                            else if ( aData[5] == "NEW" )
+                            {
+                                $('td', nRow).css('background-color', '#b3d9ff');
+                            }
+                            else if ( aData[5] == "REVIEW" )
+                            {
+                                $('td', nRow).css('background-color', '#ffff99');
+                            }
+                            else
+                            {
+                                $('td', nRow).css('background-color', '#f2f2f2');
+                            }
+                        },
+
                         paging: false,
                         info: false,
                         searching: false
@@ -279,6 +302,10 @@ $(document).ready(function () {
         var table = $('#tmw-task-table').DataTable();
         var taskId = table.row(this).data()[0];
         showFull(taskId);
+    });
+
+    $('#tmw-task-table').on('click', 'tr:first-child', function(e) {
+        e.stopPropagation();
     });
 
     $('#tmw-task-table').on('click', 'tr', function () {

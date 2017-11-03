@@ -28,9 +28,8 @@ $(document).ready(function () {
     $('#tmw-time-today-btn').click(function (){
         $('#tmw-info-selected-time').html('Selected Time : Today');
         var currentData = new Date();
-        var numberDay = currentData.getDay();
         state.dateFrom = currentData.setHours(0,0,0,0);
-        state.dateTo = currentData.setHours(23,59,59,0);
+        state.dateTo = currentData.setHours(23,59,59,0) + 1000;
         taskTable();
     });
 
@@ -65,7 +64,7 @@ $(document).ready(function () {
         }
 
         state.dateFrom = Date.parse( $('#tmw-time-custom-from').val() );
-        state.dateTo = Date.parse( $('#tmw-time-custom-to').val() ) + 86399999;
+        state.dateTo = Date.parse( $('#tmw-time-custom-to').val() ) + 86400000;
 
         $('#tmw-time-btn-group > button, #tmw-time-custom-btn').removeClass('active');
         $('#tmw-time-custom-btn').addClass('active');

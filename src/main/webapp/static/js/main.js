@@ -225,17 +225,17 @@ $(document).ready(function () {
                         ],
 
                         "fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
-                            if ( aData[5] == "DONE" )
+                            if ( aData[5] == "done" )
                             {
-                                $('td', nRow).css('background-color', '#66ff66' );
+                                $('td', nRow).css('background-color', '' );
                             }
-                            else if ( aData[5] == "INPROGRESS" )
+                            else if ( aData[5] == "in progress" )
                             {
-                                $('td', nRow).css('background-color', '#d2ff4d');
+                                $('td', nRow).css('background-color', '#AED5B3');
                             }
-                            else if ( aData[5] == "NEW" )
+                            else if ( aData[5] == "to do" )
                             {
-                                $('td', nRow).css('background-color', '#b3d9ff');
+                                $('td', nRow).css('background-color', '#CA9191');
                             }
                             else if ( aData[5] == "REVIEW" )
                             {

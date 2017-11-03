@@ -34,7 +34,7 @@ public class ErrorController {
             .map(error -> new FieldErrorResource(
                     error.getObjectName(),
                     error.getField(),
-                    messageSource.getMessage(error.getCode() + "." + error.getObjectName() + "." + error.getField().replaceAll("(.)([A-Z])", "$1.$2"), null, FALLBACKOPTION, null)))
+                    messageSource.getMessage(error.getCode() + "." + error.getObjectName() + "." + error.getField(), null, FALLBACKOPTION, null)))
       .collect(Collectors.toList());
 
     ErrorResource errorResource = new ErrorResource("ErrorValid");

@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import static org.assertj.core.api.Assertions.assertThat;
+
 import java.sql.SQLException;
 import java.sql.Time;
 import java.sql.Timestamp;
@@ -28,7 +29,7 @@ public class TaskDaoItTest {
     private PriorityPopulator priorityPopulator;
 
     @Before
-    public void createStatusAndPriority(){
+    public void setUp(){
         statusPopulator.createDefaultEntity();
         priorityPopulator.createDefaultEntity();
     }
@@ -64,9 +65,6 @@ public class TaskDaoItTest {
         assertThat(dao.update(task3)).isFalse();
         assertThat(dao.getAll()).isEmpty();
         dao.findOne(777);
-}
-
-
-
+    }
 }
 

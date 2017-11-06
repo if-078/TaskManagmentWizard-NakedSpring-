@@ -224,7 +224,7 @@ $(document).ready(function () {
                             {title: "Priority"}
                         ],
 
-                        "fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
+                        /*"fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
                             if ( aData[5] == "done" )
                             {
                                 $('td', nRow).css('background-color', '' );
@@ -245,7 +245,7 @@ $(document).ready(function () {
                             {
                                 $('td', nRow).css('background-color', '#f2f2f2');
                             }
-                        },
+                        },*/
 
                         paging: false,
                         info: false,
@@ -282,11 +282,6 @@ $(document).ready(function () {
                 fillSelectPriority(taskDTO.priority.id);
                 fillSelectStatus(taskDTO.status.id);
 
-                $('#tmw-task-table tbody').on( 'click', 'tr', function () {
-                    $(this).addClass('active').siblings().removeClass('active');
-                    $(this).css('background-color', 'red').siblings().css('background-color', '');
-                } );
-
                 $('#tmw-modal').modal('show');
             }
         });
@@ -301,12 +296,14 @@ $(document).ready(function () {
     $('#tmw-task-table').on('dblclick', 'tr:not(:first)', 'tr', function () {
         var table = $('#tmw-task-table').DataTable();
         var taskId = table.row(this).data()[0];
+        $(this).addClass('active').siblings().removeClass('active');
         showFull(taskId);
     });
 
     $('#tmw-task-table').on('click','tr:not(:first)','tr', function () {
         var table = $('#tmw-task-table').DataTable();
-            taskID = table.row(this).data()[0];
+        $(this).addClass('active').siblings().removeClass('active');
+        taskID = table.row(this).data()[0];
     });
 
     $('#tmw-delete-task').on("click", function () {

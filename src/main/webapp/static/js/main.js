@@ -298,21 +298,15 @@ $(document).ready(function () {
         createOrUpdatetask(taskDTO);
     } );
 
-    $('#tmw-task-table').on('dblclick', 'tr', function () {
+    $('#tmw-task-table').on('dblclick', 'tr:not(:first)', 'tr', function () {
         var table = $('#tmw-task-table').DataTable();
         var taskId = table.row(this).data()[0];
         showFull(taskId);
     });
 
-    $('#tmw-task-table').on('click', 'tr:first-child', function(e) {
-        e.stopPropagation();
-    });
-
-    $('#tmw-task-table').on('click', 'tr', function () {
+    $('#tmw-task-table').on('click','tr:not(:first)','tr', function () {
         var table = $('#tmw-task-table').DataTable();
-        if(table!= undefined) {
             taskID = table.row(this).data()[0];
-        }
     });
 
     $('#tmw-delete-task').on("click", function () {

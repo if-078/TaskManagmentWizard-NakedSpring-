@@ -3,6 +3,7 @@ package com.softserve.academy.tmw.dto;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 public class TaskDTO {
 
@@ -22,6 +23,7 @@ public class TaskDTO {
     }
 
     @NotBlank
+    @Size(min = 1, max = 45)
     public String getName() {
         return name;
     }

@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 @RestController
-@RequestMapping("roles")
+@RequestMapping("api/roles")
 public class RoleController {
 
     @Autowired

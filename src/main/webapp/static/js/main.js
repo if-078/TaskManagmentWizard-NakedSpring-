@@ -1,6 +1,14 @@
 
-$(document).ready(function () {
+  $(document).ready(function () {
+//         $("#main, #registration, #login").hide();
 
+
+
+    if(window.sessionStorage.getItem("token")){
+        $("#main").show();
+    }else{
+          $("#login").show();
+          }
     // STATE OF APPLIED FILTERS
     var state = {
         parentid : 0,
@@ -118,10 +126,10 @@ $(document).ready(function () {
                             return 'data:application/json,' + encodeURIComponent(JSON.stringify(rootNode));
 
                         case '$':
-                            return 'tasks/tree/0';
+                            return 'api/tasks/tree/0';
 
                         default:
-                            return 'tasks/tree/' + node.id;
+                            return 'api/tasks/tree/' + node.id;
                     }
                 }
             },
@@ -228,11 +236,13 @@ $(document).ready(function () {
     var taskTableInit = false;
     var taskTable = function () {
         $.ajax({
-            url: 'tasks/filter' + generatedRequestParameters(),
+            url: 'api/tasks/filter' + generatedRequestParameters(),
             type: 'GET',
             contentType: 'application/json',
+            headers: createAuthToken(),
+            success: function (data, textStatus, jqXHR) {
+                setToken(jqXHR);
 
-            success: function (data) {
                 var rows = []
 
                 for (var i = 0; i < data.length; i++) {
@@ -291,7 +301,14 @@ $(document).ready(function () {
                 } else {
                     $('#tmw-task-table').css('visibility', 'hidden');
                 }
-            }
+            },
+             error: function (jqXHR, textStatus, errorThrown) {
+                                    if (jqXHR.status === 401) {
+                                        resetToken();
+                                    } else {
+                                        throw new Error("an unexpected error occured: " + errorThrown);
+                                    }
+                                }
         });
     }
 
@@ -303,24 +320,34 @@ $(document).ready(function () {
         clearErrorTask();
         // AJAX return response full info one User
         $.ajax({
-            url: 'tasks/view/' + id,
+            url: 'api/tasks/view/' + id,
             type: 'GET',
             contentType: 'application/json',
-            success: function (data) {
-                taskDTO = data;
+
+            headers:createAuthToken(),
+            success: function (data, textStatus, jqXHR) {
+                 var token= jqXHR.getResponseHeader('Authentication');
+                 window.sessionStorage.setItem("token",token);
+ taskDTO = data;
 
                 $('#tmw-task-name').val(taskDTO.name);
                 $('#tmw-task-createDate').val(taskDTO.createdDate);
                 $('#tmw-task-startDate').val(taskDTO.startDate);
                 $('#tmw-task-endDate').val(taskDTO.endDate);
                 $('#tmw-task-estimateTime').val(taskDTO.estimateTime);
-
                 fillSelectUser(taskDTO.assignTo.id);
                 fillSelectPriority(taskDTO.priority.id);
                 fillSelectStatus(taskDTO.status.id);
 
                 $('#tmw-modal').modal('show');
-            }
+            },
+             error: function (jqXHR, textStatus, errorThrown) {
+                                    if (jqXHR.status === 401) {
+                                        resetToken();
+                                    } else {
+                                        throw new Error("an unexpected error occured: " + errorThrown);
+                                    }
+                                }
         });
     };
 
@@ -470,11 +497,13 @@ $(document).ready(function () {
     function fillSelectUser(id){
         $('#tmw-task-assignTo').empty();
         $.ajax({
-            url: 'users/all',
+            url: 'api/users/all',
             type: 'GET',
             contentType: 'application/json',
-            success: function (data) {
-
+            headers: createAuthToken(),
+            success: function (data, textStatus, jqXHR) {
+                var token= jqXHR.getResponseHeader('Authentication');
+                window.sessionStorage.setItem("token",token);
                 $.each(data, function(i, user) {
                     $('#tmw-task-assignTo').append($('<option>', {
                         value: user.id,
@@ -484,18 +513,27 @@ $(document).ready(function () {
 
                 if(id != null) $('#tmw-task-assignTo').val(id);
 
-            }
+            },
+             error: function (jqXHR, textStatus, errorThrown) {
+                                    if (jqXHR.status === 401) {
+                                        resetToken();
+                                    } else {
+                                        throw new Error("an unexpected error occured: " + errorThrown);
+                                    }
+                                }
         });
     }
 
     function fillSelectPriority(id){
         $('#tmw-task-priority').empty();
         $.ajax({
-            url: 'priority',
+            url: 'api/priority',
             type: 'GET',
             contentType: 'application/json',
-            success: function (data) {
-
+            headers: createAuthToken(),
+            success: function (data, textStatus, jqXHR) {
+                var token= jqXHR.getResponseHeader('Authentication');
+                                 window.sessionStorage.setItem("token",token);
                 $.each(data, function(i, priority) {
                     $('#tmw-task-priority').append($('<option>', {
                         value: priority.id,
@@ -505,18 +543,27 @@ $(document).ready(function () {
 
                 if(id != null) $('#tmw-task-priority').val(id);
 
-            }
+            },
+             error: function (jqXHR, textStatus, errorThrown) {
+                                    if (jqXHR.status === 401) {
+                                        resetToken();
+                                    } else {
+                                        throw new Error("an unexpected error occured: " + errorThrown);
+                                    }
+                                }
         });
     }
 
     function fillSelectStatus(id){
         $('#tmw-task-status').empty();
         $.ajax({
-            url: 'status',
+            url: 'api/status',
             type: 'GET',
             contentType: 'application/json',
-            success: function (data) {
-
+            headers:createAuthToken(),
+            success: function (data, textStatus, jqXHR) {
+                    var token= jqXHR.getResponseHeader('Authentication');
+                    window.sessionStorage.setItem("token",token);
                 $.each(data, function(i, status) {
                     $('#tmw-task-status').append($('<option>', {
                         value: status.id,
@@ -526,9 +573,82 @@ $(document).ready(function () {
 
                 if(id != null) $('#tmw-task-status').val(id);
 
-            }
+            },
+             error: function (jqXHR, textStatus, errorThrown) {
+                                    if (jqXHR.status === 401) {
+                                        resetToken();
+                                    } else {
+                                        throw new Error("an unexpected error occured: " + errorThrown);
+                                    }
+                                }
         });
     }
+
+
+    function createAuthToken(){
+    var token=window.sessionStorage.getItem("token");
+    if(token){
+        return {"Authentication": token}
+    }else{
+    return {}}
+    }
+
+        $("#loginForm").submit(function (event) {
+            event.preventDefault();
+
+            var $form = $(this);
+            var formData = {
+                username: $form.find('input[name="email"]').val(),
+                password: $form.find('input[name="password"]').val()
+            };
+
+            doLogin(formData);
+        });
+
+        function doLogin(loginData) {
+                $.ajax({
+                    url: "/login",
+                    type: "POST",
+                    data: JSON.stringify(loginData),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (data, textStatus, jqXHR) {
+                        setToken(jqXHR);
+                        $("#logout").show();
+                        $("#login").hide();
+                        $("#main").show();
+                        $("#leftPanel").load("static/load-pages/taskFilter.html");
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        if (jqXHR.status === 401) {
+                            resetToken();
+                        } else {
+                            throw new Error("an unexpected error occured: " + errorThrown);
+                        }
+                    }
+                });
+            }
+
+                $("#logout").click(function(){
+                $("#logout").hide();
+                $("#main").hide();
+                $("#login").show();
+                  resetToken();
+                });
+
+
+        function resetToken() {
+            window.sessionStorage.removeItem("token");
+            window.location.href = "";
+        }
+        
+        function setToken(jqXHR) {
+            var token = jqXHR.getResponseHeader('Authentication');
+            window.sessionStorage.setItem("token", token);
+            $.ajaxSetup({
+                headers: createAuthToken()
+            });
+        }
 
     function clearErrorTask(){
 
@@ -563,4 +683,5 @@ $(document).ready(function () {
             }
         }
     }
+
 });

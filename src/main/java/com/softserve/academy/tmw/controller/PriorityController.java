@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 @RestController
-@RequestMapping("priority")
+@RequestMapping("api/priority")
 public class PriorityController {
 
   EntityServiceInterface<Priority> service;

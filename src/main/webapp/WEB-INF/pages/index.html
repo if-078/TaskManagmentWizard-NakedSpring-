@@ -11,8 +11,13 @@
   <!-- Bootstrap v3.x -->
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+		  integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 
-  <!-- Bootstrap Datepicker -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css"
+		  integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+	<!-- Bootstrap Datepicker -->
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker3.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js"></script>
 
@@ -26,25 +31,33 @@
   <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
 
 	<link rel="stylesheet"  type="text/css" href="static/css/main.css">
+
 	<script src="static/js/main.js"></script>
 	<script src="static/js/partsLoader.js"></script>
-
 
 
 </head>
 
 <body>
+
   <!-- HEADER -->
-  <nav class="navbar navbar-default navbar-fixed-top">
+  <nav id="nav" class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
+		<div class="row">
+			<div class="col-md-2">
       <div class="navbar-header">
-        <a class="navbar-brand" href="#">Time Managament Wizard</a>
+
+		  <a class="navbar-brand" href="#">Time Managament Wizard</a></div></div>
+		  <div class="col-md-1 col-md-offset-9">
+			  <a id="logout" href="/">Logout</a></div>
       </div>
-    </div>
+		</div>
+
   </nav>
+
   <!-- / HEADER -->
 
-  <div class="container-fluid">
+  <div id="main" class="container-fluid">
     <div class="row">
 
       <!-- SIDEBAR -->
@@ -215,5 +228,58 @@
 		  </div>
 	  </div>
   </div>
+</div>
+<div id="login">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-4"></div>
+			<div class="col-md-4">
+				<p>Sign In</p>
+				<form id="loginForm">
+					<div class="form-group">
+						<input type="text" class="form-control" id="mail" placeholder="email"
+							   required name="email">
+					</div>
+					<div class="form-group">
+						<input type="password" class="form-control" id="password1"
+							   placeholder="password" required name="password">
+					</div>
+					<button type="submit" class="btn btn-default">login</button>
+				</form>
+			</div>
+			<div class="col-md-4"></div>
+		</div>
+	</div></div>
+<div id="registration">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-4"></div>
+			<div class="col-md-4">
+				<p>Sign Up</p>
+				<form id="registration-form">
+					<div class="form-group">
+						<input type="text" class="form-control" id="reg-name" placeholder="username"
+							   required name="reg-name">
+					</div>
+
+					<div class="form-group">
+						<input type="text" class="form-control" id="reg-email" placeholder="email"
+							   required name="reg-email">
+					</div>
+					<div class="form-group">
+						<input type="password" class="form-control" id="reg-password"
+							   placeholder="password" required name="reg-password">
+					</div>
+					<div class="form-group">
+						<input type="text" class="form-control" id="reg-confirm-pass" placeholder="confirm password"
+							   required name="reg-confirm">
+					</div>
+					<button type="submit" class="btn btn-default">sign up</button>
+				</form>
+			</div>
+			<div class="col-md-4"></div>
+		</div>
+	</div>
+</div>
 </body>
 </html>

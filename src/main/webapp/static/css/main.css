@@ -25,6 +25,44 @@ ul.jstree-container-ul a.jstree-anchor {
     text-overflow: ellipsis;
 }
 
+
 textarea {
     resize:vertical;
 }
+
+#logout{
+ display:none;
+}
+
+#main, #login, #registration{
+display:none;
+}
+        .container{
+        margin-top:200px;
+        }
+        #registrarion.input {
+            border-radius: 10px;
+        }
+
+        #registrarion.legend {
+            font-family: fantasy;
+            font-size: 50px;
+        }
+
+       #registrarion.p,
+        #registrarion.pre,
+        #registrarion.label,
+        #registrarion.legend {
+            color: white
+        }
+        #register-box{
+            margin-top: 50px;
+        }
+
+
+           #login.p,
+            {
+                font-family: fantasy;
+                              font-size: 50px;
+           }
+

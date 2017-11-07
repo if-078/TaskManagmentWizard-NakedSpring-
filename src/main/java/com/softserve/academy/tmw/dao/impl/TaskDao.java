@@ -270,7 +270,7 @@ public class TaskDao extends EntityDao<Task> implements TaskDaoInterface {
     }
 
 
-   public Task getFullTAsk(id){
+   public Task getFullTAsk(int id){
        String query = "SELECT task.id, task.name, task.created_date, task.start_date, task.end_date, task.estimate_time,\n"
            + "  task.assign_to, task.status_id, task.priority_id, task.parent_id,\n"
            + "  priority.name as priorityName,\n"

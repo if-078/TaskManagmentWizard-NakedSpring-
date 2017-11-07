@@ -154,6 +154,7 @@ $(document).ready(function () {
             default:
                 console.log("refresh failed");
         }
+        taskTable();
     };
 
     // REMOVE NODES IN A TREE

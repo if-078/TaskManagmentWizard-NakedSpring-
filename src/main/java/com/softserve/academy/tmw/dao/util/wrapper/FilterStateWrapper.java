@@ -1,4 +1,4 @@
-package com.softserve.academy.tmw.wrapper;
+package com.softserve.academy.tmw.dao.util.wrapper;
 
 public class FilterStateWrapper {
     private int id;

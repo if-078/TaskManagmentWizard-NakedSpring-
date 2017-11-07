@@ -1,6 +1,6 @@
 package com.softserve.academy.tmw.entity;
 
-public class Tag implements NamedEntity {
+public class Tag {
 
     private int id;
     private String name;
@@ -13,14 +13,13 @@ public class Tag implements NamedEntity {
     }
 
     public Tag() {
-        
+
     }
 
     public int getId() {
         return id;
     }
 
-    @Override
     public String getName() {
         return name;
     }
@@ -33,7 +32,6 @@ public class Tag implements NamedEntity {
         this.id = tagId;
     }
 
-    @Override
     public void setName(String name) {
         this.name = name;
     }

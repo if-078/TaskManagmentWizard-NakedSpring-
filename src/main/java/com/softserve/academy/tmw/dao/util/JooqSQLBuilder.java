@@ -1,6 +1,6 @@
-package com.softserve.academy.tmw.dao.impl;
+package com.softserve.academy.tmw.dao.util;
 
-import com.softserve.academy.tmw.wrapper.FilterStateWrapper;
+import com.softserve.academy.tmw.dao.util.wrapper.FilterStateWrapper;
 import org.jooq.*;
 import org.jooq.conf.ParamType;
 import org.jooq.conf.Settings;

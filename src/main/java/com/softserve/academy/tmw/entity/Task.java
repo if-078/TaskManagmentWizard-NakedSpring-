@@ -3,7 +3,7 @@ package com.softserve.academy.tmw.entity;
 import java.sql.Time;
 import java.util.Date;
 
-public class Task implements NamedEntity {
+public class Task {
 
   private int id;
   private String name;
@@ -55,7 +55,6 @@ public class Task implements NamedEntity {
     this.id = id;
   }
 
-  @Override
   public void setName(String name) {
     this.name = name;
   }
@@ -96,7 +95,6 @@ public class Task implements NamedEntity {
     return id;
   }
 
-  @Override
   public String getName() {
     return name;
   }

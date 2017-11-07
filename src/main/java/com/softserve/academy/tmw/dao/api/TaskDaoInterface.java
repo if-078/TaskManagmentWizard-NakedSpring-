@@ -1,7 +1,7 @@
 
 package com.softserve.academy.tmw.dao.api;
 
-import com.softserve.academy.tmw.dao.impl.JooqSQLBuilder;
+import com.softserve.academy.tmw.dao.util.JooqSQLBuilder;
 import com.softserve.academy.tmw.entity.Comment;
 import com.softserve.academy.tmw.entity.Tag;
 import com.softserve.academy.tmw.entity.Task;

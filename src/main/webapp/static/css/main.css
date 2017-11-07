@@ -24,3 +24,7 @@ ul.jstree-container-ul a.jstree-anchor {
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+textarea {
+    resize:vertical;
+}

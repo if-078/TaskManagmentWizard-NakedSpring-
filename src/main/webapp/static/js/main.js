@@ -130,10 +130,31 @@ $(document).ready(function () {
         }
     });
 
-    var refreshTree = function () {
-        $.jstree.reference('#tmw-treeview').select_node(state.parentid);
-        $('#tmw-treeview').jstree(true).close_node(state.parentid);
-    }
+    var refreshTree = function (method, data) {
+        switch (method) {
+            case 'create': {
+                var idParent = "#"+data.parentId+"_anchor";
+                var level = Number($(idParent).attr("aria-level")) + 1;
+                ($(idParent).next()).append("<li role=\"treeitem\" aria-selected=\"false\" " +
+                    "aria-level=\"" + level + "\" aria-labelledby=\"" + data.id + "_anchor\" id=\"" +
+                    data.id + "\" class=\"jstree-node  jstree-leaf\">" +
+                    "<i class=\"jstree-icon jstree-ocl\" role=\"presentation\"></i><a class=\"jstree-anchor\" " +
+                    "href=\"#\" tabindex=\"-1\" id=\"" + data.id + "_anchor\" title=\"" + data.name + "\">" +
+                    "<i class=\"jstree-icon jstree-themeicon\" role=\"presentation\"></i>" + data.name + "</a></li>");
+                break;
+            }
+            case 'update': {
+                $("#" + data.id + "_anchor").html("<i class=\"jstree-icon jstree-themeicon\" " +
+                    "role=\"presentation\"></i>" + data.name);
+                break;
+            }
+            case 'delete': {
+                $("li#" + data).remove();
+            }
+            default:
+                console.log("refresh failed");
+        }
+    };
 
     // REMOVE NODES IN A TREE
     $('#tmw-treeview').on('after_close.jstree', function (e, data) {
@@ -144,6 +165,7 @@ $(document).ready(function () {
 
     // OUTPUT TABLE SUBTASKS FOR SELECTED ROOT-TASK
     $('#tmw-treeview').on('select_node.jstree', function (event, data) {
+        // console.log(data);
         var hasChildren = (data.node.children.length > 0 || !data.node.state.loaded);
         if (hasChildren){
 
@@ -153,6 +175,21 @@ $(document).ready(function () {
             showFull(data.node.id);
         }
     });
+
+    // CREATE TOOLTIPE TASK
+    $('#tmw-treeview').on("mouseenter.jstree", function(event, data) {
+        console.log(event);
+        aTree();
+        // $(".jstree-hovered").attr("title", $(".jstree-hovered").text());
+        // $("ul.jstree-container-ul a.jstree-anchor").attr("title", "node.name");
+        // $(this).attr("title", $(this).text());
+    });
+    var aTree = function() {
+        var tasks = $("ul.jstree-container-ul a.jstree-anchor");
+        for (i = 0; i < tasks.length; i++) {
+            tasks[i].title = tasks[i].innerText;
+        }
+    };
 
     // DOUBLE-CLICK ON ROOT-TASK
     $('#tmw-treeview').on('dblclick.jstree',function (event, data) {
@@ -223,18 +260,18 @@ $(document).ready(function () {
                             {title: "Priority"}
                         ],
 
-                        "fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
-                            if ( aData[5] == "DONE" )
+                        /*"fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
+                            if ( aData[5] == "done" )
                             {
-                                $('td', nRow).css('background-color', '#66ff66' );
+                                $('td', nRow).css('background-color', '' );
                             }
-                            else if ( aData[5] == "INPROGRESS" )
+                            else if ( aData[5] == "in progress" )
                             {
-                                $('td', nRow).css('background-color', '#d2ff4d');
+                                $('td', nRow).css('background-color', '#AED5B3');
                             }
-                            else if ( aData[5] == "NEW" )
+                            else if ( aData[5] == "to do" )
                             {
-                                $('td', nRow).css('background-color', '#b3d9ff');
+                                $('td', nRow).css('background-color', '#CA9191');
                             }
                             else if ( aData[5] == "REVIEW" )
                             {
@@ -244,7 +281,7 @@ $(document).ready(function () {
                             {
                                 $('td', nRow).css('background-color', '#f2f2f2');
                             }
-                        },
+                        },*/
 
                         paging: false,
                         info: false,
@@ -281,11 +318,6 @@ $(document).ready(function () {
                 fillSelectPriority(taskDTO.priority.id);
                 fillSelectStatus(taskDTO.status.id);
 
-                $('#tmw-task-table tbody').on( 'click', 'tr', function () {
-                    $(this).addClass('active').siblings().removeClass('active');
-                    $(this).css('background-color', 'red').siblings().css('background-color', '');
-                } );
-
                 $('#tmw-modal').modal('show');
             }
         });
@@ -297,21 +329,17 @@ $(document).ready(function () {
         createOrUpdatetask(taskDTO);
     } );
 
-    $('#tmw-task-table').on('dblclick', 'tr', function () {
+    $('#tmw-task-table').on('dblclick', 'tr:not(:first)', 'tr', function () {
         var table = $('#tmw-task-table').DataTable();
         var taskId = table.row(this).data()[0];
+        $(this).addClass('active').siblings().removeClass('active');
         showFull(taskId);
     });
 
-    $('#tmw-task-table').on('click', 'tr:first-child', function(e) {
-        e.stopPropagation();
-    });
-
-    $('#tmw-task-table').on('click', 'tr', function () {
+    $('#tmw-task-table').on('click','tr:not(:first)','tr', function () {
         var table = $('#tmw-task-table').DataTable();
-        if(table!= undefined) {
-            taskID = table.row(this).data()[0];
-        }
+        $(this).addClass('active').siblings().removeClass('active');
+        taskID = table.row(this).data()[0];
     });
 
     $('#tmw-delete-task').on("click", function () {
@@ -376,7 +404,7 @@ $(document).ready(function () {
             contentType: 'application/json',
             success: function (data) {
                 $('#tmw-modal').modal('hide');
-                refreshTree();
+                refreshTree("create", data);
                 clearTaskModal();
                 taskTable();
             },
@@ -398,7 +426,7 @@ $(document).ready(function () {
             contentType: 'application/json',
             success: function () {
                 $('#tmw-modal').modal('hide');
-                refreshTree();
+                refreshTree("update", task);
                 clearTaskModal();
                 taskTable();
             },
@@ -417,7 +445,7 @@ $(document).ready(function () {
             url: 'tasks/' + taskId,
             contentType: 'application/json',
             success: function () {
-                refreshTree();
+                refreshTree("delete", taskId);
                 taskTable();
             },
             error: function(jqXHR) {

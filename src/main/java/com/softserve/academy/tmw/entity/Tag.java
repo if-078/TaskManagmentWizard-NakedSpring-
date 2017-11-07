@@ -13,6 +13,7 @@ public class Tag implements NamedEntity {
     }
 
     public Tag() {
+        
     }
 
     public int getId() {

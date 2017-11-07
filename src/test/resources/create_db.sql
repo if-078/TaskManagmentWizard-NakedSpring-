@@ -66,7 +66,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS tmw.comment (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `comment` TEXT NOT NULL,
+  `data` TEXT NOT NULL,
   `created_date` DATETIME NULL,
   `task_id` INT NOT NULL,
   `user_id` INT NOT NULL,

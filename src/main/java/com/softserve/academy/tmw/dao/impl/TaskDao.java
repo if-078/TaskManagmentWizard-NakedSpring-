@@ -270,56 +270,16 @@ public class TaskDao extends EntityDao<Task> implements TaskDaoInterface {
     }
 
 
-  /*
-   * * /@Override public ArrayList<Task> getTaskByStatus(int statusId) { String query =
-   * "SELECT task_id, name, created_date, start_date, end_date, estimate_time, " +
-   * "assign_to, status_id, priority_id, parent_id " + "FROM task WHERE status_id=" + statusId;
-   *
-   * return executeSelect(query, datasource); }
-   *
-   * //@Override public ArrayList<Task> getTaskByPriority(int priorityId) { String query =
-   * "SELECT task_id, name, created_date, start_date, end_date, estimate_time, " +
-   * "assign_to, status_id, priority_id, parent_id " + "FROM task WHERE priority_id=" + priorityId;
-   *
-   * return executeSelect(query, datasource); }
-   *
-   * //@Override public ArrayList<Task> getTasksCreatedByUser(int userId) { String query =
-   * "SELECT task.task_id, task.name, " + "task.created_date, task.start_date, " +
-   * "task.end_date, task.estimate_time, " + "task.assign_to, task.status_id, " +
-   * "task.priority_id, task.parent_id " + "FROM task INNER JOIN users_tasks " +
-   * "ON task.task_id=users_tasks.task_id " + "WHERE users_tasks.role_id=1 " +
-   * "AND users_tasks.user_id=" + userId;
-   *
-   * return executeSelect(query, datasource); }
-   *
-   * //@Override public ArrayList<Task> getTasksAssignToUser(int userId) { String query =
-   * "SELECT task_id, name, created_date, start_date, end_date, estimate_time, " +
-   * "assign_to, status_id, priority_id, parent_id " + "FROM task WHERE assign_to=" + userId;
-   *
-   * return executeSelect(query, datasource); }
-   *
-   * //@Override public ArrayList<Task> getTasksByTag(int tagId) { String query =
-   * "SELECT task.task_id, task.name, " + "task.created_date, task.start_date, " +
-   * "task.end_date, task.estimate_time, " + "task.assign_to, task.status_id, " +
-   * "task.priority_id, task.parent_id " + "FROM task INNER JOIN tags_tasks " +
-   * "ON task.task_id=tags_tasks.task_id " + "WHERE tags_tasks.tag_id=" + tagId;
-   *
-   * return executeSelect(query, datasource); }
-   *
-   * //@Override public User getAuthorOfTask(int taskId) { User user = new User(); String query =
-   * "SELECT user.user_id, user.name " + "FROM user INNER JOIN users_tasks " +
-   * "ON user.user_id=users_tasks.user_id " + "WHERE users_tasks.role_id=1 " +
-   * "AND users_tasks.task_id = " + taskId;
-   *
-   * try (Statement stmt = datasource.getConnection().createStatement(); ResultSet rs =
-   * stmt.executeQuery(query);){
-   *
-   * while (rs.next()) { user.setId(rs.getInt(1)); user.setName(rs.getString(2)); }
-   *
-   * rs.close(); } catch (SQLException e) { System.out.println(e.getMessage()); }
-   *
-   * return user; }
-   */
-
+   public Task getFullTAsk(id){
+       String query = "SELECT task.id, task.name, task.created_date, task.start_date, task.end_date, task.estimate_time,\n"
+           + "  task.assign_to, task.status_id, task.priority_id, task.parent_id,\n"
+           + "  priority.name as priorityName,\n"
+           + "  status.name as statusName\n"
+           + "FROM task\n"
+           + "  LEFT JOIN priority ON task.priority_id = priority.id\n"
+           + "  LEFT JOIN status ON task.status_id = status.id\n"
+           + "WHERE task.id=:id";
+       return null;
+   }
 
 }

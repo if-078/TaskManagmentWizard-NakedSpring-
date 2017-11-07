@@ -108,7 +108,6 @@ $(document).ready(function () {
         core: {
             data: {
                 url: function (node) {
-//				$("ul.jstree-container-ul a.jstree-anchor").attr("title", "node.name");
                     switch (node.id) {
                         case '#':
                             var rootNode = {

@@ -108,7 +108,6 @@ $(document).ready(function () {
         core: {
             data: {
                 url: function (node) {
-//				$("ul.jstree-container-ul a.jstree-anchor").attr("title", "node.name");
                     switch (node.id) {
                         case '#':
                             var rootNode = {
@@ -131,10 +130,31 @@ $(document).ready(function () {
         }
     });
 
-    var refreshTree = function () {
-        $.jstree.reference('#tmw-treeview').select_node(state.parentid);
-        $('#tmw-treeview').jstree(true).close_node(state.parentid);
-    }
+    var refreshTree = function (method, data) {
+        switch (method) {
+            case 'create': {
+                var idParent = "#"+data.parentId+"_anchor";
+                var level = Number($(idParent).attr("aria-level")) + 1;
+                ($(idParent).next()).append("<li role=\"treeitem\" aria-selected=\"false\" " +
+                    "aria-level=\"" + level + "\" aria-labelledby=\"" + data.id + "_anchor\" id=\"" +
+                    data.id + "\" class=\"jstree-node  jstree-leaf\">" +
+                    "<i class=\"jstree-icon jstree-ocl\" role=\"presentation\"></i><a class=\"jstree-anchor\" " +
+                    "href=\"#\" tabindex=\"-1\" id=\"" + data.id + "_anchor\" title=\"" + data.name + "\">" +
+                    "<i class=\"jstree-icon jstree-themeicon\" role=\"presentation\"></i>" + data.name + "</a></li>");
+                break;
+            }
+            case 'update': {
+                $("#" + data.id + "_anchor").html("<i class=\"jstree-icon jstree-themeicon\" " +
+                    "role=\"presentation\"></i>" + data.name);
+                break;
+            }
+            case 'delete': {
+                $("li#" + data).remove();
+            }
+            default:
+                console.log("refresh failed");
+        }
+    };
 
     // REMOVE NODES IN A TREE
     $('#tmw-treeview').on('after_close.jstree', function (e, data) {
@@ -145,6 +165,7 @@ $(document).ready(function () {
 
     // OUTPUT TABLE SUBTASKS FOR SELECTED ROOT-TASK
     $('#tmw-treeview').on('select_node.jstree', function (event, data) {
+        // console.log(data);
         var hasChildren = (data.node.children.length > 0 || !data.node.state.loaded);
         if (hasChildren){
 
@@ -154,6 +175,21 @@ $(document).ready(function () {
             showFull(data.node.id);
         }
     });
+
+    // CREATE TOOLTIPE TASK
+    $('#tmw-treeview').on("mouseenter.jstree", function(event, data) {
+        console.log(event);
+        aTree();
+        // $(".jstree-hovered").attr("title", $(".jstree-hovered").text());
+        // $("ul.jstree-container-ul a.jstree-anchor").attr("title", "node.name");
+        // $(this).attr("title", $(this).text());
+    });
+    var aTree = function() {
+        var tasks = $("ul.jstree-container-ul a.jstree-anchor");
+        for (i = 0; i < tasks.length; i++) {
+            tasks[i].title = tasks[i].innerText;
+        }
+    };
 
     // DOUBLE-CLICK ON ROOT-TASK
     $('#tmw-treeview').on('dblclick.jstree',function (event, data) {
@@ -368,7 +404,7 @@ $(document).ready(function () {
             contentType: 'application/json',
             success: function (data) {
                 $('#tmw-modal').modal('hide');
-                refreshTree();
+                refreshTree("create", data);
                 clearTaskModal();
                 taskTable();
             },
@@ -390,7 +426,7 @@ $(document).ready(function () {
             contentType: 'application/json',
             success: function () {
                 $('#tmw-modal').modal('hide');
-                refreshTree();
+                refreshTree("update", task);
                 clearTaskModal();
                 taskTable();
             },
@@ -409,7 +445,7 @@ $(document).ready(function () {
             url: 'tasks/' + taskId,
             contentType: 'application/json',
             success: function () {
-                refreshTree();
+                refreshTree("delete", taskId);
                 taskTable();
             },
             error: function(jqXHR) {

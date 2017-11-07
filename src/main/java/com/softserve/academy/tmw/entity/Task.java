@@ -18,6 +18,7 @@ public class Task {
   private Status status;
   private Priority priority;
   private Tag tags[];
+  private Comment comments[];
 
   public Task() {
 
@@ -153,6 +154,14 @@ public class Task {
 
   public void setTags(Tag[] tags) {
     this.tags = tags;
+  }
+
+  public Comment[] getComments() {
+    return comments;
+  }
+
+  public void setComments(Comment[] comments) {
+    this.comments = comments;
   }
 
   public String toString() {

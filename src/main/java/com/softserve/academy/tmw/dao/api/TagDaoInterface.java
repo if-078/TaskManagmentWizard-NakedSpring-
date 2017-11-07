@@ -6,7 +6,8 @@ import java.util.List;
 
 public interface TagDaoInterface extends EntityDaoInterface<Tag> {
     List<Tag> getAllByUserId(int userId);
-
+    List<Tag> getAllByTaskId(int taskId);
     boolean deleteAllByUserId(int userId);
+
 
 }

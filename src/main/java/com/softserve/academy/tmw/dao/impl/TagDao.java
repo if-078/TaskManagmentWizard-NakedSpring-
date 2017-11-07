@@ -43,9 +43,19 @@ public class TagDao extends EntityDao<Tag> implements TagDaoInterface {
 
     @Override
     public List<Tag> getAllByUserId(int userId) {
-        String sql = "SELECT * FROM " + table + " WHERE user_id = :user_id";
+        String sql = "SELECT * FROM " + table + " WHERE user_id = :userId";
         List<Tag> list =
-                jdbcTemplate.query(sql, new MapSqlParameterSource("user_id", userId), new TagMapper());
+                jdbcTemplate.query(sql, new MapSqlParameterSource("userId", userId), new TagMapper());
+        return list;
+    }
+
+    @Override
+    public List<Tag> getAllByTaskId(int taskId) {
+        String sql = "SELECT tag.id, tag.name, tag.user_id FROM tag\n"
+            + "JOIN tags_tasks ON tag.id = tags_tasks.tag_id\n"
+            + "WHERE tags_tasks.task_id=:taskId;";
+        List<Tag> list =
+            jdbcTemplate.query(sql, new MapSqlParameterSource("taskId", taskId), new TagMapper());
         return list;
     }
 

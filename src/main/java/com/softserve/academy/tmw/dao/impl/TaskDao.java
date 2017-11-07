@@ -8,6 +8,11 @@ import com.softserve.academy.tmw.dao.util.JooqSQLBuilder;
 import com.softserve.academy.tmw.entity.Comment;
 import com.softserve.academy.tmw.entity.Tag;
 import com.softserve.academy.tmw.entity.Task;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.List;
 import org.jooq.Select;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
@@ -15,11 +20,6 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
-import java.time.DayOfWeek;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.List;
 
 @Repository
 @PropertySource("classpath:tables.properties")
@@ -254,13 +254,16 @@ public class TaskDao extends EntityDao<Task> implements TaskDaoInterface {
     @Override
     public List<Task> getTasksAssignToUser(int userId) {
         String query = "SELECT id, name, created_date, start_date, end_date, estimate_time, " +
-                "assign_to, status_id, priority_id, parent_id FROM task WHERE assign_to= :assign_to";
+            "assign_to, status_id, priority_id, parent_id FROM task "
+            + ""
+            + "WHERE assign_to= :assign_to";
 
         List<Task> tasks =
                 jdbcTemplate.query(query, new MapSqlParameterSource("assign_to", userId), new TaskMapper());
 
         return tasks;
     }
+
 
     @Override
     public List<Task> getFilteredTasks(JooqSQLBuilder builder){
@@ -271,16 +274,17 @@ public class TaskDao extends EntityDao<Task> implements TaskDaoInterface {
     }
 
 
-   public Task getFullTAsk(int id){
+    public Task getFullTask(int id) {
        String query = "SELECT task.id, task.name, task.created_date, task.start_date, task.end_date, task.estimate_time,\n"
            + "  task.assign_to, task.status_id, task.priority_id, task.parent_id,\n"
-           + "  priority.name as priorityName,\n"
-           + "  status.name as statusName\n"
+           + "  priority.name as priority_name,\n"
+           + "  status.name as status_name\n"
            + "FROM task\n"
            + "  LEFT JOIN priority ON task.priority_id = priority.id\n"
            + "  LEFT JOIN status ON task.status_id = status.id\n"
            + "WHERE task.id=:id";
-       return null;
+
+        return null;
    }
 
 }

@@ -78,14 +78,14 @@
  INSERT INTO `tmw`.`tags_tasks` (`tag_id`, `task_id`) VALUES ('7', '14');
 
 
- INSERT INTO `tmw`.`comment` (`data`, `task_id`, `user_id`, `created_date`) VALUES ('comment1', '1', '1', '2017-09-17 00:00:00');
- INSERT INTO `tmw`.`comment` (`data`, `task_id`, `user_id`, `created_date`) VALUES ('comment2', '2', '2', '2017-09-17 00:00:00');
- INSERT INTO `tmw`.`comment` (`data`, `task_id`, `user_id`, `created_date`) VALUES ('comment3', '3', '3', '2017-09-17 00:00:00');
- INSERT INTO `tmw`.`comment` (`data`, `task_id`, `user_id`, `created_date`) VALUES ('comment5', '1', '2', '2017-09-17 00:00:00');
- INSERT INTO `tmw`.`comment` (`data`, `task_id`, `user_id`, `created_date`) VALUES ('comment6', '2', '3', '2017-09-17 00:00:00');
- INSERT INTO `tmw`.`comment` (`data`, `task_id`, `user_id`, `created_date`) VALUES ('comment7', '3', '1', '2017-09-17 00:00:00');
- INSERT INTO `tmw`.`comment` (`data`, `task_id`, `user_id`, `created_date`) VALUES ('comment9', '1', '3', '2017-09-17 00:00:00');
- INSERT INTO `tmw`.`comment` (`data`, `task_id`, `user_id`, `created_date`) VALUES ('comment10', '2', '1', '2017-09-17 00:00:00');
+ INSERT INTO `tmw`.`comment` (`comment_text`, `task_id`, `user_id`, `created_date`) VALUES ('comment1', '1', '1', '2017-09-17 00:00:00');
+ INSERT INTO `tmw`.`comment` (`comment_text`, `task_id`, `user_id`, `created_date`) VALUES ('comment2', '2', '2', '2017-09-17 00:00:00');
+ INSERT INTO `tmw`.`comment` (`comment_text`, `task_id`, `user_id`, `created_date`) VALUES ('comment3', '3', '3', '2017-09-17 00:00:00');
+ INSERT INTO `tmw`.`comment` (`comment_text`, `task_id`, `user_id`, `created_date`) VALUES ('comment5', '1', '2', '2017-09-17 00:00:00');
+ INSERT INTO `tmw`.`comment` (`comment_text`, `task_id`, `user_id`, `created_date`) VALUES ('comment6', '2', '3', '2017-09-17 00:00:00');
+ INSERT INTO `tmw`.`comment` (`comment_text`, `task_id`, `user_id`, `created_date`) VALUES ('comment7', '3', '1', '2017-09-17 00:00:00');
+ INSERT INTO `tmw`.`comment` (`comment_text`, `task_id`, `user_id`, `created_date`) VALUES ('comment9', '1', '3', '2017-09-17 00:00:00');
+ INSERT INTO `tmw`.`comment` (`comment_text`, `task_id`, `user_id`, `created_date`) VALUES ('comment10', '2', '1', '2017-09-17 00:00:00');
 
 
 

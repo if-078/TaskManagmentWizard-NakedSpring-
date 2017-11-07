@@ -187,7 +187,7 @@ $(document).ready(function () {
     var aTree = function() {
         var tasks = $("ul.jstree-container-ul a.jstree-anchor");
         for (i = 0; i < tasks.length; i++) {
-            tasks[i].attr("title", tasks[i].text());
+            tasks[i].title = tasks[i].innerText;
         }
     };
 

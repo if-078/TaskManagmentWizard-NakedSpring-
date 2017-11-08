@@ -13,14 +13,17 @@ import org.springframework.jdbc.core.RowMapper;
 public class FullTaskMapper implements RowMapper<Task> {
 
   @Override
-  public Task mapRow(ResultSet resultSet, int i) throws SQLException {
-    Task task = new Task();
-    Priority priority = new Priority(resultSet.getInt("priority_id"),
-        resultSet.getString("priority_name"));
+  public Task mapRow(ResultSet rs, int i) throws SQLException {
+    Task task = new Task(rs.getInt("id"), rs.getString("name"), rs.getDate("created_date"),
+        rs.getDate("start_date"), rs.getDate("end_date"), rs.getTime("estimate_Time"),
+        rs.getInt("assign_to"),
+        rs.getInt("status_id"), rs.getInt("priority_id"), rs.getInt("parent_id"));
+
+    Priority priority = new Priority(rs.getInt("priority_id"), rs.getString("priority_name"));
     task.setPriority(priority);
-    Status status = new Status(resultSet.getInt("status_id"),
-        resultSet.getString("status_name"));
+    Status status = new Status(rs.getInt("status_id"), rs.getString("status_name"));
     task.setStatus(status);
-    return null;
+
+    return task;
   }
 }

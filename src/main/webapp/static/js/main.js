@@ -166,7 +166,6 @@ $(document).ready(function () {
 
     // OUTPUT TABLE SUBTASKS FOR SELECTED ROOT-TASK
     $('#tmw-treeview').on('select_node.jstree', function (event, data) {
-        // console.log(data);
         var hasChildren = (data.node.children.length > 0 || !data.node.state.loaded);
         if (hasChildren){
 
@@ -179,11 +178,7 @@ $(document).ready(function () {
 
     // CREATE TOOLTIPE TASK
     $('#tmw-treeview').on("mouseenter.jstree", function(event, data) {
-        console.log(event);
         aTree();
-        // $(".jstree-hovered").attr("title", $(".jstree-hovered").text());
-        // $("ul.jstree-container-ul a.jstree-anchor").attr("title", "node.name");
-        // $(this).attr("title", $(this).text());
     });
     var aTree = function() {
         var tasks = $("ul.jstree-container-ul a.jstree-anchor");

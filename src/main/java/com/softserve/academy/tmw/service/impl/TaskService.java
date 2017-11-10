@@ -1,9 +1,9 @@
 package com.softserve.academy.tmw.service.impl;
 import com.softserve.academy.tmw.dto.TaskDTO;
 import com.softserve.academy.tmw.service.api.UserServiceInterface;
-import com.softserve.academy.tmw.wrapper.FilterStateWrapper;
+import com.softserve.academy.tmw.dao.util.wrapper.FilterStateWrapper;
 import com.softserve.academy.tmw.dto.TaskTableDTO;
-import com.softserve.academy.tmw.dao.impl.JooqSQLBuilder;
+import com.softserve.academy.tmw.dao.util.JooqSQLBuilder;
 import com.softserve.academy.tmw.dao.api.TaskDaoInterface;
 import com.softserve.academy.tmw.dao.api.UserDaoInterface;
 import com.softserve.academy.tmw.dto.TaskFullInfoDTO;

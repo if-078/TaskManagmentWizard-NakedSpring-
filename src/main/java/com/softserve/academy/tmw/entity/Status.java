@@ -1,10 +1,15 @@
 package com.softserve.academy.tmw.entity;
 
-public class Status implements NamedEntity {
-  private int id;
-  private String name;
+public class Status {
+    private int id;
+    private String name;
 
     public Status() {
+    }
+
+    public Status(int id, String name) {
+        this.id = id;
+        this.name = name;
     }
 
     public int getId() {
@@ -15,12 +20,10 @@ public class Status implements NamedEntity {
         this.id = id;
     }
 
-    @Override
     public String getName() {
         return name;
     }
 
-    @Override
     public void setName(String name) {
         this.name = name;
     }

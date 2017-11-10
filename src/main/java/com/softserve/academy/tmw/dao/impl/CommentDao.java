@@ -21,10 +21,10 @@ public class CommentDao extends EntityDao<Comment> {
 
     @Override
     public Comment create(Comment entity) {
-        String sql = "INSERT INTO " + table + " (comment, created_date, task_id, user_id) VALUES (:comment, :created_date, :task_id, :user_id)";
+        String sql = "INSERT INTO " + table + " (comment_text, created_date, task_id, user_id) VALUES (:comment_text, :created_date, :task_id, :user_id)";
         MapSqlParameterSource param = new MapSqlParameterSource();
         KeyHolder keyHolder = new GeneratedKeyHolder();
-        param.addValue("comment", entity.getCommentText());
+        param.addValue("comment_text", entity.getCommentText());
         param.addValue("created_date", entity.getCreatedDate());
         param.addValue("task_id", entity.getTaskId());
         param.addValue("user_id", entity.getUserId());
@@ -39,7 +39,7 @@ public class CommentDao extends EntityDao<Comment> {
         MapSqlParameterSource param = new MapSqlParameterSource();
         String sql =
                 "UPDATE " + table + " SET comment = :comment WHERE id = :id";
-        param.addValue("comment", entity.getCommentText());
+        param.addValue("comment_text", entity.getCommentText());
         param.addValue("id", entity.getId());
 
         return jdbcTemplate.update(sql, param) == 1;

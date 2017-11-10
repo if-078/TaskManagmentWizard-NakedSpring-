@@ -3,14 +3,13 @@ package com.softserve.academy.tmw.dao.impl;
 import com.softserve.academy.tmw.dao.api.TagDaoInterface;
 import com.softserve.academy.tmw.dao.mapper.TagMapper;
 import com.softserve.academy.tmw.entity.Tag;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 @Repository
 @PropertySource("classpath:tables.properties")
@@ -43,10 +42,35 @@ public class TagDao extends EntityDao<Tag> implements TagDaoInterface {
 
     @Override
     public List<Tag> getAllByUserId(int userId) {
-        String sql = "SELECT * FROM " + table + " WHERE user_id = :user_id";
+        String sql = "SELECT * FROM " + table + " WHERE user_id = :userId";
         List<Tag> list =
-                jdbcTemplate.query(sql, new MapSqlParameterSource("user_id", userId), new TagMapper());
+                jdbcTemplate.query(sql, new MapSqlParameterSource("userId", userId), new TagMapper());
         return list;
+    }
+
+    @Override
+    public List<Tag> getAllByTaskId(int taskId) {
+        String sql = "SELECT tag.id, tag.name, tag.user_id FROM tag\n"
+            + "JOIN tags_tasks ON tag.id = tags_tasks.tag_id\n"
+            + "WHERE tags_tasks.task_id=:taskId;";
+        List<Tag> list =
+            jdbcTemplate.query(sql, new MapSqlParameterSource("taskId", taskId), new TagMapper());
+        return list;
+    }
+
+    @Override
+    public boolean setTagsToTask(int taskId, int[] tags) {
+        MapSqlParameterSource param = new MapSqlParameterSource();
+        StringBuilder sql = new StringBuilder("INSERT into tags_tasks (tag_id, task_id) VALUES ");
+        param.addValue("task", taskId);
+        for (int i = 0; i < tags.length; i++) {
+            String tag = "tag" + 1;
+            sql.append("(tag_id:" + tag + ", task_id:task),");
+            param.addValue(tag, tags[i]);
+        }
+        sql.setLength(sql.length() - 1);
+
+        return false;
     }
 
     private MapSqlParameterSource getParameters(Tag entity) {

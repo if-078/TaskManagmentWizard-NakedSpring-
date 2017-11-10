@@ -1,6 +1,6 @@
 package com.softserve.academy.tmw.entity;
 
-public class Priority implements NamedEntity {
+public class Priority {
     private int id;
     private String name;
 
@@ -11,6 +11,7 @@ public class Priority implements NamedEntity {
 
     public Priority() {
     }
+    
 
     public int getId() {
         return id;
@@ -20,12 +21,10 @@ public class Priority implements NamedEntity {
         this.id = id;
     }
 
-    @Override
     public String getName() {
         return name;
     }
 
-    @Override
     public void setName(String name) {
         this.name = name;
     }

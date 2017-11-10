@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 @RestController
-@RequestMapping("tags")
+@RequestMapping("api/tags")
 public class TagController {
 
     @Autowired

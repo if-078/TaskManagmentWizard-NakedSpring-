@@ -677,5 +677,94 @@
             }
         }
     }
+//shceduler
+      $('#tmw-graphic').click(function () {
+          $(".col-sm-12").css("display", "none");
+          taskTableGraph();
+      });
+      var taskTableGraph = function () {
+          $.ajax({
+              url: 'api/tasks/filter' + generatedRequestParameters(),
+              type: 'GET',
+              contentType: 'application/json',
+              headers: createAuthToken(),
+              success: function (data, textStatus, jqXHR) {
+                  setToken(jqXHR);
+                  var appointments = new Array();
+                  for (var i = 0; i < data.length; i++) {
+                      var startDate = data[i].startDate;
+                      var est = data[i].estimateTime;
+                      var endDate = new Date(startDate + "T" + est + "Z");
+                      var appointment = {
+                          id: "taskGraph" + data[i].id,
+                          description: "",
+                          location: "",
+                          subject: data[i].name,
+                          calendar: data[i].assignTo,
+                          start: startDate,
+                          end: endDate
+                      }
+                      appointments.push(appointment);
+                  }
+                  // prepare the data
+                  var source =
+                      {
+                          dataType: "array",
+                          dataFields: [
+                              {name: 'id', type: 'string'},
+                              {name: 'description', type: 'string'},
+                              {name: 'location', type: 'string'},
+                              {name: 'subject', type: 'string'},
+                              {name: 'calendar', type: 'string'},
+                              {name: 'start', type: 'date'},
+                              {name: 'end', type: 'date'}
+                          ],
+                          id: 'id',
+                          localData: appointments
+                      };
+                  var adapter = new $.jqx.dataAdapter(source);
+                  $("#scheduler").jqxScheduler({
+                      date: new $.jqx.date(2017,11,1),
+                      width: "100%",
+                      height: 500,
+                      source: adapter,
+                      view: 'weekView',
+                      showLegend: true,
+                      ready: function () {
+                          $("#scheduler").jqxScheduler('ensureAppointmentVisible', 'taskGraph0');
+                      },
+                      resources:
+                          {
+                              colorScheme: "scheme05",
+                              dataField: "calendar",
+                              source: new $.jqx.dataAdapter(source)
+                          },
+                      appointmentDataFields:
+                          {
+                              from: "start",
+                              to: "end",
+                              id: "id",
+                              description: "description",
+                              location: "place",
+                              subject: "subject",
+                              resourceId: "calendar"
+                          },
+                      views:
+                          [
+                              'dayView',
+                              'weekView',
+                              'monthView'
+                          ]
+                  });
+              },
+              error: function (jqXHR, textStatus, errorThrown) {
+                  if (jqXHR.status === 401) {
+                      resetToken();
+                  } else {
+                      throw new Error("an unexpected error occured: " + errorThrown);
+                  }
+              }
+          });
+      }
 
-});
+  });

@@ -805,12 +805,20 @@
                   }
               }
           });
+
       }
 
     $("#scheduler").on('appointmentDoubleClick', function (event) {
       var args = event.args;
       var appointment = args.appointment;
       var taskId = appointment.id.slice(9);
+      var start = new Date(appointment.from.dateData);
+      var end = new Date(appointment.to.dateData);
+      var estim = (end.getDate() == start.getDate()) ? end.getHours() - start.getHours() : "";
+      // console.log(event);
+      console.log(start.getDate());
+      console.log(end.getDate());
+      console.log(estim);
       showFull(taskId);
     });
 

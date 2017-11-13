@@ -691,6 +691,7 @@
               success: function (data, textStatus, jqXHR) {
                   setToken(jqXHR);
                   var appointments = new Array();
+                  var startDates = new Array();
                   for (var i = 0; i < data.length; i++) {
                       var startDate = data[i].startDate;
                       var est = data[i].estimateTime;
@@ -705,7 +706,9 @@
                           end: endDate
                       }
                       appointments.push(appointment);
+                      startDates.push(startDate);
                   }
+                  startDates.sort();
                   // prepare the data
                   var source =
                       {
@@ -724,7 +727,7 @@
                       };
                   var adapter = new $.jqx.dataAdapter(source);
                   $("#scheduler").jqxScheduler({
-                      date: new $.jqx.date(2017,11,1),
+                      date: new $.jqx.date(startDates[0]),
                       width: "100%",
                       height: 500,
                       source: adapter,

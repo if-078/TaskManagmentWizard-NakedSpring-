@@ -229,6 +229,7 @@
 
     var taskTableInit = false;
     var taskTable = function () {
+        $("#scheduler").css("display", "none");
         $.ajax({
             url: 'api/tasks/filter' + generatedRequestParameters(),
             type: 'GET',
@@ -714,6 +715,7 @@
 //shceduler
       $('#tmw-graphic').click(function () {
           $(".col-sm-12").css("display", "none");
+          $("#scheduler").css("display", "block");
           taskTableGraph();
       });
       var taskTableGraph = function () {

@@ -1,6 +1,4 @@
 $(document).ready(function () {
-//         $("#main, #registration, #login").hide();
-
 
     if (window.sessionStorage.getItem("token")) {
         $("#main").show();
@@ -227,7 +225,7 @@ $(document).ready(function () {
 
     var taskTableInit = false;
     var taskTable = function () {
-        $("#scheduler").css("display", "none");
+        // $("#scheduler").css("display", "none");
         $.ajax({
             url: 'api/tasks/filter' + generatedRequestParameters(),
             type: 'GET',
@@ -673,8 +671,8 @@ $(document).ready(function () {
     }
 
     $("#registration-form").validate({
-        submitHandler:function(form,event){
-            $(form).on('submit',function (event) {
+        submitHandler: function (form, event) {
+            $(form).on('submit', function (event) {
                 event.preventDefault();
                 var $form = $(this);
                 var formData = {
@@ -686,36 +684,41 @@ $(document).ready(function () {
             });
         },
         rules: {
-            rname:{
-        required: true,
-            minlength: 5 },
-    remail:{
-        required:true,
-            email:true},
-    rpassword:{
-        required:true,
-            minlength:5},
-    rconfirm:{
-                required:true,
-                    minlength:5,
-            equalTo:"#reg-password"}
+            rname: {
+                required: true,
+                minlength: 5
+            },
+            remail: {
+                required: true,
+                email: true
+            },
+            rpassword: {
+                required: true,
+                minlength: 5
+            },
+            rconfirm: {
+                required: true,
+                minlength: 5,
+                equalTo: "#reg-password"
+            }
 
-    },
-    messages:{
-            rname:{
-                required:"Please enter your name",
-                    minlength:"Your name must consist of at least 5 characters"},
-        rpassword:{
-                required:"Please provide a password",
-                    minlength:"Your password must be at least 5 characters long"
         },
-        rconfirm:{
-                required:"Please provide a password",
-                    minlength:"Your password must be at least 5 characters long",
-                equalTo:"Please enter the same password as above"
+        messages: {
+            rname: {
+                required: "Please enter your name",
+                minlength: "Your name must consist of at least 5 characters"
+            },
+            rpassword: {
+                required: "Please provide a password",
+                minlength: "Your password must be at least 5 characters long"
+            },
+            rconfirm: {
+                required: "Please provide a password",
+                minlength: "Your password must be at least 5 characters long",
+                equalTo: "Please enter the same password as above"
+            }
         }
-}
-});
+    });
 
     $("#loginForm").validate();
 
@@ -762,6 +765,7 @@ $(document).ready(function () {
     }
 
 //shceduler
+
     $('#tmw-graphic').click(function () {
         $(".col-sm-12").css("display", "none");
         $("#scheduler").css("display", "block");
@@ -861,6 +865,108 @@ $(document).ready(function () {
         var appointment = args.appointment;
         $('#tmw-modal').modal('show');
         console.log("appointmentDoubleClick is raised");
-    });
 
+        $('#tmw-graphic').click(function () {
+            // $(".col-sm-12").css("display", "none");
+            $("#scheduler").css("display", "block");
+            taskTableGraph();
+        });
+        var taskTableGraph = function () {
+            $.ajax({
+                url: 'api/tasks/filter' + generatedRequestParameters(),
+                type: 'GET',
+                contentType: 'application/json',
+                headers: createAuthToken(),
+                success: function (data, textStatus, jqXHR) {
+                    setToken(jqXHR);
+                    var appointments = new Array();
+                    var startDates = new Array();
+                    for (var i = 0; i < data.length; i++) {
+                        var startDate = data[i].startDate;
+                        var est = data[i].estimateTime;
+                        var endDate = new Date(startDate + "T" + est + "Z");
+                        var appointment = {
+                            id: "taskGraph" + data[i].id,
+                            description: "",
+                            location: "",
+                            subject: data[i].name,
+                            calendar: data[i].assignTo,
+                            start: startDate,
+                            end: endDate
+                        }
+                        appointments.push(appointment);
+                        startDates.push(startDate);
+                    }
+                    startDates.sort();
+                    // prepare the data
+                    var source =
+                        {
+                            dataType: "array",
+                            dataFields: [
+                                {name: 'id', type: 'string'},
+                                {name: 'description', type: 'string'},
+                                {name: 'location', type: 'string'},
+                                {name: 'subject', type: 'string'},
+                                {name: 'calendar', type: 'string'},
+                                {name: 'start', type: 'date'},
+                                {name: 'end', type: 'date'}
+                            ],
+                            id: 'id',
+                            localData: appointments
+                        };
+                    var adapter = new $.jqx.dataAdapter(source);
+                    $("#scheduler").jqxScheduler({
+                        date: new $.jqx.date(startDates[0]),
+                        width: "100%",
+                        height: 500,
+                        source: adapter,
+                        view: 'weekView',
+                        showLegend: true,
+                        editDialog: false,
+                        ready: function () {
+                            $("#scheduler").jqxScheduler('ensureAppointmentVisible', 'taskGraph0');
+                        },
+                        resources:
+                            {
+                                colorScheme: "scheme05",
+                                dataField: "calendar",
+                                source: new $.jqx.dataAdapter(source)
+                            },
+                        appointmentDataFields:
+                            {
+                                from: "start",
+                                to: "end",
+                                id: "id",
+                                description: "description",
+                                location: "place",
+                                subject: "subject",
+                                resourceId: "calendar"
+                            },
+                        views:
+                            [
+                                'dayView',
+                                'weekView',
+                                'monthView'
+                            ]
+                    });
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    if (jqXHR.status === 401) {
+                        resetToken();
+                    } else {
+                        throw new Error("an unexpected error occured: " + errorThrown);
+                    }
+                }
+            });
+        }
+
+        $("#scheduler").on('appointmentDoubleClick', function (event) {
+            var args = event.args;
+            var appointment = args.appointment;
+            var taskId = appointment.id.slice(9);
+            showFull(taskId);
+
+        });
+
+    });
 });

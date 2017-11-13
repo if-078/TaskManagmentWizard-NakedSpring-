@@ -51,6 +51,7 @@
 	<script type="text/javascript" src="static/dev_pack/jqwidgets/globalization/globalize.js"></script>
 	<script type="text/javascript" src="static/dev_pack/jqwidgets/globalization/globalize.culture.de-DE.js"></script>
 	<!--<script type="text/javascript" src="static/js/scheduler.js" ></script>-->
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.js"></script>
 
 	<link rel="stylesheet"  type="text/css" href="static/css/main.css">
 	<script src="static/js/main.js"></script>
@@ -284,23 +285,27 @@
 			<div class="col-md-4"></div>
 			<div class="col-md-4">
 				<p>Sign Up</p>
-				<form id="registration-form">
+				<form id="registration-form" role="form" >
 					<div class="form-group">
+						<label for="reg-name">Enter your name</label>
 						<input type="text" class="form-control" id="reg-name" placeholder="username"
-							   required name="reg-name">
+							    name="rname">
 					</div>
 
 					<div class="form-group">
-						<input type="text" class="form-control" id="reg-email" placeholder="email"
-							   required name="reg-email">
+						<label for="reg-email">Enter email</label>
+						<input type="email" class="form-control" id="reg-email" placeholder="email"
+							   name="remail">
 					</div>
 					<div class="form-group">
+						<label for="reg-password">Enter password</label>
 						<input type="password" class="form-control" id="reg-password"
-							   placeholder="password" required name="reg-password">
+							   placeholder="password"  name="rpassword">
 					</div>
 					<div class="form-group">
-						<input type="text" class="form-control" id="reg-confirm-pass" placeholder="confirm password"
-							   required name="reg-confirm">
+						<label for="rconfirm-pass">Confirm password</label>
+						<input type="password" class="form-control" id="rconfirm-pass" placeholder="confirm password"
+							    name="rconfirm">
 					</div>
 					<button type="submit" class="btn btn-default">sign up</button>
 				</form>

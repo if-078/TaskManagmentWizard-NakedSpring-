@@ -54,7 +54,7 @@ public class TaskController {
     @ResponseStatus(HttpStatus.CREATED)
     public Task createTask(@Validated @RequestBody TaskDTO taskDTO) {return taskService.createTaskByDTO(taskDTO);}
 
-    @PutMapping("/update")
+    @PutMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
     boolean updateTask(@Validated @RequestBody TaskDTO taskDTO) {
         return taskService.updateTaskByDTO(taskDTO);}

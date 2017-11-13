@@ -426,6 +426,7 @@ $(document).ready(function () {
                 refreshTree("create", data);
                 clearTaskModal();
                 taskTable();
+                taskTableGraph();
             },
             cache: false
         }).fail(function ($xhr) {
@@ -448,6 +449,7 @@ $(document).ready(function () {
                 refreshTree("update", task);
                 clearTaskModal();
                 taskTable();
+                // taskTableGraph();
             },
             cache: false
         }).fail(function ($xhr) {
@@ -466,6 +468,7 @@ $(document).ready(function () {
             success: function () {
                 refreshTree("delete", taskId);
                 taskTable();
+                taskTableGraph();
             },
             error: function (jqXHR) {
                 console.log(jqXHR.status)
@@ -767,8 +770,16 @@ $(document).ready(function () {
 //shceduler
       $('#tmw-graphic').click(function () {
           // $(".col-sm-12").css("display", "none");
-          $("#scheduler").css("display", "block");
-          taskTableGraph();
+          if ($(this).attr("class") == "btn btn-default closeGraph") {
+              $(this).attr("class","btn btn-default openGraph");
+              $("#scheduler").css("display", "block");
+              taskTableGraph();
+          }
+          else {
+              $("#scheduler").css("display", "none");
+              $("#tmw-graphic").attr("class", "btn btn-default closeGraph");
+          }
+          // $("#scheduler").toggle();
       });
       var taskTableGraph = function () {
           $.ajax({
@@ -868,9 +879,9 @@ $(document).ready(function () {
       var end = new Date(appointment.to.dateData);
       var estim = (end.getDate() == start.getDate()) ? end.getHours() - start.getHours() : "";
       // console.log(event);
-      console.log(start.getDate());
-      console.log(end.getDate());
-      console.log(estim);
+      // console.log(start.getDate());
+      // console.log(end.getDate());
+      // console.log(estim);
       showFull(taskId);
 
     });

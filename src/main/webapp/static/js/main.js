@@ -443,7 +443,7 @@
     function updatetask(task){
         clearErrorTask();
         $.ajax({
-            url: 'tasks/update',
+            url: '/api/tasks',
             data: JSON.stringify(task),
             type: 'PUT',
             contentType: 'application/json',
@@ -465,7 +465,7 @@
     function deletetask(taskId){
         $.ajax({
             type: 'DELETE',
-            url: 'tasks/' + taskId,
+            url: '/api/tasks/' + taskId,
             contentType: 'application/json',
             success: function () {
                 refreshTree("delete", taskId);

@@ -84,6 +84,7 @@
             source: adapter,
             view: 'weekView',
             showLegend: true,
+            editDialog: false,
             ready: function () {
                 $("#scheduler").jqxScheduler('ensureAppointmentVisible', 'id1');
             },

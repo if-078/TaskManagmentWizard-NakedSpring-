@@ -1,8 +1,12 @@
 package it.com.softserve.academy.tmw.dao;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import com.softserve.academy.tmw.dao.impl.TagDao;
 import com.softserve.academy.tmw.entity.Tag;
 import it.com.softserve.academy.tmw.dao.utility.UserPopulator;
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,8 +15,6 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {TestDaoConfig.class})
 public class TagDaoItTest {
@@ -20,13 +22,15 @@ public class TagDaoItTest {
     @Autowired
     public TagDao tagDao;
     @Autowired
-    public UserPopulator populatorUser;
+    public UserPopulator userPopulator;
+
 
     @Before
     public void createFewUsers() {
-        populatorUser.createDefaultEntity();
-        populatorUser.createDefaultEntity();
-        populatorUser.createDefaultEntity();
+        userPopulator.createDefaultEntity();
+        userPopulator.createDefaultEntity();
+        userPopulator.createDefaultEntity();
+
     }
 
     @Test
@@ -39,7 +43,8 @@ public class TagDaoItTest {
         tagDao.create(new Tag(6, "#Axe", 2));
         tagDao.create(new Tag(7, "#Knife", 3));
         tagDao.create(new Tag(8, "#Searching", 3));
-
+        int tagId [] = {1,2,3,4};
+        //tagDao.setTagsToTask(tagId, 1);
         assertThat(tagDao.findOne(8).getName()).isEqualTo("#Searching");
         assertThat(tagDao.create(new Tag(9, "#Books", 3)).getId()).isEqualTo(9);
         assertThat(tagDao.delete(4)).isTrue();

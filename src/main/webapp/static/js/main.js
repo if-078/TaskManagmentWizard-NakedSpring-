@@ -769,6 +769,7 @@
                       source: adapter,
                       view: 'weekView',
                       showLegend: true,
+                      editDialog: false,
                       ready: function () {
                           $("#scheduler").jqxScheduler('ensureAppointmentVisible', 'taskGraph0');
                       },
@@ -805,5 +806,12 @@
               }
           });
       }
+
+    $("#scheduler").on('appointmentDoubleClick', function (event) {
+      var args = event.args;
+      var appointment = args.appointment;
+      $('#tmw-modal').modal('show');
+      console.log("appointmentDoubleClick is raised");
+    });
 
   });

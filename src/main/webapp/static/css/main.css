@@ -59,6 +59,9 @@ display:none;
             margin-top: 50px;
         }
 
+        .error{
+            color: #CC2222 ;
+        }
 #login.p
             {
                 font-family: fantasy;

@@ -421,7 +421,7 @@
         clearErrorTask();
         taskDTO = {};
         $.ajax({
-            url: 'tasks',
+            url: '/api/tasks',
             data: JSON.stringify(task),
             type: 'POST',
             contentType: 'application/json',

@@ -1,4 +1,5 @@
-$("#leftPanel").ready(function(){              
- $("#leftPanel").load("static/load-pages/taskFilter.html");
+$("#leftPanel").ready(function(){
+  if(window.sessionStorage.getItem("token")) {
+    $("#leftPanel").load("static/load-pages/taskFilter.html");
+  }
 });
-

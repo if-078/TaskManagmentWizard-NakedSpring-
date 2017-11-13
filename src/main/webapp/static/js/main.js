@@ -599,6 +599,40 @@
             doLogin(formData);
         });
 
+        $("#reg-button").click(function () {
+            $("#login").hide();
+            $("#registration").show();
+        });
+        $("#registration-form").submit(function(event){
+            event.preventDefault();
+            var $form = $(this);
+            var formData = {
+                name: $form.find('input[name="reg-name"]').val(),
+                pass: $form.find('input[name="reg-password"]').val(),
+                email: $form.find('input[name="reg-email"]').val()
+            };
+            doRegister(formData);
+        });
+      function doRegister(regData){
+          $.ajax({
+              url: "/register",
+              type: "POST",
+              data: JSON.stringify(regData),
+              contentType: "application/json; charset=utf-8",
+              dataType: "json",
+              success: function (data, textStatus, XHR) {
+                  if(XHR.status === 201){
+                  $("#registration").hide();
+                  $("#login").show();}
+              },
+              error: function (jqXHR, textStatus, errorThrown) {
+                  if (jqXHR.status === 401) {
+                  } else {
+                      throw new Error("an unexpected error occured: " + errorThrown);
+                  }
+              }
+          });
+      }
         function doLogin(loginData) {
                 $.ajax({
                     url: "/login",

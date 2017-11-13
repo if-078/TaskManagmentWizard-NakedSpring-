@@ -28,10 +28,10 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 @PropertySources(@PropertySource("classpath:security.properties"))
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-//    @Value("${urls.loginUrl}")
+
     private String LOGIN_URL = "/login";
 
-//    @Value("${urls.secureUrl}")
+
     private String SECURE_URL = "/api/**";
 
 
@@ -51,9 +51,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
-                // we don't need CSRF because our token is invulnerable
-                .csrf().disable()
+        http.csrf().disable()
 
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
 
@@ -75,6 +73,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/static/**"
                 ).permitAll()
                 .antMatchers(HttpMethod.POST, "/login").permitAll()
+                .antMatchers(HttpMethod.POST, "/register").permitAll()
                 .anyRequest().authenticated();
 
         // Custom JWT based security filter

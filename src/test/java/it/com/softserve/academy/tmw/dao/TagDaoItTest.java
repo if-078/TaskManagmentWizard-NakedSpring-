@@ -3,7 +3,9 @@ package it.com.softserve.academy.tmw.dao;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.softserve.academy.tmw.dao.impl.TagDao;
+import com.softserve.academy.tmw.dao.impl.TaskDao;
 import com.softserve.academy.tmw.entity.Tag;
+import it.com.softserve.academy.tmw.dao.utility.TaskPopulator;
 import it.com.softserve.academy.tmw.dao.utility.UserPopulator;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +24,12 @@ public class TagDaoItTest {
     @Autowired
     public TagDao tagDao;
     @Autowired
+    public TaskDao taskDao;
+    @Autowired
     public UserPopulator userPopulator;
+
+    @Autowired
+    public TaskPopulator taskPopulator;
 
 
     @Before
@@ -30,6 +37,8 @@ public class TagDaoItTest {
         userPopulator.createDefaultEntity();
         userPopulator.createDefaultEntity();
         userPopulator.createDefaultEntity();
+
+        taskPopulator.createDefaultEntity();
 
     }
 
@@ -62,5 +71,16 @@ public class TagDaoItTest {
         assertThat(tagDao.findOne(1000).getId()).isIn(0);
     }
 
+    @Test
+    public void shouldAddTagsToTaskAndGetTags() {
+        List<Tag> tags = new ArrayList<Tag>();
+        tags.add(tagDao.create(new Tag(9, "#sveta", 1)));
+        tags.add(tagDao.create(new Tag(10, "#sv", 1)));
+
+        int[] ids = {9,10};
+        assertThat(tagDao.setTagsToTask(ids, 1)).isTrue();
+        assertThat(taskDao.getTagsOfTask(1)).isEqualTo(tags);
+
+    }
 
 }

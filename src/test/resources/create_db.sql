@@ -40,6 +40,7 @@ CREATE TABLE IF NOT EXISTS tmw.task (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
   `created_date` TIMESTAMP NULL,
+  `planning_date` TIMESTAMP NULL,
   `start_date` TIMESTAMP NULL,
   `end_date` TIMESTAMP NULL,
   `estimate_time` TIME NULL,

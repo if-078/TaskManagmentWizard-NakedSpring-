@@ -12,6 +12,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.*;
@@ -60,5 +62,21 @@ public class TagServiceTest {
         assertThat(isDeleted).isTrue();
         verify(dao).delete(testId);
     }
+
+    /*@Test
+    public void addTags() {
+        int[] tagsList = new int[4];
+        for (int i = 0; i < tagsList.length; i++) {
+            tagsList[i] = i + 1;
+        }
+        for (int i = 0; i < tagsList.length; i++) {
+            System.out.println(tagsList[i]);
+        }
+        boolean added = dao.setTagsToTask(tagsList, 3);
+        assertThat(added).isTrue();
+
+    }*/
+
+
 
 }

@@ -4,6 +4,8 @@ import com.softserve.academy.tmw.dao.api.TagDaoInterface;
 import com.softserve.academy.tmw.dao.mapper.TagMapper;
 import com.softserve.academy.tmw.entity.Tag;
 import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -59,14 +61,35 @@ public class TagDao extends EntityDao<Tag> implements TagDaoInterface {
     }
 
     @Override
-    public boolean setTagsToTask( int[] tags,int taskId ) {
+    public boolean setTagsToTask(int[] tags, int taskId) {
         MapSqlParameterSource param = new MapSqlParameterSource();
-        StringBuilder sql = new StringBuilder("INSERT into tags_tasks (tag_id, task_id) VALUES ");
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        StringBuilder sql = new StringBuilder("INSERT into tmw.tags_tasks (tag_id, task_id) VALUES ");
         param.addValue("task", taskId);
         for (int i = 0; i < tags.length; i++) {
             String tag = "tag" + i;
-            sql.append("(tag_id:" + tag + ", task_id:task),");
+            sql.append("(:" + tag + ", :task),");
             param.addValue(tag, tags[i]);
+        }
+        sql.setLength(sql.length() - 1);
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        //System.out.println(jdbcTemplate.update(sql.toString(), param));
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        System.out.println(sql);
+        //return false;
+        return jdbcTemplate.update(sql.toString(), param, keyHolder) > 0;
+    }
+
+
+
+    /*public boolean addTagsToTask(int[] tagId, int taskId) {
+        MapSqlParameterSource param = new MapSqlParameterSource();
+        StringBuilder sql = new StringBuilder("INSERT into tags_tasks (tag_id, task_id) VALUES ");
+        param.addValue("task", taskId);
+        for (int i = 0; i < tagId.length; i++) {
+            String tag = "tag" + i;
+            sql.append("(tag_id:" + tag + ", task_id:task),");
+            param.addValue(tag, tagId[i]);
         }
         sql.setLength(sql.length() - 1);
         System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
@@ -74,7 +97,7 @@ public class TagDao extends EntityDao<Tag> implements TagDaoInterface {
         System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 
         return false;
-    }
+    }*/
 
     private MapSqlParameterSource getParameters(Tag entity) {
         MapSqlParameterSource param = new MapSqlParameterSource();
@@ -83,5 +106,10 @@ public class TagDao extends EntityDao<Tag> implements TagDaoInterface {
         param.addValue("user_id", entity.getUserId());
         return param;
     }
+
+
+
+
+
 
 }

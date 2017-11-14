@@ -8,6 +8,7 @@ public class Task {
   private int id;
   private String name;
   private Date createdDate;
+  private Date planningDate;
   private Date startDate;
   private Date endDate;
   private Time estimateTime;
@@ -24,10 +25,11 @@ public class Task {
 
   }
 
-  public Task(String name, Date createdDate, Date startDate, Date endDate, Time estimateTime,
+  public Task(String name, Date createdDate, Date planningDate, Date startDate, Date endDate, Time estimateTime,
       int assignTo, int statusId, int priorityId, int parentId) {
     this.name = name;
     this.createdDate = createdDate;
+    this.planningDate = planningDate;
     this.startDate = startDate;
     this.endDate = endDate;
     this.estimateTime = estimateTime;
@@ -37,11 +39,12 @@ public class Task {
     this.parentId = parentId;
   }
 
-  public Task(int id, String name, Date createdDate, Date startDate, Date endDate,
+  public Task(int id, String name, Date createdDate, Date planningDate, Date startDate, Date endDate,
       Time estimateTime, int assignTo, int statusId, int priorityId, int parentId) {
     this.id = id;
     this.name = name;
     this.createdDate = createdDate;
+    this.planningDate = planningDate;
     this.startDate = startDate;
     this.endDate = endDate;
     this.estimateTime = estimateTime;
@@ -62,6 +65,10 @@ public class Task {
 
   public void setCreatedDate(Date createdDate) {
     this.createdDate = createdDate;
+  }
+
+  public void setPlanningDate(Date planningDate) {
+    this.planningDate = planningDate;
   }
 
   public void setStartDate(Date startDate) {
@@ -102,6 +109,10 @@ public class Task {
 
   public Date getCreatedDate() {
     return createdDate;
+  }
+
+  public Date getPlanningDate() {
+    return planningDate;
   }
 
   public Date getStartDate() {
@@ -166,9 +177,10 @@ public class Task {
 
   public String toString() {
     String taskStr = "";
-    taskStr += this.getId() + " | " + this.getName() + " | " + this.getCreatedDate() + " | " + this
-        .getStartDate() + " | " + this.getEndDate() + " | " + this.getEstimateTime() + " | " + this
-        .getAssignTo() + " | " + this.getStatusId() + " | " + this.getPriorityId();
+    taskStr += this.getId() + " | " + this.getName() + " | " + this.getCreatedDate() + " | " +
+        this.getPlanningDate() + " | " + this.getStartDate() + " | " + this.getEndDate() + " | " +
+        this.getEstimateTime() + " | " + this.getAssignTo() + " | " + this.getStatusId() + " | " +
+        this.getPriorityId();
     return taskStr;
   }
 

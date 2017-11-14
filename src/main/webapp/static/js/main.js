@@ -841,23 +841,7 @@ $(document).ready(function () {
     $('#tmw-graphic').click(function () {
         $('#tmw-main-calendar').removeClass('hidden');
 
-        $.ajax({
-            url: 'api/tasks/planning',
-            type: 'GET',
-            contentType: 'application/json',
-            headers: createAuthToken(),
-            success: function (data, textStatus, jqXHR) {
-                setToken(jqXHR);
-                console.log(data);
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                if (jqXHR.status === 401) {
-                    resetToken();
-                } else {
-                    throw new Error("an unexpected error occured: " + errorThrown);
-                }
-            }
-        });
+
 
         taskCalendar();
     });
@@ -875,6 +859,33 @@ $(document).ready(function () {
                         title: data[i].name
                     });
                 }
+
+                $.ajax({
+                    url: 'api/tasks/planning',
+                    type: 'GET',
+                    contentType: 'application/json',
+                    headers: createAuthToken(),
+                    success: function (data, textStatus, jqXHR) {
+                        setToken(jqXHR);
+                        console.log(data);
+
+                       // var plannedTasks = [];
+                       // for (var i = 0; i < data.length; i++) {
+                            //plannedTasks.push({
+                            //    id: data[i].id,
+                            //    title: data[i].name
+                            //});
+                        //}
+
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        if (jqXHR.status === 401) {
+                            resetToken();
+                        } else {
+                            throw new Error("an unexpected error occured: " + errorThrown);
+                        }
+                    }
+                });
 
                 $('#tmw-task-calendar').fullCalendar({
                     schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
@@ -895,12 +906,12 @@ $(document).ready(function () {
                     resourceLabelText: 'Users',
                     resources: resources,
                     events: [
-                         {   id: '2', resourceId: '2',
-                             start: '2017-11-14T10:00:00',
-                             end: '2017-11-14T14:00:00',
-                             title: 'Make front-end',
-                             color: '#ff0000'
-                         }
+                        // {   id: '2', resourceId: '2',
+                        //     start: '2017-11-14T10:00:00',
+                        //     end: '2017-11-14T14:00:00',
+                        //     title: 'Make front-end',
+                        //     color: '#ff0000'
+                        // }
                     ],
 
                     drop: function (date, jsEvent, ui, resourceId) {

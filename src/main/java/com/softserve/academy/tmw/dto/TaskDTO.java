@@ -1,9 +1,11 @@
 package com.softserve.academy.tmw.dto;
 
+import com.softserve.academy.tmw.entity.Tag;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 public class TaskDTO {
 
@@ -17,10 +19,9 @@ public class TaskDTO {
     private int statusId;
     private int priorityId;
     private int parentId;
+    private Tag tags[];
 
-    public int getId() {
-        return id;
-    }
+    public int getId() { return id; }
 
     @NotBlank
     @Size(min = 1, max = 45)
@@ -66,6 +67,8 @@ public class TaskDTO {
         return parentId;
     }
 
+    public Tag[] getTags() { return tags;}
+
     public void setId(int id) {
         this.id = id;
     }
@@ -105,4 +108,6 @@ public class TaskDTO {
     public void setParentId(int parentId) {
         this.parentId = parentId;
     }
+
+    public void setTags(Tag[] tags) {this.tags = tags;}
 }

@@ -5,6 +5,7 @@ $(document).ready(function () {
     } else {
         $("#login").show();
     }
+
     // STATE OF APPLIED FILTERS
     var state = {
         parentid: 0,
@@ -14,6 +15,8 @@ $(document).ready(function () {
         priority: [],
         tag: []
     };
+
+    var tags = [];
 
     var taskID = null;
     var taskDTO = {};
@@ -314,8 +317,8 @@ $(document).ready(function () {
             url: 'api/tasks/view/' + id,
             type: 'GET',
             contentType: 'application/json',
-
             headers: createAuthToken(),
+
             success: function (data, textStatus, jqXHR) {
                 var token = jqXHR.getResponseHeader('Authentication');
                 window.sessionStorage.setItem("token", token);
@@ -335,6 +338,7 @@ $(document).ready(function () {
                 fillSelectUser(taskDTO.assignTo.id);
                 fillSelectPriority(taskDTO.priority.id);
                 fillSelectStatus(taskDTO.status.id);
+                fillSelectTags(taskDTO.id);
 
                 $('#tmw-modal').modal('show');
             },
@@ -378,6 +382,8 @@ $(document).ready(function () {
         fillSelectUser(null);
         fillSelectPriority(null);
         fillSelectStatus(null);
+        fillSelectTags(null);
+        $('#tmw-tag-multi-select').multiselect('deselectAll', false);
 
         $('#tmw-modal').modal('show');
     });
@@ -388,35 +394,57 @@ $(document).ready(function () {
         if ($.isEmptyObject(taskDTO)) {
             task =
                 {
-                    "name": $('#tmw-task-name').val(),
-                    "createdDate": $('#tmw-task-createDate').val(),
-                    "startDate": $('#tmw-task-startDate').val(),
-                    "endDate": $('#tmw-task-endDate').val(),
-                    "estimateTime": $('#tmw-task-estimateTime').val(),
-                    "assignTo": $('#tmw-task-assignTo').find(":selected").val(),
-                    "statusId": $('#tmw-task-status').find(":selected").val(),
-                    "priorityId": $('#tmw-task-priority').find(":selected").val(),
-                    "parentId": state.parentid
+                    "name"         : $('#tmw-task-name').val(),
+                    "createdDate"  : $('#tmw-task-createDate').val(),
+                    "startDate"    : $('#tmw-task-startDate').val(),
+                    "endDate"      : $('#tmw-task-endDate').val(),
+                    "estimateTime" : $('#tmw-task-estimateTime').val(),
+                    "assignTo"     : $('#tmw-task-assignTo').find(":selected").val(),
+                    "statusId"     : $('#tmw-task-status').find(":selected").val(),
+                    "priorityId"   : $('#tmw-task-priority').find(":selected").val(),
+                    "parentId"     : state.parentid,
+                    "tags"         : getSelectedTags(),
                 }
 
             createtask(task);
         } else {
             task =
                 {
-                    "id": taskDTO.id,
-                    "name": $('#tmw-task-name').val(),
-                    "createdDate": $('#tmw-task-createDate').val(),
-                    "startDate": $('#tmw-task-startDate').val(),
-                    "endDate": $('#tmw-task-endDate').val(),
-                    "estimateTime": $('#tmw-task-estimateTime').val(),
-                    "assignTo": $('#tmw-task-assignTo').find(":selected").val(),
-                    "statusId": $('#tmw-task-status').find(":selected").val(),
-                    "priorityId": $('#tmw-task-priority').find(":selected").val(),
-                    "parentId": state.parentid
+                    "id"           : taskDTO.id,
+                    "name"         : $('#tmw-task-name').val(),
+                    "createdDate"  : $('#tmw-task-createDate').val(),
+                    "startDate"    : $('#tmw-task-startDate').val(),
+                    "endDate"      : $('#tmw-task-endDate').val(),
+                    "estimateTime" : $('#tmw-task-estimateTime').val(),
+                    "assignTo"     : $('#tmw-task-assignTo').find(":selected").val(),
+                    "statusId"     : $('#tmw-task-status').find(":selected").val(),
+                    "priorityId"   : $('#tmw-task-priority').find(":selected").val(),
+                    "parentId"     : state.parentid,
+                    "tags"         : getSelectedTags(),
                 }
 
             updatetask(task);
         }
+    }
+
+    function  getSelectedTags() {
+        var selectedIdOfTags = $('#tmw-tag-multi-select').val();
+        var seletedTags = [];
+        console.log(selectedIdOfTags);
+        console.log("value");
+        console.log(seletedTags);
+
+        for(var i = 0; i < tags.length; i++){
+            for(var j = 0; j < selectedIdOfTags.length; j++){
+                if(tags[i].id == selectedIdOfTags[j]){
+                    seletedTags.push(tags[i]);
+                    break;
+                }
+            }
+        }
+        console.log(seletedTags);
+        return seletedTags;
+
     }
 
     function createtask(task) {
@@ -492,6 +520,7 @@ $(document).ready(function () {
         $('#tmw-task-assignTo').empty();
         $('#tmw-task-status').empty();
         $('#tmw-task-priority').empty();
+        $('#tmw-task-tag').empty();
     }
 
     function fillSelectUser(id) {
@@ -584,6 +613,83 @@ $(document).ready(function () {
         });
     }
 
+    function fillSelectTags(id) {
+        tags = [];
+        $('#tmw-tag-multi-select').empty();
+        $.ajax({
+            url: 'api/tags',
+            type: 'GET',
+            contentType: 'application/json',
+            headers: createAuthToken(),
+            success: function (data, textStatus, jqXHR) {
+                tags = data;
+                var token = jqXHR.getResponseHeader('Authentication');
+                window.sessionStorage.setItem("token", token);
+                $.each(data, function (i, tag) {
+                    $('#tmw-tag-multi-select').append($('<option>', {
+                        value: tag.id,
+                        text: tag.name
+                    }));
+                });
+
+                $('#tmw-tag-multi-select').multiselect({
+                    buttonWidth: '570px',
+                    enableCaseInsensitiveFiltering: true,
+                    dropRight: true,
+                    numberDisplayed:10,
+                });
+
+                console.log("after initialize");
+
+               if (id != null) getTagsByTask(id);
+
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                if (jqXHR.status === 401) {
+                    resetToken();
+                } else {
+                    throw new Error("an unexpected error occured: " + errorThrown);
+                }
+            }
+        });
+    }
+
+    function getTagsByTask(id) {
+        $('#tmw-tag-multi-select').multiselect('deselectAll', false);
+
+        $.ajax({
+            url: 'api/tasks/'+id+'/tags',
+            type: 'GET',
+            contentType: 'application/json',
+            headers: createAuthToken(),
+            success: function (data, textStatus, jqXHR) {
+                var token = jqXHR.getResponseHeader('Authentication');
+                window.sessionStorage.setItem("token", token);
+
+                $('#tmw-tag-multi-select').multiselect('select',getIdOfTask(data));
+
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                if (jqXHR.status === 401) {
+                    resetToken();
+                } else {
+                    throw new Error("an unexpected error occured: " + errorThrown);
+                }
+            }
+        });
+    }
+
+    function getIdOfTask(data) {
+        var arrTagsId = [];
+
+        data.map(function(tag) {
+            arrTagsId.push(tag.id);
+        });
+
+
+
+        return arrTagsId;
+    }
 
     function createAuthToken() {
         var token = window.sessionStorage.getItem("token");
@@ -876,6 +982,7 @@ $(document).ready(function () {
           });
 
       }
+
     var estim = "";
     $("#scheduler").on('appointmentDoubleClick', function (event) {
       var args = event.args;
@@ -894,8 +1001,5 @@ $(document).ready(function () {
       // console.log(end.getDate());
       // console.log(estim);
       showFull(taskId);
-      console.log($('#tmw-task-estimateTime').val());
-      $('#tmw-task-estimateTime').val("10:00:00");
-        console.log($('#tmw-task-estimateTime').val());
     });
 });

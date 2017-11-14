@@ -86,6 +86,7 @@ public class TaskService implements TaskServiceInterface {
         task.setPriorityId(taskDTO.getPriorityId());
         task.setParentId(taskDTO.getParentId());
         task.setStatusId(taskDTO.getStatusId());
+        task.setTags(taskDTO.getTags());
 
         return taskDao.create(task);
     }
@@ -103,6 +104,7 @@ public class TaskService implements TaskServiceInterface {
         task.setPriorityId(taskDTO.getPriorityId());
         task.setParentId(taskDTO.getParentId());
         task.setStatusId(taskDTO.getStatusId());
+        task.setTags(taskDTO.getTags());
 
         return taskDao.update(task);
     }

@@ -275,6 +275,13 @@ public class TaskDao extends EntityDao<Task> implements TaskDaoInterface {
         return tasks;
     }
 
+    @Override
+    public List<Task> getPlannedTasks() {
+        String sql = "SELECT * FROM " + table + " WHERE planning_date != ''";
+        List<Task> tasks = jdbcTemplate.query(sql, new TaskMapper());
+        return tasks;
+    }
+
 
     public Task getFullTask(int id) {
        String query = "SELECT task.id, task.name, task.created_date, task.planning_date, task.start_date, task.end_date, task.estimate_time,\n"

@@ -25,4 +25,6 @@ public interface TaskDaoInterface extends EntityDaoInterface<Task>{
 
     List<Task> getFilteredTasks(JooqSQLBuilder builder);
 
+    List<Task> getPlannedTasks();
+
 }

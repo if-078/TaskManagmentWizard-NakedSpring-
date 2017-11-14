@@ -31,4 +31,6 @@ public interface TaskServiceInterface extends EntityServiceInterface<Task> {
     Task createTaskByDTO(TaskDTO taskDTO);
 
     boolean updateTaskByDTO(TaskDTO taskDTO);
+
+    List<Task> getPlannedTasks();
 }

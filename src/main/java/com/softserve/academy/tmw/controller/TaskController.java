@@ -35,11 +35,8 @@ public class TaskController {
 
     @GetMapping("/planning")
     @ResponseStatus(HttpStatus.OK)
-    public List<Task> getPlannedTasks (){
-        //return taskService.getPlannedTasks();
-        //вибрати всі таски у яких planning_date != null
-
-        return taskService.getAll();
+    public List<Task> getPlannedTasks(){
+        return taskService.getPlannedTasks();
     }
 
     @GetMapping("/filter")

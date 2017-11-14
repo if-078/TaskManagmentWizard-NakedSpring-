@@ -109,6 +109,11 @@ public class TaskService implements TaskServiceInterface {
         return taskDao.update(task);
     }
 
+    @Override
+    public List<Task> getPlannedTasks() {
+        return taskDao.getPlannedTasks();
+    }
+
     private Date getFormatDate(String line){
         try {
             return new SimpleDateFormat( "yyyy-MM-dd" ).parse(line);

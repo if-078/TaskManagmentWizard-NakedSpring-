@@ -15,8 +15,8 @@ public class FullTaskMapper implements RowMapper<Task> {
   @Override
   public Task mapRow(ResultSet rs, int i) throws SQLException {
     Task task = new Task(rs.getInt("id"), rs.getString("name"), rs.getDate("created_date"),
-        rs.getDate("start_date"), rs.getDate("end_date"), rs.getTime("estimate_Time"),
-        rs.getInt("assign_to"),
+        rs.getDate("planning_date"), rs.getDate("start_date"), rs.getDate("end_date"),
+        rs.getTime("estimate_Time"), rs.getInt("assign_to"),
         rs.getInt("status_id"), rs.getInt("priority_id"), rs.getInt("parent_id"));
 
     Priority priority = new Priority(rs.getInt("priority_id"), rs.getString("priority_name"));

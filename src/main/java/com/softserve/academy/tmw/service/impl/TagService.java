@@ -70,4 +70,8 @@ public class TagService implements TagServiceInterface {
         return getAllByUserId(target.getUserId()).stream().filter(s -> s.getName().contains(target.getName())).findAny().orElse(new Tag());
     }
 
+    public boolean addTagToTask(int[] tags, int taskId) {
+        return tagDao.setTagsToTask(tags, taskId);
+    }
+
 }

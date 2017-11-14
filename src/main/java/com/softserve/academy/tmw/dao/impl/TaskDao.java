@@ -41,7 +41,7 @@ public class TaskDao extends EntityDao<Task> implements TaskDaoInterface {
 
     @Override
     public Task findOne(int id) {
-        String query = "SELECT id, name, created_date, start_date, end_date, estimate_time, "
+        String query = "SELECT id, name, created_date, planning_date, start_date, end_date, estimate_time, "
                 + "assign_to, status_id, priority_id, parent_id" + " FROM " + table
                 + " WHERE task.id = :id";
 
@@ -55,15 +55,9 @@ public class TaskDao extends EntityDao<Task> implements TaskDaoInterface {
     @Override
     public boolean update(Task task) {
         MapSqlParameterSource param = new MapSqlParameterSource();
-        java.sql.Timestamp created, start, end;
+        java.sql.Timestamp start, end;
         java.sql.Time estimate;
         Date date = new Date();
-
-        if (task.getCreatedDate() == null) {
-            created = new java.sql.Timestamp(date.getTime());
-        } else {
-            created = new java.sql.Timestamp(task.getCreatedDate().getTime());
-        }
 
         if (task.getStartDate() == null) {
             start = new java.sql.Timestamp(date.getTime());
@@ -83,9 +77,9 @@ public class TaskDao extends EntityDao<Task> implements TaskDaoInterface {
             estimate = new java.sql.Time(task.getEstimateTime().getTime());
         }
 
-        if(task.getAssignTo() == 0) {
+        /*if(task.getAssignTo() == 0) {
             task.setAssignTo(1);
-        }
+        }*/
         if(task.getStatusId() == 0) {
             task.setStatusId(1);
         }
@@ -94,12 +88,13 @@ public class TaskDao extends EntityDao<Task> implements TaskDaoInterface {
         }
 
         String sql =
-                "UPDATE " + table + " SET name=:name, created_date=:created_date, start_date=:start_date, "
+                "UPDATE " + table + " SET name=:name, created_date=:created_date, planning_date=:planning_date, start_date=:start_date, "
                         + "end_date=:end_date, estimate_time=:estimate_time, assign_to=:assign_to, status_id=:status_id, "
                         + "priority_id=:priority_id, parent_id=:parent_id WHERE id=:id";
 
         param.addValue("name", task.getName());
-        param.addValue("created_date", created);
+        param.addValue("created_date", task.getCreatedDate());
+        param.addValue("planning_date", task.getPlanningDate());
         param.addValue("start_date", start);
         param.addValue("end_date", end);
         param.addValue("estimate_time", estimate);
@@ -163,12 +158,13 @@ public class TaskDao extends EntityDao<Task> implements TaskDaoInterface {
         }
 
         String sql = "INSERT INTO " + table
-                + " (name, created_date, start_date, end_date, estimate_time, assign_to, status_id, "
-                + "priority_id, parent_id) VALUES (:name, :created_date, :start_date, :end_date, :estimate_time, "
+                + " (name, created_date, planning_date, start_date, end_date, estimate_time, assign_to, status_id, "
+                + "priority_id, parent_id) VALUES (:name, :created_date, :planning_date, :start_date, :end_date, :estimate_time, "
                 + ":assign_to, :status_id, :priority_id, :parent_id)";
 
         param.addValue("name", task.getName());
         param.addValue("created_date", created);
+        param.addValue("planning_date", task.getPlanningDate());
         param.addValue("start_date", start);
         param.addValue("end_date", end);
         param.addValue("estimate_time", estimate);
@@ -187,7 +183,7 @@ public class TaskDao extends EntityDao<Task> implements TaskDaoInterface {
     @Override
     public List<Task> getTasksForToday() {
         LocalDateTime date = LocalDateTime.now();
-        String sql = "SELECT id, name, created_date, start_date, end_date, estimate_time, "
+        String sql = "SELECT id, name, created_date, planning_date, start_date, end_date, estimate_time, "
                 + "assign_to, status_id, priority_id, parent_id FROM task WHERE date(start_date) = '"
                 + date.toLocalDate() + "'";
 
@@ -201,7 +197,7 @@ public class TaskDao extends EntityDao<Task> implements TaskDaoInterface {
         LocalDateTime date = LocalDateTime.now();
         LocalDate monday = date.with(DayOfWeek.MONDAY).toLocalDate();
         LocalDate sunday = date.with(DayOfWeek.SUNDAY).toLocalDate();
-        String sql = "SELECT id, name, created_date, start_date, end_date, estimate_time, "
+        String sql = "SELECT id, name, created_date, planning_date, start_date, end_date, estimate_time, "
                 + "assign_to, status_id, priority_id, parent_id FROM task WHERE date(start_date) "
                 + "BETWEEN '" + monday + "' AND '" + sunday + "'";
 
@@ -233,7 +229,7 @@ public class TaskDao extends EntityDao<Task> implements TaskDaoInterface {
 
     @Override
     public List<Task> getSubtasks(int id) {
-        String query = "SELECT id, name, created_date, start_date, end_date, estimate_time, "
+        String query = "SELECT id, name, created_date, planning_date, start_date, end_date, estimate_time, "
                 + "assign_to, status_id, priority_id, parent_id FROM task WHERE parent_id = :parent_id";
         List<Task> tasks =
                 jdbcTemplate.query(query, new MapSqlParameterSource("parent_id", id), new TaskMapper());
@@ -286,5 +282,6 @@ public class TaskDao extends EntityDao<Task> implements TaskDaoInterface {
 
         return null;
    }
+
 
 }

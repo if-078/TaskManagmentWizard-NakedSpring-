@@ -40,11 +40,11 @@ public class TaskDaoItTest {
         Date date = new Date();
         Timestamp sqlDate = new Timestamp(date.getTime());
         Time estTime = new Time(date.getTime());
-        Task task1 = new Task(taskName+1,sqlDate, sqlDate, sqlDate, estTime, 1,1,1,0);
+        Task task1 = new Task(taskName+1, sqlDate, sqlDate, sqlDate, sqlDate, estTime, 1,1,1,0);
         task1.setId(1);
-        Task task2 = new Task(taskName+2,sqlDate, sqlDate, sqlDate, estTime, 1,1,1,0);
+        Task task2 = new Task(taskName+2, sqlDate, sqlDate, sqlDate, sqlDate, estTime, 1,1,1,0);
         task2.setId(2);
-        Task task3 = new Task(taskName+3,sqlDate, sqlDate, sqlDate, estTime, 1,1,1,0);
+        Task task3 = new Task(taskName+3, sqlDate, sqlDate, sqlDate, sqlDate, estTime, 1,1,1,0);
         task3.setId(43);
 
         dao.create(task1);

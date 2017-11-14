@@ -264,29 +264,6 @@ $(document).ready(function () {
                             {title: "Priority"}
                         ],
 
-                        /*"fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
-                            if ( aData[5] == "done" )
-                            {
-                                $('td', nRow).css('background-color', '' );
-                            }
-                            else if ( aData[5] == "in progress" )
-                            {
-                                $('td', nRow).css('background-color', '#AED5B3');
-                            }
-                            else if ( aData[5] == "to do" )
-                            {
-                                $('td', nRow).css('background-color', '#CA9191');
-                            }
-                            else if ( aData[5] == "REVIEW" )
-                            {
-                                $('td', nRow).css('background-color', '#ffff99');
-                            }
-                            else
-                            {
-                                $('td', nRow).css('background-color', '#f2f2f2');
-                            }
-                        },*/
-
                         paging: false,
                         info: false,
                         searching: false
@@ -327,13 +304,7 @@ $(document).ready(function () {
                 $('#tmw-task-createDate').val(taskDTO.createdDate);
                 $('#tmw-task-startDate').val(taskDTO.startDate);
                 $('#tmw-task-endDate').val(taskDTO.endDate);
-                if (estim == "") {
-                    $('#tmw-task-estimateTime').val(taskDTO.estimateTime);
-                }
-                else {
-                    $('#tmw-task-estimateTime').val(estim);
-                    estim = "";
-                }
+                $('#tmw-task-estimateTime').val(taskDTO.estimateTime);
                 fillSelectUser(taskDTO.assignTo.id);
                 fillSelectPriority(taskDTO.priority.id);
                 fillSelectStatus(taskDTO.status.id);
@@ -429,9 +400,6 @@ $(document).ready(function () {
     function  getSelectedTags() {
         var selectedIdOfTags = $('#tmw-tag-multi-select').val();
         var seletedTags = [];
-        // console.log(selectedIdOfTags);
-        // console.log("value");
-        // console.log(seletedTags);
 
         for(var i = 0; i < tags.length; i++){
             for(var j = 0; j < selectedIdOfTags.length; j++){
@@ -441,7 +409,6 @@ $(document).ready(function () {
                 }
             }
         }
-        // console.log(seletedTags);
         return seletedTags;
 
     }
@@ -459,9 +426,6 @@ $(document).ready(function () {
                 refreshTree("create", data);
                 clearTaskModal();
                 taskTable();
-                if ($("#tmw-graphic").attr("class") == "btn btn-default openGraph") {
-                taskTableGraph();
-                }
             },
             cache: false
         }).fail(function ($xhr) {
@@ -485,9 +449,6 @@ $(document).ready(function () {
                 clearTaskModal();
                 console.log(task);
                 taskTable();
-                if ($("#tmw-graphic").attr("class") == "btn btn-default openGraph") {
-                taskTableGraph();
-                }
             },
             cache: false
         }).fail(function ($xhr) {
@@ -506,9 +467,6 @@ $(document).ready(function () {
             success: function () {
                 refreshTree("delete", taskId);
                 taskTable();
-                if ($("#tmw-graphic").attr("class") == "btn btn-default openGraph") {
-                taskTableGraph();
-                }
             },
             error: function (jqXHR) {
                 console.log(jqXHR.status)
@@ -736,12 +694,6 @@ $(document).ready(function () {
                     $("#login").show();
                 }
             }
-            // ,error: function (jqXHR, textStatus, errorThrown) {
-            //     if (jqXHR.status === 401) {
-            //     } else {
-            //         throw new Error("an unexpected error occured: " + errorThrown);
-            //     }
-            // }
         });
     }
 
@@ -885,132 +837,104 @@ $(document).ready(function () {
     }
 
 //shceduler
-      $('#tmw-graphic').click(function () {
-          // $(".col-sm-12").css("display", "none");
-          if ($(this).attr("class") == "btn btn-default closeGraph") {
-              $(this).attr("class","btn btn-default openGraph");
-              $("#scheduler").css("display", "block");
-              taskTableGraph();
-          }
-          else {
-              $("#scheduler").css("display", "none");
-              $("#tmw-graphic").attr("class", "btn btn-default closeGraph");
-          }
-          // $("#scheduler").toggle();
-      });
-      var taskTableGraph = function () {
-          $.ajax({
-              url: 'api/tasks/filter' + generatedRequestParameters(),
-              type: 'GET',
-              contentType: 'application/json',
-              headers: createAuthToken(),
-              success: function (data, textStatus, jqXHR) {
-                  setToken(jqXHR);
-                  var appointments = new Array();
-                  var startDates = new Array();
-                  for (var i = 0; i < data.length; i++) {
-                      var startDate = new Date(data[i].startDate);
-                      var est = data[i].estimateTime;
-                      est = est.toString().slice(0, 2);
-                      est = Number(est) * 3600000;
-                      var endDate = new Date(startDate.getTime() + est);
-//                      console.log(est);
-//                      console.log(startDate);
-//                      console.log(endDate);
-                      var appointment = {
-                          id: "taskGraph" + data[i].id,
-                          description: "",
-                          location: "",
-                          subject: data[i].name,
-                          calendar: data[i].assignTo,
-                          start: startDate,
-                          end: endDate
-                      }
-                      appointments.push(appointment);
-                      startDates.push(startDate);
-                  }
-                  startDates.sort();
-                  // prepare the data
-                  var source =
-                      {
-                          dataType: "array",
-                          dataFields: [
-                              {name: 'id', type: 'string'},
-                              {name: 'description', type: 'string'},
-                              {name: 'location', type: 'string'},
-                              {name: 'subject', type: 'string'},
-                              {name: 'calendar', type: 'string'},
-                              {name: 'start', type: 'date'},
-                              {name: 'end', type: 'date'}
-                          ],
-                          id: 'id',
-                          localData: appointments
-                      };
-                  var adapter = new $.jqx.dataAdapter(source);
-                  $("#scheduler").jqxScheduler({
-                      date: new $.jqx.date(startDates[0]),
-                      width: "100%",
-                      height: 500,
-                      source: adapter,
-                      view: 'agendaView',
-                      showLegend: true,
-                      editDialog: false,
-                      ready: function () {
-                          $("#scheduler").jqxScheduler('ensureAppointmentVisible', 'taskGraph0');
-                      },
-                      resources:
-                          {
-                              colorScheme: "scheme05",
-                              dataField: "calendar",
-                              source: new $.jqx.dataAdapter(source)
-                          },
-                      appointmentDataFields:
-                          {
-                              from: "start",
-                              to: "end",
-                              id: "id",
-                              description: "description",
-                              location: "place",
-                              subject: "subject",
-                              resourceId: "calendar"
-                          },
-                      views:
-                          [
-                              'dayView',
-                              'weekView',
-                              'monthView',
-                              'agendaView'
-                          ]
-                  });
-              },
-              error: function (jqXHR, textStatus, errorThrown) {
-                  if (jqXHR.status === 401) {
-                      resetToken();
-                  } else {
-                      throw new Error("an unexpected error occured: " + errorThrown);
-                  }
-              }
-          });
 
-      }
-
-    var estim = "";
-    $("#scheduler").on('appointmentDoubleClick', function (event) {
-      var args = event.args;
-      var appointment = args.appointment;
-      var taskId = appointment.id.slice(9);
-      var start = new Date(appointment.from.dateData);
-      var end = new Date(appointment.to.dateData);
-      estim = (end.getDate() == start.getDate()) ? end.getHours() - start.getHours() : "";
-      var minut = end.getMinutes()-start.getMinutes();
-      estim = (minut < 0) ? estim - 1 : estim;
-      estim = (estim.toString().length == 1) ? "0" + estim : estim;
-      minut = (minut == 0) ? "00" : Math.abs(minut);
-      estim = estim + ":" + minut + ":00";
-      // console.log(event);
-      // console.log(start.getDate());
-      // console.log(end.getDate());
-      // console.log(estim);
-      showFull(taskId);
+    $('#tmw-graphic').click(function () {
+        $('#tmw-main-calendar').removeClass('hidden');
+        taskCalendar();
     });
+
+    var taskCalendar = function () {
+        $.ajax({
+            url: '/api/users/all',
+            type: 'GET',
+            contentType: 'application/json',
+            success: function (data) {
+                var resources = [];
+                for (var i = 0; i < data.length; i++) {
+                    resources.push({
+                        id: data[i].id,
+                        title: data[i].name
+                    });
+                }
+
+                $('#tmw-task-calendar').fullCalendar({
+                    schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
+                    editable: true,
+                    droppable: true,
+                    height: 'auto',
+                    timezone: 'local',
+                    minTime: '09:00',
+                    maxTime: '18:00',
+                    slotDuration: '00:30:00',
+                    weekends: false,
+                    header: {
+                        left: 'prev,next',
+                        center: 'title',
+                        right: 'timelineDay,timelineWeek,timelineMonth, timelineDay'
+                    },
+                    defaultView: 'timelineDay',
+                    resourceLabelText: 'Users',
+                    resources: resources,
+                    events: [
+                        /* { id: '1', resourceId: 'b', start: '2017-10-07T02:00:00', end: '2017-10-07T07:00:00', title: 'event 1' } */
+                    ],
+
+                    drop: function (date, jsEvent, ui, resourceId) {
+                        $(this).remove();
+                    },
+
+                    eventReceive: handleCalendarTaskEdit,
+
+                    eventDrop: handleCalendarTaskEdit,
+
+                    eventResize: handleCalendarTaskEdit
+                });
+
+                makeTableRowsDraggable();
+            },
+            cache: false
+        });
+    };
+
+    var handleCalendarTaskEdit = function (event) {
+        console.log('========================');
+        console.log(event.title);
+        console.log('ID:', event.id);
+        console.log('User ID:', event.resourceId)
+        console.log('From:', event.start.toDate());
+
+        if (event.end) {
+            console.log('To:', event.end.toDate());
+        }
+    }
+
+    var makeTableRowsDraggable = function () {
+        $('#tmw-main-table tbody tr').each(function () {
+            var table = $('#tmw-task-table').DataTable();
+            var tid = table.row(this).data()[0];
+
+            $(this).data('event', {
+                id: tid,
+                title: $.trim($(this).find('td').first().text()),
+                stick: true
+            });
+
+            $(this).draggable({
+                zIndex: 999,
+                revert: true,
+                revertDuration: 0,
+                appendTo: $(document.body),
+
+                helper: function (event) {
+                    $(event.currentTarget).addClass('active');
+                    return $(event.currentTarget).clone();
+                },
+
+                stop: function () {
+                    $('#tmw-main-table tbody tr').removeClass('active');
+                }
+            });
+        });
+    };
+
 });

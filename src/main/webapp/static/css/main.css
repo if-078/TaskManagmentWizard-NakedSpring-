@@ -81,3 +81,35 @@ display:none;
 #leftPanel > div {
   padding: 2px 0px;
 }
+
+
+
+
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.tmw-main {
+    margin: 0;
+}
+
+.tmw-main-header {
+    padding-bottom: 15px;
+}
+
+.tmw-main-calendar {
+    padding-bottom: 15px;
+}
+
+body > tr {
+    border-collapse: collapse;
+    background: white;
+}
+body > tr > td {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-collapse: collapse;
+}

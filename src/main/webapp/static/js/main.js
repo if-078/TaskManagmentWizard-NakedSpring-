@@ -840,6 +840,25 @@ $(document).ready(function () {
 
     $('#tmw-graphic').click(function () {
         $('#tmw-main-calendar').removeClass('hidden');
+
+        $.ajax({
+            url: 'api/tasks/planning',
+            type: 'GET',
+            contentType: 'application/json',
+            headers: createAuthToken(),
+            success: function (data, textStatus, jqXHR) {
+                setToken(jqXHR);
+                console.log(data);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                if (jqXHR.status === 401) {
+                    resetToken();
+                } else {
+                    throw new Error("an unexpected error occured: " + errorThrown);
+                }
+            }
+        });
+
         taskCalendar();
     });
 

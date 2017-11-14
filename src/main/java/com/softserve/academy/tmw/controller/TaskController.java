@@ -33,6 +33,15 @@ public class TaskController {
         return taskService.findTaskByTree(id);
     }
 
+    @GetMapping("/planning")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Task> getPlannedTasks (){
+        //return taskService.getPlannedTasks();
+        //вибрати всі таски у яких planning_date != null
+
+        return taskService.getAll();
+    }
+
     @GetMapping("/filter")
     @ResponseStatus(HttpStatus.OK)
     public List<TaskTableDTO> getFilteredTasks (
@@ -43,6 +52,9 @@ public class TaskController {
             @RequestParam(name="tag", required = false) int[] tag){
         return taskService.getFilteredTasksForTable(parentId, date, status, priority, tag);
     }
+
+
+
 
     @GetMapping("/view/{id}")
     @ResponseStatus(HttpStatus.OK)

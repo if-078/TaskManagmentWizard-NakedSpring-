@@ -889,13 +889,18 @@ $(document).ready(function () {
                     header: {
                         left: 'prev,next',
                         center: 'title',
-                        right: 'timelineDay,timelineWeek,timelineMonth, timelineDay'
+                        right: 'timelineDay,timelineWeek,timelineMonth'
                     },
                     defaultView: 'timelineDay',
                     resourceLabelText: 'Users',
                     resources: resources,
                     events: [
-                        /* { id: '1', resourceId: 'b', start: '2017-10-07T02:00:00', end: '2017-10-07T07:00:00', title: 'event 1' } */
+                         {   id: '2', resourceId: '2',
+                             start: '2017-11-14T10:00:00',
+                             end: '2017-11-14T14:00:00',
+                             title: 'Make front-end',
+                             color: '#ff0000'
+                         }
                     ],
 
                     drop: function (date, jsEvent, ui, resourceId) {

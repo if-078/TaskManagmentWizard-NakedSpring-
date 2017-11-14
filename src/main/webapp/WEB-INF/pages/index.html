@@ -53,6 +53,11 @@
 	<!--<script type="text/javascript" src="static/js/scheduler.js" ></script>-->
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.js"></script>
 
+	<!-- MULTI SELECT BOOTSTRAP -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css">
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.min.js"></script>
+
 	<link rel="stylesheet"  type="text/css" href="static/css/main.css">
 	<script src="static/js/main.js"></script>
 	<script src="static/js/partsLoader.js"></script>
@@ -240,6 +245,15 @@
 								  </div>
 								  <div id="tmw-task-endDate-error"></div>
 							  </div>
+						  </div>
+						  <div class="form-row">
+						  <div class="form-group col-md-12">
+							  <label for="tmw-task-conteiner-tags">Tags</label>
+							  <!-- Build your select: -->
+							  <div id = "tmw-task-conteiner-tags">
+								  <select id="tmw-tag-multi-select" multiple="multiple"></select>
+							  </div>
+						  </div>
 						  </div>
 					  </div>
 					  <div class="form-row">

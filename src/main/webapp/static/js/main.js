@@ -383,7 +383,7 @@ $(document).ready(function () {
         fillSelectPriority(null);
         fillSelectStatus(null);
         fillSelectTags(null);
-        $('#tmw-tag-multi-select').multiselect('deselectAll', false);
+        //$('#tmw-tag-multi-select').multiselect('deselectAll', false);
 
         $('#tmw-modal').modal('show');
     });
@@ -634,15 +634,16 @@ $(document).ready(function () {
 
                 $('#tmw-tag-multi-select').multiselect({
                     buttonWidth: '570px',
+                    inheritClass: true,
                     enableCaseInsensitiveFiltering: true,
                     dropRight: true,
                     numberDisplayed:10,
                 });
 
-                // console.log("after initialize");
+                $('#tmw-tag-multi-select').multiselect('deselectAll', false);
+                $('#tmw-tag-multi-select').multiselect('updateButtonText');
 
                if (id != null) getTagsByTask(id);
-
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 if (jqXHR.status === 401) {
@@ -685,8 +686,6 @@ $(document).ready(function () {
         data.map(function(tag) {
             arrTagsId.push(tag.id);
         });
-
-
 
         return arrTagsId;
     }

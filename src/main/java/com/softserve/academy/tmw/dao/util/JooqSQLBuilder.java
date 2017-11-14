@@ -19,7 +19,6 @@ public class JooqSQLBuilder {
     private Field id = field("task.id");
     private Field name = field("task.name");
     private Field createdDate = field("task.created_date");
-    private Field planningDate = field("task.planning_date");
     private Field startDate = field("task.start_date");
     private Field endDate = field("task.end_date");
     private Field estimateTime = field("task.estimate_time");
@@ -27,6 +26,7 @@ public class JooqSQLBuilder {
     private Field statusId = field("task.status_id");
     private Field priorityId = field("priority_id");
     private Field parentId = field("parent_id");
+    private Field planningDate = field("planning_date");
     private FilterStateWrapper sto;
 
     public JooqSQLBuilder(FilterStateWrapper sto) {
@@ -38,6 +38,7 @@ public class JooqSQLBuilder {
         Table table;
         Condition condition = field(parentId).eq(sto.getId());
         Select selectConditionStep;
+        condition = condition.and(planningDate.isNotNull());
 
         if (sto.getStatus().length > 0) {
 
@@ -80,6 +81,7 @@ public class JooqSQLBuilder {
                     .from(table).where(condition);
 
         }
+        System.out.println(selectConditionStep.getSQL());
         return selectConditionStep;
     }
 

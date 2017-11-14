@@ -325,7 +325,13 @@ $(document).ready(function () {
                 $('#tmw-task-createDate').val(taskDTO.createdDate);
                 $('#tmw-task-startDate').val(taskDTO.startDate);
                 $('#tmw-task-endDate').val(taskDTO.endDate);
-                $('#tmw-task-estimateTime').val(taskDTO.estimateTime);
+                if (estim == "") {
+                    $('#tmw-task-estimateTime').val(taskDTO.estimateTime);
+                }
+                else {
+                    $('#tmw-task-estimateTime').val(estim);
+                    estim = "";
+                }
                 fillSelectUser(taskDTO.assignTo.id);
                 fillSelectPriority(taskDTO.priority.id);
                 fillSelectStatus(taskDTO.status.id);
@@ -870,19 +876,26 @@ $(document).ready(function () {
           });
 
       }
-
+    var estim = "";
     $("#scheduler").on('appointmentDoubleClick', function (event) {
       var args = event.args;
       var appointment = args.appointment;
       var taskId = appointment.id.slice(9);
       var start = new Date(appointment.from.dateData);
       var end = new Date(appointment.to.dateData);
-      var estim = (end.getDate() == start.getDate()) ? end.getHours() - start.getHours() : "";
+      estim = (end.getDate() == start.getDate()) ? end.getHours() - start.getHours() : "";
+      var minut = end.getMinutes()-start.getMinutes();
+      estim = (minut < 0) ? estim - 1 : estim;
+      estim = (estim.toString().length == 1) ? "0" + estim : estim;
+      minut = (minut == 0) ? "00" : Math.abs(minut);
+      estim = estim + ":" + minut + ":00";
       // console.log(event);
       // console.log(start.getDate());
       // console.log(end.getDate());
       // console.log(estim);
       showFull(taskId);
-
+      console.log($('#tmw-task-estimateTime').val());
+      $('#tmw-task-estimateTime').val("10:00:00");
+        console.log($('#tmw-task-estimateTime').val());
     });
 });

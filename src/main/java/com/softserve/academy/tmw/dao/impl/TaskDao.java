@@ -55,7 +55,7 @@ public class TaskDao extends EntityDao<Task> implements TaskDaoInterface {
     @Override
     public boolean update(Task task) {
         MapSqlParameterSource param = new MapSqlParameterSource();
-        java.sql.Timestamp start, end;
+        java.sql.Timestamp start, end, planning;
         java.sql.Time estimate;
         Date date = new Date();
 
@@ -63,6 +63,12 @@ public class TaskDao extends EntityDao<Task> implements TaskDaoInterface {
             start = new java.sql.Timestamp(date.getTime());
         } else {
             start = new java.sql.Timestamp(task.getStartDate().getTime());
+        }
+
+        if (task.getPlanningDate() == null) {
+            planning = new java.sql.Timestamp(date.getTime());
+        } else {
+            planning = new java.sql.Timestamp(task.getPlanningDate().getTime());
         }
 
         if (task.getEndDate() == null) {
@@ -94,7 +100,7 @@ public class TaskDao extends EntityDao<Task> implements TaskDaoInterface {
 
         param.addValue("name", task.getName());
         param.addValue("created_date", task.getCreatedDate());
-        param.addValue("planning_date", task.getPlanningDate());
+        param.addValue("planning_date", planning);
         param.addValue("start_date", start);
         param.addValue("end_date", end);
         param.addValue("estimate_time", estimate);
@@ -239,7 +245,7 @@ public class TaskDao extends EntityDao<Task> implements TaskDaoInterface {
 
     @Override
     public List<Task> getPageOfTasks(int page, int amount) {
-        String sql = "SELECT id, name, created_date, start_date, end_date, estimate_time, "
+        String sql = "SELECT id, name, created_date, planning_date, start_date, end_date, estimate_time, "
                 + "assign_to, status_id, priority_id, parent_id FROM task LIMIT " + (page - 1) + ", "
                 + amount;
         List<Task> tasks = jdbcTemplate.query(sql, new TaskMapper());
@@ -249,7 +255,7 @@ public class TaskDao extends EntityDao<Task> implements TaskDaoInterface {
 
     @Override
     public List<Task> getTasksAssignToUser(int userId) {
-        String query = "SELECT id, name, created_date, start_date, end_date, estimate_time, " +
+        String query = "SELECT id, name, created_date, planning_date, start_date, end_date, estimate_time, " +
             "assign_to, status_id, priority_id, parent_id FROM task "
             + ""
             + "WHERE assign_to= :assign_to";
@@ -271,7 +277,7 @@ public class TaskDao extends EntityDao<Task> implements TaskDaoInterface {
 
 
     public Task getFullTask(int id) {
-       String query = "SELECT task.id, task.name, task.created_date, task.start_date, task.end_date, task.estimate_time,\n"
+       String query = "SELECT task.id, task.name, task.created_date, task.planning_date, task.start_date, task.end_date, task.estimate_time,\n"
            + "  task.assign_to, task.status_id, task.priority_id, task.parent_id,\n"
            + "  priority.name as priority_name,\n"
            + "  status.name as status_name\n"

@@ -4,6 +4,8 @@ import com.softserve.academy.tmw.dao.api.TagDaoInterface;
 import com.softserve.academy.tmw.dao.mapper.TagMapper;
 import com.softserve.academy.tmw.entity.Tag;
 import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -65,15 +67,16 @@ public class TagDao extends EntityDao<Tag> implements TagDaoInterface {
         param.addValue("task", taskId);
         for (int i = 0; i < tags.length; i++) {
             String tag = "tag" + i;
-            sql.append("(tag_id:" + tag + ", task_id:task),");
+            sql.append("(:" + tag + ", :task),");
             param.addValue(tag, tags[i]);
         }
         sql.setLength(sql.length() - 1);
         System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-        System.out.println(jdbcTemplate.update(sql.toString(), param));
+        //System.out.println(jdbcTemplate.update(sql.toString(), param));
         System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-
-        return false;
+        System.out.println(sql);
+        //return false;
+        return jdbcTemplate.update(sql.toString(), param) > 0;
     }
 
     /*public boolean addTagsToTask(int[] tagId, int taskId) {
@@ -100,5 +103,23 @@ public class TagDao extends EntityDao<Tag> implements TagDaoInterface {
         param.addValue("user_id", entity.getUserId());
         return param;
     }
+
+
+    /*@Autowired
+    static TagDao tagDao = new TagDao("tmw.tag");
+
+    public static void main(String[] args) {
+        int[] tagsList = new int[2];
+        *//*for (int i = 0; i < tagsList.length; i++) {
+            tagsList[i] = i + 1;
+        }
+        for (int i = 0; i < tagsList.length; i++) {
+            System.out.println(tagsList[i]);
+        }*//*
+        tagsList[0] = 1;
+        tagsList[1] = 2;
+        System.out.println(tagDao);
+        tagDao.setTagsToTask(tagsList, 3);
+    }*/
 
 }

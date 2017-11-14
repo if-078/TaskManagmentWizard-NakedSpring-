@@ -19,6 +19,7 @@ public class JooqSQLBuilder {
     private Field id = field("task.id");
     private Field name = field("task.name");
     private Field createdDate = field("task.created_date");
+    private Field planningDate = field("task.planning_date");
     private Field startDate = field("task.start_date");
     private Field endDate = field("task.end_date");
     private Field estimateTime = field("task.estimate_time");
@@ -68,14 +69,14 @@ public class JooqSQLBuilder {
             List<Integer> list = Arrays.stream(sto.getTag()).boxed().collect(Collectors.toList());
             table = table("task").join(table("tags_tasks")).on(field(id).eq(field("tags_tasks.task_id")))
                     .join(table("tag")).on(field("tags_tasks.tag_id").eq(field("tag.id")));
-            selectConditionStep = creator.select(id, name, createdDate, startDate,endDate, estimateTime, assignTo, statusId, priorityId, parentId).from(table)
+            selectConditionStep = creator.select(id, name, createdDate, planningDate, startDate,endDate, estimateTime, assignTo, statusId, priorityId, parentId).from(table)
                     .where(condition).and(field("tags_tasks.tag_id").in(list))
                     .groupBy(field("task_id"))
                     .having(field("tag_id").countDistinct().eq(sto.getTag().length));
         } else {
 
             table = table("task");
-            selectConditionStep = creator.select(id, name, createdDate, startDate,endDate, estimateTime, assignTo, statusId, priorityId, parentId)
+            selectConditionStep = creator.select(id, name, createdDate, planningDate, startDate,endDate, estimateTime, assignTo, statusId, priorityId, parentId)
                     .from(table).where(condition);
 
         }

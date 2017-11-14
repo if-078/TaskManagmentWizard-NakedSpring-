@@ -377,6 +377,7 @@ $(document).ready(function () {
         fillSelectPriority(null);
         fillSelectStatus(null);
         fillSelectTags(null);
+        $('#tmw-tag-multi-select').multiselect('deselectAll', false);
 
         $('#tmw-modal').modal('show');
     });
@@ -453,6 +454,7 @@ $(document).ready(function () {
                 refreshTree("create", data);
                 clearTaskModal();
                 taskTable();
+                taskTableGraph();
             },
             cache: false
         }).fail(function ($xhr) {
@@ -475,6 +477,7 @@ $(document).ready(function () {
                 refreshTree("update", task);
                 clearTaskModal();
                 taskTable();
+                // taskTableGraph();
             },
             cache: false
         }).fail(function ($xhr) {
@@ -493,6 +496,7 @@ $(document).ready(function () {
             success: function () {
                 refreshTree("delete", taskId);
                 taskTable();
+                taskTableGraph();
             },
             error: function (jqXHR) {
                 console.log(jqXHR.status)
@@ -626,7 +630,7 @@ $(document).ready(function () {
                     buttonWidth: '570px',
                     enableCaseInsensitiveFiltering: true,
                     dropRight: true,
-                    numberDisplayed:15,
+                    numberDisplayed:10,
                 });
 
                 console.log("after initialize");
@@ -870,11 +874,122 @@ $(document).ready(function () {
     }
 
 //shceduler
+      $('#tmw-graphic').click(function () {
+          // $(".col-sm-12").css("display", "none");
+          if ($(this).attr("class") == "btn btn-default closeGraph") {
+              $(this).attr("class","btn btn-default openGraph");
+              $("#scheduler").css("display", "block");
+              taskTableGraph();
+          }
+          else {
+              $("#scheduler").css("display", "none");
+              $("#tmw-graphic").attr("class", "btn btn-default closeGraph");
+          }
+          // $("#scheduler").toggle();
+      });
+      var taskTableGraph = function () {
+          $.ajax({
+              url: 'api/tasks/filter' + generatedRequestParameters(),
+              type: 'GET',
+              contentType: 'application/json',
+              headers: createAuthToken(),
+              success: function (data, textStatus, jqXHR) {
+                  setToken(jqXHR);
+                  var appointments = new Array();
+                  var startDates = new Array();
+                  for (var i = 0; i < data.length; i++) {
+                      var startDate = data[i].startDate;
+                      var est = data[i].estimateTime;
+                      var endDate = new Date(startDate + "T" + est + "Z");
+                      var appointment = {
+                          id: "taskGraph" + data[i].id,
+                          description: "",
+                          location: "",
+                          subject: data[i].name,
+                          calendar: data[i].assignTo,
+                          start: startDate,
+                          end: endDate
+                      }
+                      appointments.push(appointment);
+                      startDates.push(startDate);
+                  }
+                  startDates.sort();
+                  // prepare the data
+                  var source =
+                      {
+                          dataType: "array",
+                          dataFields: [
+                              {name: 'id', type: 'string'},
+                              {name: 'description', type: 'string'},
+                              {name: 'location', type: 'string'},
+                              {name: 'subject', type: 'string'},
+                              {name: 'calendar', type: 'string'},
+                              {name: 'start', type: 'date'},
+                              {name: 'end', type: 'date'}
+                          ],
+                          id: 'id',
+                          localData: appointments
+                      };
+                  var adapter = new $.jqx.dataAdapter(source);
+                  $("#scheduler").jqxScheduler({
+                      date: new $.jqx.date(startDates[0]),
+                      width: "100%",
+                      height: 500,
+                      source: adapter,
+                      view: 'weekView',
+                      showLegend: true,
+                      editDialog: false,
+                      ready: function () {
+                          $("#scheduler").jqxScheduler('ensureAppointmentVisible', 'taskGraph0');
+                      },
+                      resources:
+                          {
+                              colorScheme: "scheme05",
+                              dataField: "calendar",
+                              source: new $.jqx.dataAdapter(source)
+                          },
+                      appointmentDataFields:
+                          {
+                              from: "start",
+                              to: "end",
+                              id: "id",
+                              description: "description",
+                              location: "place",
+                              subject: "subject",
+                              resourceId: "calendar"
+                          },
+                      views:
+                          [
+                              'dayView',
+                              'weekView',
+                              'monthView'
+                          ]
+                  });
+              },
+              error: function (jqXHR, textStatus, errorThrown) {
+                  if (jqXHR.status === 401) {
+                      resetToken();
+                  } else {
+                      throw new Error("an unexpected error occured: " + errorThrown);
+                  }
+              }
+          });
 
+      }
+
+    //shceduler
     $('#tmw-graphic').click(function () {
-        $(".col-sm-12").css("display", "none");
-        $("#scheduler").css("display", "block");
-        taskTableGraph();
+        // $(".col-sm-12").css("display", "none");
+        if ($(this).attr("class") == "btn btn-default closeGraph") {
+            $(this).attr("class","btn btn-default openGraph");
+            $("#scheduler").css("display", "block");
+            taskTableGraph();
+        }
+        else {
+            $("#scheduler").css("display", "none");
+            $("#tmw-graphic").attr("class", "btn btn-default closeGraph");
+        }
+        // $("#scheduler").toggle();
     });
     var taskTableGraph = function () {
         $.ajax({
@@ -963,116 +1078,21 @@ $(document).ready(function () {
                 }
             }
         });
+
     }
 
     $("#scheduler").on('appointmentDoubleClick', function (event) {
         var args = event.args;
         var appointment = args.appointment;
-        $('#tmw-modal').modal('show');
-        console.log("appointmentDoubleClick is raised");
-
-        $('#tmw-graphic').click(function () {
-            // $(".col-sm-12").css("display", "none");
-            $("#scheduler").css("display", "block");
-            taskTableGraph();
-        });
-        var taskTableGraph = function () {
-            $.ajax({
-                url: 'api/tasks/filter' + generatedRequestParameters(),
-                type: 'GET',
-                contentType: 'application/json',
-                headers: createAuthToken(),
-                success: function (data, textStatus, jqXHR) {
-                    setToken(jqXHR);
-                    var appointments = new Array();
-                    var startDates = new Array();
-                    for (var i = 0; i < data.length; i++) {
-                        var startDate = data[i].startDate;
-                        var est = data[i].estimateTime;
-                        var endDate = new Date(startDate + "T" + est + "Z");
-                        var appointment = {
-                            id: "taskGraph" + data[i].id,
-                            description: "",
-                            location: "",
-                            subject: data[i].name,
-                            calendar: data[i].assignTo,
-                            start: startDate,
-                            end: endDate
-                        }
-                        appointments.push(appointment);
-                        startDates.push(startDate);
-                    }
-                    startDates.sort();
-                    // prepare the data
-                    var source =
-                        {
-                            dataType: "array",
-                            dataFields: [
-                                {name: 'id', type: 'string'},
-                                {name: 'description', type: 'string'},
-                                {name: 'location', type: 'string'},
-                                {name: 'subject', type: 'string'},
-                                {name: 'calendar', type: 'string'},
-                                {name: 'start', type: 'date'},
-                                {name: 'end', type: 'date'}
-                            ],
-                            id: 'id',
-                            localData: appointments
-                        };
-                    var adapter = new $.jqx.dataAdapter(source);
-                    $("#scheduler").jqxScheduler({
-                        date: new $.jqx.date(startDates[0]),
-                        width: "100%",
-                        height: 500,
-                        source: adapter,
-                        view: 'weekView',
-                        showLegend: true,
-                        editDialog: false,
-                        ready: function () {
-                            $("#scheduler").jqxScheduler('ensureAppointmentVisible', 'taskGraph0');
-                        },
-                        resources:
-                            {
-                                colorScheme: "scheme05",
-                                dataField: "calendar",
-                                source: new $.jqx.dataAdapter(source)
-                            },
-                        appointmentDataFields:
-                            {
-                                from: "start",
-                                to: "end",
-                                id: "id",
-                                description: "description",
-                                location: "place",
-                                subject: "subject",
-                                resourceId: "calendar"
-                            },
-                        views:
-                            [
-                                'dayView',
-                                'weekView',
-                                'monthView'
-                            ]
-                    });
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    if (jqXHR.status === 401) {
-                        resetToken();
-                    } else {
-                        throw new Error("an unexpected error occured: " + errorThrown);
-                    }
-                }
-            });
-        }
-
-        $("#scheduler").on('appointmentDoubleClick', function (event) {
-            var args = event.args;
-            var appointment = args.appointment;
-            var taskId = appointment.id.slice(9);
-
-            showFull(taskId);
-
-        });
+        var taskId = appointment.id.slice(9);
+        var start = new Date(appointment.from.dateData);
+        var end = new Date(appointment.to.dateData);
+        var estim = (end.getDate() == start.getDate()) ? end.getHours() - start.getHours() : "";
+        // console.log(event);
+        // console.log(start.getDate());
+        // console.log(end.getDate());
+        // console.log(estim);
+        showFull(taskId);
 
     });
 });

@@ -946,7 +946,7 @@ $(document).ready(function () {
                       width: "100%",
                       height: 500,
                       source: adapter,
-                      view: 'weekView',
+                      view: 'agendaView',
                       showLegend: true,
                       editDialog: false,
                       ready: function () {
@@ -972,7 +972,8 @@ $(document).ready(function () {
                           [
                               'dayView',
                               'weekView',
-                              'monthView'
+                              'monthView',
+                              'agendaView'
                           ]
                   });
               },

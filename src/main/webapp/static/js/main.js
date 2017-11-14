@@ -430,9 +430,9 @@ $(document).ready(function () {
     function  getSelectedTags() {
         var selectedIdOfTags = $('#tmw-tag-multi-select').val();
         var seletedTags = [];
-        console.log(selectedIdOfTags);
-        console.log("value");
-        console.log(seletedTags);
+        // console.log(selectedIdOfTags);
+        // console.log("value");
+        // console.log(seletedTags);
 
         for(var i = 0; i < tags.length; i++){
             for(var j = 0; j < selectedIdOfTags.length; j++){
@@ -442,7 +442,7 @@ $(document).ready(function () {
                 }
             }
         }
-        console.log(seletedTags);
+        // console.log(seletedTags);
         return seletedTags;
 
     }
@@ -460,7 +460,7 @@ $(document).ready(function () {
                 refreshTree("create", data);
                 clearTaskModal();
                 taskTable();
-                taskTableGraph();
+                ($("#tmw-graphic").attr("class") == "openGraph") ? taskTableGraph():{};
             },
             cache: false
         }).fail(function ($xhr) {
@@ -483,7 +483,7 @@ $(document).ready(function () {
                 refreshTree("update", task);
                 clearTaskModal();
                 taskTable();
-                // taskTableGraph();
+                ($("#tmw-graphic").attr("class") == "openGraph") ? taskTableGraph():{};
             },
             cache: false
         }).fail(function ($xhr) {
@@ -502,7 +502,7 @@ $(document).ready(function () {
             success: function () {
                 refreshTree("delete", taskId);
                 taskTable();
-                taskTableGraph();
+                ($("#tmw-graphic").attr("class") == "openGraph") ? taskTableGraph():{};
             },
             error: function (jqXHR) {
                 console.log(jqXHR.status)
@@ -639,7 +639,7 @@ $(document).ready(function () {
                     numberDisplayed:10,
                 });
 
-                console.log("after initialize");
+                // console.log("after initialize");
 
                if (id != null) getTagsByTask(id);
 
@@ -904,9 +904,14 @@ $(document).ready(function () {
                   var appointments = new Array();
                   var startDates = new Array();
                   for (var i = 0; i < data.length; i++) {
-                      var startDate = data[i].startDate;
+                      var startDate = new Date(data[i].startDate);
                       var est = data[i].estimateTime;
-                      var endDate = new Date(startDate + "T" + est + "Z");
+                      est = est.toString().slice(0, 2);
+                      est = Number(est) * 3600000;
+                      var endDate = new Date(startDate.getTime() + est);
+                      console.log(est);
+                      console.log(startDate);
+                      console.log(endDate);
                       var appointment = {
                           id: "taskGraph" + data[i].id,
                           description: "",

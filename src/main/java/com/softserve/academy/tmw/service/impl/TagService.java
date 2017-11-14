@@ -74,4 +74,36 @@ public class TagService implements TagServiceInterface {
         return tagDao.setTagsToTask(tags, taskId);
     }
 
+
+
+
+    /*public static void addTagsToTask() {
+        int[] tagsList = new int[2];
+
+        tagsList[0] = 1;
+        tagsList[1] = 2;
+        System.out.println("qwe");
+        tagDao.setTagsToTask(tagsList, 2);
+        System.out.println("rty");
+
+    }
+
+    public static void main(String[] args) {
+        //addTagsToTask();
+
+
+        System.out.println(tagDao.findOne(2));
+        *//*int[] tagsList = new int[2];
+        for (int i = 0; i < tagsList.length; i++) {
+            tagsList[i] = i + 1;
+        }
+        for (int i = 0; i < tagsList.length; i++) {
+            System.out.println(tagsList[i]);
+        }
+        tagsList[0] = 1;
+        tagsList[1] = 2;
+        System.out.println(tagDao);
+        tagDao.setTagsToTask(tagsList, 3);*//*
+    }*/
+
 }

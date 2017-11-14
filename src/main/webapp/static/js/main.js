@@ -228,7 +228,6 @@ $(document).ready(function () {
 
     var taskTableInit = false;
     var taskTable = function () {
-        // $("#scheduler").css("display", "none");
         $.ajax({
             url: 'api/tasks/filter' + generatedRequestParameters(),
             type: 'GET',
@@ -460,7 +459,9 @@ $(document).ready(function () {
                 refreshTree("create", data);
                 clearTaskModal();
                 taskTable();
-                ($("#tmw-graphic").attr("class") == "openGraph") ? taskTableGraph():{};
+                if ($("#tmw-graphic").attr("class") == "btn btn-default openGraph") {
+                taskTableGraph();
+                }
             },
             cache: false
         }).fail(function ($xhr) {
@@ -482,8 +483,11 @@ $(document).ready(function () {
                 $('#tmw-modal').modal('hide');
                 refreshTree("update", task);
                 clearTaskModal();
+                console.log(task);
                 taskTable();
-                ($("#tmw-graphic").attr("class") == "openGraph") ? taskTableGraph():{};
+                if ($("#tmw-graphic").attr("class") == "btn btn-default openGraph") {
+                taskTableGraph();
+                }
             },
             cache: false
         }).fail(function ($xhr) {
@@ -502,7 +506,9 @@ $(document).ready(function () {
             success: function () {
                 refreshTree("delete", taskId);
                 taskTable();
-                ($("#tmw-graphic").attr("class") == "openGraph") ? taskTableGraph():{};
+                if ($("#tmw-graphic").attr("class") == "btn btn-default openGraph") {
+                taskTableGraph();
+                }
             },
             error: function (jqXHR) {
                 console.log(jqXHR.status)
@@ -908,9 +914,9 @@ $(document).ready(function () {
                       est = est.toString().slice(0, 2);
                       est = Number(est) * 3600000;
                       var endDate = new Date(startDate.getTime() + est);
-                      console.log(est);
-                      console.log(startDate);
-                      console.log(endDate);
+//                      console.log(est);
+//                      console.log(startDate);
+//                      console.log(endDate);
                       var appointment = {
                           id: "taskGraph" + data[i].id,
                           description: "",

@@ -38,7 +38,7 @@ public class JooqSQLBuilder {
         Table table;
         Condition condition = field(parentId).eq(sto.getId());
         Select selectConditionStep;
-        condition = condition.and(planningDate.isNotNull());
+        condition = condition.and(planningDate.isNull());
 
         if (sto.getStatus().length > 0) {
 

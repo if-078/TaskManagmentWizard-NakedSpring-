@@ -242,6 +242,8 @@ $(document).ready(function () {
                     rows.push(Object.values(data[i]));
                 }
 
+                console.log(rows);
+
                 if (taskTableInit) {
                     $('#tmw-task-table').DataTable().destroy();
                 }
@@ -860,6 +862,7 @@ $(document).ready(function () {
                     });
                 }
 
+                var plannedTasks = [];
                 $.ajax({
                     url: 'api/tasks/planning',
                     type: 'GET',
@@ -869,13 +872,58 @@ $(document).ready(function () {
                         setToken(jqXHR);
                         console.log(data);
 
-                       // var plannedTasks = [];
-                       // for (var i = 0; i < data.length; i++) {
-                            //plannedTasks.push({
-                            //    id: data[i].id,
-                            //    title: data[i].name
-                            //});
-                        //}
+
+                       for (var i = 0; i < data.length; i++) {
+                           if (data[i].planningDate==null) continue;
+                           plannedTasks.push({
+                               id: data[i].id,
+                               resourceId: data[i].assignTo,
+                               start: data[i].planningDate + 'T10:00:00',
+                               end: data[i].planningDate + 'T' +
+                                        (10 + parseInt(data[i].estimateTime.substring(0, 2))) + ':00:00',
+                               title: data[i].name,
+                               color: setColorTask(data[i].statusId)
+                           });
+                       }
+                        console.log(plannedTasks);
+
+                        $('#tmw-task-calendar').fullCalendar({
+                            schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
+                            editable: true,
+                            droppable: true,
+                            height: 'auto',
+                            timezone: 'local',
+                            minTime: '09:00',
+                            maxTime: '18:00',
+                            slotDuration: '00:30:00',
+                            weekends: false,
+                            header: {
+                                left: 'prev,next',
+                                center: 'title',
+                                right: 'timelineDay,timelineWeek,timelineMonth'
+                            },
+                            defaultView: 'timelineDay',
+                            resourceLabelText: 'Users',
+                            resources: resources,
+                            events: plannedTasks,
+
+                            drop: function (date, jsEvent, ui, resourceId) {
+                                $(this).remove();
+                            },
+
+                            eventReceive: handleCalendarTaskEdit,
+
+                            eventDrop: handleCalendarTaskEdit,
+
+                            eventResize: handleCalendarTaskEdit
+                        });
+
+                        makeTableRowsDraggable();
+
+
+
+
+
 
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
@@ -887,45 +935,7 @@ $(document).ready(function () {
                     }
                 });
 
-                $('#tmw-task-calendar').fullCalendar({
-                    schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
-                    editable: true,
-                    droppable: true,
-                    height: 'auto',
-                    timezone: 'local',
-                    minTime: '09:00',
-                    maxTime: '18:00',
-                    slotDuration: '00:30:00',
-                    weekends: false,
-                    header: {
-                        left: 'prev,next',
-                        center: 'title',
-                        right: 'timelineDay,timelineWeek,timelineMonth'
-                    },
-                    defaultView: 'timelineDay',
-                    resourceLabelText: 'Users',
-                    resources: resources,
-                    events: [
-                        // {   id: '2', resourceId: '2',
-                        //     start: '2017-11-14T10:00:00',
-                        //     end: '2017-11-14T14:00:00',
-                        //     title: 'Make front-end',
-                        //     color: '#ff0000'
-                        // }
-                    ],
 
-                    drop: function (date, jsEvent, ui, resourceId) {
-                        $(this).remove();
-                    },
-
-                    eventReceive: handleCalendarTaskEdit,
-
-                    eventDrop: handleCalendarTaskEdit,
-
-                    eventResize: handleCalendarTaskEdit
-                });
-
-                makeTableRowsDraggable();
             },
             cache: false
         });
@@ -970,6 +980,14 @@ $(document).ready(function () {
                 }
             });
         });
+    };
+
+
+    var setColorTask = function(statusId){
+      if (statusId==1) return '#ff5d61';
+      if (statusId==2) return '#6bff4f';
+      if (statusId==3) return '#ff76e9';
+      return '#6076ff';
     };
 
 });

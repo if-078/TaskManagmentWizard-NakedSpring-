@@ -11,9 +11,15 @@ import com.softserve.academy.tmw.entity.Task;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import org.jooq.Select;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -24,6 +30,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 @PropertySource("classpath:tables.properties")
 public class TaskDao extends EntityDao<Task> implements TaskDaoInterface {
+
+    @Autowired
+    TagDao tagDao;
 
 
     public TaskDao(@Value("${task}") String table) {
@@ -110,7 +119,17 @@ public class TaskDao extends EntityDao<Task> implements TaskDaoInterface {
         param.addValue("parent_id", task.getParentId());
         param.addValue("id", task.getId());
 
-        return jdbcTemplate.update(sql, param) == 1;
+        // this chunk need to refactoring
+
+        int result = jdbcTemplate.update(sql, param);
+
+        tagDao.deleteTagsOfTask(task.getId());
+
+        List<Integer> stream = Arrays.asList(task.getTags()).stream().map(Tag::getId).collect(Collectors.toList());
+        int[] array = stream.stream().mapToInt(i->i).toArray();
+        tagDao.setTagsToTask(array, task.getId());
+
+        return result >= 1;
     }
 
     @Override
@@ -181,7 +200,16 @@ public class TaskDao extends EntityDao<Task> implements TaskDaoInterface {
         param.addValue("id", task.getId());
 
         jdbcTemplate.update(sql, param, keyHolder);
+
+
+
+
         task.setId(keyHolder.getKey().intValue());
+
+        // this chunk need to refactoring
+        List<Integer> stream = Arrays.asList(task.getTags()).stream().map(Tag::getId).collect(Collectors.toList());
+        int[] array = stream.stream().mapToInt(i->i).toArray();
+        tagDao.setTagsToTask(array, task.getId());
 
         return task;
     }

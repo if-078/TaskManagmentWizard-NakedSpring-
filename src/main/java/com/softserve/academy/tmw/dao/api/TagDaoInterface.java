@@ -7,7 +7,7 @@ public interface TagDaoInterface extends EntityDaoInterface<Tag> {
     List<Tag> getAllByUserId(int userId);
     List<Tag> getAllByTaskId(int taskId);
     boolean deleteAllByUserId(int userId);
-
+    boolean deleteTagsOfTask(int taskId);
     boolean setTagsToTask(int[] tags, int taskId);
 
 

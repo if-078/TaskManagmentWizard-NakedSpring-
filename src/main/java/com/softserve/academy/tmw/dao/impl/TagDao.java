@@ -43,6 +43,12 @@ public class TagDao extends EntityDao<Tag> implements TagDaoInterface {
     }
 
     @Override
+    public boolean deleteTagsOfTask(int taskId) {
+        String Sql = "DELETE FROM " + "tmw.tags_tasks" + " WHERE task_id = :task_id";
+        return jdbcTemplate.update(Sql, new MapSqlParameterSource("task_id", taskId)) > 0;
+    }
+
+    @Override
     public List<Tag> getAllByUserId(int userId) {
         String sql = "SELECT * FROM " + table + " WHERE user_id = :userId";
         List<Tag> list =

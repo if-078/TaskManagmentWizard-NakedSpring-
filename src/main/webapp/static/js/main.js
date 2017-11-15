@@ -893,9 +893,8 @@ $(document).ready(function () {
                            plannedTasks.push({
                                id: data[i].id,
                                resourceId: data[i].assignTo,
-                               start: data[i].planningDate + 'T10:00:00',
-                               end: data[i].planningDate + 'T' +
-                                        (10 + parseInt(data[i].estimateTime.substring(0, 2))) + ':00:00',
+                               start: startPlannedDate(data[i].planningDate),
+                               end: endPlannedDate(data[i].planningDate, data[i].estimateTime),
                                title: data[i].name,
                                color: setColorTask(data[i].statusId),
                                est: data[i].estimateTime,
@@ -1014,4 +1013,19 @@ $(document).ready(function () {
       if (statusId==3) return '#ff53d4';
       return '#4750ff';
     };
+
+
+    var timezoneOffset = new Date().getTimezoneOffset() * 60 * 1000;
+    var startPlannedDate = function(planningDate){
+        return moment(planningDate + timezoneOffset).format('Y-M-DTHH:mm:00');
+    };
+
+    var endPlannedDate = function (planningDate, estimate) {
+        var estimateMinute = (parseInt(estimate.substring(0,2))*60 + parseInt(estimate.substring(3,5)));
+        var estimateMilliseconds = estimateMinute*60*1000;
+        var ofset =  estimateMilliseconds + 2*timezoneOffset;
+        console.log(moment(planningDate + ofset).format('Y-M-DTHH:mm:00'));
+        return moment(planningDate + ofset).format('Y-M-DTHH:mm:00');
+    };
+
 });

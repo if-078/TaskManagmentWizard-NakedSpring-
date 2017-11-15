@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -36,7 +37,8 @@ public class TaskController {
     @GetMapping("/planning")
     @ResponseStatus(HttpStatus.OK)
     public List<Task> getPlannedTasks(){
-        return taskService.getPlannedTasks();
+        List<Task> tasks = taskService.getPlannedTasks();
+        return  tasks;
     }
 
     @GetMapping("/filter")

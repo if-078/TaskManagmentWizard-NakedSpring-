@@ -272,6 +272,7 @@ public class TaskDao extends EntityDao<Task> implements TaskDaoInterface {
         Select select = builder.buildSql();
         String query = select.getSQL();
         List<Task> tasks = jdbcTemplate.query(query  ,new TaskMapper());
+
         return tasks;
     }
 

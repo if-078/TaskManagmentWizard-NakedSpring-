@@ -15,6 +15,10 @@
     overflow-y: scroll;
 }
 
+#tmw-task-table {
+    border-collapse: collapse !important;
+}
+
 .tmw-task-table tr {
     cursor: pointer;
 }

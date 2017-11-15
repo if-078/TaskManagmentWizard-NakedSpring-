@@ -941,11 +941,22 @@ $(document).ready(function () {
 
                             drop: function (date, jsEvent, ui, resourceId) {
                                 $(this).remove();
+
+                                if ($('#tmw-task-table tbody tr').length === 0) {
+                                    $('#tmw-task-table').empty();
+                                }
                             },
 
                             eventReceive: handleCalendarTaskEdit,
                             eventDrop: handleCalendarTaskEdit,
-                            eventResize: handleCalendarTaskEdit
+                            eventResize: handleCalendarTaskEdit,
+
+                            eventClick: function (event) {
+                                console.log('ID:', event.id);
+                                console.log('User ID:', event.resourceId);
+                                console.log('Title:', event.title);
+                                showFull(event.id);
+                            }
                         });
 
                         makeTableRowsDraggable();
@@ -964,9 +975,7 @@ $(document).ready(function () {
     };
 
     var handleCalendarTaskEdit = function (event) {
-
-        console.log(event.est);
-        
+        //console.log(event.est);
     }
 
     var makeTableRowsDraggable = function () {

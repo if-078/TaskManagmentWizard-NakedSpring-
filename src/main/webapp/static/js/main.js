@@ -270,6 +270,10 @@ $(document).ready(function () {
                         info: false,
                         searching: false
                     });
+
+                    if (!$('#tmw-main-calendar').hasClass('hidden')) {
+                        makeTableRowsDraggable();
+                    }
                 } else {
                     $('#tmw-task-table').css('visibility', 'hidden');
                 }
@@ -900,12 +904,28 @@ $(document).ready(function () {
                             header: {
                                 left: 'prev,next',
                                 center: 'title',
-                                right: 'timelineDay,timelineWeek,timelineMonth'
+                                right: '_timelineDay,_timelineWeek,timelineMonth'
                             },
-                            defaultView: 'timelineDay',
+                            views: {
+                                _timelineDay: {
+                                    type: 'timeline',
+                                    duration: { days: 1 },
+                                    buttonText: 'Day',
+                                    slotLabelFormat: ['H:mm']
+                                },
+                                _timelineWeek: {
+                                    type: 'timeline',
+                                    duration: { weeks: 1 },
+                                    buttonText: 'Week',
+                                    slotLabelFormat: ['dddd, D MMMM', 'H:mm']
+                                }
+                            },
+                            defaultView: '_timelineDay',
                             resourceLabelText: 'Users',
                             resources: resources,
                             events: plannedTasks,
+
+
 
                             drop: function (date, jsEvent, ui, resourceId) {
                                 $(this).remove();
@@ -984,10 +1004,10 @@ $(document).ready(function () {
 
 
     var setColorTask = function(statusId){
-      if (statusId==1) return '#ff5d61';
-      if (statusId==2) return '#6bff4f';
-      if (statusId==3) return '#ff76e9';
-      return '#6076ff';
+      if (statusId==1) return '#ff3c38';
+      if (statusId==2) return '#34ff16';
+      if (statusId==3) return '#ff53d4';
+      return '#4750ff';
     };
 
 });

@@ -122,9 +122,14 @@ $(document).ready(function () {
                                 text: 'All Projects',
                                 children: true
                             };
+
                             return 'data:application/json,' + encodeURIComponent(JSON.stringify(rootNode));
 
                         case '$':
+                            $.ajaxSetup({
+                                headers: createAuthToken()
+                            });
+
                             return 'api/tasks/tree/0';
 
                         default:
@@ -242,13 +247,10 @@ $(document).ready(function () {
                     rows.push(Object.values(data[i]));
                 }
 
-                console.log(rows);
-
                 if (taskTableInit) {
                     $('#tmw-task-table').DataTable().destroy();
+                    taskTableInit = false;
                 }
-
-                taskTableInit = true;
 
                 if (rows.length > 0) {
                     $('#tmw-task-table').css('visibility', 'visible');
@@ -270,6 +272,8 @@ $(document).ready(function () {
                         info: false,
                         searching: false
                     });
+
+                    taskTableInit = true;
 
                     if (!$('#tmw-main-calendar').hasClass('hidden')) {
                         makeTableRowsDraggable();
@@ -453,7 +457,6 @@ $(document).ready(function () {
                 $('#tmw-modal').modal('hide');
                 refreshTree("update", task);
                 clearTaskModal();
-                console.log(task);
                 taskTable();
             },
             cache: false
@@ -475,7 +478,7 @@ $(document).ready(function () {
                 taskTable();
             },
             error: function (jqXHR) {
-                console.log(jqXHR.status)
+
             }
         });
     }
@@ -847,9 +850,19 @@ $(document).ready(function () {
     $('#tmw-graphic').click(function () {
         $('#tmw-main-calendar').removeClass('hidden');
 
-
+        $('#tmw-graphic').addClass('hidden');
+        $('#tmw-graphic-exit').removeClass('hidden');
 
         taskCalendar();
+    });
+
+    $('#tmw-graphic-exit').click(function () {
+        $('#tmw-main-calendar').addClass('hidden');
+
+        $('#tmw-graphic').removeClass('hidden');
+        $('#tmw-graphic-exit').addClass('hidden');
+
+        $('#tmw-task-calendar').fullCalendar('destroy');
     });
 
     var taskCalendar = function () {
@@ -874,8 +887,6 @@ $(document).ready(function () {
                     headers: createAuthToken(),
                     success: function (data, textStatus, jqXHR) {
                         setToken(jqXHR);
-                        console.log(data);
-
 
                        for (var i = 0; i < data.length; i++) {
                            if (data[i].planningDate==null) continue;
@@ -886,10 +897,10 @@ $(document).ready(function () {
                                end: data[i].planningDate + 'T' +
                                         (10 + parseInt(data[i].estimateTime.substring(0, 2))) + ':00:00',
                                title: data[i].name,
-                               color: setColorTask(data[i].statusId)
+                               color: setColorTask(data[i].statusId),
+                               est: data[i].estimateTime,
                            });
                        }
-                        console.log(plannedTasks);
 
                         $('#tmw-task-calendar').fullCalendar({
                             schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
@@ -922,6 +933,7 @@ $(document).ready(function () {
                             },
                             defaultView: '_timelineDay',
                             resourceLabelText: 'Users',
+                            resourceAreaWidth: '17%',
                             resources: resources,
                             events: plannedTasks,
 
@@ -932,19 +944,11 @@ $(document).ready(function () {
                             },
 
                             eventReceive: handleCalendarTaskEdit,
-
                             eventDrop: handleCalendarTaskEdit,
-
                             eventResize: handleCalendarTaskEdit
                         });
 
                         makeTableRowsDraggable();
-
-
-
-
-
-
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
                         if (jqXHR.status === 401) {
@@ -954,23 +958,15 @@ $(document).ready(function () {
                         }
                     }
                 });
-
-
             },
             cache: false
         });
     };
 
     var handleCalendarTaskEdit = function (event) {
-        console.log('========================');
-        console.log(event.title);
-        console.log('ID:', event.id);
-        console.log('User ID:', event.resourceId)
-        console.log('From:', event.start.toDate());
 
-        if (event.end) {
-            console.log('To:', event.end.toDate());
-        }
+        console.log(event.est);
+        
     }
 
     var makeTableRowsDraggable = function () {
@@ -1009,5 +1005,4 @@ $(document).ready(function () {
       if (statusId==3) return '#ff53d4';
       return '#4750ff';
     };
-
 });

@@ -847,6 +847,10 @@ $(document).ready(function () {
 
 //shceduler
 
+    var startWorkDay = '10:00';
+    var endWorkDay = '18:00';
+    var timeSlotDuration = '00:30:00';
+
     $('#tmw-graphic').click(function () {
         $('#tmw-main-calendar').removeClass('hidden');
 
@@ -865,6 +869,7 @@ $(document).ready(function () {
         $('#tmw-task-calendar').fullCalendar('destroy');
     });
 
+    var plannedTasks = [];
     var taskCalendar = function () {
         $.ajax({
             url: '/api/users/all',
@@ -879,7 +884,7 @@ $(document).ready(function () {
                     });
                 }
 
-                var plannedTasks = [];
+                plannedTasks = [];
                 $.ajax({
                     url: 'api/tasks/planning',
                     type: 'GET',
@@ -907,9 +912,9 @@ $(document).ready(function () {
                             droppable: true,
                             height: 'auto',
                             timezone: 'local',
-                            minTime: '09:00',
-                            maxTime: '18:00',
-                            slotDuration: '00:30:00',
+                            minTime: startWorkDay,
+                            maxTime: endWorkDay,
+                            slotDuration: timeSlotDuration,
                             weekends: false,
                             header: {
                                 left: 'prev,next',

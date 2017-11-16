@@ -26,10 +26,6 @@ import java.util.List;
 @PropertySource("classpath:tables.properties")
 public class TaskDao extends EntityDao<Task> implements TaskDaoInterface {
 
-  @Autowired
-  TagDao tagDao;
-
-
   public TaskDao(@Value("${task}") String table) {
     super(table, new TaskMapper());
   }
@@ -41,21 +37,6 @@ public class TaskDao extends EntityDao<Task> implements TaskDaoInterface {
 
     return tasks;
   }
-
-
-  @Override
-  public Task findOne(int id) {
-    String query =
-        "SELECT id, name, created_date, planning_date, start_date, end_date, estimate_time, "
-            + "assign_to, status_id, priority_id, parent_id" + " FROM " + table
-            + " WHERE task.id = :id";
-
-        List<Task> tasks =
-                jdbcTemplate.query(query, new MapSqlParameterSource("id", id), new TaskMapper());
-
-        return tasks.get(0);
-    }
-
 
   @Override
   public boolean update(Task task) {

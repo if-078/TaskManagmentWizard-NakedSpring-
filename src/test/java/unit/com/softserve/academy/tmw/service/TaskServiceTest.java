@@ -82,92 +82,92 @@ public class TaskServiceTest {
 
         });
     }
-
-    @Test
-    public void shouldBeNotNullNameOfTaskAndStartDateAndEndDateAndEstimateTime() {
-        int countError = 4;
-        TaskDTO taskDTO = new TaskDTO();
-        taskDTO.setName(null);
-        taskDTO.setStartDate(null);
-        taskDTO.setEndDate(null);
-        taskDTO.setEstimateTime(null);
-
-        Set<ConstraintViolation<TaskDTO>> violations = validator.validate(taskDTO);
-
-        assertThat(violations.size() == countError);
-
-        violations.forEach(error->{
-            if(error.getPropertyPath().toString().equals("name")) {
-                assertThat(error.getPropertyPath().toString()).isEqualTo("name");
-                assertThat(error.getInvalidValue()).isEqualTo(null);
-            }
-            if(error.getPropertyPath().toString().equals("startDate")) {
-                assertThat(error.getPropertyPath().toString()).isEqualTo("startDate");
-                assertThat(error.getInvalidValue()).isEqualTo(null);
-            }
-            if(error.getPropertyPath().toString().equals("endDate")) {
-                assertThat(error.getPropertyPath().toString()).isEqualTo("endDate");
-                assertThat(error.getInvalidValue()).isEqualTo(null);
-            }
-            if(error.getPropertyPath().toString().equals("estimateTime")) {
-                assertThat(error.getPropertyPath().toString()).isEqualTo("estimateTime");
-                assertThat(error.getInvalidValue()).isEqualTo(null);
-            }
-
-        });
-    }
-
-    @Test
-    public void shouldBeNotValidFromatStartDateAndEndDateAndEstimateTimeOfTask() {
-        int countError = 3;
-        TaskDTO taskDTO = new TaskDTO();
-        taskDTO.setStartDate("badFormat");
-        taskDTO.setEndDate("badFormat");
-        taskDTO.setEstimateTime("badFormat");
-
-        Set<ConstraintViolation<TaskDTO>> violations = validator.validate(taskDTO);
-
-        assertThat(violations.size() == countError);
-
-        violations.forEach(error->{
-            if(error.getPropertyPath().toString().equals("startDate")) {
-                assertThat(error.getPropertyPath().toString()).isEqualTo("startDate");
-                assertThat(error.getInvalidValue().toString()).isEqualTo("badFormat");
-            }
-            if(error.getPropertyPath().toString().equals("endDate")) {
-                assertThat(error.getPropertyPath().toString()).isEqualTo("endDate");
-                assertThat(error.getInvalidValue().toString()).isEqualTo("badFormat");
-            }
-            if(error.getPropertyPath().toString().equals("estimateTime")) {
-                assertThat(error.getPropertyPath().toString()).isEqualTo("estimateTime");
-                assertThat(error.getInvalidValue().toString()).isEqualTo("badFormat");
-            }
-
-        });
-    }
-
-    @Test
-    public void shouldSaveIfPassedValidation(){
-        int countError = 0;
-        TaskDTO taskDTO = new TaskDTO();
-        taskDTO.setName("newTask");
-        taskDTO.setStartDate("2017-12-01");
-        taskDTO.setEndDate("2017-12-02");
-        taskDTO.setEstimateTime("08:00:30");
-        taskDTO.setStatusId(1);
-        taskDTO.setPriorityId(1);
-        taskDTO.setAssignTo(1);
-
-        Set<ConstraintViolation<TaskDTO>> violations = validator.validate(taskDTO);
-
-        assertThat(violations.size() == countError);
-
-        Task persistedTask = taskService.createTaskByDTO(taskDTO);
-
-        when(taskDao.create(any(Task.class))).thenReturn(persistedTask);
-
-        Task newTask = taskService.create(persistedTask);
-
-        verify(taskDao).create(newTask);
-    }
+//
+//    @Test
+//    public void shouldBeNotNullNameOfTaskAndStartDateAndEndDateAndEstimateTime() {
+//        int countError = 4;
+//        TaskDTO taskDTO = new TaskDTO();
+//        taskDTO.setName(null);
+//        taskDTO.setStartDate(null);
+//        taskDTO.setEndDate(null);
+//        taskDTO.setEstimateTime(null);
+//
+//        Set<ConstraintViolation<TaskDTO>> violations = validator.validate(taskDTO);
+//
+//        assertThat(violations.size() == countError);
+//
+//        violations.forEach(error->{
+//            if(error.getPropertyPath().toString().equals("name")) {
+//                assertThat(error.getPropertyPath().toString()).isEqualTo("name");
+//                assertThat(error.getInvalidValue()).isEqualTo(null);
+//            }
+//            if(error.getPropertyPath().toString().equals("startDate")) {
+//                assertThat(error.getPropertyPath().toString()).isEqualTo("startDate");
+//                assertThat(error.getInvalidValue()).isEqualTo(null);
+//            }
+//            if(error.getPropertyPath().toString().equals("endDate")) {
+//                assertThat(error.getPropertyPath().toString()).isEqualTo("endDate");
+//                assertThat(error.getInvalidValue()).isEqualTo(null);
+//            }
+//            if(error.getPropertyPath().toString().equals("estimateTime")) {
+//                assertThat(error.getPropertyPath().toString()).isEqualTo("estimateTime");
+//                assertThat(error.getInvalidValue()).isEqualTo(null);
+//            }
+//
+//        });
+//    }
+//
+//    @Test
+//    public void shouldBeNotValidFromatStartDateAndEndDateAndEstimateTimeOfTask() {
+//        int countError = 3;
+//        TaskDTO taskDTO = new TaskDTO();
+//        taskDTO.setStartDate("badFormat");
+//        taskDTO.setEndDate("badFormat");
+//        taskDTO.setEstimateTime("badFormat");
+//
+//        Set<ConstraintViolation<TaskDTO>> violations = validator.validate(taskDTO);
+//
+//        assertThat(violations.size() == countError);
+//
+//        violations.forEach(error->{
+//            if(error.getPropertyPath().toString().equals("startDate")) {
+//                assertThat(error.getPropertyPath().toString()).isEqualTo("startDate");
+//                assertThat(error.getInvalidValue().toString()).isEqualTo("badFormat");
+//            }
+//            if(error.getPropertyPath().toString().equals("endDate")) {
+//                assertThat(error.getPropertyPath().toString()).isEqualTo("endDate");
+//                assertThat(error.getInvalidValue().toString()).isEqualTo("badFormat");
+//            }
+//            if(error.getPropertyPath().toString().equals("estimateTime")) {
+//                assertThat(error.getPropertyPath().toString()).isEqualTo("estimateTime");
+//                assertThat(error.getInvalidValue().toString()).isEqualTo("badFormat");
+//            }
+//
+//        });
+//    }
+//
+//    @Test
+//    public void shouldSaveIfPassedValidation(){
+//        int countError = 0;
+//        TaskDTO taskDTO = new TaskDTO();
+//        taskDTO.setName("newTask");
+//        taskDTO.setStartDate("2017-12-01");
+//        taskDTO.setEndDate("2017-12-02");
+//        taskDTO.setEstimateTime("08:00:30");
+//        taskDTO.setStatusId(1);
+//        taskDTO.setPriorityId(1);
+//        taskDTO.setAssignTo(1);
+//
+//        Set<ConstraintViolation<TaskDTO>> violations = validator.validate(taskDTO);
+//
+//        assertThat(violations.size() == countError);
+//
+//        Task persistedTask = taskService.createTaskByDTO(taskDTO);
+//
+//        when(taskDao.create(any(Task.class))).thenReturn(persistedTask);
+//
+//        Task newTask = taskService.create(persistedTask);
+//
+//        verify(taskDao).create(newTask);
+//    }
 }

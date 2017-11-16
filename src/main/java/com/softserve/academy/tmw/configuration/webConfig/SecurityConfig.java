@@ -3,14 +3,9 @@ package com.softserve.academy.tmw.configuration.webConfig;
 import com.softserve.academy.tmw.security.JwtAuthenticationEntryPoint;
 import com.softserve.academy.tmw.security.TokenAuthenticationFilter;
 import com.softserve.academy.tmw.security.TokenAuthenticationManager;
-import com.softserve.academy.tmw.security.TokenAuthenticationService;
-import org.hibernate.validator.internal.util.logging.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.*;
-import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -19,11 +14,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
-
-import java.util.logging.Logger;
 
 @Configuration
 @EnableWebSecurity
@@ -46,24 +37,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private TokenAuthenticationManager tokenAuthenticationManager;
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
-
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
-
                 // don't create session
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-
                 .authorizeRequests()
-                //.antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-
                 // allow anonymous resource requests
                 .antMatchers(
                         HttpMethod.GET,
@@ -80,9 +61,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated();
 
         // Custom JWT based security filter
-        http
-                .addFilterBefore(getTokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
-
+        http.addFilterBefore(getTokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
         // disable page caching
         http.headers().cacheControl();
     }
@@ -90,6 +69,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers("/resources/**");
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 
     @Bean

@@ -4,6 +4,7 @@ import com.softserve.academy.tmw.dao.impl.UserDao;
 import com.softserve.academy.tmw.entity.User;
 import com.softserve.academy.tmw.service.api.UserServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,8 +13,9 @@ import java.util.List;
 public class UserService implements UserServiceInterface {
 
     @Autowired
-    UserDao userDao;
-
+   private UserDao userDao;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
     @Override
     public List getAll() {
         return userDao.getAll();
@@ -36,6 +38,7 @@ public class UserService implements UserServiceInterface {
 
     @Override
     public User create(User user) {
+        user.setPass(passwordEncoder.encode(user.getPass()));
         return userDao.create(user);
     }
 

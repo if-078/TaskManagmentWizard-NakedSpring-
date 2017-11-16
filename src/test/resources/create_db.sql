@@ -7,7 +7,7 @@ USE tmw;
 CREATE TABLE IF NOT EXISTS tmw.user (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
-  `pass` CHAR(32) NULL,
+  `pass` BINARY(60) NOT NULL,
   `email` VARCHAR(254) NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;

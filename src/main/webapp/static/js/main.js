@@ -17,6 +17,7 @@ $(document).ready(function () {
             headers: createAuthToken()
         });
         $("#main").show();
+        $("#user-login").text("Hello, "+window.sessionStorage.getItem("name"));
         $("#logout").show();
         $("")
     } else {
@@ -762,6 +763,11 @@ $(document).ready(function () {
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (data, textStatus, jqXHR) {
+                var userId=data["id"];
+                var userName=data['username'];
+                window.sessionStorage.setItem("id",userId);
+                window.sessionStorage.setItem("name",userName);
+                $("#user-login").text("Hello, "+userName);
                 setToken(jqXHR);
                 $("#logout").show();
                 $("#login").hide();
@@ -783,10 +789,14 @@ $(document).ready(function () {
         $("#password-label").hide();
     });
     $("#logout").click(function () {
+
         $.ajax({
             url: "api/logout",
             type: "POST",
-            success: resetToken()
+            success: function(){
+                resetToken();
+                $("#logout").hide()
+            }
         });
     });
 

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +23,8 @@ public class LoginController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     static Logger logger = Logger.getLogger(LoginController.class.getName());
 
@@ -30,7 +33,7 @@ public class LoginController {
     public ResponseEntity<UserProxy> getAuthenticationToken(@RequestBody UserCredential credential, HttpServletResponse response) {
         logger.info("User with credentials email " + credential.getUserEmail() + " " + credential.getPassword() + " going to login.");
         User user = getUser(credential);
-        if (user != null && user.getPass().equals(credential.getPassword())) {
+        if (user != null && passwordEncoder.matches(credential.getPassword(),user.getPass())) {
             String fullToken = TokenAuthenticationService.createToken(user);
             logger.info("Token created.");
             response.addHeader(HEADER_NAME, fullToken);

@@ -41,7 +41,13 @@ public class UserService implements UserServiceInterface {
 
     @Override
     public User findByEmail(String email) {
-        return userDao.findByEmail(email);
+        User user=null;
+        try{
+            user=userDao.findByEmail(email);
+        }catch (Exception e){
+            e.getCause();
+        }
+        return user;
     }
 
 }

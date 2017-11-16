@@ -1,15 +1,15 @@
 package com.softserve.academy.tmw.security;
 
 public class UserCredential {
-    private String username;
+    private String userEmail;
     private String password;
 
-    public String getUsername() {
-        return username;
+    public String getUserEmail() {
+        return userEmail;
     }
 
     public void setLogin(String username) {
-        this.username = username;
+        this.userEmail = username;
     }
 
     public String getPassword() {

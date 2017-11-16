@@ -29,66 +29,58 @@ ul.jstree-container-ul a.jstree-anchor {
     text-overflow: ellipsis;
 }
 
-
 textarea {
-    resize:vertical;
+    resize: vertical;
 }
 
-#logout{
- display:none;
+#logout {
+    display: none;
 }
 
-#main, #login, #registration{
-display:none;
+#main, #login, #registration {
+    display: none;
 }
-        .container{
-        margin-top:200px;
-        }
-        #registrarion.input {
-            border-radius: 10px;
-        }
 
-        #registrarion.legend {
-            font-family: fantasy;
-            font-size: 50px;
-        }
+.container {
+    margin-top: 200px;
+}
 
-       #registrarion.p,
-        #registrarion.pre,
-        #registrarion.label,
-        #registrarion.legend {
-            color: white
-        }
-        #register-box{
-            margin-top: 50px;
-        }
+#registration.input {
+    border-radius: 10px;
+}
 
-        .error{
-            color: #CC2222 ;
-        }
-#login.p
-            {
-                font-family: fantasy;
-                              font-size: 50px;
-           }
+#registration.legend {
+    font-family: fantasy;
+    font-size: 50px;
+}
+
+
+#register-box {
+    margin-top: 50px;
+}
+
+.error {
+    color: #CC2222;
+}
+
+#login.p {
+    font-family: fantasy;
+    font-size: 50px;
+}
 
 #leftPanel {
-  overflow: scroll;
-  overflow-x: hidden;
-  height: 35%;
-  max-height: 140px;
-  width: 96.5%;
-  position: relative;
+    overflow: scroll;
+    overflow-x: hidden;
+    height: 35%;
+    max-height: 140px;
+    width: 96.5%;
+    position: relative;
 
 }
 
 #leftPanel > div {
-  padding: 2px 0px;
+    padding: 2px 0px;
 }
-
-
-
-
 
 html, body {
     width: 100%;
@@ -112,6 +104,7 @@ body > tr {
     border-collapse: collapse;
     background: white;
 }
+
 body > tr > td {
     padding: 8px;
     border: 1px solid #ddd;

@@ -4,6 +4,7 @@ import com.softserve.academy.tmw.security.JwtAuthenticationEntryPoint;
 import com.softserve.academy.tmw.security.TokenAuthenticationFilter;
 import com.softserve.academy.tmw.security.TokenAuthenticationManager;
 import com.softserve.academy.tmw.security.TokenAuthenticationService;
+import org.hibernate.validator.internal.util.logging.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.*;
@@ -21,6 +22,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+
+import java.util.logging.Logger;
 
 @Configuration
 @EnableWebSecurity
@@ -95,4 +98,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         filter.setAuthenticationManager(tokenAuthenticationManager);
         return filter;
     }
+
 }

@@ -10,13 +10,5 @@ public class MainController {
     public String getIndexPage() {
         return "index";
     }
-    @RequestMapping("/login")
-    public String getLoginPage(){
-        return "login";
-    }
 
-    @RequestMapping("/task")
-    public String getTaskPage(){
-        return "task";
-    }
 }

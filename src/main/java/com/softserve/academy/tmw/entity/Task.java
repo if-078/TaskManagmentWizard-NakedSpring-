@@ -25,7 +25,8 @@ public class Task {
 
   }
 
-  public Task(String name, Date createdDate, Date planningDate, Date startDate, Date endDate, Time estimateTime,
+  public Task(String name, Date createdDate, Date planningDate, Date startDate, Date endDate,
+      Time estimateTime,
       int assignTo, int statusId, int priorityId, int parentId) {
     this.name = name;
     this.createdDate = createdDate;
@@ -37,9 +38,11 @@ public class Task {
     this.statusId = statusId;
     this.priorityId = priorityId;
     this.parentId = parentId;
+
   }
 
-  public Task(int id, String name, Date createdDate, Date planningDate, Date startDate, Date endDate,
+  public Task(int id, String name, Date createdDate, Date planningDate, Date startDate,
+      Date endDate,
       Time estimateTime, int assignTo, int statusId, int priorityId, int parentId) {
     this.id = id;
     this.name = name;

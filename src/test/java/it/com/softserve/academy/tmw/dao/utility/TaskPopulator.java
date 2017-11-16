@@ -42,7 +42,7 @@ public class TaskPopulator  {
         task.setName("Default task name");
         task.setAssignTo(defUser.getId());
         task.setCreatedDate(new Date(System.currentTimeMillis()));
-        task.setPlanningDate(new Date(System.currentTimeMillis() + (hourFromMillSecs)));
+       // task.setPlanningDate(new Date(System.currentTimeMillis() + (hourFromMillSecs)));
         task.setEndDate(new Date(System.currentTimeMillis() + (7 * hourFromMillSecs * 24))); //end date after one week
         task.setStartDate(new Date(System.currentTimeMillis() + (hourFromMillSecs)));
         task.setEstimateTime(new Time(2, 0, 0));

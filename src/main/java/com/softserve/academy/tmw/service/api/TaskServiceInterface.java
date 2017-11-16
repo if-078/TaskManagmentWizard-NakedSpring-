@@ -10,9 +10,6 @@ import com.softserve.academy.tmw.entity.Task;
 import java.util.List;
 
 public interface TaskServiceInterface extends EntityServiceInterface<Task> {
-    List<Task> getTasksForToday();
-
-    List<Task> getSprint();
 
     List<Tag> getTagsOfTask(int taskId);
 

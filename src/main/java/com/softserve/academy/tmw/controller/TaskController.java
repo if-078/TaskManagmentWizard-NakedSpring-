@@ -88,12 +88,6 @@ public class TaskController {
        return taskService.findOne(id);
    }
 
-   @GetMapping("/today")
-   @ResponseStatus(HttpStatus.OK)
-   List<Task> getTasksForToday() {
-       return taskService.getTasksForToday();
-   }
-
    @GetMapping("/{id}/tags")
    @ResponseStatus(HttpStatus.OK)
    List<Tag> getTagsOfTask(@PathVariable Integer id) {

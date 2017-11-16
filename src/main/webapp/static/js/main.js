@@ -715,6 +715,7 @@ $(document).ready(function() {
     function resetToken() {
         window.sessionStorage.removeItem("token");
         window.location.href = "";
+
     }
 
     function setToken(jqXHR) {
@@ -778,8 +779,11 @@ $(document).ready(function() {
 
 
     $("#logout").click(function() {
-        location.reload();
-        resetToken();
+        $.ajax({
+            url:"/logout",
+            type:"POST",
+            success: resetToken()
+        });
     });
 
     $("#registration-form").validate({

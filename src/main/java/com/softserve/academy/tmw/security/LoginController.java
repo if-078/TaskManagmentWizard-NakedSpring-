@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @RestController
@@ -27,17 +28,24 @@ public class LoginController {
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseStatus(value = HttpStatus.OK)
     public ResponseEntity<UserProxy> getAuthenticationToken(@RequestBody UserCredential credential, HttpServletResponse response) {
-       logger.info("User with credentials email "+credential.getUserEmail()+" "+credential.getPassword()+" going to login");
+       logger.info("User with credentials email "+credential.getUserEmail()+" "+credential.getPassword()+" going to login.");
         User user = getUser(credential);
         if (user != null && user.getPass().equals(credential.getPassword())) {
             String fullToken = TokenAuthenticationService.createToken(user);
+            logger.info("Token created.");
             response.addHeader(HEADER_NAME, fullToken);
-            return ResponseEntity.ok(new UserProxy(user.getId(), null, null));
+            logger.info("User authentication success. User: "+user.getName()+" with email address: "+user.getEmail()+" logged in.");
+            return ResponseEntity.ok(new UserProxy(user.getId(), user.getName(), null));
         } else {
+            logger.info("Bad user credentials email "+credential.getUserEmail()+" "+credential.getPassword());
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
     }
-
+    @RequestMapping(value="/logout", method=RequestMethod.POST)
+   public void logout(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse){
+        httpServletResponse.setHeader(HEADER_NAME,"");
+        logger.info("User "+ httpServletRequest);
+    }
     private User getUser(@RequestBody UserCredential credential) {
         try {
             return userService.findByEmail(credential.getUserEmail());

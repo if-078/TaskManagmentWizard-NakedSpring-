@@ -780,7 +780,7 @@ $(document).ready(function() {
 
     $("#logout").click(function() {
         $.ajax({
-            url:"/logout",
+            url:"api/logout",
             type:"POST",
             success: resetToken()
         });

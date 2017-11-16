@@ -23,29 +23,33 @@ public class LoginController {
     @Autowired
     private UserService userService;
 
-    static Logger logger= Logger.getLogger(LoginController.class.getName());
+    static Logger logger = Logger.getLogger(LoginController.class.getName());
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseStatus(value = HttpStatus.OK)
     public ResponseEntity<UserProxy> getAuthenticationToken(@RequestBody UserCredential credential, HttpServletResponse response) {
-       logger.info("User with credentials email "+credential.getUserEmail()+" "+credential.getPassword()+" going to login.");
+        logger.info("User with credentials email " + credential.getUserEmail() + " " + credential.getPassword() + " going to login.");
         User user = getUser(credential);
         if (user != null && user.getPass().equals(credential.getPassword())) {
             String fullToken = TokenAuthenticationService.createToken(user);
             logger.info("Token created.");
             response.addHeader(HEADER_NAME, fullToken);
-            logger.info("User authentication success. User: "+user.getName()+" with email address: "+user.getEmail()+" logged in.");
+            logger.info("User authentication success. User: " + user.getName() + " with email address: " + user.getEmail() + " logged in.");
             return ResponseEntity.ok(new UserProxy(user.getId(), user.getName(), null));
         } else {
-            logger.info("Bad user credentials email "+credential.getUserEmail()+" "+credential.getPassword());
+            logger.info("Bad user credentials email " + credential.getUserEmail() + " " + credential.getPassword());
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
     }
-    @RequestMapping(value="/logout", method=RequestMethod.POST)
-   public void logout(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse){
-        httpServletResponse.setHeader(HEADER_NAME,"");
-        logger.info("User "+ httpServletRequest);
+
+    @RequestMapping(value = "api/logout", method = RequestMethod.POST)
+    public ResponseEntity logout(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+        String token = httpServletRequest.getHeader("Authentication");
+        String username = TokenAuthenticationService.getUsernameFromToken(token);
+        logger.info("User " + username + " logout");
+        return new ResponseEntity(HttpStatus.OK);
     }
+
     private User getUser(@RequestBody UserCredential credential) {
         try {
             return userService.findByEmail(credential.getUserEmail());

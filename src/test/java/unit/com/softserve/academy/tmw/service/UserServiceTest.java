@@ -1,4 +1,4 @@
-package unit.com.softserve.academy.tmw.services;
+package unit.com.softserve.academy.tmw.service;
 
 import com.softserve.academy.tmw.dao.impl.UserDao;
 import com.softserve.academy.tmw.entity.User;

@@ -1,4 +1,4 @@
-package unit.com.softserve.academy.tmw.services;
+package unit.com.softserve.academy.tmw.service;
 
 import com.softserve.academy.tmw.dao.impl.TaskDao;
 import com.softserve.academy.tmw.dto.TaskDTO;

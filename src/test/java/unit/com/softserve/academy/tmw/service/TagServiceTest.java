@@ -1,4 +1,4 @@
-package unit.com.softserve.academy.tmw.services;
+package unit.com.softserve.academy.tmw.service;
 
 
 import com.softserve.academy.tmw.dao.impl.TagDao;
@@ -12,7 +12,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;

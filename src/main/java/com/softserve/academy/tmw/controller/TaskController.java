@@ -52,8 +52,8 @@ public class TaskController {
             @RequestParam(name="status", required = false) int[] status,
             @RequestParam(name="priority", required = false) int[] priority,
             @RequestParam(name="tag", required = false) int[] tag){
-        List<Task> tasks = taskService.getFilteredTasksForTable(parentId, date, status, priority, tag);
-        return transformator.transformTasksForTree(tasks);
+
+        return taskService.getFilteredTasksForTable(parentId, date, status, priority, tag);
     }
 
     @GetMapping("/view/{id}")

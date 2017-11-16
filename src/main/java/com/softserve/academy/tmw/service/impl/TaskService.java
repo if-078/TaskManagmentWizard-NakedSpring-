@@ -160,7 +160,7 @@ public class TaskService implements TaskServiceInterface {
   }
 
     @Override
-    public List<Task> getFilteredTasksForTable(int parentId, String[] dates, int[] status,
+    public List<TaskTableDTO> getFilteredTasksForTable(int parentId, String[] dates, int[] status,
                                                        int[] priority, int[] tag) {
         FilterStateWrapper wrapper = new FilterStateWrapper();
         wrapper.setId(parentId);

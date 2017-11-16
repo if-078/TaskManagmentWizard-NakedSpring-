@@ -174,32 +174,30 @@ public class TaskService implements TaskServiceInterface {
         List<Priority>priorities = servicePriority.getAll();
         List<Status>statuses =serviceStatus.getAll();
 
-        for (Task task : tasksList){
+        tasksList.forEach(task -> {
+
             TaskTableDTO dto = new TaskTableDTO();
             dto.setId(task.getId());
             dto.setName(task.getName());
             dto.setStartDate(task.getStartDate());
             dto.setEstimateTime(task.getEstimateTime());
-            for (User user : users){
-                if (user.getId() == task.getAssignTo()) {
+
+            users.forEach(user -> {
+                if (user.getId() == task.getAssignTo())
                     dto.setAssignTo(user.getName());
-                    break;
+            });
+            priorities.forEach(priority1 -> {
+                if (priority1.getId() == task.getPriorityId())
+                    dto.setPriority(priority1.getName());
+            });
+            statuses.forEach(status1 -> {
+                if (status1.getId() == task.getStatusId()){
+                    dto.setStatus(status1.getName());
                 }
-            }
-            for (Priority priorit : priorities){
-                if (priorit.getId() == task.getPriorityId()){
-                    dto.setPriority(priorit.getName());
-                    break;
-                }
-            }
-            for (Status stat : statuses){
-                if (task.getStatusId() == stat.getId()){
-                    dto.setStatus(stat.getName());
-                    break;
-                }
-            }
+            });
             tasksDTOList.add(dto);
-        }
+        });
+
         return tasksDTOList;
     }
 
@@ -250,5 +248,4 @@ public class TaskService implements TaskServiceInterface {
 
         return taskDTO;
     }
-
 }

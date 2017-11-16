@@ -8,16 +8,6 @@ import com.softserve.academy.tmw.dao.util.JooqSQLBuilder;
 import com.softserve.academy.tmw.entity.Comment;
 import com.softserve.academy.tmw.entity.Tag;
 import com.softserve.academy.tmw.entity.Task;
-import java.time.DayOfWeek;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
 import org.jooq.Select;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,6 +16,11 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
+
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository
 @PropertySource("classpath:tables.properties")
@@ -279,7 +274,7 @@ public class TaskDao extends EntityDao<Task> implements TaskDaoInterface {
            + "  LEFT JOIN priority ON task.priority_id = priority.id\n"
            + "  LEFT JOIN status ON task.status_id = status.id\n"
            + "WHERE task.id=:id";
-
+        // Нахер цього методу якщо в сервісі є через даошкі
         return null;
    }
 

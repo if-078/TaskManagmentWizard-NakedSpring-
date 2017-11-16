@@ -4,6 +4,7 @@ import com.softserve.academy.tmw.dto.TaskDTO;
 import com.softserve.academy.tmw.dto.TaskTableDTO;
 import com.softserve.academy.tmw.dto.TaskFullInfoDTO;
 import com.softserve.academy.tmw.dto.TaskTreeDTO;
+import com.softserve.academy.tmw.dto.mapper.TaskTransformator;
 import com.softserve.academy.tmw.entity.Comment;
 import com.softserve.academy.tmw.entity.Tag;
 import com.softserve.academy.tmw.entity.Task;
@@ -23,9 +24,14 @@ public class TaskController {
     TaskServiceInterface taskService;
 
     @Autowired
+    TaskTransformator transformator;
+
+    @Autowired
     public TaskController(TaskServiceInterface taskService) {
         this.taskService = taskService;
     }
+
+
 
 
     @GetMapping("/tree/{id}")
@@ -38,6 +44,26 @@ public class TaskController {
     @ResponseStatus(HttpStatus.OK)
     public List<Task> getPlannedTasks(){return taskService.getPlannedTasks();}
 
+    @PutMapping("/planning")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    boolean updateCalendarTask(@Validated @RequestBody TaskDTO taskDTO) {
+
+        System.out.println("In PUT Planning controller");
+        System.out.println(taskDTO.getId());
+        System.out.println(taskDTO.getName());
+        System.out.println(taskDTO.getCreatedDate());
+        System.out.println(taskDTO.getStartDate());
+        System.out.println(taskDTO.getEndDate());
+        System.out.println(taskDTO.getEstimateTime());
+        System.out.println(taskDTO.getAssignTo());
+        System.out.println(taskDTO.getStatusId());
+        System.out.println(taskDTO.getPriorityId());
+        System.out.println(taskDTO.getParentId());
+        System.out.println(taskDTO.getTags());
+
+        return taskService.updateTaskByDTO(taskDTO);
+    }
+
     @GetMapping("/filter")
     @ResponseStatus(HttpStatus.OK)
     public List<TaskTableDTO> getFilteredTasks (
@@ -46,11 +72,9 @@ public class TaskController {
             @RequestParam(name="status", required = false) int[] status,
             @RequestParam(name="priority", required = false) int[] priority,
             @RequestParam(name="tag", required = false) int[] tag){
+
         return taskService.getFilteredTasksForTable(parentId, date, status, priority, tag);
     }
-
-
-
 
     @GetMapping("/view/{id}")
     @ResponseStatus(HttpStatus.OK)

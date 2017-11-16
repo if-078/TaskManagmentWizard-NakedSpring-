@@ -1043,7 +1043,7 @@ $(document).ready(function () {
 
                             eventReceive: handleCalendarTaskEdit,
                             eventDrop: handleCalendarTaskEdit,
-                            eventResize: handleCalendarTaskEdit,
+                            eventResize: resizeTaskOnCalendar,
 
                             eventClick: function (event) {
                                 console.log('ID:', event.id);
@@ -1067,6 +1067,50 @@ $(document).ready(function () {
             cache: false
         });
     };
+
+
+
+//============================================================================================================
+    var resizeTaskOnCalendar = function (event) {
+
+        var task =
+            {
+                "id"           : 1,
+                "name"         : 'Event My Resize',
+                "createdDate"  : '2017-11-16',
+                "startDate"    : '2017-11-16',
+                "endDate"      : '2017-11-16',
+                "estimateTime" : '05:00:00',
+                "assignTo"     : 1,
+                "statusId"     : 1,
+                "priorityId"   : 1,
+                "parentId"     : 0,
+                "tags"         : null,
+            }
+
+        console.log('Prepared TASKDTO');
+        console.log(task);
+
+
+        $.ajax({
+            url: '/api/tasks/planning',
+            data: JSON.stringify(task),
+            type: 'PUT',
+            contentType: 'application/json',
+            success: function (task) {
+                console.log('task from DB after resize');
+                console.log(task);
+            },
+            cache: false
+        }).fail(function ($xhr) {
+            if ($xhr.status == 400) {
+                var data = $xhr.responseJSON;
+                showErrorsOfForm(data)
+            }
+        });
+
+    }
+
 
     var handleCalendarTaskEdit = function (event) {
         //console.log(event.est);

@@ -4,8 +4,10 @@ import com.softserve.academy.tmw.dao.api.TaskDaoInterface;
 import com.softserve.academy.tmw.dao.mapper.CommentMapper;
 import com.softserve.academy.tmw.dao.mapper.TagMapper;
 import com.softserve.academy.tmw.dao.mapper.TaskMapper;
+import com.softserve.academy.tmw.dao.mapper.TaskMapperForTable;
 import com.softserve.academy.tmw.dao.util.JooqSQLBuilder;
 import com.softserve.academy.tmw.dto.TaskFullInfoDTO;
+import com.softserve.academy.tmw.dto.TaskTableDTO;
 import com.softserve.academy.tmw.entity.Comment;
 import com.softserve.academy.tmw.entity.Tag;
 import com.softserve.academy.tmw.entity.Task;
@@ -30,13 +32,6 @@ public class TaskDao extends EntityDao<Task> implements TaskDaoInterface {
     super(table, new TaskMapper());
   }
 
-  @Override
-  public List<Task> getAll() {
-    String sql = "SELECT * FROM " + table;
-    List<Task> tasks = jdbcTemplate.query(sql, new TaskMapper());
-
-    return tasks;
-  }
 
   @Override
   public boolean update(Task task) {
@@ -96,13 +91,6 @@ public class TaskDao extends EntityDao<Task> implements TaskDaoInterface {
     param.addValue("id", task.getId());
 
     return jdbcTemplate.update(sql, param) >= 1;
-  }
-
-  @Override
-  public boolean delete(int id) {
-    String sql = "DELETE FROM " + table + " WHERE id=:id";
-
-    return jdbcTemplate.update(sql, new MapSqlParameterSource("id", id)) > 0;
   }
 
   @Override
@@ -216,10 +204,10 @@ public class TaskDao extends EntityDao<Task> implements TaskDaoInterface {
 
 
   @Override
-  public List<Task> getFilteredTasks(JooqSQLBuilder builder) {
+  public List<TaskTableDTO> getFilteredTasks(JooqSQLBuilder builder) {
     Select select = builder.buildSql();
     String query = select.getSQL();
-    List<Task> tasks = jdbcTemplate.query(query, new TaskMapper());
+    List<TaskTableDTO> tasks = jdbcTemplate.query(query, new TaskMapperForTable());
 
     return tasks;
   }

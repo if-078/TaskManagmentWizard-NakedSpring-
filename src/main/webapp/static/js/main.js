@@ -250,8 +250,6 @@ $(document).ready(function () {
                             subtasks.push(Object.values(treeData[i]));
                         }
 
-                        console.log(subtasks);
-
                         var rows = [];
 
                         for (var i = 0; i < data.length; i++) {
@@ -266,7 +264,6 @@ $(document).ready(function () {
                                 rows.push(Object.values(data[i]));
                             }
                         }
-
 
                         if (taskTableInit) {
                             $('#tmw-task-table').DataTable().destroy();

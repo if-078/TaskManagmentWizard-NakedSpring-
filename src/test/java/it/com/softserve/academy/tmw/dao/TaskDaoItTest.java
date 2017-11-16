@@ -4,6 +4,7 @@ import com.softserve.academy.tmw.dao.impl.CommentDao;
 import com.softserve.academy.tmw.dao.impl.TaskDao;
 import com.softserve.academy.tmw.entity.Comment;
 import com.softserve.academy.tmw.entity.Task;
+import com.sun.org.apache.xpath.internal.SourceTree;
 import it.com.softserve.academy.tmw.dao.utility.PriorityPopulator;
 import it.com.softserve.academy.tmw.dao.utility.StatusPopulator;
 import it.com.softserve.academy.tmw.dao.utility.TaskPopulator;
@@ -12,6 +13,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -33,22 +35,23 @@ public class TaskDaoItTest {
     @Autowired
     private CommentDao commentDao;
     @Autowired
-    private TaskPopulator taskPopulator;
-    @Autowired
     public UserPopulator userPopulator;
     @Autowired
     private StatusPopulator statusPopulator;
     @Autowired
     private PriorityPopulator priorityPopulator;
+    @Autowired
+    private TaskPopulator taskPopulator;
 
     @Before
     public void setUp(){
         statusPopulator.createDefaultEntity();
         priorityPopulator.createDefaultEntity();
-        //taskPopulator.createDefaultEntity();
+        userPopulator.createDefaultEntity();
+
     }
 
-    @Test(expected = IndexOutOfBoundsException.class)
+    @Test(expected = EmptyResultDataAccessException.class)
     public void shouldCreateFindUpdateDeleteAndGetAllAndThrowExeption() throws SQLException {
         String taskName = "TestTask";
         Date date = new Date();
@@ -64,29 +67,34 @@ public class TaskDaoItTest {
         dao.create(task1);
         dao.create(task2);
         dao.create(task3);
-        assertThat(dao.findOne(1)).isEqualTo(task1);
-        assertThat(dao.findOne(2)).isEqualTo(task2);
-        assertThat(dao.findOne(3)).isEqualTo(task3);
+        System.out.println(dao.findOne(1));
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        assertThat(dao.findOne(4)).isEqualTo(task1);
+        assertThat(dao.findOne(5)).isEqualTo(task2);
+        assertThat(dao.findOne(6)).isEqualTo(task3);
         task3.setName(taskName+" update");
         assertThat(dao.update(task3)).isTrue();
         assertThat(dao.getAll()).isNotEmpty();
         assertThat(dao.delete(task3.getId())).isTrue();
-        assertThat(dao.getAll().size()).isEqualTo(2);
+        assertThat(dao.getAll().size()).isEqualTo(5);
 
         assertThat(dao.delete(task1.getId())).isTrue();
         assertThat(dao.delete(task2.getId())).isTrue();
         assertThat(dao.delete(task3.getId())).isFalse();
         assertThat(dao.update(task3)).isFalse();
-        assertThat(dao.getAll()).isEmpty();
+        //assertThat(dao.getAll()).isEmpty();
         dao.findOne(777);
     }
 
     @Test
     public void shouldAddCommentAndGetComment() {
+
         taskPopulator.createDefaultEntity();
-        Comment comment1 = new Comment("Comment1", 4, 1);
-        Comment comment2 = new Comment("Comment2", 4, 1);
-        Comment comment3 = new Comment("Comment3", 4, 1);
+        System.out.println(dao.findOne(7));
+        Comment comment1 = new Comment("Comment1", 7, 1);
+        Comment comment2 = new Comment("Comment2", 7, 1);
+        Comment comment3 = new Comment("Comment3", 7, 1);
         LocalDateTime createdDate = LocalDateTime.now();
         comment1.setCreatedDate(createdDate);
         comment2.setCreatedDate(createdDate);
@@ -99,12 +107,10 @@ public class TaskDaoItTest {
         commentDao.create(comment2);
         assertThat(commentDao.create(comment3)).isEqualTo(comment3);
         for (int i = 0; i < commentsList.size(); i++) {
-            assertThat(dao.getCommentsOfTask(4).get(i).getCommentText()).isEqualTo(commentsList.get(i).getCommentText());
+            assertThat(dao.getCommentsOfTask(7).get(i).getCommentText()).isEqualTo(commentsList.get(i).getCommentText());
         }
 
-
     }
-
 
 }
 

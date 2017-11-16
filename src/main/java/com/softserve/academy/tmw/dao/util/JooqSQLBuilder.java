@@ -81,7 +81,7 @@ public class JooqSQLBuilder {
                     .from(table).where(condition);
 
         }
-        System.out.println(selectConditionStep.getSQL());
+
         return selectConditionStep;
     }
 

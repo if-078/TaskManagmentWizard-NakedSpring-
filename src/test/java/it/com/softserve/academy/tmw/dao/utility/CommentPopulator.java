@@ -7,26 +7,27 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 public class CommentPopulator {
 
-    private TaskPopulator taskPopulator;
-    private CommentDao dao;
+  private TaskPopulator taskPopulator;
+  private CommentDao dao;
 
-    @Autowired
-    public void setDao(CommentDao dao) {
-        this.dao = dao;
-    }
+  @Autowired
+  public void setDao(CommentDao dao) {
+    this.dao = dao;
+  }
 
-    @Autowired
-    public void setTaskPopulator(TaskPopulator taskPopulator) {
-        this.taskPopulator = taskPopulator;
-    }
+  @Autowired
+  public void setTaskPopulator(TaskPopulator taskPopulator) {
+    this.taskPopulator = taskPopulator;
+  }
 
 
-    public Comment createDefaultEntity() {
-        Comment comment = new Comment();
-        comment.setCommentText("Default comment text.txt");
-        Task task = taskPopulator.createDefaultEntity();
-        comment.setUserId(task.getAssignTo());
-        comment.setTaskId(task.getId());
-        return dao.create(comment);
-    }
+  public Comment createDefaultEntity() {
+    Comment comment = new Comment();
+    comment.setCommentText("Default comment text.txt");
+    Task task = taskPopulator.createDefaultEntity();
+    comment.setUserId(task.getAssignTo());
+    comment.setTaskId(task.getId());
+    return dao.create(comment);
+
+  }
 }

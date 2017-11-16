@@ -21,10 +21,10 @@ public abstract class EntityDao<E> implements EntityDaoInterface<E> {
         this.mapper = mapper;
     }
 
-  @Autowired
-  private void setJdbcTemplate(DataSource dataSource) {
-    this.jdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
-  }
+    @Autowired
+    public void setJdbcTemplate(DataSource dataSource) {
+        this.jdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
+    }
 
     @Override
     public List<E> getAll() {

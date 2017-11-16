@@ -27,9 +27,8 @@ public class TagDaoItTest {
     public TaskDao taskDao;
     @Autowired
     public UserPopulator userPopulator;
-
     @Autowired
-    public TaskPopulator taskPopulator;
+    private TaskPopulator taskPopulator;
 
 
     @Before
@@ -37,25 +36,24 @@ public class TagDaoItTest {
         userPopulator.createDefaultEntity();
         userPopulator.createDefaultEntity();
         userPopulator.createDefaultEntity();
-
-        taskPopulator.createDefaultEntity();
-
+       taskPopulator.createDefaultEntity();
     }
 
     @Test
     public void shouldCreateFindOneAndAllUpdateAndDelete() {
-        tagDao.create(new Tag(1, "#Cat", 1));
-        tagDao.create(new Tag(2, "#bicycle", 1));
-        tagDao.create(new Tag(3, "#Books", 1));
-        tagDao.create(new Tag(4, "#Sword", 2));
-        tagDao.create(new Tag(5, "#Bow", 2));
-        tagDao.create(new Tag(6, "#Axe", 2));
-        tagDao.create(new Tag(7, "#Knife", 3));
-        tagDao.create(new Tag(8, "#Searching", 3));
-        int tagId [] = {1,2,3,4};
-        //tagDao.setTagsToTask(tagId, 1);
-        assertThat(tagDao.findOne(8).getName()).isEqualTo("#Searching");
-        assertThat(tagDao.create(new Tag(9, "#Books", 3)).getId()).isEqualTo(9);
+        List<Tag> tagsForTest = new ArrayList<>();
+        tagsForTest.add(new Tag(1, "#Cat", 1));
+        tagsForTest.add(new Tag(2, "#bicycle", 1));
+        tagsForTest.add(new Tag(3, "#Books", 1));
+        tagsForTest.add(new Tag(4, "#Sword", 2));
+        tagsForTest.add(new Tag(5, "#Bow", 2));
+        tagsForTest.add(new Tag(6, "#Axe", 3));
+        tagsForTest.add(new Tag(7, "#Knife", 3));
+        tagsForTest.add(new Tag(8, "#Searching", 3));
+        tagsForTest.forEach(item ->  assertThat(tagDao.create(item).getName()).isEqualTo(item.getName()));
+        tagsForTest.forEach(item ->  assertThat(tagDao.findOne(item.getId())).isEqualTo(item));
+
+        assertThat(tagDao.findOne( tagsForTest.get(7).getId()).getName()).isEqualTo("#Searching");
         assertThat(tagDao.delete(4)).isTrue();
         assertThat(tagDao.getAllByUserId(3)).hasSize(3);
         assertThat(tagDao.update(new Tag(1, "#Cat2", 2))).isTrue();
@@ -73,12 +71,13 @@ public class TagDaoItTest {
 
     @Test
     public void shouldAddTagsToTaskAndGetTags() {
-        List<Tag> tags = new ArrayList<Tag>();
-        tags.add(tagDao.create(new Tag(9, "#sveta", 1)));
-        tags.add(tagDao.create(new Tag(10, "#sv", 1)));
-
-        int[] ids = {9,10};
-        assertThat(tagDao.setTagsToTask(ids, 1)).isTrue();
+        userPopulator.createDefaultEntity();
+        List<Tag> tags = new ArrayList<>();
+        tags.add(new Tag(1, "#TestTag1", 1));
+        tags.add(new Tag(2, "#TestTag2", 1));
+        tagDao.create(tags.get(0));
+        tagDao.create(tags.get(1));
+        assertThat(tagDao.setTagsToTask(tags, 1)).isTrue();
         assertThat(taskDao.getTagsOfTask(1)).isEqualTo(tags);
 
     }

@@ -36,19 +36,7 @@ public class TaskController {
 
     @GetMapping("/planning")
     @ResponseStatus(HttpStatus.OK)
-    public List<Task> getPlannedTasks(){
-        List<Task> tasks = taskService.getPlannedTasks();
-
-        System.out.println();
-        System.out.println("Новий запит даних на календар");
-        for (Task task : tasks){
-            System.out.println("Planning_date : " + task.getPlanningDate());
-            System.out.println("Estimate_time : " + task.getEstimateTime());
-            System.out.println("=========================================");
-        }
-
-        return  tasks;
-    }
+    public List<Task> getPlannedTasks(){return taskService.getPlannedTasks();}
 
     @GetMapping("/filter")
     @ResponseStatus(HttpStatus.OK)

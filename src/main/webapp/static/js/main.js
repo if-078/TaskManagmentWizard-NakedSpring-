@@ -847,8 +847,8 @@ $(document).ready(function () {
 
 //shceduler
 
-    var startWorkDay = '10:00';
-    var endWorkDay = '18:00';
+    var startWorkDay = '09:00';
+    var endWorkDay = '17:00';
     var timeSlotDuration = '00:30:00';
 
     $('#tmw-graphic').click(function () {
@@ -895,16 +895,24 @@ $(document).ready(function () {
 
                        for (var i = 0; i < data.length; i++) {
                            if (data[i].planningDate==null) continue;
+
+                           var hours   = parseInt(data[i].estimateTime.split(':')[0]),
+                               minutes = parseInt(data[i].estimateTime.split(':')[0]);
+
                            plannedTasks.push({
                                id: data[i].id,
                                resourceId: data[i].assignTo,
-                               start: startPlannedDate(data[i].planningDate),
-                               end: endPlannedDate(data[i].planningDate, data[i].estimateTime),
+
                                title: data[i].name,
+
+                               start: moment(data[i].planningDate),
+                               end:   moment(data[i].planningDate).addWorkingTime(hours, 'hours', minutes, 'minutes', 0, 'seconds'),
+
                                color: setColorTask(data[i].statusId),
-                               est: data[i].estimateTime,
+                               est: data[i].estimateTime
                            });
                        }
+
 
                         $('#tmw-task-calendar').fullCalendar({
                             schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
@@ -944,7 +952,10 @@ $(document).ready(function () {
 
 
                             drop: function (date, jsEvent, ui, resourceId) {
-                                $(this).remove();
+                                // $(this).remove();
+
+                                var table = $('#tmw-task-table').DataTable();
+                                table.row($(this)).remove().draw();
 
                                 if ($('#tmw-task-table tbody tr').length === 0) {
                                     $('#tmw-task-table').empty();
@@ -1017,20 +1028,6 @@ $(document).ready(function () {
       if (statusId==2) return '#34ff16';
       if (statusId==3) return '#ff53d4';
       return '#4750ff';
-    };
-
-
-    var timezoneOffset = new Date().getTimezoneOffset() * 60 * 1000;
-    var startPlannedDate = function(planningDate){
-        return moment(planningDate + timezoneOffset).format('Y-M-DTHH:mm:00');
-    };
-
-    var endPlannedDate = function (planningDate, estimate) {
-        var estimateMinute = (parseInt(estimate.substring(0,2))*60 + parseInt(estimate.substring(3,5)));
-        var estimateMilliseconds = estimateMinute*60*1000;
-        var ofset =  estimateMilliseconds + 2*timezoneOffset;
-        console.log(moment(planningDate + ofset).format('Y-M-DTHH:mm:00'));
-        return moment(planningDate + ofset).format('Y-M-DTHH:mm:00');
     };
 
 });

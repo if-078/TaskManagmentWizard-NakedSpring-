@@ -8,7 +8,6 @@ import com.softserve.academy.tmw.dao.util.JooqSQLBuilder;
 import com.softserve.academy.tmw.entity.Comment;
 import com.softserve.academy.tmw.entity.Tag;
 import com.softserve.academy.tmw.entity.Task;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import org.jooq.Select;
@@ -110,13 +109,7 @@ public class TaskDao extends EntityDao<Task> implements TaskDaoInterface {
     param.addValue("parent_id", task.getParentId());
     param.addValue("id", task.getId());
 
-    int result = jdbcTemplate.update(sql, param);
-    tagDao.deleteTagsOfTask(task.getId());
-
-    List<Tag> list = Arrays.asList(task.getTags());
-    tagDao.setTagsToTask(list, task.getId());
-
-    return result >= 1;
+    return jdbcTemplate.update(sql, param) >= 1;
   }
 
   @Override
@@ -184,11 +177,7 @@ public class TaskDao extends EntityDao<Task> implements TaskDaoInterface {
     param.addValue("id", task.getId());
 
     jdbcTemplate.update(sql, param, keyHolder);
-
     task.setId(keyHolder.getKey().intValue());
-
-    List<Tag> list = Arrays.asList(task.getTags());
-    tagDao.setTagsToTask(list, task.getId());
 
     return task;
   }

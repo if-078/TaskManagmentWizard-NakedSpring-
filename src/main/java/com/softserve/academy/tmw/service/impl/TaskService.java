@@ -22,6 +22,7 @@ import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -106,8 +107,9 @@ public class TaskService implements TaskServiceInterface {
     task.setStatusId(taskDTO.getStatusId());
     task.setTags(taskDTO.getTags());
 
-    // tagDao.setTagsToTask(taskDTO.getTags())
-    return taskDao.create(task);
+    task = taskDao.create(task);
+    tagService.setTagsToTask(Arrays.asList(taskDTO.getTags()), task.getId());
+    return task;
   }
 
   @Override
@@ -124,8 +126,12 @@ public class TaskService implements TaskServiceInterface {
     task.setParentId(taskDTO.getParentId());
     task.setStatusId(taskDTO.getStatusId());
     task.setTags(taskDTO.getTags());
+    
+    taskDao.update(task);
+    tagService.deleteTagsOfTask(task.getId());
+    tagService.setTagsToTask(Arrays.asList(taskDTO.getTags()), task.getId());
 
-    return taskDao.update(task);
+    return false;
   }
 
   @Override

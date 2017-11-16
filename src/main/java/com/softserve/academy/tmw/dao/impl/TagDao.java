@@ -67,15 +67,15 @@ public class TagDao extends EntityDao<Tag> implements TagDaoInterface {
     }
 
     @Override
-    public boolean setTagsToTask(int[] tags, int taskId) {
+    public boolean setTagsToTask(List<Integer> tags, int taskId) {
         MapSqlParameterSource param = new MapSqlParameterSource();
         KeyHolder keyHolder = new GeneratedKeyHolder();
         StringBuilder sql = new StringBuilder("INSERT into tmw.tags_tasks (tag_id, task_id) VALUES ");
         param.addValue("task", taskId);
-        for (int i = 0; i < tags.length; i++) {
+        for (int i = 0; i < tags.size(); i++) {
             String tag = "tag" + i;
             sql.append("(:" + tag + ", :task),");
-            param.addValue(tag, tags[i]);
+            param.addValue(tag, tags.get(i));
         }
         sql.setLength(sql.length() - 1);
         System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");

@@ -1,4 +1,5 @@
 package com.softserve.academy.tmw.service.impl;
+import com.softserve.academy.tmw.dao.api.TagDaoInterface;
 import com.softserve.academy.tmw.dto.TaskDTO;
 import com.softserve.academy.tmw.service.api.UserServiceInterface;
 import com.softserve.academy.tmw.dao.util.wrapper.FilterStateWrapper;
@@ -38,6 +39,9 @@ public class TaskService implements TaskServiceInterface {
 
     @Autowired
     UserServiceInterface serviceUser;
+
+    @Autowired
+    TagDaoInterface tagDao;
 
 
 
@@ -112,29 +116,6 @@ public class TaskService implements TaskServiceInterface {
     @Override
     public List<Task> getPlannedTasks() {
         return taskDao.getPlannedTasks();
-    }
-
-    private Date getFormatDate(String line){
-        try {
-            return new SimpleDateFormat( "yyyy-MM-dd" ).parse(line);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return new Date();
-    }
-
-    private Time getTimeFormat(String line){
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-        try {
-            Date date = sdf.parse(line);
-            Calendar calendar = GregorianCalendar.getInstance();
-            calendar.setTime(date);
-
-            return new Time(calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), calendar.get(Calendar.SECOND));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return new Time(00,00,00);
     }
 
     @Override
@@ -247,5 +228,29 @@ public class TaskService implements TaskServiceInterface {
         taskDTO.setPriority(servicePriority.findOne(task.getStatusId()));
 
         return taskDTO;
+    }
+
+
+    private Date getFormatDate(String line){
+        try {
+            return new SimpleDateFormat( "yyyy-MM-dd" ).parse(line);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return new Date();
+    }
+
+    private Time getTimeFormat(String line){
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+        try {
+            Date date = sdf.parse(line);
+            Calendar calendar = GregorianCalendar.getInstance();
+            calendar.setTime(date);
+
+            return new Time(calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), calendar.get(Calendar.SECOND));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return new Time(00,00,00);
     }
 }

@@ -98,7 +98,6 @@ $(document).ready(function () {
         taskTable();
     });
 
-
     // ON CLICK RESET FILTERS --> STATUS, PRIORITY, TAG
     $('#tmw-reset-btn').click(function () {
         state.status = [];
@@ -108,7 +107,6 @@ $(document).ready(function () {
 
         taskTable();
     });
-
 
     // CREATE TREEVIEW
     $('#tmw-treeview').jstree({
@@ -228,8 +226,7 @@ $(document).ready(function () {
         }
         parameters = parameters.slice(0, -1);
         return parameters;
-    }
-
+    };
 
     var taskTableInit = false;
     var taskTable = function () {
@@ -241,46 +238,69 @@ $(document).ready(function () {
             success: function (data, textStatus, jqXHR) {
                 setToken(jqXHR);
 
-                var rows = []
+                $.ajax({
+                    url: 'api/tasks/tree/' + state.parentid,
+                    type: 'GET',
+                    contentType: 'application/json',
+                    success: function (treeData) {
 
-                for (var i = 0; i < data.length; i++) {
-                    rows.push(Object.values(data[i]));
-                }
+                        var subtasks = [];
 
-                if (taskTableInit) {
-                    $('#tmw-task-table').DataTable().destroy();
-                    taskTableInit = false;
-                }
+                        for (var i = 0; i < treeData.length; i++) {
+                            subtasks.push(Object.values(treeData[i]));
+                        }
 
-                if (rows.length > 0) {
-                    $('#tmw-task-table').css('visibility', 'visible');
+                        var rows = [];
 
-                    $('#tmw-task-table').DataTable({
-                        data: rows,
+                        for (var i = 0; i < data.length; i++) {
+                            var hasChildren = false;
+                            for (var j = 0; j < subtasks.length; j++){
+                                if ((data[i].id==subtasks[j][0])&&(subtasks[j][2])){
+                                    hasChildren = true;
+                                    break;
+                                }
+                            }
+                            if (!hasChildren) {
+                                rows.push(Object.values(data[i]));
+                            }
+                        }
 
-                        columns: [
-                            {title: "ID", visible: false},
-                            {title: "Name"},
-                            {title: "Start Date"},
-                            {title: "Est. Time"},
-                            {title: "Assignee"},
-                            {title: "Status"},
-                            {title: "Priority"}
-                        ],
+                        if (taskTableInit) {
+                            $('#tmw-task-table').DataTable().destroy();
+                            taskTableInit = false;
+                        }
 
-                        paging: false,
-                        info: false,
-                        searching: false
-                    });
+                        if (rows.length > 0) {
+                            $('#tmw-task-table').css('visibility', 'visible');
 
-                    taskTableInit = true;
+                            $('#tmw-task-table').DataTable({
+                                data: rows,
 
-                    if (!$('#tmw-main-calendar').hasClass('hidden')) {
-                        makeTableRowsDraggable();
+                                columns: [
+                                    {title: "ID", visible: false},
+                                    {title: "Name"},
+                                    {title: "Start Date"},
+                                    {title: "Est. Time"},
+                                    {title: "Assignee"},
+                                    {title: "Status"},
+                                    {title: "Priority"}
+                                ],
+
+                                paging: false,
+                                info: false,
+                                searching: false
+                            });
+
+                            taskTableInit = true;
+
+                            if (!$('#tmw-main-calendar').hasClass('hidden')) {
+                                makeTableRowsDraggable();
+                            }
+                        } else {
+                            $('#tmw-task-table').css('visibility', 'hidden');
+                        }
                     }
-                } else {
-                    $('#tmw-task-table').css('visibility', 'hidden');
-                }
+                });
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 if (jqXHR.status === 401) {
@@ -290,7 +310,7 @@ $(document).ready(function () {
                 }
             }
         });
-    }
+    };
 
 
     // SHOW FULL INFORMATION ABOUT THE TASK

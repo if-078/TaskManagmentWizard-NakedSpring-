@@ -9,17 +9,11 @@ import java.util.List;
 
 public interface TaskDaoInterface extends EntityDaoInterface<Task>{
 
-    List<Task> getTasksForToday();
-
     List<Tag> getTagsOfTask(int taskId);
 
     List<Comment> getCommentsOfTask(int taskId);
 
     List<Task> getSubtasks(int id);
-
-    List<Task> getPageOfTasks(int page, int amount);
-
-    List<Task> getSprint();
 
     List<Task> getTasksAssignToUser(int userId);
 

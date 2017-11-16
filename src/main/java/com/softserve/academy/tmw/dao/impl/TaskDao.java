@@ -92,9 +92,6 @@ public class TaskDao extends EntityDao<Task> implements TaskDaoInterface {
             estimate = new java.sql.Time(task.getEstimateTime().getTime());
         }
 
-        /*if(task.getAssignTo() == 0) {
-            task.setAssignTo(1);
-        }*/
         if(task.getStatusId() == 0) {
             task.setStatusId(1);
         }
@@ -172,9 +169,6 @@ public class TaskDao extends EntityDao<Task> implements TaskDaoInterface {
             estimate = new java.sql.Time(task.getEstimateTime().getTime());
         }
 
-        if(task.getAssignTo() == 0) {
-            task.setAssignTo(1);
-        }
         if(task.getStatusId() == 0) {
             task.setStatusId(1);
         }
@@ -215,32 +209,6 @@ public class TaskDao extends EntityDao<Task> implements TaskDaoInterface {
     }
 
     @Override
-    public List<Task> getTasksForToday() {
-        LocalDateTime date = LocalDateTime.now();
-        String sql = "SELECT id, name, created_date, planning_date, start_date, end_date, estimate_time, "
-                + "assign_to, status_id, priority_id, parent_id FROM task WHERE date(start_date) = '"
-                + date.toLocalDate() + "'";
-
-        List<Task> tasks = jdbcTemplate.query(sql, new TaskMapper());
-
-        return tasks;
-    }
-
-    @Override
-    public List<Task> getSprint() {
-        LocalDateTime date = LocalDateTime.now();
-        LocalDate monday = date.with(DayOfWeek.MONDAY).toLocalDate();
-        LocalDate sunday = date.with(DayOfWeek.SUNDAY).toLocalDate();
-        String sql = "SELECT id, name, created_date, planning_date, start_date, end_date, estimate_time, "
-                + "assign_to, status_id, priority_id, parent_id FROM task WHERE date(start_date) "
-                + "BETWEEN '" + monday + "' AND '" + sunday + "'";
-
-        List<Task> tasks = jdbcTemplate.query(sql, new TaskMapper());
-
-        return tasks;
-    }
-
-    @Override
     public List<Tag> getTagsOfTask(int taskId) {
         String sql = "SELECT tag.id, tag.name, tag.user_id FROM tmw.tag INNER JOIN tmw.tags_tasks  "
                 + "ON tag.id=tags_tasks.tag_id  WHERE tags_tasks.task_id = :tags_tasks.task_id";
@@ -267,16 +235,6 @@ public class TaskDao extends EntityDao<Task> implements TaskDaoInterface {
                 + "assign_to, status_id, priority_id, parent_id FROM task WHERE parent_id = :parent_id";
         List<Task> tasks =
                 jdbcTemplate.query(query, new MapSqlParameterSource("parent_id", id), new TaskMapper());
-
-        return tasks;
-    }
-
-    @Override
-    public List<Task> getPageOfTasks(int page, int amount) {
-        String sql = "SELECT id, name, created_date, planning_date, start_date, end_date, estimate_time, "
-                + "assign_to, status_id, priority_id, parent_id FROM task LIMIT " + (page - 1) + ", "
-                + amount;
-        List<Task> tasks = jdbcTemplate.query(sql, new TaskMapper());
 
         return tasks;
     }

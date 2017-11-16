@@ -137,17 +137,6 @@ public class TaskService implements TaskServiceInterface {
         return new Time(00,00,00);
     }
 
-
-    @Override
-    public List<Task> getTasksForToday() {
-        return taskDao.getTasksForToday();
-    }
-
-    @Override
-    public List<Task> getSprint() {
-        return taskDao.getSprint();
-    }
-
     @Override
     public List<Tag> getTagsOfTask(int taskId) {
         return taskDao.getTagsOfTask(taskId);

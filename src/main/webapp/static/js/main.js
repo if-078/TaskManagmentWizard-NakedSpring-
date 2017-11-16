@@ -144,10 +144,6 @@ $(document).ready(function () {
                             return 'data:application/json,' + encodeURIComponent(JSON.stringify(rootNode));
 
                         case '$':
-                            $.ajaxSetup({
-                                headers: createAuthToken()
-                            });
-
                             return 'api/tasks/tree/0';
 
                         default:

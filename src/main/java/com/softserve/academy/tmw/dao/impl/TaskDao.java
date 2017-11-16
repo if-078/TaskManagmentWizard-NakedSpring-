@@ -5,6 +5,7 @@ import com.softserve.academy.tmw.dao.mapper.CommentMapper;
 import com.softserve.academy.tmw.dao.mapper.TagMapper;
 import com.softserve.academy.tmw.dao.mapper.TaskMapper;
 import com.softserve.academy.tmw.dao.util.JooqSQLBuilder;
+import com.softserve.academy.tmw.dto.TaskFullInfoDTO;
 import com.softserve.academy.tmw.entity.Comment;
 import com.softserve.academy.tmw.entity.Tag;
 import com.softserve.academy.tmw.entity.Task;
@@ -249,16 +250,14 @@ public class TaskDao extends EntityDao<Task> implements TaskDaoInterface {
     return tasks;
   }
 
-    public Task getFullTask(int id) {
+    public TaskFullInfoDTO getFullTask(int id) {
        String query = "SELECT task.id, task.name, task.created_date, task.planning_date, task.start_date, task.end_date, task.estimate_time,\n"
-           + "  task.assign_to, task.status_id, task.priority_id, task.parent_id,\n"
-           + "  priority.name as priority_name,\n"
-           + "  status.name as status_name\n"
-           + "FROM task\n"
+           + "  user.name as user, status.name as status, priority.name as priority, task.parent_id\n"
+           + "  FROM task\n"
            + "  LEFT JOIN priority ON task.priority_id = priority.id\n"
-           + "  LEFT JOIN status ON task.statugs_id = status.id\n"
+           + "  LEFT JOIN status ON task.status_id = status.id\n"
+           + "  LEFT JOIN user ON task.assign_to = user.id"
            + "WHERE task.id=:id";
-        // Нахер цього методу якщо в сервісі є через даошкі
         return null;
    }
 

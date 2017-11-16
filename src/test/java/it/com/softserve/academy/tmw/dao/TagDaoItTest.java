@@ -71,11 +71,14 @@ public class TagDaoItTest {
 
     @Test
     public void shouldAddTagsToTaskAndGetTags() {
-
-        int[] ids = {9,10};
-        //tagDao.setTagsToTask(ids, 1);
-       // assertThat(tagDao.setTagsToTask(ids, 1)).isTrue();
-      //  assertThat(taskDao.getTagsOfTask(1)).isEqualTo(tags);
+        userPopulator.createDefaultEntity();
+        List<Tag> tags = new ArrayList<>();
+        tags.add(new Tag(1, "#TestTag1", 1));
+        tags.add(new Tag(2, "#TestTag2", 1));
+        tagDao.create(tags.get(0));
+        tagDao.create(tags.get(1));
+        assertThat(tagDao.setTagsToTask(tags, 1)).isTrue();
+        assertThat(taskDao.getTagsOfTask(1)).isEqualTo(tags);
 
     }
 

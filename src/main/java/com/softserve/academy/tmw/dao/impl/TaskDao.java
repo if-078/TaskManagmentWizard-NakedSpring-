@@ -75,7 +75,7 @@ public class TaskDao extends EntityDao<Task> implements TaskDaoInterface {
         }
 
         if (task.getPlanningDate() == null) {
-            planning = new java.sql.Timestamp(date.getTime());
+            planning = null;
         } else {
             planning = new java.sql.Timestamp(task.getPlanningDate().getTime());
         }

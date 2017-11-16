@@ -917,7 +917,7 @@ $(document).ready(function () {
                            if (data[i].planningDate==null) continue;
 
                            var hours   = parseInt(data[i].estimateTime.split(':')[0]),
-                               minutes = parseInt(data[i].estimateTime.split(':')[0]);
+                               minutes = parseInt(data[i].estimateTime.split(':')[1]);
 
                            plannedTasks.push({
                                id: data[i].id,
@@ -932,7 +932,6 @@ $(document).ready(function () {
                                est: data[i].estimateTime
                            });
                        }
-
 
                         $('#tmw-task-calendar').fullCalendar({
                             schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
@@ -1014,41 +1013,59 @@ $(document).ready(function () {
 //============================================================================================================
     var resizeTaskOnCalendar = function (event) {
 
-        var task =
-            {
-                "id"           : 12,
-                "name"         : 'Event Resize Task',
-                "createdDate"  : '2017-11-15',
-                "planningDate" : '2017-11-16',
-                "startDate"    : '2017-11-17',
-                "endDate"      : '2017-11-18',
-                "estimateTime" : '05:00:00',
-                "assignTo"     : 1,
-                "statusId"     : 2,
-                "priorityId"   : 3,
-                "parentId"     : 1,
-            }
-
-        console.log('Prepared TASKDTO');
-        console.log(task);
-
-
         $.ajax({
-            url: '/api/tasks/planning',
-            data: JSON.stringify(task),
-            type: 'PUT',
+            url: '/api/tasks/planning/' + event.id,
+            type: 'GET',
             contentType: 'application/json',
-            success: function (task) {
-                console.log('task from DB after resize');
-                console.log(task);
-            },
-            cache: false
-        }).fail(function ($xhr) {
-            if ($xhr.status == 400) {
-                var data = $xhr.responseJSON;
-                showErrorsOfForm(data)
+            success: function (data) {
+
+                console.log('[BEFORE]');
+                console.log(data.planningDate);
+                console.log(data.estimateTime);
+                console.log(data.assignTo);
+                console.log('[BEFORE]');
+
+                var task = {
+                    "id"           : 12,
+                    "name"         : 'Last Event Resize Task',
+                    "createdDate"  : '2017-11-15',
+                    "planningDate" : '2017-11-16',
+                    "startDate"    : '2017-11-17',
+                    "endDate"      : '2017-11-18',
+                    "estimateTime" : '05:00:00',
+                    "assignTo"     : 1,
+                    "statusId"     : 2,
+                    "priorityId"   : 3,
+                    "parentId"     : 1,
+                };
+
+                var planningDate = event.start.format('YYYY-MM-DD HH:mm:ss');
+
+                var hours   = ('0' + event.end.workingDiff(event.start, 'hours')).slice(-2),
+                    minutes = ('0' + event.end.workingDiff(event.start, 'minutes') % 60).slice(-2);
+
+                var estimateTime = hours + ':' + minutes + ':00';
+
+                data.planningDate = planningDate;
+                data.estimateTime = estimateTime;
+                data.assignTo = event.resourceId;
+
+                console.log('[AFTER]');
+                console.log(data.planningDate);
+                console.log(data.estimateTime);
+                console.log(data.assignTo);
+                console.log('[AFTER]');
+
+                /* $.ajax({
+                    url: '/api/tasks/planning',
+                    data: JSON.stringify(data),
+                    type: 'PUT',
+                    contentType: 'application/json'
+                }); */
+
             }
         });
+
 
     }
 

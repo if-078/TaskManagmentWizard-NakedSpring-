@@ -32,13 +32,9 @@ public class TaskController {
     }
 
 
-
-
-    @GetMapping("/tree/{id}")
+    @GetMapping("/planning/{id}")
     @ResponseStatus(HttpStatus.OK)
-    List<TaskTreeDTO> getTreeSubtask(@PathVariable Integer id){
-        return taskService.findTaskByTree(id);
-    }
+    public Task getPlannedTask(@PathVariable Integer id){return taskService.findOne(id);}
 
     @GetMapping("/planning")
     @ResponseStatus(HttpStatus.OK)
@@ -48,6 +44,12 @@ public class TaskController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     boolean updateCalendarTask(@Validated @RequestBody Task task) {
         return taskService.updateCalendarTask(task);
+    }
+
+    @GetMapping("/tree/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    List<TaskTreeDTO> getTreeSubtask(@PathVariable Integer id){
+        return taskService.findTaskByTree(id);
     }
 
     @GetMapping("/filter")

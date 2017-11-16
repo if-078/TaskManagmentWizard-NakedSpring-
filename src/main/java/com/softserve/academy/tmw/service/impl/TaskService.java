@@ -138,21 +138,6 @@ public class TaskService implements TaskServiceInterface {
     @Override
     public boolean updateCalendarTask(Task task) {
         taskDao.update(task);
-
-        System.out.println("In method serice update task");
-        System.out.println(task.getId());
-        System.out.println(task.getName());
-        System.out.println(task.getCreatedDate());
-        System.out.println(task.getPlanningDate());
-        System.out.println(task.getStartDate());
-        System.out.println(task.getEndDate());
-        System.out.println(task.getEstimateTime());
-        System.out.println(task.getAssignTo());
-        System.out.println(task.getStatusId());
-        System.out.println(task.getPriorityId());
-        System.out.println(task.getParentId());
-        System.out.println("=The end task================");
-
         return false;
     }
 

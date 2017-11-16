@@ -37,9 +37,7 @@ public class TaskDao extends EntityDao<Task> implements TaskDaoInterface {
     @Override
     public List<Task> getAll() {
         String sql = "SELECT * FROM " + table;
-        List<Task> tasks = jdbcTemplate.query(sql, new TaskMapper());
-
-        return tasks;
+        return jdbcTemplate.query(sql, new TaskMapper());
     }
 
 
@@ -51,9 +49,8 @@ public class TaskDao extends EntityDao<Task> implements TaskDaoInterface {
 
         List<Task> tasks =
                 jdbcTemplate.query(query, new MapSqlParameterSource("id", id), new TaskMapper());
-        Task task = tasks.get(0);
 
-        return task;
+        return tasks.get(0);
     }
 
     @Override
@@ -272,7 +269,7 @@ public class TaskDao extends EntityDao<Task> implements TaskDaoInterface {
            + "  status.name as status_name\n"
            + "FROM task\n"
            + "  LEFT JOIN priority ON task.priority_id = priority.id\n"
-           + "  LEFT JOIN status ON task.status_id = status.id\n"
+           + "  LEFT JOIN status ON task.statugs_id = status.id\n"
            + "WHERE task.id=:id";
         // Нахер цього методу якщо в сервісі є через даошкі
         return null;

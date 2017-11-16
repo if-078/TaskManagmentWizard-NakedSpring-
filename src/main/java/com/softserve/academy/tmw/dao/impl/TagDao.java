@@ -79,31 +79,12 @@ public class TagDao extends EntityDao<Tag> implements TagDaoInterface {
         }
         sql.setLength(sql.length() - 1);
         System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-        //System.out.println(jdbcTemplate.update(sql.toString(), param));
+        System.out.println(sql.toString());
         System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         System.out.println(sql);
-        //return false;
-        return jdbcTemplate.update(sql.toString(), param, keyHolder) > 0;
-    }
-
-
-
-    /*public boolean addTagsToTask(int[] tagId, int taskId) {
-        MapSqlParameterSource param = new MapSqlParameterSource();
-        StringBuilder sql = new StringBuilder("INSERT into tags_tasks (tag_id, task_id) VALUES ");
-        param.addValue("task", taskId);
-        for (int i = 0; i < tagId.length; i++) {
-            String tag = "tag" + i;
-            sql.append("(tag_id:" + tag + ", task_id:task),");
-            param.addValue(tag, tagId[i]);
-        }
-        sql.setLength(sql.length() - 1);
-        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-        System.out.println(jdbcTemplate.update(sql.toString(), param));
-        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-
         return false;
-    }*/
+      //  return jdbcTemplate.update(sql.toString(), param, keyHolder) > 0;
+    }
 
     private MapSqlParameterSource getParameters(Tag entity) {
         MapSqlParameterSource param = new MapSqlParameterSource();
@@ -112,10 +93,5 @@ public class TagDao extends EntityDao<Tag> implements TagDaoInterface {
         param.addValue("user_id", entity.getUserId());
         return param;
     }
-
-
-
-
-
 
 }

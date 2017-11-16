@@ -36,7 +36,7 @@ public class TagDaoItTest {
         userPopulator.createDefaultEntity();
         userPopulator.createDefaultEntity();
         userPopulator.createDefaultEntity();
-       // taskPopulator.createDefaultEntity();
+       taskPopulator.createDefaultEntity();
     }
 
     @Test
@@ -47,13 +47,13 @@ public class TagDaoItTest {
         tagsForTest.add(new Tag(3, "#Books", 1));
         tagsForTest.add(new Tag(4, "#Sword", 2));
         tagsForTest.add(new Tag(5, "#Bow", 2));
-        tagsForTest.add(new Tag(6, "#Axe", 2));
+        tagsForTest.add(new Tag(6, "#Axe", 3));
         tagsForTest.add(new Tag(7, "#Knife", 3));
         tagsForTest.add(new Tag(8, "#Searching", 3));
         tagsForTest.forEach(item ->  assertThat(tagDao.create(item).getName()).isEqualTo(item.getName()));
         tagsForTest.forEach(item ->  assertThat(tagDao.findOne(item.getId())).isEqualTo(item));
+
         assertThat(tagDao.findOne( tagsForTest.get(7).getId()).getName()).isEqualTo("#Searching");
-        assertThat(tagDao.create(new Tag(9, "#Books", 3)).getId()).isEqualTo(9);
         assertThat(tagDao.delete(4)).isTrue();
         assertThat(tagDao.getAllByUserId(3)).hasSize(3);
         assertThat(tagDao.update(new Tag(1, "#Cat2", 2))).isTrue();

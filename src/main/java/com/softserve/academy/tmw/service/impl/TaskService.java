@@ -1,82 +1,97 @@
 package com.softserve.academy.tmw.service.impl;
-import com.softserve.academy.tmw.dao.api.TagDaoInterface;
-import com.softserve.academy.tmw.dto.TaskDTO;
-import com.softserve.academy.tmw.service.api.UserServiceInterface;
-import com.softserve.academy.tmw.dao.util.wrapper.FilterStateWrapper;
-import com.softserve.academy.tmw.dto.TaskTableDTO;
-import com.softserve.academy.tmw.dao.util.JooqSQLBuilder;
+
 import com.softserve.academy.tmw.dao.api.TaskDaoInterface;
 import com.softserve.academy.tmw.dao.api.UserDaoInterface;
+import com.softserve.academy.tmw.dao.util.JooqSQLBuilder;
+import com.softserve.academy.tmw.dao.util.wrapper.FilterStateWrapper;
+import com.softserve.academy.tmw.dto.TaskDTO;
 import com.softserve.academy.tmw.dto.TaskFullInfoDTO;
+import com.softserve.academy.tmw.dto.TaskTableDTO;
 import com.softserve.academy.tmw.dto.TaskTreeDTO;
-import com.softserve.academy.tmw.entity.*;
+import com.softserve.academy.tmw.entity.Comment;
+import com.softserve.academy.tmw.entity.Priority;
+import com.softserve.academy.tmw.entity.Status;
+import com.softserve.academy.tmw.entity.Tag;
+import com.softserve.academy.tmw.entity.Task;
+import com.softserve.academy.tmw.entity.User;
 import com.softserve.academy.tmw.service.api.EntityServiceInterface;
+import com.softserve.academy.tmw.service.api.TagServiceInterface;
 import com.softserve.academy.tmw.service.api.TaskServiceInterface;
+import com.softserve.academy.tmw.service.api.UserServiceInterface;
+import java.sql.Time;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
-
-import java.sql.Time;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.*;
+import org.springframework.transaction.support.TransactionTemplate;
 
 @Service
 public class TaskService implements TaskServiceInterface {
 
-    @Autowired
-    TaskDaoInterface taskDao;
+  public TaskService() {
 
-    @Autowired
-    UserDaoInterface userDao;
+  }
 
-    @Autowired
-    EntityServiceInterface<Status> serviceStatus;
+  private TransactionTemplate transactionTemplate;
 
-    @Autowired
-    EntityServiceInterface<Priority> servicePriority;
+  @Autowired
+  private TaskDaoInterface taskDao;
 
-    @Autowired
-    UserServiceInterface serviceUser;
+  @Autowired
+  private UserDaoInterface userDao;
 
-    @Autowired
-    TagDaoInterface tagDao;
+  @Autowired
+  private TagServiceInterface tagService;
 
+  @Autowired
+  private EntityServiceInterface<Status> serviceStatus;
 
+  @Autowired
+  private EntityServiceInterface<Priority> servicePriority;
 
-    @Override
-    public List<Task> getAll() {
-        return taskDao.getAll();
+  @Autowired
+  private UserServiceInterface serviceUser;
+
+  @Override
+  public List<Task> getAll() {
+    return taskDao.getAll();
+  }
+
+  @Override
+  public Task findOne(int id) {
+    try {
+      return taskDao.findOne(id);
+    } catch (EmptyResultDataAccessException e) {
+      return new Task();
     }
+  }
 
-    @Override
-    public Task findOne(int id) {
-        try {
-            return taskDao.findOne(id);
-        } catch (EmptyResultDataAccessException e) {
-            return new Task();
-        }
-    }
+  @Override
+  public boolean update(Task task) {
+    return taskDao.update(task);
+  }
 
-    @Override
-    public boolean update(Task task) {
-        return taskDao.update(task);
-    }
+  @Override
+  public boolean delete(int id) {
+    return taskDao.delete(id);
+  }
 
-    @Override
-    public boolean delete(int id) {
-        return taskDao.delete(id);
+  @Override
+  public Task create(Task task) {
+    try {
+      return taskDao.create(task);
+    } catch (DataAccessException e) {
+      return new Task();
     }
-
-    @Override
-    public Task create(Task task) {
-        try {
-            return taskDao.create(task);
-        } catch (DataAccessException e) {
-            return new Task();
-        }
-    }
+  }
 
     @Override
     public Task createTaskByDTO(TaskDTO taskDTO) {
@@ -92,7 +107,9 @@ public class TaskService implements TaskServiceInterface {
         task.setStatusId(taskDTO.getStatusId());
         task.setTags(taskDTO.getTags());
 
-        return taskDao.create(task);
+        task = taskDao.create(task);
+        tagService.setTagsToTask(Arrays.asList(taskDTO.getTags()), task.getId());
+        return task;
     }
 
     @Override
@@ -110,36 +127,41 @@ public class TaskService implements TaskServiceInterface {
         task.setStatusId(taskDTO.getStatusId());
         task.setTags(taskDTO.getTags());
 
-        return taskDao.update(task);
+        taskDao.update(task);
+        tagService.deleteTagsOfTask(task.getId());
+        tagService.setTagsToTask(Arrays.asList(taskDTO.getTags()), task.getId());
+
+        return false;
     }
 
-    @Override
-    public List<Task> getPlannedTasks() {
-        return taskDao.getPlannedTasks();
-    }
+  @Override
+  public List<Task> getPlannedTasks() {
+    return taskDao.getPlannedTasks();
+  }
+
+  @Override
+  public List<Tag> getTagsOfTask(int taskId) {
+    return taskDao.getTagsOfTask(taskId);
+  }
+
+  @Override
+  public List<Comment> getCommentsOfTask(int taskId) {
+    return taskDao.getCommentsOfTask(taskId);
+  }
+
+  @Override
+  public List<Task> getSubtasks(int id) {
+    return taskDao.getSubtasks(id);
+  }
+
+  @Override
+  public List<Task> getTasksAssignToUser(int userId) {
+    return taskDao.getTasksAssignToUser(userId);
+  }
 
     @Override
-    public List<Tag> getTagsOfTask(int taskId) {
-        return taskDao.getTagsOfTask(taskId);
-    }
-
-    @Override
-    public List<Comment> getCommentsOfTask(int taskId) {
-        return taskDao.getCommentsOfTask(taskId);
-    }
-
-    @Override
-    public List<Task> getSubtasks(int id) {
-        return taskDao.getSubtasks(id);
-    }
-
-    @Override
-    public List<Task> getTasksAssignToUser(int userId) {
-        return taskDao.getTasksAssignToUser(userId);
-    }
-
-    @Override
-    public List<TaskTableDTO> getFilteredTasksForTable(int parentId, String[] dates, int[] status, int[] priority, int[] tag){
+    public List<TaskTableDTO> getFilteredTasksForTable(int parentId, String[] dates, int[] status,
+                                                       int[] priority, int[] tag) {
         FilterStateWrapper wrapper = new FilterStateWrapper();
         wrapper.setId(parentId);
         wrapper.setPriority(priority);
@@ -152,19 +174,17 @@ public class TaskService implements TaskServiceInterface {
         List<TaskTableDTO> tasksDTOList = new ArrayList<>();
 
         List<User> users = userDao.getAll();
-        List<Priority>priorities = servicePriority.getAll();
-        List<Status>statuses =serviceStatus.getAll();
+        List<Priority> priorities = servicePriority.getAll();
+        List<Status> statuses = serviceStatus.getAll();
 
         tasksList.forEach(task -> {
-
             TaskTableDTO dto = new TaskTableDTO();
             dto.setId(task.getId());
             dto.setName(task.getName());
             dto.setStartDate(task.getStartDate());
             dto.setEstimateTime(task.getEstimateTime());
-
             users.forEach(user -> {
-                if (user.getId() == task.getAssignTo())
+                if (user.getId()==task.getAssignTo())
                     dto.setAssignTo(user.getName());
             });
             priorities.forEach(priority1 -> {
@@ -172,37 +192,36 @@ public class TaskService implements TaskServiceInterface {
                     dto.setPriority(priority1.getName());
             });
             statuses.forEach(status1 -> {
-                if (status1.getId() == task.getStatusId()){
+                if (status1.getId() == task.getStatusId())
                     dto.setStatus(status1.getName());
-                }
             });
-            tasksDTOList.add(dto);
+        tasksDTOList.add(dto);
         });
-
         return tasksDTOList;
     }
 
-
     @Override
-    public List<TaskTreeDTO> findTaskByTree(int id){
+    public List<TaskTreeDTO> findTaskByTree(int id) {
 
         List<Task> allTask = taskDao.getAll();
         List<Task> selectedTask = new ArrayList<Task>();
-        for (Task task : allTask){
-            if(task.getParentId() == id) selectedTask.add(task);
+        for (Task task : allTask) {
+            if (task.getParentId() == id) {
+                selectedTask.add(task);
+            }
         }
 
         List<TaskTreeDTO> allTaskDTO = new ArrayList<>();
-        for(Task task : selectedTask){
+        for (Task task : selectedTask) {
             TaskTreeDTO taskDTO = new TaskTreeDTO();
             taskDTO.setId(task.getId());
             taskDTO.setText(task.getName());
             allTaskDTO.add(taskDTO);
         }
 
-        for(TaskTreeDTO taskDTO : allTaskDTO){
-            for(Task task : allTask){
-                if (taskDTO.getId()==task.getParentId()){
+        for (TaskTreeDTO taskDTO : allTaskDTO) {
+            for (Task task : allTask) {
+                if (taskDTO.getId() == task.getParentId()) {
                     taskDTO.setChildren(true);
                     break;
                 }
@@ -211,9 +230,8 @@ public class TaskService implements TaskServiceInterface {
         return allTaskDTO;
     }
 
-
     @Override
-    public TaskFullInfoDTO getFullInfo(int id){
+    public TaskFullInfoDTO getFullInfo(int id) {
         Task task = taskDao.findOne(id);
         TaskFullInfoDTO taskDTO = new TaskFullInfoDTO();
 
@@ -229,7 +247,6 @@ public class TaskService implements TaskServiceInterface {
 
         return taskDTO;
     }
-
 
     private Date getFormatDate(String line){
         try {

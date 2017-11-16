@@ -37,7 +37,7 @@ public class LoginController {
             logger.info("User authentication success. User: " + user.getName() + " with email address: " + user.getEmail() + " logged in.");
             return ResponseEntity.ok(new UserProxy(user.getId(), user.getName(), null));
         } else {
-            logger.info("Bad user credentials email " + credential.getUserEmail() + " " + credential.getPassword());
+            logger.info("Bad user credentials email: " + credential.getUserEmail() + " " + credential.getPassword());
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
     }

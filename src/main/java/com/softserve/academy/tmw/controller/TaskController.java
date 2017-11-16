@@ -46,22 +46,8 @@ public class TaskController {
 
     @PutMapping("/planning")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    boolean updateCalendarTask(@Validated @RequestBody TaskDTO taskDTO) {
-
-        System.out.println("In PUT Planning controller");
-        System.out.println(taskDTO.getId());
-        System.out.println(taskDTO.getName());
-        System.out.println(taskDTO.getCreatedDate());
-        System.out.println(taskDTO.getStartDate());
-        System.out.println(taskDTO.getEndDate());
-        System.out.println(taskDTO.getEstimateTime());
-        System.out.println(taskDTO.getAssignTo());
-        System.out.println(taskDTO.getStatusId());
-        System.out.println(taskDTO.getPriorityId());
-        System.out.println(taskDTO.getParentId());
-        System.out.println(taskDTO.getTags());
-
-        return taskService.updateTaskByDTO(taskDTO);
+    boolean updateCalendarTask(@Validated @RequestBody Task task) {
+        return taskService.updateCalendarTask(task);
     }
 
     @GetMapping("/filter")

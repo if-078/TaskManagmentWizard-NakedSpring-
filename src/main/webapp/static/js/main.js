@@ -1016,17 +1016,17 @@ $(document).ready(function () {
 
         var task =
             {
-                "id"           : 1,
-                "name"         : 'Event My Resize',
-                "createdDate"  : '2017-11-16',
-                "startDate"    : '2017-11-16',
-                "endDate"      : '2017-11-16',
+                "id"           : 12,
+                "name"         : 'Event Resize Task',
+                "createdDate"  : '2017-11-15',
+                "planningDate" : '2017-11-16',
+                "startDate"    : '2017-11-17',
+                "endDate"      : '2017-11-18',
                 "estimateTime" : '05:00:00',
                 "assignTo"     : 1,
-                "statusId"     : 1,
-                "priorityId"   : 1,
-                "parentId"     : 0,
-                "tags"         : null,
+                "statusId"     : 2,
+                "priorityId"   : 3,
+                "parentId"     : 1,
             }
 
         console.log('Prepared TASKDTO');

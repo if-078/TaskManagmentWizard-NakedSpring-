@@ -942,7 +942,7 @@ $(document).ready(function () {
                             maxTime: endWorkDay,
                             slotDuration: timeSlotDuration,
                             defaultTimedEventDuration: '00:30:00',
-                            slotWidth: '20',
+                            slotWidth: '25',
                             forceEventDuration: true,
                             weekends: false,
                             header: {
@@ -987,9 +987,6 @@ $(document).ready(function () {
                             eventResize: resizeTaskOnCalendar,
 
                             eventClick: function (event) {
-                                console.log('ID:', event.id);
-                                console.log('User ID:', event.resourceId);
-                                console.log('Title:', event.title);
                                 showFull(event.id);
                             }
                         });
@@ -1119,7 +1116,6 @@ $(document).ready(function () {
 
     var setColorTask = function (data) {
         if (data.statusId == 3) return '#4750ff';
-
         if (data.priorityId == 1) return '#ff3c38';
         if (data.priorityId == 2) return '#34ff16';
         if (data.priorityId == 3) return '#ff53d4';

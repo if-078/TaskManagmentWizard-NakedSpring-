@@ -21,7 +21,6 @@ $(document).ready(function () {
     var taskID = null;
     var taskDTO = {};
 
-
     // ON CLICK - SELECT TIME - ALL
     $('#tmw-time-all-btn').click(function () {
         $('#tmw-info-selected-time').html('Selected Time : All');
@@ -30,27 +29,27 @@ $(document).ready(function () {
         taskTable();
     });
 
-
     // ON CLICK - SELECT TIME - TODAY
     $('#tmw-time-today-btn').click(function () {
         $('#tmw-info-selected-time').html('Selected Time : Today');
         var currentData = new Date();
         state.dateFrom = currentData.setHours(0, 0, 0, 0);
-        state.dateTo = currentData.setHours(23, 59, 59, 0) + 1000;
+        state.dateTo = currentData.setHours(23, 59, 59, 999);
+
         taskTable();
     });
-
 
     // ON CLICK - SELECT TIME - WEEK
     $('#tmw-time-week-btn').click(function () {
         $('#tmw-info-selected-time').html('Selected Time : Week');
         var currentData = new Date();
         var numberDay = currentData.getDay();
-        state.dateFrom = currentData.setHours(0, 0, 0, 0) - (numberDay - 1) * 86400000;
-        state.dateTo = currentData.setHours(23, 59, 59, 0) + (6 - numberDay) * 86400000;
+
+        state.dateFrom = currentData.setHours(0, 0, 0, 0) - (numberDay - 1) * 24 * 60 * 60 * 1000;
+        state.dateTo = currentData.setHours(23, 59, 59, 999) + (8 - numberDay) * 24 * 60 * 60 * 1000;
+
         taskTable();
     });
-
 
     // ON CLICK - SELECT TIME - CUSTOM
     $('.datepicker').datepicker({
@@ -71,7 +70,7 @@ $(document).ready(function () {
         }
 
         state.dateFrom = Date.parse($('#tmw-time-custom-from').val());
-        state.dateTo = Date.parse($('#tmw-time-custom-to').val()) + 86400000;
+        state.dateTo = Date.parse($('#tmw-time-custom-to').val()) + 24 * 60 * 60 * 1000 - 1;
 
         $('#tmw-time-btn-group > button, #tmw-time-custom-btn').removeClass('active');
         $('#tmw-time-custom-btn').addClass('active');
@@ -254,8 +253,8 @@ $(document).ready(function () {
 
                         for (var i = 0; i < data.length; i++) {
                             var hasChildren = false;
-                            for (var j = 0; j < subtasks.length; j++){
-                                if ((data[i].id==subtasks[j][0])&&(subtasks[j][2])){
+                            for (var j = 0; j < subtasks.length; j++) {
+                                if ((data[i].id == subtasks[j][0]) && (subtasks[j][2])) {
                                     hasChildren = true;
                                     break;
                                 }
@@ -394,46 +393,46 @@ $(document).ready(function () {
         if ($.isEmptyObject(taskDTO)) {
             task =
                 {
-                    "name"         : $('#tmw-task-name').val(),
-                    "createdDate"  : $('#tmw-task-createDate').val(),
-                    "startDate"    : $('#tmw-task-startDate').val(),
-                    "endDate"      : $('#tmw-task-endDate').val(),
-                    "estimateTime" : $('#tmw-task-estimateTime').val(),
-                    "assignTo"     : $('#tmw-task-assignTo').find(":selected").val(),
-                    "statusId"     : $('#tmw-task-status').find(":selected").val(),
-                    "priorityId"   : $('#tmw-task-priority').find(":selected").val(),
-                    "parentId"     : state.parentid,
-                    "tags"         : getSelectedTags(),
+                    "name": $('#tmw-task-name').val(),
+                    "createdDate": $('#tmw-task-createDate').val(),
+                    "startDate": $('#tmw-task-startDate').val(),
+                    "endDate": $('#tmw-task-endDate').val(),
+                    "estimateTime": $('#tmw-task-estimateTime').val(),
+                    "assignTo": $('#tmw-task-assignTo').find(":selected").val(),
+                    "statusId": $('#tmw-task-status').find(":selected").val(),
+                    "priorityId": $('#tmw-task-priority').find(":selected").val(),
+                    "parentId": state.parentid,
+                    "tags": getSelectedTags(),
                 }
 
             createtask(task);
         } else {
             task =
                 {
-                    "id"           : taskDTO.id,
-                    "name"         : $('#tmw-task-name').val(),
-                    "createdDate"  : $('#tmw-task-createDate').val(),
-                    "startDate"    : $('#tmw-task-startDate').val(),
-                    "endDate"      : $('#tmw-task-endDate').val(),
-                    "estimateTime" : $('#tmw-task-estimateTime').val(),
-                    "assignTo"     : $('#tmw-task-assignTo').find(":selected").val(),
-                    "statusId"     : $('#tmw-task-status').find(":selected").val(),
-                    "priorityId"   : $('#tmw-task-priority').find(":selected").val(),
-                    "parentId"     : state.parentid,
-                    "tags"         : getSelectedTags(),
+                    "id": taskDTO.id,
+                    "name": $('#tmw-task-name').val(),
+                    "createdDate": $('#tmw-task-createDate').val(),
+                    "startDate": $('#tmw-task-startDate').val(),
+                    "endDate": $('#tmw-task-endDate').val(),
+                    "estimateTime": $('#tmw-task-estimateTime').val(),
+                    "assignTo": $('#tmw-task-assignTo').find(":selected").val(),
+                    "statusId": $('#tmw-task-status').find(":selected").val(),
+                    "priorityId": $('#tmw-task-priority').find(":selected").val(),
+                    "parentId": state.parentid,
+                    "tags": getSelectedTags(),
                 }
 
             updatetask(task);
         }
     }
 
-    function  getSelectedTags() {
+    function getSelectedTags() {
         var selectedIdOfTags = $('#tmw-tag-multi-select').val();
         var seletedTags = [];
 
-        for(var i = 0; i < tags.length; i++){
-            for(var j = 0; j < selectedIdOfTags.length; j++){
-                if(tags[i].id == selectedIdOfTags[j]){
+        for (var i = 0; i < tags.length; i++) {
+            for (var j = 0; j < selectedIdOfTags.length; j++) {
+                if (tags[i].id == selectedIdOfTags[j]) {
                     seletedTags.push(tags[i]);
                     break;
                 }
@@ -630,13 +629,13 @@ $(document).ready(function () {
                     inheritClass: true,
                     enableCaseInsensitiveFiltering: true,
                     dropRight: true,
-                    numberDisplayed:10,
+                    numberDisplayed: 10,
                 });
 
                 $('#tmw-tag-multi-select').multiselect('deselectAll', false);
                 $('#tmw-tag-multi-select').multiselect('updateButtonText');
 
-               if (id != null) getTagsByTask(id);
+                if (id != null) getTagsByTask(id);
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 if (jqXHR.status === 401) {
@@ -652,7 +651,7 @@ $(document).ready(function () {
         $('#tmw-tag-multi-select').multiselect('deselectAll', false);
 
         $.ajax({
-            url: 'api/tasks/'+id+'/tags',
+            url: 'api/tasks/' + id + '/tags',
             type: 'GET',
             contentType: 'application/json',
             headers: createAuthToken(),
@@ -660,7 +659,7 @@ $(document).ready(function () {
                 var token = jqXHR.getResponseHeader('Authentication');
                 window.sessionStorage.setItem("token", token);
 
-                $('#tmw-tag-multi-select').multiselect('select',getIdOfTask(data));
+                $('#tmw-tag-multi-select').multiselect('select', getIdOfTask(data));
 
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -676,7 +675,7 @@ $(document).ready(function () {
     function getIdOfTask(data) {
         var arrTagsId = [];
 
-        data.map(function(tag) {
+        data.map(function (tag) {
             arrTagsId.push(tag.id);
         });
 
@@ -913,26 +912,25 @@ $(document).ready(function () {
                     success: function (data, textStatus, jqXHR) {
                         setToken(jqXHR);
 
-                       for (var i = 0; i < data.length; i++) {
-                           if (data[i].planningDate==null) continue;
+                        for (var i = 0; i < data.length; i++) {
+                            if (data[i].planningDate == null) continue;
 
-                           var hours   = parseInt(data[i].estimateTime.split(':')[0]),
-                               minutes = parseInt(data[i].estimateTime.split(':')[0]);
+                            var hours = parseInt(data[i].estimateTime.split(':')[0]),
+                                minutes = parseInt(data[i].estimateTime.split(':')[1]);
 
-                           plannedTasks.push({
-                               id: data[i].id,
-                               resourceId: data[i].assignTo,
+                            plannedTasks.push({
+                                id: data[i].id,
+                                resourceId: data[i].assignTo,
 
-                               title: data[i].name,
+                                title: data[i].name,
 
-                               start: moment(data[i].planningDate),
-                               end:   moment(data[i].planningDate).addWorkingTime(hours, 'hours', minutes, 'minutes', 0, 'seconds'),
+                                start: moment(data[i].planningDate),
+                                end: moment(data[i].planningDate).addWorkingTime(hours, 'hours', minutes, 'minutes', 0, 'seconds'),
 
-                               color: setColorTask(data[i].statusId),
-                               est: data[i].estimateTime
-                           });
-                       }
-
+                                color: setColorTask(data[i]),
+                                est: data[i].estimateTime
+                            });
+                        }
 
                         $('#tmw-task-calendar').fullCalendar({
                             schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
@@ -943,6 +941,9 @@ $(document).ready(function () {
                             minTime: startWorkDay,
                             maxTime: endWorkDay,
                             slotDuration: timeSlotDuration,
+                            defaultTimedEventDuration: '00:30:00',
+                            slotWidth: '25',
+                            forceEventDuration: true,
                             weekends: false,
                             header: {
                                 left: 'prev,next',
@@ -952,13 +953,13 @@ $(document).ready(function () {
                             views: {
                                 _timelineDay: {
                                     type: 'timeline',
-                                    duration: { days: 1 },
+                                    duration: {days: 1},
                                     buttonText: 'Day',
                                     slotLabelFormat: ['H:mm']
                                 },
                                 _timelineWeek: {
                                     type: 'timeline',
-                                    duration: { weeks: 1 },
+                                    duration: {weeks: 1},
                                     buttonText: 'Week',
                                     slotLabelFormat: ['dddd, D MMMM', 'H:mm']
                                 }
@@ -968,7 +969,6 @@ $(document).ready(function () {
                             resourceAreaWidth: '17%',
                             resources: resources,
                             events: plannedTasks,
-
 
 
                             drop: function (date, jsEvent, ui, resourceId) {
@@ -984,12 +984,9 @@ $(document).ready(function () {
 
                             eventReceive: handleCalendarTaskEdit,
                             eventDrop: handleCalendarTaskEdit,
-                            eventResize: handleCalendarTaskEdit,
+                            eventResize: resizeTaskOnCalendar,
 
                             eventClick: function (event) {
-                                console.log('ID:', event.id);
-                                console.log('User ID:', event.resourceId);
-                                console.log('Title:', event.title);
                                 showFull(event.id);
                             }
                         });
@@ -1009,19 +1006,88 @@ $(document).ready(function () {
         });
     };
 
+//============================================================================================================
+
+    var resizeTaskOnCalendar = function (event) {
+        var msDiff = event.end.workingDiff(event.start);
+
+        var hours = Math.floor(msDiff / 1000 / 60 / 60);
+        var minutes = Math.floor(msDiff / 1000 / 60) - (hours * 60);
+
+        var hours = ('0' + event.end.workingDiff(event.start, 'hours')).slice(-2),
+            minutes = ('0' + event.end.workingDiff(event.start, 'minutes') % 60).slice(-2);
+
+        event.est = hours + ':' + minutes + ':00';
+
+        handleCalendarTaskEdit(event);
+    };
+
     var handleCalendarTaskEdit = function (event) {
-        //console.log(event.est);
-    }
+        var hours = parseInt(event.est.split(':')[0]),
+            minutes = parseInt(event.est.split(':')[1]);
+
+        if (!event.start.isWorkingTime()) {
+            event.start = moment(event.end).subtractWorkingTime(hours, 'hours', minutes, 'minutes', 0, 'seconds');
+        }
+
+        if (!event.end.isWorkingTime()) {
+            event.end = moment(event.start).addWorkingTime(hours, 'hours', minutes, 'minutes', 0, 'seconds');
+        }
+
+        $.ajax({
+            url: '/api/tasks/planning/' + event.id,
+            type: 'GET',
+            contentType: 'application/json',
+
+            success: function (data) {
+
+
+                data.assignTo = event.resourceId;
+
+                var planningDate = event.start.valueOf();
+                data.planningDate = planningDate;
+
+                var hours = ('0' + event.end.workingDiff(event.start, 'hours')).slice(-2),
+                    minutes = ('0' + event.end.workingDiff(event.start, 'minutes') % 60).slice(-2);
+
+                var estimateTime = hours + ':' + minutes + ':00';
+
+                data.estimateTime = estimateTime;
+
+                $.ajax({
+                    url: '/api/tasks/planning',
+                    data: JSON.stringify(data),
+                    type: 'PUT',
+                    contentType: 'application/json',
+
+                    success: function () {
+                        $.ajax({
+                            url: '/api/tasks/planning/' + event.id,
+                            type: 'GET',
+                            contentType: 'application/json',
+
+                            success: function (innerData) {
+                                event.color = setColorTask(innerData);
+                                $('#tmw-task-calendar').fullCalendar('updateEvent', event);
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    };
 
     var makeTableRowsDraggable = function () {
         $('#tmw-main-table tbody tr').each(function () {
             var table = $('#tmw-task-table').DataTable();
             var tid = table.row(this).data()[0];
+            var estimateTime = table.row(this).data()[3];
 
             $(this).data('event', {
                 id: tid,
                 title: $.trim($(this).find('td').first().text()),
-                stick: true
+                stick: true,
+                est: estimateTime
             });
 
             $(this).draggable({
@@ -1032,6 +1098,12 @@ $(document).ready(function () {
 
                 helper: function (event) {
                     $(event.currentTarget).addClass('active');
+
+                    var table = $('#tmw-task-table').DataTable();
+                    estimateTime = table.row(this).data()[3] || '00:30:00';
+
+                    $('#tmw-task-calendar').fullCalendar('getView').calendar.defaultTimedEventDuration = moment.duration(estimateTime);
+
                     return $(event.currentTarget).clone();
                 },
 
@@ -1042,12 +1114,13 @@ $(document).ready(function () {
         });
     };
 
+    var setColorTask = function (data) {
+        if (data.statusId == 3) return '#4750ff';
+        if (data.priorityId == 1) return '#ff3c38';
+        if (data.priorityId == 2) return '#34ff16';
+        if (data.priorityId == 3) return '#ff53d4';
 
-    var setColorTask = function(statusId){
-      if (statusId==1) return '#ff3c38';
-      if (statusId==2) return '#34ff16';
-      if (statusId==3) return '#ff53d4';
-      return '#4750ff';
+        return '#fffd5d'
     };
 
 });

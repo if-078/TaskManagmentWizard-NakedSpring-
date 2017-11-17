@@ -134,6 +134,13 @@ public class TaskService implements TaskServiceInterface {
         return false;
     }
 
+
+    @Override
+    public boolean updateCalendarTask(Task task) {
+        taskDao.update(task);
+        return false;
+    }
+
   @Override
   public List<Task> getPlannedTasks() {
     return taskDao.getPlannedTasks();
@@ -160,7 +167,7 @@ public class TaskService implements TaskServiceInterface {
   }
 
     @Override
-    public List<Task> getFilteredTasksForTable(int parentId, String[] dates, int[] status,
+    public List<TaskTableDTO> getFilteredTasksForTable(int parentId, String[] dates, int[] status,
                                                        int[] priority, int[] tag) {
         FilterStateWrapper wrapper = new FilterStateWrapper();
         wrapper.setId(parentId);

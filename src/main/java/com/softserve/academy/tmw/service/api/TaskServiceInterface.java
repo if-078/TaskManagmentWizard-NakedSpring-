@@ -19,7 +19,7 @@ public interface TaskServiceInterface extends EntityServiceInterface<Task> {
 
     List<Task> getTasksAssignToUser(int userId);
 
-    List<Task> getFilteredTasksForTable(int parentId, String[] dates, int[] status, int[] priority, int[] tag);
+    List<TaskTableDTO> getFilteredTasksForTable(int parentId, String[] dates, int[] status, int[] priority, int[] tag);
 
     List<TaskTreeDTO> findTaskByTree(int id);
 
@@ -28,6 +28,8 @@ public interface TaskServiceInterface extends EntityServiceInterface<Task> {
     Task createTaskByDTO(TaskDTO taskDTO);
 
     boolean updateTaskByDTO(TaskDTO taskDTO);
+
+    boolean updateCalendarTask(Task task);
 
     List<Task> getPlannedTasks();
 }

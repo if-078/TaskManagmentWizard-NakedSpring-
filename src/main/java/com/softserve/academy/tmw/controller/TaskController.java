@@ -32,17 +32,25 @@ public class TaskController {
     }
 
 
+    @GetMapping("/planning/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public Task getPlannedTask(@PathVariable Integer id){return taskService.findOne(id);}
 
+    @GetMapping("/planning")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Task> getPlannedTasks(){return taskService.getPlannedTasks();}
+
+    @PutMapping("/planning")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    boolean updateCalendarTask(@Validated @RequestBody Task task) {
+        return taskService.updateCalendarTask(task);
+    }
 
     @GetMapping("/tree/{id}")
     @ResponseStatus(HttpStatus.OK)
     List<TaskTreeDTO> getTreeSubtask(@PathVariable Integer id){
         return taskService.findTaskByTree(id);
     }
-
-    @GetMapping("/planning")
-    @ResponseStatus(HttpStatus.OK)
-    public List<Task> getPlannedTasks(){return taskService.getPlannedTasks();}
 
     @GetMapping("/filter")
     @ResponseStatus(HttpStatus.OK)
@@ -52,8 +60,8 @@ public class TaskController {
             @RequestParam(name="status", required = false) int[] status,
             @RequestParam(name="priority", required = false) int[] priority,
             @RequestParam(name="tag", required = false) int[] tag){
-        List<Task> tasks = taskService.getFilteredTasksForTable(parentId, date, status, priority, tag);
-        return transformator.transformTasksForTree(tasks);
+
+        return taskService.getFilteredTasksForTable(parentId, date, status, priority, tag);
     }
 
     @GetMapping("/view/{id}")

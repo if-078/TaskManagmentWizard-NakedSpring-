@@ -1,9 +1,29 @@
-$(document).ready(function () {
+/*$.ajaxSetup({
+    global:true
+});
 
-    if (window.sessionStorage.getItem("token")) {
-        $("#main").show();
-    } else {
+$(document).ajaxError(function(jqXHR){
+    if(jqXHR.status===401){
+        $("#main, #registration").hide();
         $("#login").show();
+    }
+
+});*/
+
+$(document).ready(function () {
+    var datatoken = window.sessionStorage.getItem("token");
+    if (datatoken != undefined | datatoken != null) {
+        $.ajaxSetup({
+            headers: createAuthToken()
+        });
+        $("#main").show();
+        $("#user-login").text("Hello, " + window.sessionStorage.getItem("name"));
+        $("#logout").show();
+        $("")
+    } else {
+        $("#main").hide();
+        $("#login").show();
+
     }
 
     // STATE OF APPLIED FILTERS
@@ -123,10 +143,6 @@ $(document).ready(function () {
                             return 'data:application/json,' + encodeURIComponent(JSON.stringify(rootNode));
 
                         case '$':
-                            $.ajaxSetup({
-                                headers: createAuthToken()
-                            });
-
                             return 'api/tasks/tree/0';
 
                         default:
@@ -685,29 +701,32 @@ $(document).ready(function () {
     function createAuthToken() {
         var token = window.sessionStorage.getItem("token");
         if (token) {
-            return {"Authentication": token}
+            return {
+                "Authentication": token
+            }
         } else {
             return {}
         }
     }
 
-    $("#loginForm").submit(function (event) {
-        event.preventDefault();
+    function resetToken() {
+        window.sessionStorage.removeItem("token");
+        window.location.href = "";
 
-        var $form = $(this);
-        var formData = {
-            username: $form.find('input[name="email"]').val(),
-            password: $form.find('input[name="password"]').val()
-        };
+    }
 
-        doLogin(formData);
-    });
+    function setToken(jqXHR) {
+        var token = jqXHR.getResponseHeader('Authentication');
+        window.sessionStorage.setItem("token", token);
+        $.ajaxSetup({
+            headers: createAuthToken()
+        });
+    }
 
     $("#reg-button").click(function () {
         $("#login").hide();
         $("#registration").show();
     });
-
 
     function doRegister(regData) {
         $.ajax({
@@ -715,11 +734,17 @@ $(document).ready(function () {
             type: "POST",
             data: JSON.stringify(regData),
             contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function (data, textStatus, jqXHR) {
-                if (jqXHR.status === 201) {
-                    $("#registration").hide();
-                    $("#login").show();
+            success: function (data, textStatus, jqXHR, response) {
+                if (response === 201) {
+                    alert(response);
+                }
+                if (jqXHR.status == 201) {
+                    location.reload();
+                }
+            },
+            error: function (jqXHR) {
+                if (jqXHR.status == 409) {
+                    $("#existing-email").show();
                 }
             }
         });
@@ -733,6 +758,11 @@ $(document).ready(function () {
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (data, textStatus, jqXHR) {
+                var userId = data["id"];
+                var userName = data['username'];
+                window.sessionStorage.setItem("id", userId);
+                window.sessionStorage.setItem("name", userName);
+                $("#user-login").text("Hello, " + userName);
                 setToken(jqXHR);
                 $("#logout").show();
                 $("#login").hide();
@@ -741,7 +771,8 @@ $(document).ready(function () {
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 if (jqXHR.status === 401) {
-                    resetToken();
+                    window.sessionStorage.removeItem("token");
+                    $("#password-label").show();
                 } else {
                     throw new Error("an unexpected error occured: " + errorThrown);
                 }
@@ -749,29 +780,24 @@ $(document).ready(function () {
         });
     }
 
+    $("input").on("click", function () {
+        $("#password-label").hide();
+    });
     $("#logout").click(function () {
-        $("#logout").hide();
-        $("#main").hide();
-        $("#login").show();
-        resetToken();
+
+        $.ajax({
+            url: "api/logout",
+            type: "POST",
+            success: function () {
+                resetToken();
+                location.reload();
+                $("#logout").hide()
+            }
+        });
     });
 
-
-    function resetToken() {
-        window.sessionStorage.removeItem("token");
-        window.location.href = "";
-    }
-
-    function setToken(jqXHR) {
-        var token = jqXHR.getResponseHeader('Authentication');
-        window.sessionStorage.setItem("token", token);
-        $.ajaxSetup({
-            headers: createAuthToken()
-        });
-    }
-
     $("#registration-form").validate({
-        submitHandler: function (form, event) {
+        submitHandler: function (form) {
             $(form).on('submit', function (event) {
                 event.preventDefault();
                 var $form = $(this);
@@ -820,14 +846,44 @@ $(document).ready(function () {
         }
     });
 
-    $("#loginForm").validate();
+    $("#loginForm").validate(
+        {
+            submitHandler: function (form) {
+                $(form).submit(function (event) {
+                    event.preventDefault();
+                    var $form = $(this);
+                    var formData = {
+                        userEmail: $form.find('input[name="email"]').val(),
+                        password: $form.find('input[name="password"]').val()
+                    };
+                    doLogin(formData);
+                });
+            }
+        }
+    );
 
     function clearErrorTask() {
 
-        $('#tmw-task-name').css({"border-color": "", "border-width": "", "border-style": ""});
-        $('#tmw-task-endDate').css({"border-color": "", "border-width": "", "border-style": ""});
-        $('#tmw-task-startDate').css({"border-color": "", "border-width": "", "border-style": ""});
-        $('#tmw-task-estimateTime').css({"border-color": "", "border-width": "", "border-style": ""});
+        $('#tmw-task-name').css({
+            "border-color": "",
+            "border-width": "",
+            "border-style": ""
+        });
+        $('#tmw-task-endDate').css({
+            "border-color": "",
+            "border-width": "",
+            "border-style": ""
+        });
+        $('#tmw-task-startDate').css({
+            "border-color": "",
+            "border-width": "",
+            "border-style": ""
+        });
+        $('#tmw-task-estimateTime').css({
+            "border-color": "",
+            "border-width": "",
+            "border-style": ""
+        });
 
         $('#tmw-task-name-error').empty();
         $('#tmw-task-startDate-error').empty();
@@ -838,7 +894,11 @@ $(document).ready(function () {
     function showErrorsOfForm(data) {
         for (var i = 0; i < data.fieldErrors.length; i++) {
             if (data.fieldErrors[i].field == 'name') {
-                $('#tmw-task-name').css({"border-color": "#FF0000", "border-width": "1px", "border-style": "solid"});
+                $('#tmw-task-name').css({
+                    "border-color": "#FF0000",
+                    "border-width": "1px",
+                    "border-style": "solid"
+                });
                 $('#tmw-task-name-error').text(data.fieldErrors[i].message).css('color', 'red');
             }
             if (data.fieldErrors[i].field == 'startDate') {
@@ -850,7 +910,11 @@ $(document).ready(function () {
                 $('#tmw-task-startDate-error').text(data.fieldErrors[i].message).css('color', 'red');
             }
             if (data.fieldErrors[i].field == 'endDate') {
-                $('#tmw-task-endDate').css({"border-color": "#FF0000", "border-width": "1px", "border-style": "solid"});
+                $('#tmw-task-endDate').css({
+                    "border-color": "#FF0000",
+                    "border-width": "1px",
+                    "border-style": "solid"
+                });
                 $('#tmw-task-endDate-error').text(data.fieldErrors[i].message).css('color', 'red');
             }
             if (data.fieldErrors[i].field == 'estimateTime') {
@@ -863,8 +927,6 @@ $(document).ready(function () {
             }
         }
     }
-
-//shceduler
 
     var startWorkDay = '09:00';
     var endWorkDay = '17:00';
@@ -1114,13 +1176,12 @@ $(document).ready(function () {
         });
     };
 
-    var setColorTask = function (data) {
-        if (data.statusId == 3) return '#4750ff';
-        if (data.priorityId == 1) return '#ff3c38';
-        if (data.priorityId == 2) return '#34ff16';
-        if (data.priorityId == 3) return '#ff53d4';
-
-        return '#fffd5d'
+    var setColorTask = function (statusId) {
+        if (statusId == 1) return '#ff3c38';
+        if (statusId == 2) return '#34ff16';
+        if (statusId == 3) return '#ff53d4';
+        return '#0000ff';
     };
 
 });
+

@@ -39,7 +39,6 @@ public class TokenAuthenticationService  {
                 .setSubject(user.getName())
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .claim("id", user.getId())
-//                .claim("roles", user.getAuthorities()) // TODO: real roles
                 .claim("roles", Collections.singletonList("USER"))
                 .signWith(SignatureAlgorithm.HS512, SECRET)
                 .compact();

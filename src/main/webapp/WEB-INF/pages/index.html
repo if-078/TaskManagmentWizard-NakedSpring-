@@ -53,7 +53,7 @@
     <!-- Moment.js Business Time Plugin -->>
     <script src="static/js/moment-business-time.js"></script>
 
-    <link rel="stylesheet" type="text/css" href="static/css/main.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/main.css">
     <script src="static/js/main.js"></script>
     <script src="static/js/partsLoader.js"></script>
 
@@ -71,7 +71,8 @@
                     <a class="navbar-brand" href="#">Time Management Wizard</a>
                 </div>
             </div>
-            <div class="col-md-1 col-md-offset-9" style="float:right; margin:0; padding:15px">
+            <div class="col-md-2 col-md-offset-8" style="float:right; margin:0; padding:15px">
+                <span id="user-login"></span>
                 <a id="logout" href="/" style="float:right">Logout</a></div>
         </div>
     </div>
@@ -306,6 +307,7 @@
                     <div class="form-group">
                         <input type="password" class="form-control" id="password1"
                                placeholder="password" required name="password">
+                        <label id="password-label" for="password1" style="display: none; color:red">Logon failure: unknown user name or bad password!</label>
                     </div>
                     <button type="submit" class="btn btn-default">login</button>
                     <span style="float:right; margin-top: 5px;"><a
@@ -333,6 +335,7 @@
                         <label for="reg-email">Enter email</label>
                         <input type="email" class="form-control" id="reg-email" placeholder="email"
                                name="remail">
+                        <label id="existing-email" for="reg-email" style="display: none; color:red">User with the same email exists!</label>
                     </div>
                     <div class="form-group">
                         <label for="reg-password">Enter password</label>

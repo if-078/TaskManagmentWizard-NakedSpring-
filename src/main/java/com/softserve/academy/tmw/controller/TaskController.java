@@ -4,7 +4,6 @@ import com.softserve.academy.tmw.dto.TaskDTO;
 import com.softserve.academy.tmw.dto.TaskFullInfoDTO;
 import com.softserve.academy.tmw.dto.TaskTableDTO;
 import com.softserve.academy.tmw.dto.TaskTreeDTO;
-import com.softserve.academy.tmw.dto.mapper.TaskTransformator;
 import com.softserve.academy.tmw.entity.Comment;
 import com.softserve.academy.tmw.entity.Tag;
 import com.softserve.academy.tmw.entity.Task;
@@ -29,9 +28,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class TaskController {
 
   TaskServiceInterface taskService;
-
-  @Autowired
-  TaskTransformator transformator;
 
   @Autowired
   public TaskController(TaskServiceInterface taskService) {

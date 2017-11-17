@@ -4,10 +4,7 @@ import com.softserve.academy.tmw.security.JwtAuthenticationEntryPoint;
 import com.softserve.academy.tmw.security.TokenAuthenticationFilter;
 import com.softserve.academy.tmw.security.TokenAuthenticationManager;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.context.annotation.PropertySources;
+import org.springframework.context.annotation.*;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -26,71 +23,64 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
-  private String LOGIN_URL = "/login";
+    private String LOGIN_URL = "/login";
 
 
-  private String SECURE_URL = "/api/**";
+    private String SECURE_URL = "/api/**";
 
 
-  @Autowired
-  private JwtAuthenticationEntryPoint unauthorizedHandler;
+    @Autowired
+    private JwtAuthenticationEntryPoint unauthorizedHandler;
 
-  @Autowired
-  private TokenAuthenticationFilter tokenAuthenticationFilter;
-  @Autowired
-  private TokenAuthenticationManager tokenAuthenticationManager;
-
-  @Bean
-  public PasswordEncoder passwordEncoder() {
-    return new BCryptPasswordEncoder();
-  }
+    @Autowired
+    private TokenAuthenticationFilter tokenAuthenticationFilter;
+    @Autowired
+    private TokenAuthenticationManager tokenAuthenticationManager;
 
 
-  @Override
-  protected void configure(HttpSecurity http) throws Exception {
-    http.csrf().disable()
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.csrf().disable()
+                .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
+                // don't create session
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+                .authorizeRequests()
+                // allow anonymous resource requests
+                .antMatchers(
+                        HttpMethod.GET,
+                        "/",
+                        "/*.html",
+                        "/favicon.ico",
+                        "/**/*.html",
+                        "/**/*.css",
+                        "/**/*.js",
+                        "/static/**"
+                ).permitAll()
+                .antMatchers(HttpMethod.POST, "/login").permitAll()
+                .antMatchers(HttpMethod.POST, "/register").permitAll()
+                .anyRequest().authenticated();
 
-        .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
+        // Custom JWT based security filter
+        http.addFilterBefore(getTokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+        // disable page caching
+        http.headers().cacheControl();
+    }
 
-        // don't create session
-        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers("/resources/**");
+    }
 
-        .authorizeRequests()
-        //.antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
-        // allow anonymous resource requests
-        .antMatchers(
-            HttpMethod.GET,
-            "/",
-            "/*.html",
-            "/favicon.ico",
-            "/**/*.html",
-            "/**/*.css",
-            "/**/*.js",
-            "/static/**"
-        ).permitAll()
-        .antMatchers(HttpMethod.POST, "/login").permitAll()
-        .antMatchers(HttpMethod.POST, "/register").permitAll()
-        .anyRequest().authenticated();
+    @Bean
+    public TokenAuthenticationFilter getTokenAuthenticationFilter() throws Exception {
+        TokenAuthenticationFilter filter = new TokenAuthenticationFilter(SECURE_URL);
+        filter.setAuthenticationManager(tokenAuthenticationManager);
+        return filter;
+    }
 
-    // Custom JWT based security filter
-    http
-        .addFilterBefore(getTokenAuthenticationFilter(),
-            UsernamePasswordAuthenticationFilter.class);
-
-    // disable page caching
-    http.headers().cacheControl();
-  }
-
-  @Override
-  public void configure(WebSecurity web) throws Exception {
-    web.ignoring().antMatchers("/resources/**");
-  }
-
-  @Bean
-  public TokenAuthenticationFilter getTokenAuthenticationFilter() throws Exception {
-    TokenAuthenticationFilter filter = new TokenAuthenticationFilter(SECURE_URL);
-    filter.setAuthenticationManager(tokenAuthenticationManager);
-    return filter;
-  }
 }

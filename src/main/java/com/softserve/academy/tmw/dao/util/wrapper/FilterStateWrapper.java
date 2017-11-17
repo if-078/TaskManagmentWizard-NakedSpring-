@@ -1,52 +1,54 @@
 package com.softserve.academy.tmw.dao.util.wrapper;
 
 public class FilterStateWrapper {
-    private int id;
-    private String [] dates;
-    private int[] statuses;
-    private int[] tags;
-    private int[] priorities;
 
-    public FilterStateWrapper() {}
+  private int id;
+  private String[] dates;
+  private int[] statuses;
+  private int[] tags;
+  private int[] priorities;
 
-    public String[] getDates() {
-        return dates;
-    }
+  public FilterStateWrapper() {
+  }
 
-    public void setDates(String[] dates) {
-        this.dates = dates;
-    }
+  public String[] getDates() {
+    return dates;
+  }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+  public void setDates(String[] dates) {
+    this.dates = dates;
+  }
 
-    public void setStatus(int[] statuses) {
-        this.statuses = statuses;
-    }
+  public void setId(int id) {
+    this.id = id;
+  }
 
-    public void setTag(int[] tags) {
-        this.tags = tags;
-    }
+  public void setStatus(int[] statuses) {
+    this.statuses = statuses;
+  }
 
-    public void setPriority(int[] priorities) {
-        this.priorities = priorities;
-    }
+  public void setTag(int[] tags) {
+    this.tags = tags;
+  }
 
-    public int getId() {
-        return id;
-    }
+  public void setPriority(int[] priorities) {
+    this.priorities = priorities;
+  }
 
-    public int[] getStatus() {
-        return statuses;
-    }
+  public int getId() {
+    return id;
+  }
 
-    public int[] getTag() {
-        return tags;
-    }
+  public int[] getStatus() {
+    return statuses;
+  }
 
-    public int[] getPriority() {
-        return priorities;
-    }
+  public int[] getTag() {
+    return tags;
+  }
+
+  public int[] getPriority() {
+    return priorities;
+  }
 
 }

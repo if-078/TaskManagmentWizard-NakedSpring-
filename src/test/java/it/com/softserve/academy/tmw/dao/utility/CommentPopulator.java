@@ -20,7 +20,6 @@ public class CommentPopulator {
     this.taskPopulator = taskPopulator;
   }
 
-
   public Comment createDefaultEntity() {
     Comment comment = new Comment();
     comment.setCommentText("Default comment text.txt");

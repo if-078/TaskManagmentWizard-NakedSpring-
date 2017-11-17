@@ -3,58 +3,60 @@ package com.softserve.academy.tmw.entity;
 import java.time.LocalDateTime;
 
 public class Comment {
-    private int id;
-    private String commentText;
-    private LocalDateTime createdDate = LocalDateTime.now();
-    private int taskId;
-    private int userId;
 
-    public Comment() {
-    }
+  private int id;
+  private String commentText;
+  private LocalDateTime createdDate = LocalDateTime.now();
+  private int taskId;
+  private int userId;
 
-    public Comment(String commentText, int taskId, int userId) {
-        this.commentText = commentText;
-        this.taskId = taskId;
-        this.userId = userId;
-    }
+  public Comment() {
+  }
 
-    public int getId() {
-        return id;
-    }
+  public Comment(String commentText, int taskId, int userId) {
+    this.commentText = commentText;
+    this.taskId = taskId;
+    this.userId = userId;
 
-    public void setId(int id) {
-        this.id = id;
-    }
+  }
 
-    public String getCommentText() {
-        return commentText;
-    }
+  public int getId() {
+    return id;
+  }
 
-    public void setCommentText(String commentText) {
-        this.commentText = commentText;
-    }
+  public void setId(int id) {
+    this.id = id;
+  }
 
-    public LocalDateTime getCreatedDate() {
-        return createdDate;
-    }
+  public String getCommentText() {
+    return commentText;
+  }
 
-    public void setCreatedDate(LocalDateTime createdDate) {
-        this.createdDate = createdDate;
-    }
+  public void setCommentText(String commentText) {
+    this.commentText = commentText;
+  }
 
-    public int getTaskId() {
-        return taskId;
-    }
+  public LocalDateTime getCreatedDate() {
+    return createdDate;
+  }
 
-    public void setTaskId(int taskId) {
-        this.taskId = taskId;
-    }
+  public void setCreatedDate(LocalDateTime createdDate) {
+    this.createdDate = createdDate;
+  }
 
-    public int getUserId() {
-        return userId;
-    }
+  public int getTaskId() {
+    return taskId;
+  }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
+  public void setTaskId(int taskId) {
+    this.taskId = taskId;
+  }
+
+  public int getUserId() {
+    return userId;
+  }
+
+  public void setUserId(int userId) {
+    this.userId = userId;
+  }
 }

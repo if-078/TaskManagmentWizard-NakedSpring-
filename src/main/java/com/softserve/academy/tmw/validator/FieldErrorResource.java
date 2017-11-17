@@ -1,26 +1,41 @@
 package com.softserve.academy.tmw.validator;
 
 public class FieldErrorResource {
-    private String resource;
-    private String field;
-    private String message;
 
-    public FieldErrorResource(String resource, String field, String message){
-        this.resource = resource;
-        this.field = field;
-        this.message = message;
-    }
-    public FieldErrorResource(){}
+  private String resource;
+  private String field;
+  private String message;
 
-    public String getResource() { return resource; }
+  public FieldErrorResource(String resource, String field, String message) {
+    this.resource = resource;
+    this.field = field;
+    this.message = message;
+  }
 
-    public void setResource(String resource) { this.resource = resource; }
+  public FieldErrorResource() {
+  }
 
-    public String getField() { return field; }
+  public String getResource() {
+    return resource;
+  }
 
-    public void setField(String field) { this.field = field; }
+  public void setResource(String resource) {
+    this.resource = resource;
+  }
 
-    public String getMessage() { return message; }
+  public String getField() {
+    return field;
+  }
 
-    public void setMessage(String message) { this.message = message; }
+  public void setField(String field) {
+    this.field = field;
+  }
+
+  public String getMessage() {
+    return message;
+  }
+
+  public void setMessage(String message) {
+    this.message = message;
+  }
 }

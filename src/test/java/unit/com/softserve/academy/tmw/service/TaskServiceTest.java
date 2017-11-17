@@ -1,10 +1,17 @@
 package unit.com.softserve.academy.tmw.service;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertNotNull;
+
 import com.softserve.academy.tmw.dao.impl.TaskDao;
 import com.softserve.academy.tmw.dto.TaskDTO;
-import com.softserve.academy.tmw.entity.Task;
 import com.softserve.academy.tmw.service.api.TaskServiceInterface;
 import com.softserve.academy.tmw.service.impl.TaskService;
+import java.util.Set;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,75 +20,63 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import javax.validation.ConstraintViolation;
-import javax.validation.Validation;
-import javax.validation.Validator;
-import javax.validation.ValidatorFactory;
-import java.util.Set;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
 @RunWith(MockitoJUnitRunner.class)
 public class TaskServiceTest {
 
-    @InjectMocks
-    private TaskServiceInterface taskService = new TaskService();
+  @InjectMocks
+  private TaskServiceInterface taskService = new TaskService();
 
-    @Mock
-    private TaskDao taskDao;
+  @Mock
+  private TaskDao taskDao;
 
-    private static Validator validator;
+  private static Validator validator;
 
-    @Before
-    public void setUp() {
-        MockitoAnnotations.initMocks(this);
-        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-        validator = factory.getValidator();
-    }
+  @Before
+  public void setUp() {
+    MockitoAnnotations.initMocks(this);
+    ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+    validator = factory.getValidator();
+  }
 
-    @Test
-    public void testUserMockCreation() {
-        assertNotNull(taskService);
-        assertNotNull(taskDao);
-    }
+  @Test
+  public void testUserMockCreation() {
+    assertNotNull(taskService);
+    assertNotNull(taskDao);
+  }
 
-    @Test
-    public void shouldBeNotBlankNameOfTaskAndStartDateAndEndDateAndEstimateTime() {
-        int countError = 4;
-        TaskDTO taskDTO = new TaskDTO();
-        taskDTO.setName("");
-        taskDTO.setStartDate("");
-        taskDTO.setEndDate("");
-        taskDTO.setEstimateTime("");
+  @Test
+  public void shouldBeNotBlankNameOfTaskAndStartDateAndEndDateAndEstimateTime() {
+    int countError = 4;
+    TaskDTO taskDTO = new TaskDTO();
+    taskDTO.setName("");
+    taskDTO.setStartDate("");
+    taskDTO.setEndDate("");
+    taskDTO.setEstimateTime("");
 
-        Set<ConstraintViolation<TaskDTO>> violations = validator.validate(taskDTO);
+    Set<ConstraintViolation<TaskDTO>> violations = validator.validate(taskDTO);
 
-        assertThat(violations.size() == countError);
+    assertThat(violations.size() == countError);
 
-        violations.forEach(error->{
-            if(error.getPropertyPath().toString().equals("name")) {
-                assertThat(error.getPropertyPath().toString()).isEqualTo("name");
-                assertThat(error.getInvalidValue().toString()).isEqualTo("");
-            }
-            if(error.getPropertyPath().toString().equals("startDate")) {
-                assertThat(error.getPropertyPath().toString()).isEqualTo("startDate");
-                assertThat(error.getInvalidValue().toString()).isEqualTo("");
-            }
-            if(error.getPropertyPath().toString().equals("endDate")) {
-                assertThat(error.getPropertyPath().toString()).isEqualTo("endDate");
-                assertThat(error.getInvalidValue().toString()).isEqualTo("");
-            }
-            if(error.getPropertyPath().toString().equals("estimateTime")) {
-                assertThat(error.getPropertyPath().toString()).isEqualTo("estimateTime");
-                assertThat(error.getInvalidValue().toString()).isEqualTo("");
-            }
+    violations.forEach(error -> {
+      if (error.getPropertyPath().toString().equals("name")) {
+        assertThat(error.getPropertyPath().toString()).isEqualTo("name");
+        assertThat(error.getInvalidValue().toString()).isEqualTo("");
+      }
+      if (error.getPropertyPath().toString().equals("startDate")) {
+        assertThat(error.getPropertyPath().toString()).isEqualTo("startDate");
+        assertThat(error.getInvalidValue().toString()).isEqualTo("");
+      }
+      if (error.getPropertyPath().toString().equals("endDate")) {
+        assertThat(error.getPropertyPath().toString()).isEqualTo("endDate");
+        assertThat(error.getInvalidValue().toString()).isEqualTo("");
+      }
+      if (error.getPropertyPath().toString().equals("estimateTime")) {
+        assertThat(error.getPropertyPath().toString()).isEqualTo("estimateTime");
+        assertThat(error.getInvalidValue().toString()).isEqualTo("");
+      }
 
-        });
-    }
+    });
+  }
 //
 //    @Test
 //    public void shouldBeNotNullNameOfTaskAndStartDateAndEndDateAndEstimateTime() {

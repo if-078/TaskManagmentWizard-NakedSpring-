@@ -4,67 +4,69 @@ import java.sql.Time;
 import java.util.Date;
 
 public class TaskTableDTO {
-    private int id;
-    private String name;
-    private Date startDate;
-    private Time estimateTime;
-    private String assignTo;
-    private String status;
-    private String priority;
 
-    public int getId() {
-        return id;
-    }
+  private int id;
+  private String name;
+  private Date startDate;
+  private Time estimateTime;
+  private String assignTo;
+  private String status;
+  private String priority;
 
-    public void setId(int id) {
-        this.id = id;
-    }
 
-    public String getName() {
-        return name;
-    }
+  public int getId() {
+    return id;
+  }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+  public void setId(int id) {
+    this.id = id;
+  }
 
-    public Date getStartDate() {
-        return startDate;
-    }
+  public String getName() {
+    return name;
+  }
 
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
-    }
+  public void setName(String name) {
+    this.name = name;
+  }
 
-    public Time getEstimateTime() {
-        return estimateTime;
-    }
+  public Date getStartDate() {
+    return startDate;
+  }
 
-    public void setEstimateTime(Time estimateTime) {
-        this.estimateTime = estimateTime;
-    }
+  public void setStartDate(Date startDate) {
+    this.startDate = startDate;
+  }
 
-    public String getAssignTo() {
-        return assignTo;
-    }
+  public Time getEstimateTime() {
+    return estimateTime;
+  }
 
-    public void setAssignTo(String assignTo) {
-        this.assignTo = assignTo;
-    }
+  public void setEstimateTime(Time estimateTime) {
+    this.estimateTime = estimateTime;
+  }
 
-    public String getStatus() {
-        return status;
-    }
+  public String getAssignTo() {
+    return assignTo;
+  }
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
+  public void setAssignTo(String assignTo) {
+    this.assignTo = assignTo;
+  }
 
-    public String getPriority() {
-        return priority;
-    }
+  public String getStatus() {
+    return status;
+  }
 
-    public void setPriority(String priority) {
-        this.priority = priority;
-    }
+  public void setStatus(String status) {
+    this.status = status;
+  }
+
+  public String getPriority() {
+    return priority;
+  }
+
+  public void setPriority(String priority) {
+    this.priority = priority;
+  }
 }

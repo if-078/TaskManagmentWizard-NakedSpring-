@@ -13,7 +13,6 @@ import com.softserve.academy.tmw.entity.Priority;
 import com.softserve.academy.tmw.entity.Status;
 import com.softserve.academy.tmw.entity.Tag;
 import com.softserve.academy.tmw.entity.Task;
-import com.softserve.academy.tmw.entity.User;
 import com.softserve.academy.tmw.service.api.EntityServiceInterface;
 import com.softserve.academy.tmw.service.api.TagServiceInterface;
 import com.softserve.academy.tmw.service.api.TaskServiceInterface;
@@ -93,53 +92,53 @@ public class TaskService implements TaskServiceInterface {
     }
   }
 
-    @Override
-    public Task createTaskByDTO(TaskDTO taskDTO) {
-        Task task = new Task();
-        task.setName(taskDTO.getName());
-        task.setAssignTo(taskDTO.getAssignTo());
-        task.setCreatedDate(new Date());
-        task.setStartDate(getFormatDate(taskDTO.getStartDate()));
-        task.setEndDate(getFormatDate(taskDTO.getEndDate()));
-        task.setEstimateTime(getTimeFormat(taskDTO.getEstimateTime()));
-        task.setPriorityId(taskDTO.getPriorityId());
-        task.setParentId(taskDTO.getParentId());
-        task.setStatusId(taskDTO.getStatusId());
-        task.setTags(taskDTO.getTags());
+  @Override
+  public Task createTaskByDTO(TaskDTO taskDTO) {
+    Task task = new Task();
+    task.setName(taskDTO.getName());
+    task.setAssignTo(taskDTO.getAssignTo());
+    task.setCreatedDate(new Date());
+    task.setStartDate(getFormatDate(taskDTO.getStartDate()));
+    task.setEndDate(getFormatDate(taskDTO.getEndDate()));
+    task.setEstimateTime(getTimeFormat(taskDTO.getEstimateTime()));
+    task.setPriorityId(taskDTO.getPriorityId());
+    task.setParentId(taskDTO.getParentId());
+    task.setStatusId(taskDTO.getStatusId());
+    task.setTags(taskDTO.getTags());
 
-        task = taskDao.create(task);
-        tagService.setTagsToTask(Arrays.asList(taskDTO.getTags()), task.getId());
-        return task;
-    }
+    task = taskDao.create(task);
+    tagService.setTagsToTask(Arrays.asList(taskDTO.getTags()), task.getId());
+    return task;
+  }
 
-    @Override
-    public boolean updateTaskByDTO(TaskDTO taskDTO) {
-        Task task = new Task();
-        task.setId(taskDTO.getId());
-        task.setName(taskDTO.getName());
-        task.setAssignTo(taskDTO.getAssignTo());
-        task.setCreatedDate(new Date());
-        task.setStartDate(getFormatDate(taskDTO.getStartDate()));
-        task.setEndDate(getFormatDate(taskDTO.getEndDate()));
-        task.setEstimateTime(getTimeFormat(taskDTO.getEstimateTime()));
-        task.setPriorityId(taskDTO.getPriorityId());
-        task.setParentId(taskDTO.getParentId());
-        task.setStatusId(taskDTO.getStatusId());
-        task.setTags(taskDTO.getTags());
+  @Override
+  public boolean updateTaskByDTO(TaskDTO taskDTO) {
+    Task task = new Task();
+    task.setId(taskDTO.getId());
+    task.setName(taskDTO.getName());
+    task.setAssignTo(taskDTO.getAssignTo());
+    task.setCreatedDate(new Date());
+    task.setStartDate(getFormatDate(taskDTO.getStartDate()));
+    task.setEndDate(getFormatDate(taskDTO.getEndDate()));
+    task.setEstimateTime(getTimeFormat(taskDTO.getEstimateTime()));
+    task.setPriorityId(taskDTO.getPriorityId());
+    task.setParentId(taskDTO.getParentId());
+    task.setStatusId(taskDTO.getStatusId());
+    task.setTags(taskDTO.getTags());
 
-        taskDao.update(task);
-        tagService.deleteTagsOfTask(task.getId());
-        tagService.setTagsToTask(Arrays.asList(taskDTO.getTags()), task.getId());
+    taskDao.update(task);
+    tagService.deleteTagsOfTask(task.getId());
+    tagService.setTagsToTask(Arrays.asList(taskDTO.getTags()), task.getId());
 
-        return false;
-    }
+    return false;
+  }
 
 
-    @Override
-    public boolean updateCalendarTask(Task task) {
-        taskDao.update(task);
-        return false;
-    }
+  @Override
+  public boolean updateCalendarTask(Task task) {
+    taskDao.update(task);
+    return false;
+  }
 
   @Override
   public List<Task> getPlannedTasks() {
@@ -166,88 +165,89 @@ public class TaskService implements TaskServiceInterface {
     return taskDao.getTasksAssignToUser(userId);
   }
 
-    @Override
-    public List<TaskTableDTO> getFilteredTasksForTable(int parentId, String[] dates, int[] status,
-                                                       int[] priority, int[] tag) {
-        FilterStateWrapper wrapper = new FilterStateWrapper();
-        wrapper.setId(parentId);
-        wrapper.setPriority(priority);
-        wrapper.setStatus(status);
-        wrapper.setTag(tag);
-        wrapper.setDates(dates);
-        JooqSQLBuilder builder = new JooqSQLBuilder(wrapper);
-        return taskDao.getFilteredTasks(builder);
+  @Override
+  public List<TaskTableDTO> getFilteredTasksForTable(int parentId, String[] dates, int[] status,
+      int[] priority, int[] tag) {
+    FilterStateWrapper wrapper = new FilterStateWrapper();
+    wrapper.setId(parentId);
+    wrapper.setPriority(priority);
+    wrapper.setStatus(status);
+    wrapper.setTag(tag);
+    wrapper.setDates(dates);
+    JooqSQLBuilder builder = new JooqSQLBuilder(wrapper);
+    return taskDao.getFilteredTasks(builder);
 
+  }
+
+  @Override
+  public List<TaskTreeDTO> findTaskByTree(int id) {
+
+    List<Task> allTask = taskDao.getAll();
+    List<Task> selectedTask = new ArrayList<>();
+    for (Task task : allTask) {
+      if (task.getParentId() == id) {
+        selectedTask.add(task);
+      }
     }
 
-    @Override
-    public List<TaskTreeDTO> findTaskByTree(int id) {
-
-        List<Task> allTask = taskDao.getAll();
-        List<Task> selectedTask = new ArrayList<>();
-        for (Task task : allTask) {
-            if (task.getParentId() == id) {
-                selectedTask.add(task);
-            }
-        }
-
-        List<TaskTreeDTO> allTaskDTO = new ArrayList<>();
-        for (Task task : selectedTask) {
-            TaskTreeDTO taskDTO = new TaskTreeDTO();
-            taskDTO.setId(task.getId());
-            taskDTO.setText(task.getName());
-            allTaskDTO.add(taskDTO);
-        }
-
-        for (TaskTreeDTO taskDTO : allTaskDTO) {
-            for (Task task : allTask) {
-                if (taskDTO.getId() == task.getParentId()) {
-                    taskDTO.setChildren(true);
-                    break;
-                }
-            }
-        }
-        return allTaskDTO;
+    List<TaskTreeDTO> allTaskDTO = new ArrayList<>();
+    for (Task task : selectedTask) {
+      TaskTreeDTO taskDTO = new TaskTreeDTO();
+      taskDTO.setId(task.getId());
+      taskDTO.setText(task.getName());
+      allTaskDTO.add(taskDTO);
     }
 
-    @Override
-    public TaskFullInfoDTO getFullInfo(int id) {
-        Task task = taskDao.findOne(id);
-        TaskFullInfoDTO taskDTO = new TaskFullInfoDTO();
-
-        taskDTO.setId(task.getId());
-        taskDTO.setName(task.getName());
-        taskDTO.setCreatedDate(task.getCreatedDate());
-        taskDTO.setStartDate(task.getStartDate());
-        taskDTO.setEndDate(task.getEndDate());
-        taskDTO.setEstimateTime(task.getEstimateTime());
-        taskDTO.setAssignTo(serviceUser.findOne(task.getAssignTo()));
-        taskDTO.setStatus(serviceStatus.findOne(task.getStatusId()));
-        taskDTO.setPriority(servicePriority.findOne(task.getStatusId()));
-
-        return taskDTO;
-    }
-
-    private Date getFormatDate(String line){
-        try {
-            return new SimpleDateFormat( "yyyy-MM-dd" ).parse(line);
-        } catch (ParseException e) {
-            e.printStackTrace();
+    for (TaskTreeDTO taskDTO : allTaskDTO) {
+      for (Task task : allTask) {
+        if (taskDTO.getId() == task.getParentId()) {
+          taskDTO.setChildren(true);
+          break;
         }
-        return new Date();
+      }
     }
+    return allTaskDTO;
+  }
 
-    private Time getTimeFormat(String line){
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-        try {
-            Date date = sdf.parse(line);
-            Calendar calendar = GregorianCalendar.getInstance();
-            calendar.setTime(date);
+  @Override
+  public TaskFullInfoDTO getFullInfo(int id) {
+    Task task = taskDao.findOne(id);
+    TaskFullInfoDTO taskDTO = new TaskFullInfoDTO();
 
-            return new Time(calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), calendar.get(Calendar.SECOND));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return new Time(00,00,00);
+    taskDTO.setId(task.getId());
+    taskDTO.setName(task.getName());
+    taskDTO.setCreatedDate(task.getCreatedDate());
+    taskDTO.setStartDate(task.getStartDate());
+    taskDTO.setEndDate(task.getEndDate());
+    taskDTO.setEstimateTime(task.getEstimateTime());
+    taskDTO.setAssignTo(serviceUser.findOne(task.getAssignTo()));
+    taskDTO.setStatus(serviceStatus.findOne(task.getStatusId()));
+    taskDTO.setPriority(servicePriority.findOne(task.getStatusId()));
+
+    return taskDTO;
+  }
+
+  private Date getFormatDate(String line) {
+    try {
+      return new SimpleDateFormat("yyyy-MM-dd").parse(line);
+    } catch (ParseException e) {
+      e.printStackTrace();
     }
+    return new Date();
+  }
+
+  private Time getTimeFormat(String line) {
+    SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+    try {
+      Date date = sdf.parse(line);
+      Calendar calendar = GregorianCalendar.getInstance();
+      calendar.setTime(date);
+
+      return new Time(calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE),
+          calendar.get(Calendar.SECOND));
+    } catch (ParseException e) {
+      e.printStackTrace();
+    }
+    return new Time(00, 00, 00);
+  }
 }

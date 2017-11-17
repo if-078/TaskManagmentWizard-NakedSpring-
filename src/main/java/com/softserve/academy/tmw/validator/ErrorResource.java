@@ -3,22 +3,30 @@ package com.softserve.academy.tmw.validator;
 import java.util.List;
 
 public class ErrorResource {
-    private String code;
-    private List<FieldErrorResource> fieldErrors;
 
-    public ErrorResource() { }
+  private String code;
+  private List<FieldErrorResource> fieldErrors;
 
-    public ErrorResource(String code) {
-        this.code = code;
-    }
+  public ErrorResource() {
+  }
 
-    public String getCode() { return code; }
+  public ErrorResource(String code) {
+    this.code = code;
+  }
 
-    public void setCode(String code) { this.code = code; }
+  public String getCode() {
+    return code;
+  }
 
-    public List<FieldErrorResource> getFieldErrors() { return fieldErrors; }
+  public void setCode(String code) {
+    this.code = code;
+  }
 
-    public void setFieldErrors(List<FieldErrorResource> fieldErrors) {
-        this.fieldErrors = fieldErrors;
-    }
+  public List<FieldErrorResource> getFieldErrors() {
+    return fieldErrors;
+  }
+
+  public void setFieldErrors(List<FieldErrorResource> fieldErrors) {
+    this.fieldErrors = fieldErrors;
+  }
 }

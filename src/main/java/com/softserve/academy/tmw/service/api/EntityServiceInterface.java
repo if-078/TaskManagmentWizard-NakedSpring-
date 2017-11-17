@@ -3,13 +3,14 @@ package com.softserve.academy.tmw.service.api;
 import java.util.List;
 
 public interface EntityServiceInterface<E> {
-    List<E> getAll();
 
-    E findOne(int id);
+  List<E> getAll();
 
-    boolean update(E entity);
+  E findOne(int id);
 
-    boolean delete(int id);
+  boolean update(E entity);
 
-    E create(E entity);
+  boolean delete(int id);
+
+  E create(E entity);
 }

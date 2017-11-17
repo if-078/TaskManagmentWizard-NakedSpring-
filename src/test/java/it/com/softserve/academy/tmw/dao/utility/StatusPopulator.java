@@ -18,6 +18,5 @@ public class StatusPopulator {
     status.setId(-1);
     status.setName("In queue");
     return dao.create(status);
-
   }
 }

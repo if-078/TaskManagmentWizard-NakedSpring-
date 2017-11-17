@@ -1,59 +1,60 @@
 package com.softserve.academy.tmw.entity;
 
 public class Status {
-    private int id;
-    private String name;
 
-    public Status() {
-    }
+  private int id;
+  private String name;
 
-    public Status(int id, String name) {
-        this.id = id;
-        this.name = name;
-    }
+  public Status() {
+  }
 
-    public int getId() {
-        return id;
-    }
+  public Status(int id, String name) {
+    this.id = id;
+    this.name = name;
+  }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+  public int getId() {
+    return id;
+  }
 
-    public String getName() {
-        return name;
-    }
+  public void setId(int id) {
+    this.id = id;
+  }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+  public String getName() {
+    return name;
+  }
 
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 17 * hash + this.id;
-        return hash;
-    }
+  public void setName(String name) {
+    this.name = name;
+  }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Status other = (Status) obj;
-        return this.id == other.id;
-    }
+  @Override
+  public int hashCode() {
+    int hash = 7;
+    hash = 17 * hash + this.id;
+    return hash;
+  }
 
-    @Override
-    public String toString() {
-        return "Status{" + "id=" + id + ", name=" + name + '}';
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj) {
+      return true;
     }
+    if (obj == null) {
+      return false;
+    }
+    if (getClass() != obj.getClass()) {
+      return false;
+    }
+    final Status other = (Status) obj;
+    return this.id == other.id;
+  }
+
+  @Override
+  public String toString() {
+    return "Status{" + "id=" + id + ", name=" + name + '}';
+  }
 
 
 }

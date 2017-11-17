@@ -65,8 +65,8 @@ public class TagDao extends EntityDao<Tag> implements TagDaoInterface {
   }
 
 
-    @Override
-    public boolean setTagsToTask(List<Tag> tags, int taskId) {
+  @Override
+  public boolean setTagsToTask(List<Tag> tags, int taskId) {
 
     MapSqlParameterSource param = new MapSqlParameterSource();
     StringBuilder sql = new StringBuilder("INSERT into tmw.tags_tasks (tag_id, task_id) VALUES ");

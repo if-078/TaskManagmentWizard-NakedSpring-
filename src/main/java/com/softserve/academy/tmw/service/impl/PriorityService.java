@@ -3,16 +3,14 @@ package com.softserve.academy.tmw.service.impl;
 import com.softserve.academy.tmw.dao.impl.PriorityDao;
 import com.softserve.academy.tmw.entity.Priority;
 import com.softserve.academy.tmw.service.api.EntityServiceInterface;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @org.springframework.stereotype.Service
 public class PriorityService implements EntityServiceInterface<Priority> {
 
   @Autowired
   PriorityDao priorityDao;
-
 
   @Override
   public List<Priority> getAll() {

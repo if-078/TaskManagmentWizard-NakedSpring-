@@ -11,17 +11,15 @@ import com.softserve.academy.tmw.dto.TaskTableDTO;
 import com.softserve.academy.tmw.entity.Comment;
 import com.softserve.academy.tmw.entity.Tag;
 import com.softserve.academy.tmw.entity.Task;
+import java.util.Date;
+import java.util.List;
 import org.jooq.Select;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
-
-import java.util.Date;
-import java.util.List;
 
 
 @Repository
@@ -36,7 +34,8 @@ public class TaskDao extends EntityDao<Task> implements TaskDaoInterface {
   @Override
   public Task findOne(int id) {
     String query = "SELECT * FROM " + table + " WHERE id = :id";
-    Task task = jdbcTemplate.queryForObject(query, new MapSqlParameterSource("id", id), new TaskMapper());
+    Task task = jdbcTemplate
+        .queryForObject(query, new MapSqlParameterSource("id", id), new TaskMapper());
     return task;
   }
 
@@ -46,7 +45,6 @@ public class TaskDao extends EntityDao<Task> implements TaskDaoInterface {
     java.sql.Timestamp start, end, planning;
     java.sql.Time estimate;
     Date date = new Date();
-
 
     if (task.getStartDate() == null) {
       start = new java.sql.Timestamp(date.getTime());
@@ -226,15 +224,16 @@ public class TaskDao extends EntityDao<Task> implements TaskDaoInterface {
     return tasks;
   }
 
-    public TaskFullInfoDTO getFullTask(int id) {
-       String query = "SELECT task.id, task.name, task.created_date, task.planning_date, task.start_date, task.end_date, task.estimate_time,\n"
-           + "  user.name as user, status.name as status, priority.name as priority, task.parent_id\n"
-           + "  FROM task\n"
-           + "  LEFT JOIN priority ON task.priority_id = priority.id\n"
-           + "  LEFT JOIN status ON task.status_id = status.id\n"
-           + "  LEFT JOIN user ON task.assign_to = user.id"
-           + "WHERE task.id=:id";
-        return null;
-   }
+  public TaskFullInfoDTO getFullTask(int id) {
+    String query =
+        "SELECT task.id, task.name, task.created_date, task.planning_date, task.start_date, task.end_date, task.estimate_time,\n"
+            + "  user.name as user, status.name as status, priority.name as priority, task.parent_id\n"
+            + "  FROM task\n"
+            + "  LEFT JOIN priority ON task.priority_id = priority.id\n"
+            + "  LEFT JOIN status ON task.status_id = status.id\n"
+            + "  LEFT JOIN user ON task.assign_to = user.id"
+            + "WHERE task.id=:id";
+    return null;
+  }
 
 }

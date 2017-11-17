@@ -29,5 +29,7 @@ public interface TaskServiceInterface extends EntityServiceInterface<Task> {
 
     boolean updateTaskByDTO(TaskDTO taskDTO);
 
+    boolean updateCalendarTask(Task task);
+
     List<Task> getPlannedTasks();
 }

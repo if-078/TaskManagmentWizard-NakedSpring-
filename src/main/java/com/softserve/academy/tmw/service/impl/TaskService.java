@@ -134,6 +134,13 @@ public class TaskService implements TaskServiceInterface {
         return false;
     }
 
+
+    @Override
+    public boolean updateCalendarTask(Task task) {
+        taskDao.update(task);
+        return false;
+    }
+
   @Override
   public List<Task> getPlannedTasks() {
     return taskDao.getPlannedTasks();

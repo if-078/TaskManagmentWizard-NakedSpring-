@@ -32,13 +32,9 @@ public class TaskController {
     }
 
 
-
-
-    @GetMapping("/tree/{id}")
+    @GetMapping("/planning/{id}")
     @ResponseStatus(HttpStatus.OK)
-    List<TaskTreeDTO> getTreeSubtask(@PathVariable Integer id){
-        return taskService.findTaskByTree(id);
-    }
+    public Task getPlannedTask(@PathVariable Integer id){return taskService.findOne(id);}
 
     @GetMapping("/planning")
     @ResponseStatus(HttpStatus.OK)
@@ -46,22 +42,14 @@ public class TaskController {
 
     @PutMapping("/planning")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    boolean updateCalendarTask(@Validated @RequestBody TaskDTO taskDTO) {
+    boolean updateCalendarTask(@Validated @RequestBody Task task) {
+        return taskService.updateCalendarTask(task);
+    }
 
-        System.out.println("In PUT Planning controller");
-        System.out.println(taskDTO.getId());
-        System.out.println(taskDTO.getName());
-        System.out.println(taskDTO.getCreatedDate());
-        System.out.println(taskDTO.getStartDate());
-        System.out.println(taskDTO.getEndDate());
-        System.out.println(taskDTO.getEstimateTime());
-        System.out.println(taskDTO.getAssignTo());
-        System.out.println(taskDTO.getStatusId());
-        System.out.println(taskDTO.getPriorityId());
-        System.out.println(taskDTO.getParentId());
-        System.out.println(taskDTO.getTags());
-
-        return taskService.updateTaskByDTO(taskDTO);
+    @GetMapping("/tree/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    List<TaskTreeDTO> getTreeSubtask(@PathVariable Integer id){
+        return taskService.findTaskByTree(id);
     }
 
     @GetMapping("/filter")

@@ -790,6 +790,7 @@ $(document).ready(function () {
             type: "POST",
             success: function () {
                 resetToken();
+                location.reload();
                 $("#logout").hide()
             }
         });

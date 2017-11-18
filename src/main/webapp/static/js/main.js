@@ -373,6 +373,10 @@ $(document).ready(function () {
         createOrUpdatetask(taskDTO);
     });
 
+    $('#tmw-task-btn-delete').on('click', function () {
+        deletetask(taskDTO.id);
+    });
+
     $('#tmw-task-table').on('dblclick', 'tr:not(:first)', 'tr', function () {
         var table = $('#tmw-task-table').DataTable();
         var taskId = table.row(this).data()[0];

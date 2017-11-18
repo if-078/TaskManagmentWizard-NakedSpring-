@@ -1,13 +1,11 @@
 package com.softserve.academy.tmw.dao.impl;
 
 import com.softserve.academy.tmw.dao.api.TaskDaoInterface;
-import com.softserve.academy.tmw.dao.mapper.CommentMapper;
-import com.softserve.academy.tmw.dao.mapper.TagMapper;
-import com.softserve.academy.tmw.dao.mapper.TaskMapper;
-import com.softserve.academy.tmw.dao.mapper.TaskMapperForTable;
+import com.softserve.academy.tmw.dao.mapper.*;
 import com.softserve.academy.tmw.dao.util.JooqSQLBuilder;
 import com.softserve.academy.tmw.dto.TaskFullInfoDTO;
 import com.softserve.academy.tmw.dto.TaskTableDTO;
+import com.softserve.academy.tmw.dto.TaskTreeDTO;
 import com.softserve.academy.tmw.entity.Comment;
 import com.softserve.academy.tmw.entity.Tag;
 import com.softserve.academy.tmw.entity.Task;
@@ -234,6 +232,13 @@ public class TaskDao extends EntityDao<Task> implements TaskDaoInterface {
             + "  LEFT JOIN user ON task.assign_to = user.id"
             + "WHERE task.id=:id";
     return null;
+  }
+
+  public List<TaskTreeDTO> getTaskByTree(int id) {
+    String query = "SELECT id, name, (SELECT COUNT(*) FROM task WHERE parent_id = t.id) count_children " +
+            "FROM task AS t WHERE parent_id = :id";
+    List<TaskTreeDTO> tasks = jdbcTemplate.query(query, new TaskMapperForTree());
+    return tasks;
   }
 
 }

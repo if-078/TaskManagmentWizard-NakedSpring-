@@ -1180,12 +1180,13 @@ $(document).ready(function () {
         });
     };
 
-    var setColorTask = function (statusId) {
-        if (statusId == 1) return '#ff3c38';
-        if (statusId == 2) return '#34ff16';
-        if (statusId == 3) return '#ff53d4';
-        return '#0000ff';
-    };
+    var setColorTask = function (data) {
+        if (data.statusId == 3) return '#4750ff';
+        if (data.priorityId == 1) return '#ff3c38';
+        if (data.priorityId == 2) return '#34ff16';
+        if (data.priorityId == 3) return '#ff53d4';
 
+        return '#c2bdc1'
+    };
 });
 

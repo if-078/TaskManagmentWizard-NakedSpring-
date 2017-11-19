@@ -2,6 +2,7 @@ package com.softserve.academy.tmw.service.impl;
 
 import com.softserve.academy.tmw.dao.api.TaskDaoInterface;
 import com.softserve.academy.tmw.dao.api.UserDaoInterface;
+import com.softserve.academy.tmw.dao.impl.TaskDao;
 import com.softserve.academy.tmw.dao.util.JooqSQLBuilder;
 import com.softserve.academy.tmw.dao.util.wrapper.FilterStateWrapper;
 import com.softserve.academy.tmw.dto.TaskDTO;
@@ -181,32 +182,7 @@ public class TaskService implements TaskServiceInterface {
 
   @Override
   public List<TaskTreeDTO> findTaskByTree(int id) {
-
-    List<Task> allTask = taskDao.getAll();
-    List<Task> selectedTask = new ArrayList<>();
-    for (Task task : allTask) {
-      if (task.getParentId() == id) {
-        selectedTask.add(task);
-      }
-    }
-
-    List<TaskTreeDTO> allTaskDTO = new ArrayList<>();
-    for (Task task : selectedTask) {
-      TaskTreeDTO taskDTO = new TaskTreeDTO();
-      taskDTO.setId(task.getId());
-      taskDTO.setText(task.getName());
-      allTaskDTO.add(taskDTO);
-    }
-
-    for (TaskTreeDTO taskDTO : allTaskDTO) {
-      for (Task task : allTask) {
-        if (taskDTO.getId() == task.getParentId()) {
-          taskDTO.setChildren(true);
-          break;
-        }
-      }
-    }
-    return allTaskDTO;
+    return taskDao.findTaskByTree(id);
   }
 
   @Override

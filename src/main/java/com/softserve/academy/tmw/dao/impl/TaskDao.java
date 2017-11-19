@@ -234,10 +234,12 @@ public class TaskDao extends EntityDao<Task> implements TaskDaoInterface {
     return null;
   }
 
-  public List<TaskTreeDTO> getTaskByTree(int id) {
+  @Override
+  public List<TaskTreeDTO> findTaskByTree(int id) {
     String query = "SELECT id, name, (SELECT COUNT(*) FROM task WHERE parent_id = t.id) count_children " +
-            "FROM task AS t WHERE parent_id = :id";
-    List<TaskTreeDTO> tasks = jdbcTemplate.query(query, new TaskMapperForTree());
+            "FROM task AS t WHERE parent_id = :parent_id";
+    List<TaskTreeDTO> tasks = jdbcTemplate.query(query, new MapSqlParameterSource("parent_id", id), new TaskMapperForTree());
+    System.out.println(tasks);
     return tasks;
   }
 

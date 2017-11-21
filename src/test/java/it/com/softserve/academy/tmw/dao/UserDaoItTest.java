@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -21,14 +22,15 @@ public class UserDaoItTest {
   private UserDaoInterface userDao;
   @Autowired
   private UserPopulator populator;
-
+  @Autowired
+  private PasswordEncoder passwordEncoder;
   @Test
   public void iTshouldInsertAndGetOneAndDelete() throws SQLException {
     // Given
     User userNew = new User();
     userNew.setName("if-078");
     userNew.setEmail("softServeAcademy@gmail.test");
-
+    userNew.setPass(passwordEncoder.encode("1111111"));
     User userFindOne;
     // When
     userNew = userDao.create(userNew);

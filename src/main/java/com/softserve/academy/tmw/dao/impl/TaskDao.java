@@ -105,26 +105,22 @@ public class TaskDao extends EntityDao<Task> implements TaskDaoInterface {
     java.sql.Time estimate;
     Date date = new Date();
 
-    if (task.getCreatedDate() == null) {
-      created = new java.sql.Timestamp(date.getTime());
-    } else {
-      created = new java.sql.Timestamp(task.getCreatedDate().getTime());
-    }
+    created = new java.sql.Timestamp(date.getTime());
 
     if (task.getStartDate() == null) {
-      start = new java.sql.Timestamp(date.getTime());
+      start = null;
     } else {
       start = new java.sql.Timestamp(task.getStartDate().getTime());
     }
 
     if (task.getEndDate() == null) {
-      end = new java.sql.Timestamp(date.getTime());
+      end = null;
     } else {
       end = new java.sql.Timestamp(task.getEndDate().getTime());
     }
 
     if (task.getEstimateTime() == null) {
-      estimate = new java.sql.Time(date.getTime());
+      estimate = null;
     } else {
       estimate = new java.sql.Time(task.getEstimateTime().getTime());
     }

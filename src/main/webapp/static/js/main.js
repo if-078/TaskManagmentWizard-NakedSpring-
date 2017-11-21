@@ -195,8 +195,6 @@ $(document).ready(function () {
 
             state.parentid = data.node.id !== '$' ? data.node.id : 0;
             taskTable();
-        } else {
-            showFull(data.node.id);
         }
     });
 

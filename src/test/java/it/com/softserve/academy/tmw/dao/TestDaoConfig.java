@@ -14,8 +14,7 @@ import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 
 @Configuration
-@ComponentScan(basePackages = {"com.softserve.academy.tmw.dao",
-    "com.softserve.academy.tmw.service"})
+@ComponentScan(basePackages = {"com.softserve.academy.tmw.dao"})
 public class TestDaoConfig {
 
   @Bean

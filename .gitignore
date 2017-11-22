@@ -8,9 +8,9 @@ tomcat
 # Default excludes
 #
 
-<<<<<<< HEAD
+
 # Binaries
-=======
+
 ### NetBeans ###
 nbproject/private/
 build/
@@ -32,7 +32,7 @@ README
 .settings/
 
 ### Binaries ###
->>>>>>> oleg
+
 *.7z
 *.dmg
 *.gz
@@ -79,4 +79,4 @@ release.properties
 pom.xml.releaseBackup
 pom.xml.tag
 /bin/
-/logs/
+./logs/.

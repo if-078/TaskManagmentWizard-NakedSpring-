@@ -200,16 +200,44 @@ $(document).ready(function () {
 
     // CREATE TOOLTIPE TASK
     $('#tmw-treeview').on("mouseenter.jstree", function (event, data) {
-        aTree();
+        ToolTipeTree();
+        SelectPlanningTasks();
     });
-    var aTree = function () {
+    var ToolTipeTree = function () {
         var tasks = $("ul.jstree-container-ul a.jstree-anchor");
         for (i = 0; i < tasks.length; i++) {
             tasks[i].title = tasks[i].innerText;
         }
     };
+    var SelectPlanningTasks = function () {
+        var tasks = $("ul.jstree-container-ul a.jstree-anchor");
+        for (i = 1; i < tasks.length; i++) {
+            tasks[i].style.background = "#FF8C00";
+        }
+        $.ajax({
+            url: 'api/tasks/planning',
+            type: 'GET',
+            contentType: 'application/json',
+            headers: createAuthToken(),
+            success: function (data, textStatus, jqXHR) {
+                var token = jqXHR.getResponseHeader('Authentication');
+                window.sessionStorage.setItem("token", token);
+                for (var j=0;j<data.length;j++) {
+                    $("#"+data[j].id+"_anchor").css("background","#00FFFF");
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                if (jqXHR.status === 401) {
+                    resetToken();
+                } else {
+                    throw new Error("an unexpected error occured: " + errorThrown);
+                }
+            }
+        });
 
-    // DOUBLE-CLICK ON ROOT-TASK
+    };
+
+    // DOUBLE-CLICK ON TASK
     $('#tmw-treeview').on('dblclick.jstree', function (event, data) {
 
         var node = $(event.target).closest('li');

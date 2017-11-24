@@ -11,7 +11,7 @@ public class Task {
   private Date planningDate;
   private Date startDate;
   private Date endDate;
-  private Time estimateTime;
+  private int estimateTime;
   private int assignTo;
   private int statusId;
   private int priorityId;
@@ -26,7 +26,7 @@ public class Task {
   }
 
   public Task(String name, Date createdDate, Date planningDate, Date startDate, Date endDate,
-      Time estimateTime,
+      int estimateTime,
       int assignTo, int statusId, int priorityId, int parentId) {
     this.name = name;
     this.createdDate = createdDate;
@@ -43,7 +43,7 @@ public class Task {
 
   public Task(int id, String name, Date createdDate, Date planningDate, Date startDate,
       Date endDate,
-      Time estimateTime, int assignTo, int statusId, int priorityId, int parentId) {
+      int estimateTime, int assignTo, int statusId, int priorityId, int parentId) {
     this.id = id;
     this.name = name;
     this.createdDate = createdDate;
@@ -82,7 +82,7 @@ public class Task {
     this.endDate = endDate;
   }
 
-  public void setEstimateTime(Time estimateTime) {
+  public void setEstimateTime(int estimateTime) {
     this.estimateTime = estimateTime;
   }
 
@@ -126,7 +126,7 @@ public class Task {
     return endDate;
   }
 
-  public Time getEstimateTime() {
+  public int getEstimateTime() {
     return estimateTime;
   }
 

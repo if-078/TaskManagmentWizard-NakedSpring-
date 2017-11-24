@@ -200,16 +200,16 @@ $(document).ready(function () {
 
     // CREATE TOOLTIPE TASK
     $('#tmw-treeview').on("mouseenter.jstree", function (event, data) {
-        ToolTipeTree();
-        SelectPlanningTasks();
+        toolTipeTree();
+        selectPlanningTasks();
     });
-    var ToolTipeTree = function () {
+    var toolTipeTree = function () {
         var tasks = $("ul.jstree-container-ul a.jstree-anchor");
         for (i = 0; i < tasks.length; i++) {
             tasks[i].title = tasks[i].innerText;
         }
     };
-    var SelectPlanningTasks = function () {
+    var selectPlanningTasks = function () {
         var tasks = $("ul.jstree-container-ul a.jstree-anchor");
         for (i = 1; i < tasks.length; i++) {
             tasks[i].style.background = "#FF8C00";
@@ -370,12 +370,13 @@ $(document).ready(function () {
                 var token = jqXHR.getResponseHeader('Authentication');
                 window.sessionStorage.setItem("token", token);
                 taskDTO = data;
+                var estimate = Number(taskDTO.estimateTime);
 
                 $('#tmw-task-name').val(taskDTO.name);
                 $('#tmw-task-createDate').val(taskDTO.createdDate);
                 $('#tmw-task-startDate').val(taskDTO.startDate);
                 $('#tmw-task-endDate').val(taskDTO.endDate);
-                $('#tmw-task-estimateTime').val(taskDTO.estimateTime);
+                $('#tmw-task-estimateTime').val(parseInt(estimate/60) + ":" + (estimate % 60) + ":00");
                 fillSelectUser(taskDTO.assignTo.id);
                 fillSelectPriority(taskDTO.priority.id);
                 fillSelectStatus(taskDTO.status.id);
@@ -437,13 +438,14 @@ $(document).ready(function () {
         var task = {};
 
         if ($.isEmptyObject(taskDTO)) {
+            var estimate = $('#tmw-task-estimateTime').val().split(":");
             task =
                 {
                     "name": $('#tmw-task-name').val(),
                     "createdDate": $('#tmw-task-createDate').val(),
                     "startDate": $('#tmw-task-startDate').val(),
                     "endDate": $('#tmw-task-endDate').val(),
-                    "estimateTime": $('#tmw-task-estimateTime').val(),
+                    "estimateTime": estimate[0] * 60 + Number(estimate[1]),
                     "assignTo": $('#tmw-task-assignTo').find(":selected").val(),
                     "statusId": $('#tmw-task-status').find(":selected").val(),
                     "priorityId": $('#tmw-task-priority').find(":selected").val(),
@@ -453,6 +455,7 @@ $(document).ready(function () {
 
             createtask(task);
         } else {
+            var estimate = $('#tmw-task-estimateTime').val().split(":");
             task =
                 {
                     "id": taskDTO.id,
@@ -460,14 +463,13 @@ $(document).ready(function () {
                     "createdDate": $('#tmw-task-createDate').val(),
                     "startDate": $('#tmw-task-startDate').val(),
                     "endDate": $('#tmw-task-endDate').val(),
-                    "estimateTime": $('#tmw-task-estimateTime').val(),
+                    "estimateTime": estimate[0] * 60 + Number(estimate[1]),
                     "assignTo": $('#tmw-task-assignTo').find(":selected").val(),
                     "statusId": $('#tmw-task-status').find(":selected").val(),
                     "priorityId": $('#tmw-task-priority').find(":selected").val(),
                     "parentId": state.parentid,
                     "tags": getSelectedTags(),
                 }
-
             updatetask(task);
         }
     }
@@ -1007,8 +1009,8 @@ $(document).ready(function () {
                         for (var i = 0; i < data.length; i++) {
                             if (data[i].planningDate == null) continue;
 
-                            var hours = parseInt(data[i].estimateTime.split(':')[0]),
-                                minutes = parseInt(data[i].estimateTime.split(':')[1]);
+                            var hours = parseInt(data[i].estimateTime / 60),
+                                minutes = parseInt(data[i].estimateTime % 60);
 
                             plannedTasks.push({
                                 id: data[i].id,
@@ -1020,7 +1022,7 @@ $(document).ready(function () {
                                 end: moment(data[i].planningDate).addWorkingTime(hours, 'hours', minutes, 'minutes', 0, 'seconds'),
 
                                 color: setColorTask(data[i]),
-                                est: data[i].estimateTime
+                                est: hours + ":" + minutes + ":00"
                             });
                         }
 
@@ -1067,7 +1069,9 @@ $(document).ready(function () {
                                 // $(this).remove();
 
                                 var table = $('#tmw-task-table').DataTable();
+
                                 table.row($(this)).remove().draw();
+                                selectPlanningTasks();
 
                                 if ($('#tmw-task-table tbody tr').length === 0) {
                                     $('#tmw-task-table').empty();
@@ -1082,7 +1086,6 @@ $(document).ready(function () {
                                 showFull(event.id);
                             }
                         });
-
                         makeTableRowsDraggable();
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
@@ -1179,7 +1182,7 @@ $(document).ready(function () {
                 id: tid,
                 title: $.trim($(this).find('td').first().text()),
                 stick: true,
-                est: estimateTime
+                est: parseInt(estimateTime/60) + ":" + (estimateTime%60) + ":00"
             });
 
             $(this).draggable({
@@ -1192,7 +1195,8 @@ $(document).ready(function () {
                     $(event.currentTarget).addClass('active');
 
                     var table = $('#tmw-task-table').DataTable();
-                    estimateTime = table.row(this).data()[3] || '00:30:00';
+                    var estimate = table.row(this).data()[3];
+                    estimateTime = parseInt(estimate/60) + ":" + (estimate%60) + ":00" || '00:30:00';
 
                     $('#tmw-task-calendar').fullCalendar('getView').calendar.defaultTimedEventDuration = moment.duration(estimateTime);
 

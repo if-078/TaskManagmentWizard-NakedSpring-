@@ -41,7 +41,7 @@ public class TaskDao extends EntityDao<Task> implements TaskDaoInterface {
   public boolean update(Task task) {
     MapSqlParameterSource param = new MapSqlParameterSource();
     java.sql.Timestamp start, end, planning;
-    java.sql.Time estimate;
+//    java.sql.Time estimate;
     Date date = new Date();
 
     if (task.getStartDate() == null) {
@@ -62,11 +62,11 @@ public class TaskDao extends EntityDao<Task> implements TaskDaoInterface {
       end = new java.sql.Timestamp(task.getEndDate().getTime());
     }
 
-    if (task.getEstimateTime() == null) {
-      estimate = new java.sql.Time(date.getTime());
-    } else {
-      estimate = new java.sql.Time(task.getEstimateTime().getTime());
-    }
+//    if (task.getEstimateTime() == null) {
+//      estimate = new java.sql.Time(date.getTime());
+//    } else {
+//      estimate = new java.sql.Time(task.getEstimateTime().getTime());
+//    }
 
     if (task.getStatusId() == 0) {
       task.setStatusId(1);
@@ -86,7 +86,7 @@ public class TaskDao extends EntityDao<Task> implements TaskDaoInterface {
     param.addValue("planning_date", planning);
     param.addValue("start_date", start);
     param.addValue("end_date", end);
-    param.addValue("estimate_time", estimate);
+    param.addValue("estimate_time", task.getEstimateTime());
     param.addValue("assign_to", task.getAssignTo());
     param.addValue("status_id", task.getStatusId());
     param.addValue("priority_id", task.getPriorityId());
@@ -102,7 +102,7 @@ public class TaskDao extends EntityDao<Task> implements TaskDaoInterface {
     KeyHolder keyHolder = new GeneratedKeyHolder();
 
     java.sql.Timestamp created, start, end;
-    java.sql.Time estimate;
+//    java.sql.Time estimate;
     Date date = new Date();
 
     created = new java.sql.Timestamp(date.getTime());
@@ -119,11 +119,11 @@ public class TaskDao extends EntityDao<Task> implements TaskDaoInterface {
       end = new java.sql.Timestamp(task.getEndDate().getTime());
     }
 
-    if (task.getEstimateTime() == null) {
-      estimate = null;
-    } else {
-      estimate = new java.sql.Time(task.getEstimateTime().getTime());
-    }
+//    if (task.getEstimateTime() == null) {
+//      estimate = null;
+//    } else {
+//      estimate = new java.sql.Time(task.getEstimateTime().getTime());
+//    }
 
     if (task.getStatusId() == 0) {
       task.setStatusId(1);
@@ -142,7 +142,7 @@ public class TaskDao extends EntityDao<Task> implements TaskDaoInterface {
     param.addValue("planning_date", task.getPlanningDate());
     param.addValue("start_date", start);
     param.addValue("end_date", end);
-    param.addValue("estimate_time", estimate);
+    param.addValue("estimate_time", task.getEstimateTime());
     param.addValue("assign_to", task.getAssignTo());
     param.addValue("status_id", task.getStatusId());
     param.addValue("priority_id", task.getPriorityId());

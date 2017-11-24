@@ -8,7 +8,7 @@ public class TaskTableDTO {
   private int id;
   private String name;
   private Date startDate;
-  private Time estimateTime;
+  private String estimateTime;
   private String assignTo;
   private String status;
   private String priority;
@@ -38,11 +38,11 @@ public class TaskTableDTO {
     this.startDate = startDate;
   }
 
-  public Time getEstimateTime() {
+  public String getEstimateTime() {
     return estimateTime;
   }
 
-  public void setEstimateTime(Time estimateTime) {
+  public void setEstimateTime(String estimateTime) {
     this.estimateTime = estimateTime;
   }
 

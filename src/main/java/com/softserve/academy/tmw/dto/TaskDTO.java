@@ -45,8 +45,8 @@ public class TaskDTO {
     return endDate;
   }
 
-  @NotBlank
-  @Pattern(regexp = "^\\d{2}:\\d{2}:\\d{2}$")
+//  @NotBlank
+//  @Pattern(regexp = "^\\d:\\d{2}:\\d{2}")
   public String getEstimateTime() {
     return estimateTime;
   }

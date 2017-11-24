@@ -101,7 +101,7 @@ public class TaskService implements TaskServiceInterface {
     task.setCreatedDate(new Date());
     task.setStartDate(getFormatDate(taskDTO.getStartDate()));
     task.setEndDate(getFormatDate(taskDTO.getEndDate()));
-    task.setEstimateTime(getTimeFormat(taskDTO.getEstimateTime()));
+    task.setEstimateTime(taskDTO.getEstimateTime());
     task.setPriorityId(taskDTO.getPriorityId());
     task.setParentId(taskDTO.getParentId());
     task.setStatusId(taskDTO.getStatusId());
@@ -121,7 +121,7 @@ public class TaskService implements TaskServiceInterface {
     task.setCreatedDate(new Date());
     task.setStartDate(getFormatDate(taskDTO.getStartDate()));
     task.setEndDate(getFormatDate(taskDTO.getEndDate()));
-    task.setEstimateTime(getTimeFormat(taskDTO.getEstimateTime()));
+    task.setEstimateTime(taskDTO.getEstimateTime());
     task.setPriorityId(taskDTO.getPriorityId());
     task.setParentId(taskDTO.getParentId());
     task.setStatusId(taskDTO.getStatusId());

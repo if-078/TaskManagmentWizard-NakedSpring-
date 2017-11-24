@@ -212,7 +212,7 @@ $(document).ready(function () {
     var SelectPlanningTasks = function () {
         var tasks = $("ul.jstree-container-ul a.jstree-anchor");
         for (i = 1; i < tasks.length; i++) {
-            tasks[i].style.background = "#FF8C00";
+            if (tasks[i].style.background != "#00FFFF") {tasks[i].style.background = "#FF8C00";}
         }
         $.ajax({
             url: 'api/tasks/planning',

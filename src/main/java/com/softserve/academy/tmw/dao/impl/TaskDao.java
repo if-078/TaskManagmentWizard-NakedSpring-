@@ -41,7 +41,7 @@ public class TaskDao extends EntityDao<Task> implements TaskDaoInterface {
   public boolean update(Task task) {
     MapSqlParameterSource param = new MapSqlParameterSource();
     java.sql.Timestamp start, end, planning;
-    java.sql.Time estimate;
+    String estimate;
     Date date = new Date();
 
     if (task.getStartDate() == null) {
@@ -63,9 +63,9 @@ public class TaskDao extends EntityDao<Task> implements TaskDaoInterface {
     }
 
     if (task.getEstimateTime() == null) {
-      estimate = new java.sql.Time(date.getTime());
+      estimate = "00:00:00";
     } else {
-      estimate = new java.sql.Time(task.getEstimateTime().getTime());
+      estimate = new String(task.getEstimateTime());
     }
 
     if (task.getStatusId() == 0) {
@@ -102,7 +102,7 @@ public class TaskDao extends EntityDao<Task> implements TaskDaoInterface {
     KeyHolder keyHolder = new GeneratedKeyHolder();
 
     java.sql.Timestamp created, start, end;
-    java.sql.Time estimate;
+    String estimate;
     Date date = new Date();
 
     created = new java.sql.Timestamp(date.getTime());
@@ -122,7 +122,7 @@ public class TaskDao extends EntityDao<Task> implements TaskDaoInterface {
     if (task.getEstimateTime() == null) {
       estimate = null;
     } else {
-      estimate = new java.sql.Time(task.getEstimateTime().getTime());
+      estimate = new String(task.getEstimateTime());
     }
 
     if (task.getStatusId() == 0) {

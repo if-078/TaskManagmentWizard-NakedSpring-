@@ -43,7 +43,10 @@ public class TaskTableDTO {
   }
 
   public void setEstimateTime(int estimateTime) {
-    this.estimateTime = estimateTime/60 + ":" + estimateTime%60 + ":00";
+    int hours = estimateTime/60;
+    String minuts = String.valueOf(estimateTime%60);
+    minuts = minuts.length() < 2 ? "0" + minuts : minuts;
+    this.estimateTime = hours + ":" + minuts + ":00";
   }
 
   public String getAssignTo() {

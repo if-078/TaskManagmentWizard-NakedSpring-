@@ -1,13 +1,12 @@
 package com.softserve.academy.tmw.configuration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import javax.sql.DataSource;
+import org.apache.tomcat.jdbc.pool.DataSource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 @Configuration
 @PropertySource("classpath:mysql_connection.properties")
@@ -23,16 +22,19 @@ public class AppConfig {
   private String username;
   @Value("${jdbc.password}")
   private String password;
+  
 
   @Bean
   public DataSource getDataSource() {
-    DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
-    driverManagerDataSource.setSchema(schema);
-    driverManagerDataSource.setDriverClassName(driver);
-    driverManagerDataSource.setUrl(url);
-    driverManagerDataSource.setUsername(username);
-    driverManagerDataSource.setPassword(password);
-    return driverManagerDataSource;
+    DataSource dataSource = new DataSource();
+    dataSource.setDriverClassName(driver);
+    dataSource.setUrl(url);
+    dataSource.setUsername(username);
+    dataSource.setPassword(password);
+    dataSource.setRemoveAbandoned(true);
+    dataSource.setInitialSize(10);
+    dataSource.setMaxActive(20);
+    return dataSource;
   }
 
   @Bean

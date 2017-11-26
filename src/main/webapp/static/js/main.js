@@ -376,7 +376,7 @@ $(document).ready(function () {
                 $('#tmw-task-createDate').val(taskDTO.createdDate);
                 $('#tmw-task-startDate').val(taskDTO.startDate);
                 $('#tmw-task-endDate').val(taskDTO.endDate);
-                $('#tmw-task-estimateTime').val(parseInt(estimate/60) + ":" + (estimate % 60) + ":00");
+                $('#tmw-task-estimateTime').val(taskDTO.estimateTime);
                 fillSelectUser(taskDTO.assignTo.id);
                 fillSelectPriority(taskDTO.priority.id);
                 fillSelectStatus(taskDTO.status.id);

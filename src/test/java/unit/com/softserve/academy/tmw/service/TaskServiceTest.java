@@ -51,7 +51,7 @@ public class TaskServiceTest {
     taskDTO.setName("");
     taskDTO.setStartDate("");
     taskDTO.setEndDate("");
-    taskDTO.setEstimateTime("");
+    taskDTO.setEstimateTime(0);
 
     Set<ConstraintViolation<TaskDTO>> violations = validator.validate(taskDTO);
 

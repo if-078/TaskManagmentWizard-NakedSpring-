@@ -219,7 +219,7 @@
         <version>2.2</version>
         <configuration>
           <path>/</path>
-          <port>8585</port>
+          <port>8586</port>
         </configuration>
       </plugin>
 

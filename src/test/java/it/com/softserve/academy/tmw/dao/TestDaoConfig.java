@@ -12,12 +12,14 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
-import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.annotation.DirtiesContext.ClassMode;
 
 @Configuration
 @ComponentScan(basePackages = {"com.softserve.academy.tmw.dao"})
+@DirtiesContext(classMode = ClassMode.BEFORE_CLASS)
 public class TestDaoConfig {
 
   @Bean
@@ -57,7 +59,7 @@ public class TestDaoConfig {
   }
 
   @Bean
-  public PasswordEncoder getEncoder(){
+  public PasswordEncoder getEncoder() {
     return new BCryptPasswordEncoder();
   }
 }

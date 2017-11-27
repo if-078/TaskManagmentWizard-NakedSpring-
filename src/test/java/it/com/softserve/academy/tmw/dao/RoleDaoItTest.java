@@ -20,7 +20,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {TestDaoConfig.class})
-@DirtiesContext(classMode = ClassMode.BEFORE_CLASS)
+@DirtiesContext(classMode = ClassMode.BEFORE_EACH_TEST_METHOD)
 public class RoleDaoItTest {
 
   @Autowired
@@ -51,17 +51,11 @@ public class RoleDaoItTest {
   }
 
   @Test
-  public void ShouldCreateAndGetAllAndDeleteAll() throws Exception {
+  public void ShouldCreateAndDeleteAll() throws Exception {
     List<Role> list = roleDao.addBatch(rolePopulator.initOneEntity("zxcv1"),
         rolePopulator.initOneEntity("zxcv2"), rolePopulator.initOneEntity("zxcv3"));
     assertEquals(3, list.size());
     int id = 1;
-    for (Role role : roleDao.getAll()) {
-//      if (role.getId() == id) {
-//        assertEquals("zxcv" + id++, role.getName());
-//      }
-      System.out.println(role);
-    }
     roleDao.deleteAll();
     assertEquals(0, roleDao.getAll().size());
   }

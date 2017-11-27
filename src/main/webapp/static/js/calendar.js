@@ -27,7 +27,7 @@ $('#tmw-graphic-exit').click(function () {
 var plannedTasks = [];
 var taskCalendar = function () {
     $.ajax({
-        url: '/api/users/all',
+        url: '/api/users/team/' + selectedTaskId + '?userId=' + userId,
         type: 'GET',
         contentType: 'application/json',
         success: function (data) {

@@ -1,6 +1,7 @@
 package com.softserve.academy.tmw.service.impl;
 
 import com.softserve.academy.tmw.dao.impl.UserDao;
+import com.softserve.academy.tmw.dao.impl.UsersTasksDao;
 import com.softserve.academy.tmw.entity.User;
 import com.softserve.academy.tmw.service.api.UserServiceInterface;
 import java.util.List;
@@ -13,6 +14,8 @@ public class UserService implements UserServiceInterface {
 
     @Autowired
    private UserDao userDao;
+    @Autowired
+   private UsersTasksDao usersTasksDao;
     @Autowired
     private PasswordEncoder passwordEncoder;
     @Override
@@ -52,5 +55,8 @@ public class UserService implements UserServiceInterface {
         return user;
     }
 
-
+    @Override
+    public List<User> getTeamByTask(int taskId, int userId) {
+        return usersTasksDao.getTeamByTask(taskId, userId);
+    }
 }

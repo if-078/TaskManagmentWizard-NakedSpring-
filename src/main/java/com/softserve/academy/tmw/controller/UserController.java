@@ -22,7 +22,7 @@ public class UserController {
     System.out.println("taskId = " + taskId);
     System.out.println("userId = " + userId);
     System.out.println("====================");
-    return userService.getAll();
+    return userService.getTeamByTask(taskId, userId);
   }
 
   @PostMapping("/add/")

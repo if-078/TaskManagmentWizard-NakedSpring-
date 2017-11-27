@@ -22,7 +22,7 @@ public interface TaskServiceInterface extends EntityServiceInterface<Task> {
   List<TaskTableDTO> getFilteredTasksForTable(int parentId, String[] dates, int[] status,
       int[] priority, int[] tag);
 
-  List<TaskTreeDTO> findTaskByTree(int id);
+  List<TaskTreeDTO> findTaskByTree(int id, int userId);
 
   TaskFullInfoDTO getFullInfo(int id);
 

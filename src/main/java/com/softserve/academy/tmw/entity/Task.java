@@ -12,10 +12,47 @@ public class Task {
   private Date startDate;
   private Date endDate;
   private int estimateTime;
+  private int spentTime;
+  private int leftTime;
   private int assignTo;
   private int statusId;
   private int priorityId;
   private int parentId;
+  private int authorId;
+  private int projectId;
+
+  public int getSpentTime() {
+    return spentTime;
+  }
+
+  public void setSpentTime(int spentTime) {
+    this.spentTime = spentTime;
+  }
+
+  public int getLeftTime() {
+    return leftTime;
+  }
+
+  public void setLeftTime(int leftTime) {
+    this.leftTime = leftTime;
+  }
+
+  public int getAuthorId() {
+    return authorId;
+  }
+
+  public void setAuthorId(int authorId) {
+    this.authorId = authorId;
+  }
+
+  public int getProjectId() {
+    return projectId;
+  }
+
+  public void setProjectId(int projectId) {
+    this.projectId = projectId;
+  }
+
   private Status status;
   private Priority priority;
   private Tag tags[];
@@ -26,24 +63,28 @@ public class Task {
   }
 
   public Task(String name, Date createdDate, Date planningDate, Date startDate, Date endDate,
-      int estimateTime,
-      int assignTo, int statusId, int priorityId, int parentId) {
+      int estimateTime, int spentTime, int leftTime,
+      int assignTo, int statusId, int priorityId, int parentId, int authorId, int projectId) {
     this.name = name;
     this.createdDate = createdDate;
     this.planningDate = planningDate;
     this.startDate = startDate;
     this.endDate = endDate;
     this.estimateTime = estimateTime;
+    this.spentTime = spentTime;
+    this.leftTime = leftTime;
     this.assignTo = assignTo;
     this.statusId = statusId;
     this.priorityId = priorityId;
     this.parentId = parentId;
+    this.authorId = authorId;
+    this.projectId = projectId;
 
   }
 
   public Task(int id, String name, Date createdDate, Date planningDate, Date startDate,
-      Date endDate,
-      int estimateTime, int assignTo, int statusId, int priorityId, int parentId) {
+      Date endDate, int estimateTime, int spentTime, int leftTime,
+              int assignTo, int statusId, int priorityId, int parentId, int authorId, int projectId) {
     this.id = id;
     this.name = name;
     this.createdDate = createdDate;
@@ -51,10 +92,14 @@ public class Task {
     this.startDate = startDate;
     this.endDate = endDate;
     this.estimateTime = estimateTime;
+    this.spentTime = spentTime;
+    this.leftTime = leftTime;
     this.assignTo = assignTo;
     this.statusId = statusId;
     this.priorityId = priorityId;
     this.parentId = parentId;
+    this.authorId = authorId;
+    this.projectId = projectId;
 
   }
 

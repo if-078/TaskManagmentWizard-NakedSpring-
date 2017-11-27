@@ -2,6 +2,7 @@ package com.softserve.academy.tmw.service.impl;
 
 import com.softserve.academy.tmw.dao.api.TaskDaoInterface;
 import com.softserve.academy.tmw.dao.api.UserDaoInterface;
+import com.softserve.academy.tmw.dao.api.UsersTasksDaoInterface;
 import com.softserve.academy.tmw.dao.impl.TaskDao;
 import com.softserve.academy.tmw.dao.util.JooqSQLBuilder;
 import com.softserve.academy.tmw.dao.util.wrapper.FilterStateWrapper;
@@ -9,11 +10,7 @@ import com.softserve.academy.tmw.dto.TaskDTO;
 import com.softserve.academy.tmw.dto.TaskFullInfoDTO;
 import com.softserve.academy.tmw.dto.TaskTableDTO;
 import com.softserve.academy.tmw.dto.TaskTreeDTO;
-import com.softserve.academy.tmw.entity.Comment;
-import com.softserve.academy.tmw.entity.Priority;
-import com.softserve.academy.tmw.entity.Status;
-import com.softserve.academy.tmw.entity.Tag;
-import com.softserve.academy.tmw.entity.Task;
+import com.softserve.academy.tmw.entity.*;
 import com.softserve.academy.tmw.service.api.EntityServiceInterface;
 import com.softserve.academy.tmw.service.api.TagServiceInterface;
 import com.softserve.academy.tmw.service.api.TaskServiceInterface;
@@ -45,6 +42,7 @@ public class TaskService implements TaskServiceInterface {
   @Autowired
   private TaskDaoInterface taskDao;
 
+
   @Autowired
   private UserDaoInterface userDao;
 
@@ -59,6 +57,9 @@ public class TaskService implements TaskServiceInterface {
 
   @Autowired
   private UserServiceInterface serviceUser;
+
+  @Autowired
+  private UsersTasksDaoInterface usersTasksDao;
 
   @Override
   public List<Task> getAll() {
@@ -181,8 +182,36 @@ public class TaskService implements TaskServiceInterface {
   }
 
   @Override
-  public List<TaskTreeDTO> findTaskByTree(int id) {
-    return taskDao.findTaskByTree(id);
+  public List<TaskTreeDTO> findTaskByTree(int id, int userId) {
+    List<TaskTreeDTO> tasksTreeDTO = taskDao.findTaskByTree(id);
+
+    //if id==0 - load projects
+    //show project for user if (userId==autorId or userId==assignTo or userId in team project)
+    //make SQL select
+
+    if (id==0){
+      List<TaskTreeDTO> usertasks = new ArrayList<TaskTreeDTO>();
+      for(TaskTreeDTO taskTreeDTO : tasksTreeDTO) {
+
+        Task task = taskDao.findOne(taskTreeDTO.getId());
+        if (userId==task.getAuthorId()|(userId==task.getAssignTo())){
+          usertasks.add(taskTreeDTO);
+          continue;
+        }
+
+        List<UsersTasks> usersTasksList = usersTasksDao.getAll();
+        for(UsersTasks usersTasks : usersTasksList){
+          if((task.getId()==usersTasks.getTaskId())&(userId==usersTasks.getUserId())){
+            usertasks.add(taskTreeDTO);
+            continue;
+          }
+        }
+
+      }
+      tasksTreeDTO = usertasks;
+    }
+
+    return tasksTreeDTO;
   }
 
   @Override

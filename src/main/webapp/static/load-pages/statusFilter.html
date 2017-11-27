@@ -21,10 +21,22 @@
     <!--EasyUI-->
     <script src="static/dev_pack/jqeasyui/jquery.easyui.min.js"></script>
 
-    <script type="text/javascript" src="static/js/filter.js"></script>
+    <script type="text/javascript">
+        function setFilerValues() {
+            var myFilter = new Filter($("#start").val(), $("#end").val());
+            myFilter.setPriority($("#priorityBox").val().split(","));
+            myFilter.setStatus($("#statusBox").val().split(","));
+            myFilter.setTag($("#tagBox").val().split(","));
+            alert('action');
+            console.log(JSON.stringify(myFilter));
+            return myFilter
+        }
 
-
-
+        function boxMessage() {
+            var d = new Date();
+            var strDate = d.getFullYear() + "/" + (d.getMonth() + 1) + "/" + (d.getDate());
+        }
+    </script>
 </head>
 <body>
 

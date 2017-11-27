@@ -8,7 +8,7 @@ public class TaskTableDTO {
   private int id;
   private String name;
   private Date startDate;
-  private String estimateTime;
+  private int estimateTime;
   private String assignTo;
   private String status;
   private String priority;
@@ -38,15 +38,12 @@ public class TaskTableDTO {
     this.startDate = startDate;
   }
 
-  public String getEstimateTime() {
+  public int getEstimateTime() {
     return estimateTime;
   }
 
   public void setEstimateTime(int estimateTime) {
-    int hours = estimateTime/60;
-    String minuts = String.valueOf(estimateTime%60);
-    minuts = minuts.length() < 2 ? "0" + minuts : minuts;
-    this.estimateTime = hours + ":" + minuts + ":00";
+    this.estimateTime = estimateTime;
   }
 
   public String getAssignTo() {

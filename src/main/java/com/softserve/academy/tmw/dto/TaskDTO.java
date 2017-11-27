@@ -12,7 +12,7 @@ public class TaskDTO {
   private String createdDate;
   private String startDate;
   private String endDate;
-  private String estimateTime;
+  private int estimateTime;
   private int assignTo;
   private int statusId;
   private int priorityId;
@@ -47,7 +47,7 @@ public class TaskDTO {
 
   @NotBlank
   @Pattern(regexp = "^\\d{2}:\\d{2}:\\d{2}$")
-  public String getEstimateTime() {
+  public int getEstimateTime() {
     return estimateTime;
   }
 
@@ -91,7 +91,7 @@ public class TaskDTO {
     this.endDate = endDate;
   }
 
-  public void setEstimateTime(String estimateTime) {
+  public void setEstimateTime(int estimateTime) {
     this.estimateTime = estimateTime;
   }
 

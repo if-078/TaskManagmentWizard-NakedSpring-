@@ -55,8 +55,12 @@ public class TaskController {
 
   @GetMapping("/tree/{id}")
   @ResponseStatus(HttpStatus.OK)
-  List<TaskTreeDTO> getTreeSubtask(@PathVariable Integer id) {
-    return taskService.findTaskByTree(id);
+  List<TaskTreeDTO> getTreeSubtask(@PathVariable Integer id, @RequestParam(name = "userId", required = false) int userId) {
+    System.out.println("Start controller =============");
+    System.out.println("parentId = " + id);
+    System.out.println("userId = " + userId);
+    System.out.println("End controller =============");
+    return taskService.findTaskByTree(id, userId);
   }
 
   @GetMapping("/filter")

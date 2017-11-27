@@ -69,11 +69,10 @@ textarea {
 }
 
 #leftPanel {
-    overflow: scroll;
+    overflow-y: hidden;
     overflow-x: hidden;
     height: 35%;
     max-height: 140px;
-    width: 96.5%;
     position: relative;
 
 }
@@ -109,4 +108,34 @@ body > tr > td {
     padding: 8px;
     border: 1px solid #ddd;
     border-collapse: collapse;
+}
+
+/*
+ * jsTree
+ */
+
+#tmw-treeview > ul > li > a  {
+    font-weight: bold;
+}
+
+#tmw-treeview > ul > li > ul > li > a  {
+    font-weight: bold;
+}
+
+li.jstree-closed > a .jstree-icon {
+    display: none;
+    /*background: url("imageClosed.gif") 0px 0px no-repeat !important;*/
+    /*background-color: red;*/
+}
+
+li.jstree-open > a .jstree-icon {
+    display: none;
+    /*background: url("imageOpen.gif") 0px 0px no-repeat !important;*/
+    /*background-color: green;*/
+}
+
+li.jstree-leaf > a .jstree-icon {
+    display: none;
+    /*background: url("imageClosed.gif") 0px 0px no-repeat !important;*/
+    /*background-color: blue;*/
 }

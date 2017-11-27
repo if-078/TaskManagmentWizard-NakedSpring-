@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS tmw.task (
   `planning_date` TIMESTAMP NULL,
   `start_date` TIMESTAMP NULL,
   `end_date` TIMESTAMP NULL,
-  `estimate_time` TIME NULL,
+  `estimate_time` INT NULL,
   `assign_to` INT NULL,
   `status_id` INT NULL,
   `priority_id` INT NULL,

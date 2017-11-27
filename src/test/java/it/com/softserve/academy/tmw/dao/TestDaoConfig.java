@@ -12,7 +12,6 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
-import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -57,7 +56,7 @@ public class TestDaoConfig {
   }
 
   @Bean
-  public PasswordEncoder getEncoder(){
+  public PasswordEncoder getEncoder() {
     return new BCryptPasswordEncoder();
   }
 }

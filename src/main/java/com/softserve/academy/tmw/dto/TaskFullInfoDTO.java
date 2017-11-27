@@ -13,7 +13,7 @@ public class TaskFullInfoDTO {
   private Date createdDate;
   private Date startDate;
   private Date endDate;
-  private int estimateTime;
+  private String estimateTime;
   private User assignTo;
   private Status status;
   private Priority priority;
@@ -59,12 +59,15 @@ public class TaskFullInfoDTO {
     this.endDate = endDate;
   }
 
-  public int getEstimateTime() {
+  public String getEstimateTime() {
     return estimateTime;
   }
 
   public void setEstimateTime(int estimateTime) {
-    this.estimateTime = estimateTime;
+    int hours = estimateTime/60;
+    String minuts = String.valueOf(estimateTime%60);
+    minuts = minuts.length() < 2 ? "0" + minuts : minuts;
+    this.estimateTime = hours + ":" + minuts + ":00";
   }
 
   public User getAssignTo() {

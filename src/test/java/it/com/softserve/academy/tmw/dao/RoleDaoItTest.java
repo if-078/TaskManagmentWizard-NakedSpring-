@@ -8,17 +8,19 @@ import com.softserve.academy.tmw.entity.Role;
 import it.com.softserve.academy.tmw.dao.utility.RolePopulator;
 import java.sql.SQLException;
 import java.util.List;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {TestDaoConfig.class})
+@DirtiesContext(classMode = ClassMode.BEFORE_EACH_TEST_METHOD)
 public class RoleDaoItTest {
 
   @Autowired
@@ -29,11 +31,6 @@ public class RoleDaoItTest {
   @Before
   public void getObcetsFromContext() throws SQLException {
     rolePopulator.initTable();
-  }
-
-  @After
-  public void dropObjectsFromContext() throws SQLException {
-    rolePopulator.deleteRecordsOfTable();
   }
 
   @Test
@@ -54,16 +51,11 @@ public class RoleDaoItTest {
   }
 
   @Test
-  public void ShouldCreateAndGetAllAndDeleteAll() throws Exception {
+  public void ShouldCreateAndDeleteAll() throws Exception {
     List<Role> list = roleDao.addBatch(rolePopulator.initOneEntity("zxcv1"),
         rolePopulator.initOneEntity("zxcv2"), rolePopulator.initOneEntity("zxcv3"));
     assertEquals(3, list.size());
     int id = 1;
-    for (Role role : roleDao.getAll()) {
-      if (role.getId() == id) {
-        assertEquals("zxcv" + id++, role.getName());
-      }
-    }
     roleDao.deleteAll();
     assertEquals(0, roleDao.getAll().size());
   }

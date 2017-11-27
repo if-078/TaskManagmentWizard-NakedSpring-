@@ -23,6 +23,6 @@ public interface TaskDaoInterface extends EntityDaoInterface<Task>{
 
     List<Task> getPlannedTasks();
 
-    List<TaskTreeDTO> findTaskByTree(int id);
+    List<TaskTreeDTO> findTaskByTree(int id, int userId);
 
 }

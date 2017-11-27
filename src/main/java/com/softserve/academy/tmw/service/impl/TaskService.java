@@ -183,12 +183,12 @@ public class TaskService implements TaskServiceInterface {
 
   @Override
   public List<TaskTreeDTO> findTaskByTree(int id, int userId) {
-    List<TaskTreeDTO> tasksTreeDTO = taskDao.findTaskByTree(id);
+    List<TaskTreeDTO> tasksTreeDTO = taskDao.findTaskByTree(id, userId);
 
     //if id==0 - load projects
     //show project for user if (userId==autorId or userId==assignTo or userId in team project)
     //make SQL select
-
+/*
     if (id==0){
       List<TaskTreeDTO> usertasks = new ArrayList<TaskTreeDTO>();
       for(TaskTreeDTO taskTreeDTO : tasksTreeDTO) {
@@ -210,7 +210,7 @@ public class TaskService implements TaskServiceInterface {
       }
       tasksTreeDTO = usertasks;
     }
-
+*/
     return tasksTreeDTO;
   }
 

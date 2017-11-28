@@ -45,13 +45,13 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void shouldBeNotBlankNameOfTaskAndStartDateAndEndDateAndEstimateTime() {
+  public void shouldBeNotBlankNameOfTaskAndStartDateAndEndDateAndCreateDate() {
     int countError = 4;
     TaskDTO taskDTO = new TaskDTO();
     taskDTO.setName("");
     taskDTO.setStartDate("");
     taskDTO.setEndDate("");
-    taskDTO.setEstimateTime(0);
+    taskDTO.setCreatedDate("");
 
     Set<ConstraintViolation<TaskDTO>> violations = validator.validate(taskDTO);
 
@@ -70,8 +70,8 @@ public class TaskServiceTest {
         assertThat(error.getPropertyPath().toString()).isEqualTo("endDate");
         assertThat(error.getInvalidValue().toString()).isEqualTo("");
       }
-      if (error.getPropertyPath().toString().equals("estimateTime")) {
-        assertThat(error.getPropertyPath().toString()).isEqualTo("estimateTime");
+      if (error.getPropertyPath().toString().equals("createDate")) {
+        assertThat(error.getPropertyPath().toString()).isEqualTo("createDate");
         assertThat(error.getInvalidValue().toString()).isEqualTo("");
       }
 

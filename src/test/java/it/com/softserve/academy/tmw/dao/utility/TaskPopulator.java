@@ -46,9 +46,14 @@ public class TaskPopulator {
         System.currentTimeMillis() + (7 * hourFromMillSecs * 24))); //end date after one week
     task.setStartDate(new Date(System.currentTimeMillis() + (hourFromMillSecs)));
     task.setEstimateTime(0);
+    task.setSpentTime(0);
+    task.setLeftTime(0);
     task.setParentId(0);
+    task.setAuthorId(defUser.getId());
+    task.setProjectId(1);
     task.setPriorityId(priorityPopulator.initOnePriority("HIGH").getId());
     task.setStatusId(statusPopulator.createDefaultEntity().getId());
+    System.out.println(task.toString());
     return dao.create(task);
   }
 

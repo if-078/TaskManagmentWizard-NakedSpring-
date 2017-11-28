@@ -6,18 +6,25 @@ import com.softserve.academy.tmw.entity.User;
 import com.softserve.academy.tmw.service.api.UserServiceInterface;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 @Service
 public class UserService implements UserServiceInterface {
 
     @Autowired
-   private UserDao userDao;
+    private UserDao userDao;
     @Autowired
-   private UsersTasksDao usersTasksDao;
+    private UsersTasksDao usersTasksDao;
     @Autowired
     private PasswordEncoder passwordEncoder;
+
     @Override
     public List getAll() {
         return userDao.getAll();
@@ -45,6 +52,12 @@ public class UserService implements UserServiceInterface {
     }
 
     @Override
+    public boolean verify (int UserId, long UserKey){
+
+        return false;
+    }
+
+    @Override
     public User findByEmail(String email) {
         User user=null;
         try{
@@ -60,3 +73,4 @@ public class UserService implements UserServiceInterface {
         return usersTasksDao.getTeamByTask(taskId, userId);
     }
 }
+//165475TMW

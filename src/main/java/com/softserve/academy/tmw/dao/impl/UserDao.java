@@ -3,12 +3,21 @@ package com.softserve.academy.tmw.dao.impl;
 import com.softserve.academy.tmw.dao.api.UserDaoInterface;
 import com.softserve.academy.tmw.dao.mapper.UserMapper;
 import com.softserve.academy.tmw.entity.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMailMessage;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Repository;
+
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 @Repository
 @PropertySource("classpath:tables.properties")
@@ -17,6 +26,10 @@ public class UserDao extends EntityDao<User> implements UserDaoInterface {
   public UserDao(@Value("${uuser}") String table) {
     super(table, new UserMapper());
   }
+
+  @Autowired
+  private JavaMailSender mailSender;
+
 
   @Override
   public User create(User entity) {
@@ -29,9 +42,28 @@ public class UserDao extends EntityDao<User> implements UserDaoInterface {
     jdbcTemplate.update(sql, param, keyHolder);
     entity.setId(keyHolder.getKey().intValue());
 
-    return entity;
+    long key =java.util.UUID.randomUUID().hashCode();
+    String notVerifaed = "insert into user_activation (id, user_id) values (:id, :user_id)";
+    param.addValue("id", entity.getId());
+    param.addValue("user_id", key);
 
+    MimeMessage message = mailSender.createMimeMessage();
+    String messageLink = "http:localhost:8585/api/users/verify/" + entity.getId()+ "?key=";
+    try {
+      message.addRecipient(Message.RecipientType.TO, new InternetAddress(entity.getEmail()));
+      message.setSubject("email verification");
+
+      messageLink = messageLink+ key;
+      message.setText("Please click link below to confirm your email verification + /n " +
+              messageLink);
+      mailSender.send(message);
+      jdbcTemplate.update(notVerifaed, param);
+    } catch (MessagingException e) {
+      e.printStackTrace();
+    }
+    return entity;
   }
+
 
   @Override
   public boolean update(User entity) {

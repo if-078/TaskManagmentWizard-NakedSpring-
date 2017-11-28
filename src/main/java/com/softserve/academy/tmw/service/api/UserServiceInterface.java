@@ -6,7 +6,9 @@ import java.util.List;
 
 public interface UserServiceInterface extends EntityServiceInterface<User> {
 
-  User findByEmail(String email);
+    boolean verify(int UserId, long UserKey);
+
+    User findByEmail(String email);
 
   List<User> getTeamByTask(int taskId, int userId);
 }

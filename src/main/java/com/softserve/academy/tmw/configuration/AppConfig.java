@@ -7,6 +7,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+
+import java.util.Properties;
 
 @Configuration
 @PropertySource("classpath:mysql_connection.properties")
@@ -45,5 +49,25 @@ public class AppConfig {
   @Bean
   public ObjectMapper getJsonMapper() {
     return new ObjectMapper();
+  }
+
+  @Bean
+  public JavaMailSender getJavaMailSender()
+  {
+    JavaMailSenderImpl sender = new JavaMailSenderImpl();
+    sender.setProtocol("smtp");
+    sender.setHost("smtp.gmail.com");
+    sender.setPort(587);
+    sender.setUsername("taskmanagementwizard@gmail.com");
+    sender.setPassword("165475TMW");
+
+    Properties mailProps = new Properties();
+    mailProps.put("mail.smtps.auth", "true");
+    mailProps.put("mail.smtp.starttls.enable", "true");
+    mailProps.put("mail.smtp.debug", "true");
+
+    sender.setJavaMailProperties(mailProps);
+
+    return sender;
   }
 }

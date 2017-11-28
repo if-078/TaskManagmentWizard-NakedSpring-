@@ -55,4 +55,11 @@ public class UserController {
     return userService.delete(id);
   }
 
+  @GetMapping("/verify/{id}")
+  @ResponseStatus(HttpStatus.FOUND)
+  boolean verifyUser (@PathVariable Integer id,  @RequestParam(name = "key") long userKey){
+    return userService.verify(id, userKey);
+  }
 }
+
+// http:localhost:8585/api/users/verify/5?key=5441534156465

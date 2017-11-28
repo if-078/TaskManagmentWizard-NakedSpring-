@@ -6,11 +6,19 @@ create table user
 	id int auto_increment
 		primary key,
 	name varchar(45) not null,
-	pass binary(60) not null,
-	email varchar(254) null
+	pass char(60) not null,
+	email varchar(254) null,
+    active tinyint(1) default 0
 )
 ;
 
+create table user_activation
+(
+	id int primary key,
+    user_id int not null,
+    constraint fk_user_id foreign key (user_id)
+    references user(id)
+);
 
 
 create table priority

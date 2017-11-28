@@ -6,7 +6,7 @@ create table user
 	id int auto_increment
 		primary key,
 	name varchar(45) not null,
-	pass binary(60) not null,
+	pass char(60) not null,
 	email varchar(254) null
 )
 ;

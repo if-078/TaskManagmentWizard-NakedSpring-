@@ -32,6 +32,7 @@ var taskCalendar = function () {
         contentType: 'application/json',
         success: function (data) {
             var resources = [];
+            console.log(data);
             for (var i = 0; i < data.length; i++) {
                 resources.push({
                     id: data[i].id,

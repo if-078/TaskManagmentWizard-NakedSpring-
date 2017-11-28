@@ -1,65 +1,521 @@
-2017-11-28 17:54:31,769   INFO org.springframework.web.context.ContextLoader: Root WebApplicationContext: initialization started
- 2017-11-28 17:54:31,788   INFO org.springframework.web.context.support.AnnotationConfigWebApplicationContext: Refreshing Root WebApplicationContext: startup date [Tue Nov 28 17:54:31 EET 2017]; root of context hierarchy
- 2017-11-28 17:54:32,033   INFO org.springframework.web.context.support.AnnotationConfigWebApplicationContext: Registering annotated classes: [class com.softserve.academy.tmw.configuration.webConfig.WebAppConfig,class com.softserve.academy.tmw.configuration.AppConfig,class com.softserve.academy.tmw.configuration.webConfig.SecurityConfig]
- 2017-11-28 17:54:32,941   INFO org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor: JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
- 2017-11-28 17:54:35,779   INFO org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping: Mapped "{[/api/comment/],methods=[GET]}" onto java.util.List<com.softserve.academy.tmw.entity.Comment> com.softserve.academy.tmw.controller.CommentController.getAllComment() throws java.sql.SQLException
- 2017-11-28 17:54:35,781   INFO org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping: Mapped "{[/api/comment/],methods=[PUT]}" onto boolean com.softserve.academy.tmw.controller.CommentController.updateComment(com.softserve.academy.tmw.entity.Comment) throws java.sql.SQLException
- 2017-11-28 17:54:35,781   INFO org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping: Mapped "{[/api/comment/{id}],methods=[DELETE]}" onto boolean com.softserve.academy.tmw.controller.CommentController.deleteComment(java.lang.Integer) throws java.sql.SQLException
- 2017-11-28 17:54:35,782   INFO org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping: Mapped "{[/api/comment/],methods=[POST]}" onto com.softserve.academy.tmw.entity.Comment com.softserve.academy.tmw.controller.CommentController.createComment(com.softserve.academy.tmw.entity.Comment) throws java.sql.SQLException
- 2017-11-28 17:54:35,782   INFO org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping: Mapped "{[/api/comment/{id}],methods=[GET]}" onto com.softserve.academy.tmw.entity.Comment com.softserve.academy.tmw.controller.CommentController.getComment(java.lang.Integer) throws java.sql.SQLException
- 2017-11-28 17:54:35,782   INFO org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping: Mapped "{[/]}" onto public java.lang.String com.softserve.academy.tmw.controller.MainController.getIndexPage(javax.servlet.http.HttpServletRequest)
- 2017-11-28 17:54:35,782   INFO org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping: Mapped "{[/login]}" onto public java.lang.String com.softserve.academy.tmw.controller.MainController.getLoginPage()
- 2017-11-28 17:54:35,783   INFO org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping: Mapped "{[/api/priority],methods=[GET]}" onto public java.util.List<com.softserve.academy.tmw.entity.Priority> com.softserve.academy.tmw.controller.PriorityController.getPriorities() throws java.sql.SQLException,com.fasterxml.jackson.core.JsonProcessingException
- 2017-11-28 17:54:35,784   INFO org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping: Mapped "{[/api/priority/{id}],methods=[GET]}" onto java.lang.String com.softserve.academy.tmw.controller.PriorityController.getPriorityById(java.lang.Integer) throws java.sql.SQLException,java.io.IOException
- 2017-11-28 17:54:35,784   INFO org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping: Mapped "{[/register],methods=[POST]}" onto public org.springframework.http.ResponseEntity com.softserve.academy.tmw.controller.RegistrationController.register(com.softserve.academy.tmw.entity.User)
- 2017-11-28 17:54:35,787   INFO org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping: Mapped "{[/api/roles/],methods=[POST]}" onto com.softserve.academy.tmw.entity.Role com.softserve.academy.tmw.controller.RoleController.createRole(com.softserve.academy.tmw.entity.Role) throws java.sql.SQLException
- 2017-11-28 17:54:35,787   INFO org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping: Mapped "{[/api/roles/],methods=[PUT]}" onto boolean com.softserve.academy.tmw.controller.RoleController.updateRole(com.softserve.academy.tmw.entity.Role) throws java.sql.SQLException
- 2017-11-28 17:54:35,787   INFO org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping: Mapped "{[/api/roles/{id}],methods=[DELETE]}" onto boolean com.softserve.academy.tmw.controller.RoleController.deleteRole(java.lang.Integer) throws java.sql.SQLException
- 2017-11-28 17:54:35,787   INFO org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping: Mapped "{[/api/roles/{id}],methods=[GET]}" onto com.softserve.academy.tmw.entity.Role com.softserve.academy.tmw.controller.RoleController.getRole(java.lang.Integer) throws java.sql.SQLException
- 2017-11-28 17:54:35,787   INFO org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping: Mapped "{[/api/roles/],methods=[GET]}" onto java.util.List<com.softserve.academy.tmw.entity.Role> com.softserve.academy.tmw.controller.RoleController.getAllRoles() throws java.sql.SQLException
- 2017-11-28 17:54:35,789   INFO org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping: Mapped "{[/api/status],methods=[GET]}" onto public java.util.List<com.softserve.academy.tmw.entity.Status> com.softserve.academy.tmw.controller.StatusController.getStatuses() throws java.sql.SQLException,com.fasterxml.jackson.core.JsonProcessingException
- 2017-11-28 17:54:35,789   INFO org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping: Mapped "{[/api/status],methods=[POST]}" onto public com.softserve.academy.tmw.entity.Status com.softserve.academy.tmw.controller.StatusController.createStatus(com.softserve.academy.tmw.entity.Status) throws java.sql.SQLException
- 2017-11-28 17:54:35,789   INFO org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping: Mapped "{[/api/status],methods=[DELETE]}" onto boolean com.softserve.academy.tmw.controller.StatusController.deleteStatus(java.lang.String) throws java.sql.SQLException,java.io.IOException
- 2017-11-28 17:54:35,790   INFO org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping: Mapped "{[/api/status],methods=[PUT]}" onto boolean com.softserve.academy.tmw.controller.StatusController.updateStatus(java.lang.String) throws java.sql.SQLException,java.io.IOException
- 2017-11-28 17:54:35,792   INFO org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping: Mapped "{[/api/tags],methods=[GET]}" onto java.util.List<com.softserve.academy.tmw.entity.Tag> com.softserve.academy.tmw.controller.TagController.getTagsByUserId() throws java.sql.SQLException
- 2017-11-28 17:54:35,792   INFO org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping: Mapped "{[/api/tags],methods=[POST]}" onto public com.softserve.academy.tmw.entity.Tag com.softserve.academy.tmw.controller.TagController.createTag(com.softserve.academy.tmw.entity.Tag) throws java.sql.SQLException
- 2017-11-28 17:54:35,792   INFO org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping: Mapped "{[/api/tags],methods=[PUT]}" onto public boolean com.softserve.academy.tmw.controller.TagController.updateTag(com.softserve.academy.tmw.entity.Tag)
- 2017-11-28 17:54:35,792   INFO org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping: Mapped "{[/api/tags/{id}],methods=[DELETE]}" onto public boolean com.softserve.academy.tmw.controller.TagController.deleteTag(java.lang.Integer)
- 2017-11-28 17:54:35,793   INFO org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping: Mapped "{[/api/tags],methods=[DELETE]}" onto public boolean com.softserve.academy.tmw.controller.TagController.deleteAllUserTags(java.lang.Integer)
- 2017-11-28 17:54:35,793   INFO org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping: Mapped "{[/api/tags/{id}],methods=[GET]}" onto com.softserve.academy.tmw.entity.Tag com.softserve.academy.tmw.controller.TagController.getTag(java.lang.Integer) throws java.sql.SQLException
- 2017-11-28 17:54:35,801   INFO org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping: Mapped "{[/api/tasks/planning/{id}],methods=[GET]}" onto public com.softserve.academy.tmw.entity.Task com.softserve.academy.tmw.controller.TaskController.getPlannedTask(java.lang.Integer)
- 2017-11-28 17:54:35,801   INFO org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping: Mapped "{[/api/tasks/planning],methods=[GET]}" onto public java.util.List<com.softserve.academy.tmw.entity.Task> com.softserve.academy.tmw.controller.TaskController.getPlannedTasks()
- 2017-11-28 17:54:35,801   INFO org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping: Mapped "{[/api/tasks/planning],methods=[PUT]}" onto boolean com.softserve.academy.tmw.controller.TaskController.updateCalendarTask(com.softserve.academy.tmw.entity.Task)
- 2017-11-28 17:54:35,802   INFO org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping: Mapped "{[/api/tasks/tree/{id}],methods=[GET]}" onto java.util.List<com.softserve.academy.tmw.dto.TaskTreeDTO> com.softserve.academy.tmw.controller.TaskController.getTreeSubtask(java.lang.Integer,int)
- 2017-11-28 17:54:35,802   INFO org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping: Mapped "{[/api/tasks/filter],methods=[GET]}" onto public java.util.List<com.softserve.academy.tmw.dto.TaskTableDTO> com.softserve.academy.tmw.controller.TaskController.getFilteredTasks(int,java.lang.String[],int[],int[],int[])
- 2017-11-28 17:54:35,802   INFO org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping: Mapped "{[/api/tasks/view/{id}],methods=[GET]}" onto com.softserve.academy.tmw.dto.TaskFullInfoDTO com.softserve.academy.tmw.controller.TaskController.getFullInfoByUser(java.lang.Integer)
- 2017-11-28 17:54:35,803   INFO org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping: Mapped "{[/api/tasks],methods=[POST]}" onto public com.softserve.academy.tmw.entity.Task com.softserve.academy.tmw.controller.TaskController.createTask(com.softserve.academy.tmw.dto.TaskDTO)
- 2017-11-28 17:54:35,804   INFO org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping: Mapped "{[/api/tasks],methods=[PUT]}" onto boolean com.softserve.academy.tmw.controller.TaskController.updateTask(com.softserve.academy.tmw.dto.TaskDTO)
- 2017-11-28 17:54:35,804   INFO org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping: Mapped "{[/api/tasks/{id}],methods=[DELETE]}" onto boolean com.softserve.academy.tmw.controller.TaskController.deleteTask(int)
- 2017-11-28 17:54:35,804   INFO org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping: Mapped "{[/api/tasks],methods=[GET]}" onto java.util.List<com.softserve.academy.tmw.entity.Task> com.softserve.academy.tmw.controller.TaskController.getAllTasks()
- 2017-11-28 17:54:35,804   INFO org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping: Mapped "{[/api/tasks/{id}/tags],methods=[GET]}" onto java.util.List<com.softserve.academy.tmw.entity.Tag> com.softserve.academy.tmw.controller.TaskController.getTagsOfTask(java.lang.Integer)
- 2017-11-28 17:54:35,805   INFO org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping: Mapped "{[/api/tasks/{id}/comments],methods=[GET]}" onto java.util.List<com.softserve.academy.tmw.entity.Comment> com.softserve.academy.tmw.controller.TaskController.getCommentsOfTask(java.lang.Integer)
- 2017-11-28 17:54:35,805   INFO org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping: Mapped "{[/api/tasks/{id}/subtasks],methods=[GET]}" onto java.util.List<com.softserve.academy.tmw.entity.Task> com.softserve.academy.tmw.controller.TaskController.getSubtasks(java.lang.Integer)
- 2017-11-28 17:54:35,805   INFO org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping: Mapped "{[/api/tasks/one/{id}],methods=[GET]}" onto com.softserve.academy.tmw.entity.Task com.softserve.academy.tmw.controller.TaskController.getTask(java.lang.Integer)
- 2017-11-28 17:54:35,808   INFO org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping: Mapped "{[/api/users/team/{taskId}],methods=[GET]}" onto java.util.List<com.softserve.academy.tmw.entity.User> com.softserve.academy.tmw.controller.UserController.getAllUsers(java.lang.Integer,int) throws java.sql.SQLException
- 2017-11-28 17:54:35,808   INFO org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping: Mapped "{[/api/users/add/],methods=[POST]}" onto com.softserve.academy.tmw.entity.User com.softserve.academy.tmw.controller.UserController.createUser(com.softserve.academy.tmw.entity.User) throws java.sql.SQLException
- 2017-11-28 17:54:35,808   INFO org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping: Mapped "{[/api/users/id/{id}],methods=[GET]}" onto com.softserve.academy.tmw.entity.User com.softserve.academy.tmw.controller.UserController.getUser(java.lang.Integer) throws java.sql.SQLException
- 2017-11-28 17:54:35,808   INFO org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping: Mapped "{[/api/users/email/{email}],methods=[GET]}" onto com.softserve.academy.tmw.entity.User com.softserve.academy.tmw.controller.UserController.getUser(java.lang.String) throws java.sql.SQLException
- 2017-11-28 17:54:35,809   INFO org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping: Mapped "{[/api/users/update],methods=[PUT]}" onto boolean com.softserve.academy.tmw.controller.UserController.updateUser(com.softserve.academy.tmw.entity.User) throws java.sql.SQLException
- 2017-11-28 17:54:35,809   INFO org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping: Mapped "{[/api/users/del/{id}],methods=[DELETE]}" onto boolean com.softserve.academy.tmw.controller.UserController.deleteUser(java.lang.Integer) throws java.sql.SQLException
- 2017-11-28 17:54:35,809   INFO org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping: Mapped "{[/api/users/verify/{id}],methods=[GET]}" onto boolean com.softserve.academy.tmw.controller.UserController.verifyUser(java.lang.Integer,long)
- 2017-11-28 17:54:35,810   INFO org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping: Mapped "{[/login],methods=[POST]}" onto public org.springframework.http.ResponseEntity<com.softserve.academy.tmw.security.UserProxy> com.softserve.academy.tmw.security.LoginController.getAuthenticationToken(com.softserve.academy.tmw.security.UserCredential,javax.servlet.http.HttpServletResponse)
- 2017-11-28 17:54:35,810   INFO org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping: Mapped "{[/api/logout],methods=[POST]}" onto public org.springframework.http.ResponseEntity com.softserve.academy.tmw.security.LoginController.logout(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
- 2017-11-28 17:54:35,885   INFO org.springframework.web.servlet.handler.SimpleUrlHandlerMapping: Mapped URL path [/**] onto handler of type [class org.springframework.web.servlet.resource.DefaultServletHttpRequestHandler]
- 2017-11-28 17:54:36,160   INFO org.hibernate.validator.internal.util.Version: HV000001: Hibernate Validator 5.4.1.Final
- 2017-11-28 17:54:36,374   INFO org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter: Looking for @ControllerAdvice: Root WebApplicationContext: startup date [Tue Nov 28 17:54:31 EET 2017]; root of context hierarchy
- 2017-11-28 17:54:36,450   INFO org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver: Detected @ExceptionHandler methods in errorController
- 2017-11-28 17:54:36,657   INFO org.springframework.security.web.DefaultSecurityFilterChain: Creating filter chain: Ant [pattern='/resources/**'], []
- 2017-11-28 17:54:36,791   INFO org.springframework.security.web.DefaultSecurityFilterChain: Creating filter chain: org.springframework.security.web.util.matcher.AnyRequestMatcher@1, [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@64fc26d1, org.springframework.security.web.context.SecurityContextPersistenceFilter@438400ac, org.springframework.security.web.header.HeaderWriterFilter@1d432609, org.springframework.security.web.authentication.logout.LogoutFilter@253ac816, com.softserve.academy.tmw.security.TokenAuthenticationFilter@f905782, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@2effedf6, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@1e0ff144, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@5dee630d, org.springframework.security.web.session.SessionManagementFilter@19f7ab2d, org.springframework.security.web.access.ExceptionTranslationFilter@12824a99, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@1fb92410]
- 2017-11-28 17:54:36,899   INFO org.springframework.web.context.ContextLoader: Root WebApplicationContext: initialization completed in 5130 ms
- 2017-11-28 17:54:36,985   INFO org.springframework.web.servlet.DispatcherServlet: FrameworkServlet 'dispatcher': initialization started
- 2017-11-28 17:54:36,987   INFO org.springframework.web.context.support.AnnotationConfigWebApplicationContext: Refreshing WebApplicationContext for namespace 'dispatcher-servlet': startup date [Tue Nov 28 17:54:36 EET 2017]; parent: Root WebApplicationContext
- 2017-11-28 17:54:36,988   INFO org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor: JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
- 2017-11-28 17:54:37,020   INFO org.springframework.web.servlet.DispatcherServlet: FrameworkServlet 'dispatcher': initialization completed in 35 ms
- 2017-11-28 17:54:37,478   INFO com.softserve.academy.tmw.controller.MainController: User with ip: 127.0.0.1 connected
+2017-11-28 20:03:05,939   INFO org.springframework.test.context.support.DefaultTestContextBootstrapper: Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener]
+ 2017-11-28 20:03:05,949   INFO org.springframework.test.context.support.DefaultTestContextBootstrapper: Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@39c0f4a, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@1794d431, org.springframework.test.context.support.DependencyInjectionTestExecutionListener@42e26948, org.springframework.test.context.support.DirtiesContextTestExecutionListener@57baeedf, org.springframework.test.context.transaction.TransactionalTestExecutionListener@343f4d3d, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@53b32d7]
+ 2017-11-28 20:03:05,949   INFO org.springframework.test.context.support.DefaultTestContextBootstrapper: Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener]
+ 2017-11-28 20:03:05,949   INFO org.springframework.test.context.support.DefaultTestContextBootstrapper: Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@402a079c, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@59ec2012, org.springframework.test.context.support.DependencyInjectionTestExecutionListener@4cf777e8, org.springframework.test.context.support.DirtiesContextTestExecutionListener@2f686d1f, org.springframework.test.context.transaction.TransactionalTestExecutionListener@3fee9989, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@73ad2d6]
+ 2017-11-28 20:03:05,961   INFO org.springframework.test.context.support.DefaultTestContextBootstrapper: Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener]
+ 2017-11-28 20:03:05,962   INFO org.springframework.test.context.support.DefaultTestContextBootstrapper: Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@13805618, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@56ef9176, org.springframework.test.context.support.DependencyInjectionTestExecutionListener@4566e5bd, org.springframework.test.context.support.DirtiesContextTestExecutionListener@1ed4004b, org.springframework.test.context.transaction.TransactionalTestExecutionListener@ff5b51f, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@25bbe1b6]
+ 2017-11-28 20:03:05,965   INFO org.springframework.test.context.support.DefaultTestContextBootstrapper: Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener]
+ 2017-11-28 20:03:05,966   INFO org.springframework.test.context.support.DefaultTestContextBootstrapper: Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@1e127982, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@60c6f5b, org.springframework.test.context.support.DependencyInjectionTestExecutionListener@2038ae61, org.springframework.test.context.support.DirtiesContextTestExecutionListener@3c0f93f1, org.springframework.test.context.transaction.TransactionalTestExecutionListener@31dc339b, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@544fe44c]
+ 2017-11-28 20:03:06,083   INFO org.springframework.context.support.GenericApplicationContext: Refreshing org.springframework.context.support.GenericApplicationContext@7a3d45bd: startup date [Tue Nov 28 20:03:06 EET 2017]; root of context hierarchy
+ 2017-11-28 20:03:06,554   INFO org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseFactory: Starting embedded database: url='jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false', username='sa'
+ 2017-11-28 20:03:06,695   INFO org.springframework.jdbc.datasource.init.ScriptUtils: Executing SQL script from class path resource [create_db.sql]
+ 2017-11-28 20:03:06,753   INFO org.springframework.jdbc.datasource.init.ScriptUtils: Executed SQL script from class path resource [create_db.sql] in 58 ms.
+ 2017-11-28 20:03:06,795   WARN org.springframework.context.support.GenericApplicationContext: Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'userDao': Unsatisfied dependency expressed through field 'mailSender'; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'org.springframework.mail.javamail.JavaMailSender' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
+ 2017-11-28 20:03:06,795   INFO org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseFactory: Shutting down embedded database: url='jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false'
+ 2017-11-28 20:03:06,795   ERROR org.springframework.test.context.TestContextManager: Caught exception while allowing TestExecutionListener [org.springframework.test.context.support.DependencyInjectionTestExecutionListener@42e26948] to prepare test instance [it.com.softserve.academy.tmw.dao.StatusDaoItTest@97e93f1]
+ java.lang.IllegalStateException: Failed to load ApplicationContext
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:124)
+	at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:83)
+	at org.springframework.test.context.support.DependencyInjectionTestExecutionListener.injectDependencies(DependencyInjectionTestExecutionListener.java:117)
+	at org.springframework.test.context.support.DependencyInjectionTestExecutionListener.prepareTestInstance(DependencyInjectionTestExecutionListener.java:83)
+	at org.springframework.test.context.TestContextManager.prepareTestInstance(TestContextManager.java:230)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.createTest(SpringJUnit4ClassRunner.java:228)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner$1.runReflectiveCall(SpringJUnit4ClassRunner.java:287)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.methodBlock(SpringJUnit4ClassRunner.java:289)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:247)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:94)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+	at org.springframework.test.context.junit4.statements.RunBeforeTestClassCallbacks.evaluate(RunBeforeTestClassCallbacks.java:61)
+	at org.springframework.test.context.junit4.statements.RunAfterTestClassCallbacks.evaluate(RunAfterTestClassCallbacks.java:70)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.run(SpringJUnit4ClassRunner.java:191)
+	at org.junit.runners.Suite.runChild(Suite.java:128)
+	at org.junit.runners.Suite.runChild(Suite.java:27)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+	at org.junit.runner.JUnitCore.run(JUnitCore.java:137)
+	at com.intellij.junit4.JUnit4IdeaTestRunner.startRunnerWithArgs(JUnit4IdeaTestRunner.java:117)
+	at com.intellij.junit4.JUnit4IdeaTestRunner.startRunnerWithArgs(JUnit4IdeaTestRunner.java:42)
+	at com.intellij.rt.execution.junit.JUnitStarter.prepareStreamsAndStart(JUnitStarter.java:262)
+	at com.intellij.rt.execution.junit.JUnitStarter.main(JUnitStarter.java:84)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at com.intellij.rt.execution.application.AppMain.main(AppMain.java:147)
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'userDao': Unsatisfied dependency expressed through field 'mailSender'; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'org.springframework.mail.javamail.JavaMailSender' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:588)
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:88)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessPropertyValues(AutowiredAnnotationBeanPostProcessor.java:366)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1264)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:553)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:483)
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:306)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:230)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:302)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:197)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:761)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:867)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:543)
+	at org.springframework.test.context.support.AbstractGenericContextLoader.loadContext(AbstractGenericContextLoader.java:128)
+	at org.springframework.test.context.support.AbstractGenericContextLoader.loadContext(AbstractGenericContextLoader.java:60)
+	at org.springframework.test.context.support.AbstractDelegatingSmartContextLoader.delegateLoading(AbstractDelegatingSmartContextLoader.java:108)
+	at org.springframework.test.context.support.AbstractDelegatingSmartContextLoader.loadContext(AbstractDelegatingSmartContextLoader.java:251)
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContextInternal(DefaultCacheAwareContextLoaderDelegate.java:98)
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:116)
+	... 37 more
+Caused by: org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'org.springframework.mail.javamail.JavaMailSender' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.raiseNoMatchingBeanFound(DefaultListableBeanFactory.java:1493)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1104)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1066)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:585)
+	... 55 more
+2017-11-28 20:03:06,815   INFO org.springframework.context.support.GenericApplicationContext: Refreshing org.springframework.context.support.GenericApplicationContext@69504ae9: startup date [Tue Nov 28 20:03:06 EET 2017]; root of context hierarchy
+ 2017-11-28 20:03:06,845   INFO org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseFactory: Starting embedded database: url='jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false', username='sa'
+ 2017-11-28 20:03:06,845   INFO org.springframework.jdbc.datasource.init.ScriptUtils: Executing SQL script from class path resource [create_db.sql]
+ 2017-11-28 20:03:06,865   INFO org.springframework.jdbc.datasource.init.ScriptUtils: Executed SQL script from class path resource [create_db.sql] in 20 ms.
+ 2017-11-28 20:03:06,895   WARN org.springframework.context.support.GenericApplicationContext: Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'userDao': Unsatisfied dependency expressed through field 'mailSender'; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'org.springframework.mail.javamail.JavaMailSender' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
+ 2017-11-28 20:03:06,895   INFO org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseFactory: Shutting down embedded database: url='jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false'
+ 2017-11-28 20:03:06,895   ERROR org.springframework.test.context.TestContextManager: Caught exception while allowing TestExecutionListener [org.springframework.test.context.support.DependencyInjectionTestExecutionListener@4cf777e8] to prepare test instance [it.com.softserve.academy.tmw.dao.TagDaoItTest@22f59fa]
+ java.lang.IllegalStateException: Failed to load ApplicationContext
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:124)
+	at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:83)
+	at org.springframework.test.context.support.DependencyInjectionTestExecutionListener.injectDependencies(DependencyInjectionTestExecutionListener.java:117)
+	at org.springframework.test.context.support.DependencyInjectionTestExecutionListener.prepareTestInstance(DependencyInjectionTestExecutionListener.java:83)
+	at org.springframework.test.context.TestContextManager.prepareTestInstance(TestContextManager.java:230)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.createTest(SpringJUnit4ClassRunner.java:228)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner$1.runReflectiveCall(SpringJUnit4ClassRunner.java:287)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.methodBlock(SpringJUnit4ClassRunner.java:289)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:247)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:94)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+	at org.springframework.test.context.junit4.statements.RunBeforeTestClassCallbacks.evaluate(RunBeforeTestClassCallbacks.java:61)
+	at org.springframework.test.context.junit4.statements.RunAfterTestClassCallbacks.evaluate(RunAfterTestClassCallbacks.java:70)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.run(SpringJUnit4ClassRunner.java:191)
+	at org.junit.runners.Suite.runChild(Suite.java:128)
+	at org.junit.runners.Suite.runChild(Suite.java:27)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+	at org.junit.runner.JUnitCore.run(JUnitCore.java:137)
+	at com.intellij.junit4.JUnit4IdeaTestRunner.startRunnerWithArgs(JUnit4IdeaTestRunner.java:117)
+	at com.intellij.junit4.JUnit4IdeaTestRunner.startRunnerWithArgs(JUnit4IdeaTestRunner.java:42)
+	at com.intellij.rt.execution.junit.JUnitStarter.prepareStreamsAndStart(JUnitStarter.java:262)
+	at com.intellij.rt.execution.junit.JUnitStarter.main(JUnitStarter.java:84)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at com.intellij.rt.execution.application.AppMain.main(AppMain.java:147)
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'userDao': Unsatisfied dependency expressed through field 'mailSender'; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'org.springframework.mail.javamail.JavaMailSender' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:588)
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:88)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessPropertyValues(AutowiredAnnotationBeanPostProcessor.java:366)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1264)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:553)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:483)
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:306)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:230)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:302)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:197)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:761)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:867)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:543)
+	at org.springframework.test.context.support.AbstractGenericContextLoader.loadContext(AbstractGenericContextLoader.java:128)
+	at org.springframework.test.context.support.AbstractGenericContextLoader.loadContext(AbstractGenericContextLoader.java:60)
+	at org.springframework.test.context.support.AbstractDelegatingSmartContextLoader.delegateLoading(AbstractDelegatingSmartContextLoader.java:108)
+	at org.springframework.test.context.support.AbstractDelegatingSmartContextLoader.loadContext(AbstractDelegatingSmartContextLoader.java:251)
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContextInternal(DefaultCacheAwareContextLoaderDelegate.java:98)
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:116)
+	... 37 more
+Caused by: org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'org.springframework.mail.javamail.JavaMailSender' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.raiseNoMatchingBeanFound(DefaultListableBeanFactory.java:1493)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1104)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1066)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:585)
+	... 55 more
+2017-11-28 20:03:06,916   INFO org.springframework.context.support.GenericApplicationContext: Refreshing org.springframework.context.support.GenericApplicationContext@18317edc: startup date [Tue Nov 28 20:03:06 EET 2017]; root of context hierarchy
+ 2017-11-28 20:03:06,950   INFO org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseFactory: Starting embedded database: url='jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false', username='sa'
+ 2017-11-28 20:03:06,951   INFO org.springframework.jdbc.datasource.init.ScriptUtils: Executing SQL script from class path resource [create_db.sql]
+ 2017-11-28 20:03:06,964   INFO org.springframework.jdbc.datasource.init.ScriptUtils: Executed SQL script from class path resource [create_db.sql] in 13 ms.
+ 2017-11-28 20:03:06,967   WARN org.springframework.context.support.GenericApplicationContext: Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'userDao': Unsatisfied dependency expressed through field 'mailSender'; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'org.springframework.mail.javamail.JavaMailSender' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
+ 2017-11-28 20:03:06,967   INFO org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseFactory: Shutting down embedded database: url='jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false'
+ 2017-11-28 20:03:06,977   ERROR org.springframework.test.context.TestContextManager: Caught exception while allowing TestExecutionListener [org.springframework.test.context.support.DependencyInjectionTestExecutionListener@4cf777e8] to prepare test instance [it.com.softserve.academy.tmw.dao.TagDaoItTest@407a7f2a]
+ java.lang.IllegalStateException: Failed to load ApplicationContext
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:124)
+	at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:83)
+	at org.springframework.test.context.support.DependencyInjectionTestExecutionListener.injectDependencies(DependencyInjectionTestExecutionListener.java:117)
+	at org.springframework.test.context.support.DependencyInjectionTestExecutionListener.prepareTestInstance(DependencyInjectionTestExecutionListener.java:83)
+	at org.springframework.test.context.TestContextManager.prepareTestInstance(TestContextManager.java:230)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.createTest(SpringJUnit4ClassRunner.java:228)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner$1.runReflectiveCall(SpringJUnit4ClassRunner.java:287)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.methodBlock(SpringJUnit4ClassRunner.java:289)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:247)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:94)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+	at org.springframework.test.context.junit4.statements.RunBeforeTestClassCallbacks.evaluate(RunBeforeTestClassCallbacks.java:61)
+	at org.springframework.test.context.junit4.statements.RunAfterTestClassCallbacks.evaluate(RunAfterTestClassCallbacks.java:70)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.run(SpringJUnit4ClassRunner.java:191)
+	at org.junit.runners.Suite.runChild(Suite.java:128)
+	at org.junit.runners.Suite.runChild(Suite.java:27)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+	at org.junit.runner.JUnitCore.run(JUnitCore.java:137)
+	at com.intellij.junit4.JUnit4IdeaTestRunner.startRunnerWithArgs(JUnit4IdeaTestRunner.java:117)
+	at com.intellij.junit4.JUnit4IdeaTestRunner.startRunnerWithArgs(JUnit4IdeaTestRunner.java:42)
+	at com.intellij.rt.execution.junit.JUnitStarter.prepareStreamsAndStart(JUnitStarter.java:262)
+	at com.intellij.rt.execution.junit.JUnitStarter.main(JUnitStarter.java:84)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at com.intellij.rt.execution.application.AppMain.main(AppMain.java:147)
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'userDao': Unsatisfied dependency expressed through field 'mailSender'; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'org.springframework.mail.javamail.JavaMailSender' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:588)
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:88)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessPropertyValues(AutowiredAnnotationBeanPostProcessor.java:366)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1264)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:553)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:483)
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:306)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:230)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:302)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:197)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:761)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:867)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:543)
+	at org.springframework.test.context.support.AbstractGenericContextLoader.loadContext(AbstractGenericContextLoader.java:128)
+	at org.springframework.test.context.support.AbstractGenericContextLoader.loadContext(AbstractGenericContextLoader.java:60)
+	at org.springframework.test.context.support.AbstractDelegatingSmartContextLoader.delegateLoading(AbstractDelegatingSmartContextLoader.java:108)
+	at org.springframework.test.context.support.AbstractDelegatingSmartContextLoader.loadContext(AbstractDelegatingSmartContextLoader.java:251)
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContextInternal(DefaultCacheAwareContextLoaderDelegate.java:98)
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:116)
+	... 37 more
+Caused by: org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'org.springframework.mail.javamail.JavaMailSender' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.raiseNoMatchingBeanFound(DefaultListableBeanFactory.java:1493)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1104)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1066)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:585)
+	... 55 more
+2017-11-28 20:03:06,997   INFO org.springframework.context.support.GenericApplicationContext: Refreshing org.springframework.context.support.GenericApplicationContext@2cb2fc20: startup date [Tue Nov 28 20:03:06 EET 2017]; root of context hierarchy
+ 2017-11-28 20:03:07,048   INFO org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseFactory: Starting embedded database: url='jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false', username='sa'
+ 2017-11-28 20:03:07,049   INFO org.springframework.jdbc.datasource.init.ScriptUtils: Executing SQL script from class path resource [create_db.sql]
+ 2017-11-28 20:03:07,059   INFO org.springframework.jdbc.datasource.init.ScriptUtils: Executed SQL script from class path resource [create_db.sql] in 10 ms.
+ 2017-11-28 20:03:07,103   WARN org.springframework.context.support.GenericApplicationContext: Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'userDao': Unsatisfied dependency expressed through field 'mailSender'; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'org.springframework.mail.javamail.JavaMailSender' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
+ 2017-11-28 20:03:07,103   INFO org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseFactory: Shutting down embedded database: url='jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false'
+ 2017-11-28 20:03:07,105   ERROR org.springframework.test.context.TestContextManager: Caught exception while allowing TestExecutionListener [org.springframework.test.context.support.DependencyInjectionTestExecutionListener@4cf777e8] to prepare test instance [it.com.softserve.academy.tmw.dao.TagDaoItTest@7cb502c]
+ java.lang.IllegalStateException: Failed to load ApplicationContext
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:124)
+	at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:83)
+	at org.springframework.test.context.support.DependencyInjectionTestExecutionListener.injectDependencies(DependencyInjectionTestExecutionListener.java:117)
+	at org.springframework.test.context.support.DependencyInjectionTestExecutionListener.prepareTestInstance(DependencyInjectionTestExecutionListener.java:83)
+	at org.springframework.test.context.TestContextManager.prepareTestInstance(TestContextManager.java:230)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.createTest(SpringJUnit4ClassRunner.java:228)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner$1.runReflectiveCall(SpringJUnit4ClassRunner.java:287)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.methodBlock(SpringJUnit4ClassRunner.java:289)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:247)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:94)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+	at org.springframework.test.context.junit4.statements.RunBeforeTestClassCallbacks.evaluate(RunBeforeTestClassCallbacks.java:61)
+	at org.springframework.test.context.junit4.statements.RunAfterTestClassCallbacks.evaluate(RunAfterTestClassCallbacks.java:70)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.run(SpringJUnit4ClassRunner.java:191)
+	at org.junit.runners.Suite.runChild(Suite.java:128)
+	at org.junit.runners.Suite.runChild(Suite.java:27)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+	at org.junit.runner.JUnitCore.run(JUnitCore.java:137)
+	at com.intellij.junit4.JUnit4IdeaTestRunner.startRunnerWithArgs(JUnit4IdeaTestRunner.java:117)
+	at com.intellij.junit4.JUnit4IdeaTestRunner.startRunnerWithArgs(JUnit4IdeaTestRunner.java:42)
+	at com.intellij.rt.execution.junit.JUnitStarter.prepareStreamsAndStart(JUnitStarter.java:262)
+	at com.intellij.rt.execution.junit.JUnitStarter.main(JUnitStarter.java:84)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at com.intellij.rt.execution.application.AppMain.main(AppMain.java:147)
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'userDao': Unsatisfied dependency expressed through field 'mailSender'; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'org.springframework.mail.javamail.JavaMailSender' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:588)
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:88)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessPropertyValues(AutowiredAnnotationBeanPostProcessor.java:366)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1264)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:553)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:483)
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:306)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:230)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:302)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:197)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:761)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:867)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:543)
+	at org.springframework.test.context.support.AbstractGenericContextLoader.loadContext(AbstractGenericContextLoader.java:128)
+	at org.springframework.test.context.support.AbstractGenericContextLoader.loadContext(AbstractGenericContextLoader.java:60)
+	at org.springframework.test.context.support.AbstractDelegatingSmartContextLoader.delegateLoading(AbstractDelegatingSmartContextLoader.java:108)
+	at org.springframework.test.context.support.AbstractDelegatingSmartContextLoader.loadContext(AbstractDelegatingSmartContextLoader.java:251)
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContextInternal(DefaultCacheAwareContextLoaderDelegate.java:98)
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:116)
+	... 37 more
+Caused by: org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'org.springframework.mail.javamail.JavaMailSender' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.raiseNoMatchingBeanFound(DefaultListableBeanFactory.java:1493)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1104)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1066)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:585)
+	... 55 more
+2017-11-28 20:03:07,112   INFO org.springframework.context.support.GenericApplicationContext: Refreshing org.springframework.context.support.GenericApplicationContext@12a94400: startup date [Tue Nov 28 20:03:07 EET 2017]; root of context hierarchy
+ 2017-11-28 20:03:07,143   INFO org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseFactory: Starting embedded database: url='jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false', username='sa'
+ 2017-11-28 20:03:07,144   INFO org.springframework.jdbc.datasource.init.ScriptUtils: Executing SQL script from class path resource [create_db.sql]
+ 2017-11-28 20:03:07,154   INFO org.springframework.jdbc.datasource.init.ScriptUtils: Executed SQL script from class path resource [create_db.sql] in 10 ms.
+ 2017-11-28 20:03:07,169   WARN org.springframework.context.support.GenericApplicationContext: Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'userDao': Unsatisfied dependency expressed through field 'mailSender'; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'org.springframework.mail.javamail.JavaMailSender' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
+ 2017-11-28 20:03:07,169   INFO org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseFactory: Shutting down embedded database: url='jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false'
+ 2017-11-28 20:03:07,169   ERROR org.springframework.test.context.TestContextManager: Caught exception while allowing TestExecutionListener [org.springframework.test.context.support.DependencyInjectionTestExecutionListener@4566e5bd] to prepare test instance [it.com.softserve.academy.tmw.dao.TaskDaoItTest@2141a12]
+ java.lang.IllegalStateException: Failed to load ApplicationContext
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:124)
+	at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:83)
+	at org.springframework.test.context.support.DependencyInjectionTestExecutionListener.injectDependencies(DependencyInjectionTestExecutionListener.java:117)
+	at org.springframework.test.context.support.DependencyInjectionTestExecutionListener.prepareTestInstance(DependencyInjectionTestExecutionListener.java:83)
+	at org.springframework.test.context.TestContextManager.prepareTestInstance(TestContextManager.java:230)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.createTest(SpringJUnit4ClassRunner.java:228)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner$1.runReflectiveCall(SpringJUnit4ClassRunner.java:287)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.methodBlock(SpringJUnit4ClassRunner.java:289)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:247)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:94)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+	at org.springframework.test.context.junit4.statements.RunBeforeTestClassCallbacks.evaluate(RunBeforeTestClassCallbacks.java:61)
+	at org.springframework.test.context.junit4.statements.RunAfterTestClassCallbacks.evaluate(RunAfterTestClassCallbacks.java:70)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.run(SpringJUnit4ClassRunner.java:191)
+	at org.junit.runners.Suite.runChild(Suite.java:128)
+	at org.junit.runners.Suite.runChild(Suite.java:27)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+	at org.junit.runner.JUnitCore.run(JUnitCore.java:137)
+	at com.intellij.junit4.JUnit4IdeaTestRunner.startRunnerWithArgs(JUnit4IdeaTestRunner.java:117)
+	at com.intellij.junit4.JUnit4IdeaTestRunner.startRunnerWithArgs(JUnit4IdeaTestRunner.java:42)
+	at com.intellij.rt.execution.junit.JUnitStarter.prepareStreamsAndStart(JUnitStarter.java:262)
+	at com.intellij.rt.execution.junit.JUnitStarter.main(JUnitStarter.java:84)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at com.intellij.rt.execution.application.AppMain.main(AppMain.java:147)
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'userDao': Unsatisfied dependency expressed through field 'mailSender'; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'org.springframework.mail.javamail.JavaMailSender' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:588)
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:88)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessPropertyValues(AutowiredAnnotationBeanPostProcessor.java:366)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1264)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:553)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:483)
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:306)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:230)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:302)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:197)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:761)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:867)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:543)
+	at org.springframework.test.context.support.AbstractGenericContextLoader.loadContext(AbstractGenericContextLoader.java:128)
+	at org.springframework.test.context.support.AbstractGenericContextLoader.loadContext(AbstractGenericContextLoader.java:60)
+	at org.springframework.test.context.support.AbstractDelegatingSmartContextLoader.delegateLoading(AbstractDelegatingSmartContextLoader.java:108)
+	at org.springframework.test.context.support.AbstractDelegatingSmartContextLoader.loadContext(AbstractDelegatingSmartContextLoader.java:251)
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContextInternal(DefaultCacheAwareContextLoaderDelegate.java:98)
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:116)
+	... 37 more
+Caused by: org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'org.springframework.mail.javamail.JavaMailSender' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.raiseNoMatchingBeanFound(DefaultListableBeanFactory.java:1493)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1104)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1066)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:585)
+	... 55 more
+2017-11-28 20:03:07,180   INFO org.springframework.context.support.GenericApplicationContext: Refreshing org.springframework.context.support.GenericApplicationContext@573906eb: startup date [Tue Nov 28 20:03:07 EET 2017]; root of context hierarchy
+ 2017-11-28 20:03:07,224   INFO org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseFactory: Starting embedded database: url='jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false', username='sa'
+ 2017-11-28 20:03:07,227   INFO org.springframework.jdbc.datasource.init.ScriptUtils: Executing SQL script from class path resource [create_db.sql]
+ 2017-11-28 20:03:07,352   INFO org.springframework.jdbc.datasource.init.ScriptUtils: Executed SQL script from class path resource [create_db.sql] in 125 ms.
+ 2017-11-28 20:03:07,369   WARN org.springframework.context.support.GenericApplicationContext: Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'userDao': Unsatisfied dependency expressed through field 'mailSender'; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'org.springframework.mail.javamail.JavaMailSender' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
+ 2017-11-28 20:03:07,369   INFO org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseFactory: Shutting down embedded database: url='jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false'
+ 2017-11-28 20:03:07,369   ERROR org.springframework.test.context.TestContextManager: Caught exception while allowing TestExecutionListener [org.springframework.test.context.support.DependencyInjectionTestExecutionListener@2038ae61] to prepare test instance [it.com.softserve.academy.tmw.dao.UserDaoItTest@5be46f9d]
+ java.lang.IllegalStateException: Failed to load ApplicationContext
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:124)
+	at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:83)
+	at org.springframework.test.context.support.DependencyInjectionTestExecutionListener.injectDependencies(DependencyInjectionTestExecutionListener.java:117)
+	at org.springframework.test.context.support.DependencyInjectionTestExecutionListener.prepareTestInstance(DependencyInjectionTestExecutionListener.java:83)
+	at org.springframework.test.context.TestContextManager.prepareTestInstance(TestContextManager.java:230)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.createTest(SpringJUnit4ClassRunner.java:228)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner$1.runReflectiveCall(SpringJUnit4ClassRunner.java:287)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.methodBlock(SpringJUnit4ClassRunner.java:289)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:247)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:94)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+	at org.springframework.test.context.junit4.statements.RunBeforeTestClassCallbacks.evaluate(RunBeforeTestClassCallbacks.java:61)
+	at org.springframework.test.context.junit4.statements.RunAfterTestClassCallbacks.evaluate(RunAfterTestClassCallbacks.java:70)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.run(SpringJUnit4ClassRunner.java:191)
+	at org.junit.runners.Suite.runChild(Suite.java:128)
+	at org.junit.runners.Suite.runChild(Suite.java:27)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+	at org.junit.runner.JUnitCore.run(JUnitCore.java:137)
+	at com.intellij.junit4.JUnit4IdeaTestRunner.startRunnerWithArgs(JUnit4IdeaTestRunner.java:117)
+	at com.intellij.junit4.JUnit4IdeaTestRunner.startRunnerWithArgs(JUnit4IdeaTestRunner.java:42)
+	at com.intellij.rt.execution.junit.JUnitStarter.prepareStreamsAndStart(JUnitStarter.java:262)
+	at com.intellij.rt.execution.junit.JUnitStarter.main(JUnitStarter.java:84)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at com.intellij.rt.execution.application.AppMain.main(AppMain.java:147)
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'userDao': Unsatisfied dependency expressed through field 'mailSender'; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'org.springframework.mail.javamail.JavaMailSender' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:588)
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:88)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessPropertyValues(AutowiredAnnotationBeanPostProcessor.java:366)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1264)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:553)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:483)
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:306)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:230)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:302)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:197)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:761)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:867)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:543)
+	at org.springframework.test.context.support.AbstractGenericContextLoader.loadContext(AbstractGenericContextLoader.java:128)
+	at org.springframework.test.context.support.AbstractGenericContextLoader.loadContext(AbstractGenericContextLoader.java:60)
+	at org.springframework.test.context.support.AbstractDelegatingSmartContextLoader.delegateLoading(AbstractDelegatingSmartContextLoader.java:108)
+	at org.springframework.test.context.support.AbstractDelegatingSmartContextLoader.loadContext(AbstractDelegatingSmartContextLoader.java:251)
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContextInternal(DefaultCacheAwareContextLoaderDelegate.java:98)
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:116)
+	... 37 more
+Caused by: org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'org.springframework.mail.javamail.JavaMailSender' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.raiseNoMatchingBeanFound(DefaultListableBeanFactory.java:1493)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1104)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1066)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:585)
+	... 55 more
+2017-11-28 20:03:07,399   INFO org.springframework.context.support.GenericApplicationContext: Refreshing org.springframework.context.support.GenericApplicationContext@30c93896: startup date [Tue Nov 28 20:03:07 EET 2017]; root of context hierarchy
+ 2017-11-28 20:03:07,456   INFO org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseFactory: Starting embedded database: url='jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false', username='sa'
+ 2017-11-28 20:03:07,456   INFO org.springframework.jdbc.datasource.init.ScriptUtils: Executing SQL script from class path resource [create_db.sql]
+ 2017-11-28 20:03:07,475   INFO org.springframework.jdbc.datasource.init.ScriptUtils: Executed SQL script from class path resource [create_db.sql] in 18 ms.
+ 2017-11-28 20:03:07,513   WARN org.springframework.context.support.GenericApplicationContext: Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'userDao': Unsatisfied dependency expressed through field 'mailSender'; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'org.springframework.mail.javamail.JavaMailSender' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
+ 2017-11-28 20:03:07,513   INFO org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseFactory: Shutting down embedded database: url='jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false'
+ 2017-11-28 20:03:07,514   ERROR org.springframework.test.context.TestContextManager: Caught exception while allowing TestExecutionListener [org.springframework.test.context.support.DependencyInjectionTestExecutionListener@2038ae61] to prepare test instance [it.com.softserve.academy.tmw.dao.UserDaoItTest@7f0d96f2]
+ java.lang.IllegalStateException: Failed to load ApplicationContext
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:124)
+	at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:83)
+	at org.springframework.test.context.support.DependencyInjectionTestExecutionListener.injectDependencies(DependencyInjectionTestExecutionListener.java:117)
+	at org.springframework.test.context.support.DependencyInjectionTestExecutionListener.prepareTestInstance(DependencyInjectionTestExecutionListener.java:83)
+	at org.springframework.test.context.TestContextManager.prepareTestInstance(TestContextManager.java:230)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.createTest(SpringJUnit4ClassRunner.java:228)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner$1.runReflectiveCall(SpringJUnit4ClassRunner.java:287)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.methodBlock(SpringJUnit4ClassRunner.java:289)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:247)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:94)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+	at org.springframework.test.context.junit4.statements.RunBeforeTestClassCallbacks.evaluate(RunBeforeTestClassCallbacks.java:61)
+	at org.springframework.test.context.junit4.statements.RunAfterTestClassCallbacks.evaluate(RunAfterTestClassCallbacks.java:70)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.run(SpringJUnit4ClassRunner.java:191)
+	at org.junit.runners.Suite.runChild(Suite.java:128)
+	at org.junit.runners.Suite.runChild(Suite.java:27)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+	at org.junit.runner.JUnitCore.run(JUnitCore.java:137)
+	at com.intellij.junit4.JUnit4IdeaTestRunner.startRunnerWithArgs(JUnit4IdeaTestRunner.java:117)
+	at com.intellij.junit4.JUnit4IdeaTestRunner.startRunnerWithArgs(JUnit4IdeaTestRunner.java:42)
+	at com.intellij.rt.execution.junit.JUnitStarter.prepareStreamsAndStart(JUnitStarter.java:262)
+	at com.intellij.rt.execution.junit.JUnitStarter.main(JUnitStarter.java:84)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at com.intellij.rt.execution.application.AppMain.main(AppMain.java:147)
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'userDao': Unsatisfied dependency expressed through field 'mailSender'; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'org.springframework.mail.javamail.JavaMailSender' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:588)
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:88)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessPropertyValues(AutowiredAnnotationBeanPostProcessor.java:366)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1264)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:553)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:483)
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:306)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:230)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:302)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:197)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:761)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:867)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:543)
+	at org.springframework.test.context.support.AbstractGenericContextLoader.loadContext(AbstractGenericContextLoader.java:128)
+	at org.springframework.test.context.support.AbstractGenericContextLoader.loadContext(AbstractGenericContextLoader.java:60)
+	at org.springframework.test.context.support.AbstractDelegatingSmartContextLoader.delegateLoading(AbstractDelegatingSmartContextLoader.java:108)
+	at org.springframework.test.context.support.AbstractDelegatingSmartContextLoader.loadContext(AbstractDelegatingSmartContextLoader.java:251)
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContextInternal(DefaultCacheAwareContextLoaderDelegate.java:98)
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:116)
+	... 37 more
+Caused by: org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'org.springframework.mail.javamail.JavaMailSender' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.raiseNoMatchingBeanFound(DefaultListableBeanFactory.java:1493)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1104)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1066)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:585)
+	... 55 more
+2017-11-28 20:03:07,655   INFO org.hibernate.validator.internal.util.Version: HV000001: Hibernate Validator 5.4.1.Final
  

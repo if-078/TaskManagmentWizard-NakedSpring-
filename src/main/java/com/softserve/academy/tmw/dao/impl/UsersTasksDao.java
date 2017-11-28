@@ -35,11 +35,11 @@ public class UsersTasksDao extends EntityDao<UsersTasks> implements UsersTasksDa
 
     @Override
     public List<User> getTeamByTask(int taskId, int userId) {
-        String query = "select * from " + table + " where id in (select user_id from tmw.users_tasks as tut " +
+        String query = "select * from tmw.user where id in (select user_id from tmw.users_tasks as tut " +
                 "where tut.task_id = (select project_id from tmw.task where tmw.task.id = :taskId)) and id = :userId";
         MapSqlParameterSource parameterSource = new MapSqlParameterSource();
-        parameterSource.addValue("task_id", taskId);
-        parameterSource.addValue("user_id", userId);
+        parameterSource.addValue("taskId", taskId);
+        parameterSource.addValue("userId", userId);
         List<User> users = jdbcTemplate.query(query, parameterSource, new UserMapper());
         return users;
     }

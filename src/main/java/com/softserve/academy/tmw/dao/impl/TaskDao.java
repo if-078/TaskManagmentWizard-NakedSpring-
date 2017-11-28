@@ -9,6 +9,8 @@ import com.softserve.academy.tmw.dto.TaskTreeDTO;
 import com.softserve.academy.tmw.entity.Comment;
 import com.softserve.academy.tmw.entity.Tag;
 import com.softserve.academy.tmw.entity.Task;
+
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import org.jooq.Select;
@@ -69,6 +71,12 @@ public class TaskDao extends EntityDao<Task> implements TaskDaoInterface {
       task.setPriorityId(1);
     }
 
+    Task task0 = findOne(task.getId());
+    int diffEstimate = task.getEstimateTime() - task0.getEstimateTime();
+    int diffSpent = task.getSpentTime() - task0.getSpentTime();
+    int diffLeft = task.getLeftTime() - task0.getLeftTime();
+    refreshEstimateTimeOfParents(task.getId(), diffEstimate, diffSpent, diffLeft);
+
     String sql =
         "UPDATE " + table
             + " SET name=:name, created_date=:created_date, planning_date=:planning_date, start_date=:start_date, "
@@ -122,6 +130,8 @@ public class TaskDao extends EntityDao<Task> implements TaskDaoInterface {
     if (task.getPriorityId() == 0) {
       task.setPriorityId(1);
     }
+
+    refreshEstimateTimeOfParents(task.getId(), task.getEstimateTime(), task.getSpentTime(), task.getLeftTime());
 
     String sql = "INSERT INTO " + table
         + " (name, created_date, planning_date, start_date, end_date, estimate_time, spent_time, left_time, assign_to, status_id, "
@@ -235,6 +245,25 @@ public class TaskDao extends EntityDao<Task> implements TaskDaoInterface {
     parameterSource.addValue("user_id", userId);
     List<TaskTreeDTO> tasks = jdbcTemplate.query(query, parameterSource, new TaskMapperForTree());
     return tasks;
+  }
+
+  @Override
+  public void refreshEstimateTimeOfParents(int id, int diffEst, int diffSpent, int diffLeft) {
+    String query = "select * from " + table + " where id = (select parentId from " + table + " where id = :id)";
+    List<Task> tasks;
+    List<Task> tasksFinish = new ArrayList<>();
+    int parentId;
+    do {
+      tasks = jdbcTemplate.query(query, new MapSqlParameterSource("id", id), new TaskMapper());
+      tasksFinish.addAll(tasks);
+      parentId = tasks.get(0).getParentId();
+      System.out.println(parentId);
+    } while (parentId != 0);
+    for (Task task : tasksFinish) {
+      task.setEstimateTime(task.getEstimateTime() + diffEst);
+      task.setSpentTime(task.getSpentTime() + diffSpent);
+      task.setLeftTime(task.getLeftTime() + diffLeft);
+    }
   }
 
 }

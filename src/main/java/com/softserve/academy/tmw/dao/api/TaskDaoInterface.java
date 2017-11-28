@@ -25,4 +25,6 @@ public interface TaskDaoInterface extends EntityDaoInterface<Task>{
 
     List<TaskTreeDTO> findTaskByTree(int id, int userId);
 
+    void refreshEstimateTimeOfParents(int id, int diffEstimate, int diffSpent, int diffLeft);
+
 }

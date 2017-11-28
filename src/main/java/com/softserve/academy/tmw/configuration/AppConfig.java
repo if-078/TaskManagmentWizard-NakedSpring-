@@ -10,6 +10,9 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 
+import javax.mail.Authenticator;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
 import java.util.Properties;
 
 @Configuration
@@ -56,16 +59,19 @@ public class AppConfig {
   {
 
     JavaMailSenderImpl sender = new JavaMailSenderImpl();
-    Properties properties = System.getProperties();
-    properties.setProperty("mail.smtp.user", "taskmanagementwizard@gmail.com");
-    properties.setProperty("mail.smtp.password", "165475TMW");
-    properties.setProperty("mail.smtp.auth", "true");
-    properties.setProperty("mail.smtps.ssl.enable", "true");
-    properties.setProperty("mail.smtp.port", "587");
-    properties.setProperty("mail.smtp.host", "smtp.gmail.com");
-
-    sender.setJavaMailProperties(properties);
-
+    Properties props = System.getProperties();
+    props.put("mail.smtp.starttls.enable", "true");
+    props.put("mail.smtp.auth", "true");
+    props.put("mail.smtp.host", "smtp.gmail.com");
+    props.put("mail.smtp.port", "587");
+    Authenticator authenticator = new Authenticator() {
+      @Override
+      protected PasswordAuthentication getPasswordAuthentication() {
+        return new PasswordAuthentication("taskmanagementwizard@gmail.com", "165475TMW");
+      }
+    };
+    Session session = Session.getDefaultInstance(props, authenticator);
+    sender.setSession(session);
     return sender;
   }
 }

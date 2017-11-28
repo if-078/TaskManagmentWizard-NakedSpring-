@@ -54,19 +54,17 @@ public class AppConfig {
   @Bean
   public JavaMailSender getJavaMailSender()
   {
+
     JavaMailSenderImpl sender = new JavaMailSenderImpl();
-    sender.setProtocol("smtp");
-    sender.setHost("smtp.gmail.com");
-    sender.setPort(587);
-    sender.setUsername("taskmanagementwizard@gmail.com");
-    sender.setPassword("165475TMW");
+    Properties properties = System.getProperties();
+    properties.setProperty("mail.smtp.user", "taskmanagementwizard@gmail.com");
+    properties.setProperty("mail.smtp.password", "165475TMW");
+    properties.setProperty("mail.smtp.auth", "true");
+    properties.setProperty("mail.smtps.ssl.enable", "true");
+    properties.setProperty("mail.smtp.port", "587");
+    properties.setProperty("mail.smtp.host", "smtp.gmail.com");
 
-    Properties mailProps = new Properties();
-    mailProps.put("mail.smtps.auth", "true");
-    mailProps.put("mail.smtp.starttls.enable", "true");
-    mailProps.put("mail.smtp.debug", "true");
-
-    sender.setJavaMailProperties(mailProps);
+    sender.setJavaMailProperties(properties);
 
     return sender;
   }

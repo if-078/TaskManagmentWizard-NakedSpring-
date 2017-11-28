@@ -57,8 +57,8 @@ public class UserDao extends EntityDao<User> implements UserDaoInterface {
       message.setSubject("email verification");
 
       messageLink = messageLink+ key;
-      message.setText("Please click link below to confirm your email verification + \n " +
-             "<a href="+ messageLink + "</a>");
+      message.setContent("Please click link below to confirm your email verification + \n " +
+             "<a href="+ messageLink + ">Your link for verify</a>",  "text/html");
       mailSender.send(message);
       jdbcTemplate.update(notVerifaed, source);
     } catch (MessagingException e) {

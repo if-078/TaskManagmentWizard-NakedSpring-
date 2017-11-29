@@ -15,6 +15,7 @@ create table user
 create table user_activation
 (
 	id int primary key,
+	user_key int not null,
     user_id int not null,
     constraint fk_user_id foreign key (user_id)
     references user(id)

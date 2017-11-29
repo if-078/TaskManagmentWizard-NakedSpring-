@@ -170,6 +170,16 @@
             </div>
 
 
+            <!-- BUTTON JIRA -->
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <div class="col-xs-12 btn-group-vertical">
+                        <button id="jira-integration" type="button" class="btn btn-default btn-block">Jira integration</button>
+                    </div>
+                </div>
+            </div>
+
+
             <!-- TREE VIEW -->
             <div id="tmw-treeview" class="tmw-treeview"></div>
             <!-- / TREE VIEW -->
@@ -190,7 +200,6 @@
                         </div>
                     </div>
                 </div>
-
 
                 <!-- CALENDAR -->
                 <div id="tmw-main-calendar" class="tmw-main-calendar row hidden">
@@ -304,6 +313,49 @@
         </div>
     </div>
 </div>
+
+
+<!-- Modal Jira-->
+<div class="modal fade" id="jira-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="jiraModalLabel">Login to your Jira account</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form>
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <label for="jira-link">Login</label>
+                        <input type="text" class="form-control" id="jira-link">
+                    </div>
+                </div>
+
+
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <label for="jira-login">Login</label>
+                        <input type="text" class="form-control" id="jira-login">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <label for="jira-password">Password</label>
+                        <input type="text" class="form-control" id="jira-password">
+                    </div>
+                </div>
+
+
+
+            </form>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button id="jira-ok" type="button" class="btn btn-primary">Ok</button>
+            </div>
+        </div>
+    </div>
 </div>
 
 
@@ -382,6 +434,7 @@
 
 <script src="static/js/calendar.js"></script>
 <script src="static/js/loginOrRegistration.js"></script>
+<script src="static/js/jiraIntegration.js"></script>
 
 
 </html>

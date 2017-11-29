@@ -6,14 +6,22 @@ import it.com.softserve.academy.tmw.dao.utility.RolePopulator;
 import it.com.softserve.academy.tmw.dao.utility.StatusPopulator;
 import it.com.softserve.academy.tmw.dao.utility.TaskPopulator;
 import it.com.softserve.academy.tmw.dao.utility.UserPopulator;
+
+import javax.mail.Authenticator;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
 import javax.sql.DataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import java.util.Properties;
 
 @Configuration
 @ComponentScan(basePackages = {"com.softserve.academy.tmw.dao"})
@@ -59,4 +67,26 @@ public class TestDaoConfig {
   public PasswordEncoder getEncoder() {
     return new BCryptPasswordEncoder();
   }
+
+  @Bean
+  public JavaMailSender getJavaMailSender()
+  {
+
+    JavaMailSenderImpl sender = new JavaMailSenderImpl();
+    Properties props = System.getProperties();
+    props.put("mail.smtp.starttls.enable", "true");
+    props.put("mail.smtp.auth", "true");
+    props.put("mail.smtp.host", "smtp.gmail.com");
+    props.put("mail.smtp.port", "587");
+    Authenticator authenticator = new Authenticator() {
+      @Override
+      protected PasswordAuthentication getPasswordAuthentication() {
+        return new PasswordAuthentication("taskmanagementwizard@gmail.com", "165475TMW");
+      }
+    };
+    Session session = Session.getDefaultInstance(props, authenticator);
+    sender.setSession(session);
+    return sender;
+  }
+
 }

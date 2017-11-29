@@ -5,6 +5,7 @@ import com.softserve.academy.tmw.dao.mapper.UserMapper;
 import com.softserve.academy.tmw.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -44,7 +45,7 @@ public class UserDao extends EntityDao<User> implements UserDaoInterface {
 
     System.out.println(entity.getId());
     long key =java.util.UUID.randomUUID().hashCode();
-    String notVerifaed = "insert into user_activation (user_id, user_key) values (:user_id, :user_key)";
+    String notVerifaed = "insert into tmw.user_activation (user_id, user_key) values (:user_id, :user_key)";
     MapSqlParameterSource source = new MapSqlParameterSource();
     source.addValue("user_key", key);
     source.addValue("user_id", entity.getId());

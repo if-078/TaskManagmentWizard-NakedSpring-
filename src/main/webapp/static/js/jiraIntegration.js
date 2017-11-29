@@ -1,6 +1,7 @@
 $('#jira-integration').on('click', function () {
     console.log('wqwqwqwqwqwq');
-    $('#jira-modal').modal('show');
+    $('#jira-modal-authorization').modal('show');
+
 
     $('#jira-ok').on('click', function () {
         var jLink = $('#jira-link').val();
@@ -12,8 +13,10 @@ $('#jira-integration').on('click', function () {
         var jiraToken = jUsername + ":" + jPassword;
 
         var jUrl = "https://" + jLink + "/rest/api/2/" + "issue/FP-1";
+        //var jUrl = "https://" + jLink + "/rest/api/2/" + "search?jql=project=SP&maxResults=20";
+        //var jUrl = "https://" + jLink + "/rest/auth/1/session";
 
-        var str = "ovochevarka@gmail.com:ovochevarka1996";
+        //var str = "ovochevarka@gmail.com:ovochevarka1996";
 
         var encode = btoa(jiraToken);
         console.log(encode);
@@ -30,9 +33,31 @@ $('#jira-integration').on('click', function () {
             beforeSend: function(xhr, settings) { xhr.setRequestHeader('Authorization','Basic ' + encode); },
             dataType: "json",
             success: function (data) {
-                $('#jira-modal').modal('hide');
+                //$('#jira-modal').modal('hide');
+                $('#jira-modal-authorization').modal('hide');
+                $('#jira-modal-choose-project').modal('show');
                 console.log("login to jira");
                 console.log(data);
+
+                $('#jira-project-ok').on('click', function () {
+                var key = $('#jira-project-key').val();
+                var urlGetIssues = "https://" + jLink + "/rest/api/2/search?jql=project=" + key + "&maxResults=20";
+                    $.ajax({
+                        url: urlGetIssues,
+                        type: "GET",
+                        data: JSON.stringify(),
+                        dataType: "json",
+                        beforeSend: function(xhr, settings) { xhr.setRequestHeader('Authorization','Basic ' + encode); },
+                        contentType: "application/json",
+                        success: function (data) {
+                            console.log("yes");
+                            console.log(data);
+                        },
+                        error: function() {
+                            console.log("no")
+                        }
+                    });
+                })
             },
             error: function () {
                 console.log("error login to jira")

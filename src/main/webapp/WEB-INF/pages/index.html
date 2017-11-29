@@ -316,7 +316,7 @@
 
 
 <!-- Modal Jira-->
-<div class="modal fade" id="jira-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+<div class="modal fade" id="jira-modal-authorization" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
      aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -356,7 +356,36 @@
             </div>
         </div>
     </div>
+
 </div>
+
+<div class="modal fade" id="jira-modal-choose-project" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" aria-hidden="true">
+            <div class="modal-header">
+                <h5 class="modal-title">Choose Jira project to import tasks</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form>
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <label for="jira-project-key">Project key</label>
+                        <input type="text" class="form-control" id="jira-project-key">
+                    </div>
+                </div>
+
+            </form>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button id="jira-project-ok" type="button" class="btn btn-primary">Ok</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 
 
 

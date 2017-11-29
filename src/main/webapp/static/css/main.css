@@ -84,6 +84,10 @@ html, body {
     overflow-y: scroll;
 }
 
+.fc-toolbar.fc-header-toolbar {
+    margin-bottom: 0px;
+}
+
 .tmw-main-table {
     /*flex-grow: 1;*/
     margin-top: 10px;

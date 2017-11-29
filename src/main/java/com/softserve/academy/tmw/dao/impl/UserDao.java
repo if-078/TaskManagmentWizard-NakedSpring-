@@ -50,8 +50,7 @@ public class UserDao extends EntityDao<User> implements UserDaoInterface {
     source.addValue("user_id", entity.getId());
 
     MimeMessage message = mailSender.createMimeMessage();
-    String messageLink = "http:localhost:8585/api/users/verify/" + entity.getId()+ "?key=";
-
+    String messageLink = "http://localhost:8585/api/users/verify/" + entity.getId()+ "?key=";
     try {
       message.addRecipient(Message.RecipientType.TO, new InternetAddress(entity.getEmail()));
       message.setSubject("email verification");
@@ -89,6 +88,14 @@ public class UserDao extends EntityDao<User> implements UserDaoInterface {
     param.addValue("email", email);
 
     return jdbcTemplate.queryForObject(sql, param, super.mapper);
+  }
+
+  public boolean verifyUser (int id, long key){
+    String sql = "update " + table + "set active = 1 where id = (select user_id from tmw.user_activation where user_key = :key)and user_id = :user_id";
+    MapSqlParameterSource parameterSource = new MapSqlParameterSource();
+    parameterSource.addValue("key", key);
+    parameterSource.addValue("user_id", id);
+    return jdbcTemplate.update(sql, parameterSource) >0;
   }
 
 }

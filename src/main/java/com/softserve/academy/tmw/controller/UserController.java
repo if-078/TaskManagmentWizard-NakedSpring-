@@ -51,8 +51,8 @@ public class UserController {
     return userService.delete(id);
   }
 
-  @GetMapping("/verify/{id}")
-  @ResponseStatus(HttpStatus.FOUND)
+  @PostMapping("/verify/{id}") //метод крейт при створенні юзера посилає лінку з айдішкою юзера і згенереним ключем, та лінка має тригерети цей контроллер
+  @ResponseStatus(HttpStatus.CREATED)
   boolean verifyUser (@PathVariable Integer id,  @RequestParam(name = "key") long userKey){
     return userService.verify(id, userKey);
   }

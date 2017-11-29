@@ -106,7 +106,7 @@ var taskCalendar = function () {
                                 slotLabelFormat: ['dddd, D MMMM', 'H:mm']
                             }
                         },
-                        defaultView: '_timelineDay',
+                        defaultView: '_timelineWeek',
                         resourceLabelText: 'Users',
                         resourceAreaWidth: '17%',
                         resources: resources,

@@ -22,6 +22,21 @@ var generatedRequestParameters = function () {
 var taskTableInit = false;
 var taskTable = function () {
 
+    if (selectedTaskId==0){
+        $('#tmw-main-calendar').addClass('hidden');
+        $('#tmw-task-calendar').fullCalendar('destroy');
+        if (taskTableInit) {
+            $('#tmw-task-table').DataTable().destroy();
+            taskTableInit = false;
+        }
+        return;
+    }
+
+    $('#tmw-task-calendar').fullCalendar('destroy');
+
+    $('#tmw-main-calendar').removeClass('hidden');
+    taskCalendar();
+
     console.log('userId = ',userId);
     console.log('userName = ',userName);
     $.ajax({

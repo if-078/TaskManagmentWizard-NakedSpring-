@@ -18,10 +18,6 @@ public class UserController {
   @GetMapping("/team/{taskId}")
   @ResponseStatus(HttpStatus.OK)
   List<User> getAllUsers(@PathVariable Integer taskId, @RequestParam(name = "userId", required = false) int userId) throws SQLException {
-    System.out.println("====================");
-    System.out.println("taskId = " + taskId);
-    System.out.println("userId = " + userId);
-    System.out.println("====================");
     return userService.getTeamByTask(taskId, userId);
   }
 

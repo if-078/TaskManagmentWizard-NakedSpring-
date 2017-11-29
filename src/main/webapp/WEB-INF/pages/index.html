@@ -84,73 +84,19 @@
         <!-- SIDEBAR -->
         <div class="tmw-sidebar col-xs-3">
 
-            <!-- TIME FILTERS -->
-            <div class="form-horizontal">
-                <div class="form-group">
-                    <div id="tmw-time-btn-group" class="col-xs-12 btn-group-vertical">
-                        <button id="tmw-time-all-btn" type="button" class="btn btn-default active ">All Time</button>
-                        <button id="tmw-time-today-btn" type="button" class="btn btn-default">Today</button>
-                        <button id="tmw-time-week-btn" type="button" class="btn btn-default">Week</button>
-
-                        <div class="btn-group">
-                            <button id="tmw-time-custom-btn" type="button" class="btn btn-default dropdown-toggle"
-                                    data-toggle="dropdown">Custom
-                            </button>
-
-                            <div class="col-xs-12 dropdown-menu" style="padding-top: 10px; padding-bottom: 10px;">
-                                <div class="row">
-                                    <div class="col-xs-12">
-                                        <form class="form-horizontal">
-                                            <div class="col-xs-12 form-gorup" style="margin-bottom: 10px;">
-                                                <div class="col-xs-6">
-                                                    <input id="tmw-time-custom-from" type="text"
-                                                           class="form-control datepicker" placeholder="From"
-                                                           data-date-format="yyyy/mm/dd">
-                                                </div>
-
-                                                <div class="col-xs-6">
-                                                    <input id="tmw-time-custom-to" type="text"
-                                                           class="form-control datepicker" placeholder="To"
-                                                           data-date-format="yyyy/mm/dd">
-                                                </div>
-                                            </div>
-
-                                            <div class="col-xs-12 form-gorup">
-                                                <div class="col-xs-6">
-                                                    <button id="tmw-time-custom-apply-btn"
-                                                            class="btn btn-default btn-block" type="button">Apply
-                                                    </button>
-                                                </div>
-
-                                                <div class="col-xs-6">
-                                                    <button id="tmw-time-custom-cancel-btn"
-                                                            class="btn btn-default btn-block" type="button">Cancel
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- / TIME FILTERS -->
-
             <!-- PRIORITY, STATUS AND TAG FILTERS -->
             <div class="form-horizontal">
-                <div class="form-group">
+                <div id="tmw-filters" class="form-group">
                     <div id="leftPanel" class="col-xs-12 btn-group-vertical">
                         <!--loaded content-->
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <div class="col-xs-6">
+                    <div id="tmw-apply-btn-area" class="col-xs-6">
                         <button id="tmw-apply-btn" class="btn btn-default btn-block" type="button">Apply</button>
                     </div>
-                    <div class="col-xs-6">
+                    <div id="tmw-reset-btn-area" class="col-xs-6">
                         <button id="tmw-reset-btn" class="btn btn-default btn-block" type="button">Reset</button>
                     </div>
                 </div>
@@ -158,21 +104,18 @@
             <!-- / STATUS AND TAG FILTERS -->
 
 
+            <div id="tree-and-addbtn">
 
-
-            <!-- CREATE NEW TASK -->
-            <div class="form-horizontal">
-                <div class="form-group">
-                    <div id="tmw-task-btn-group" class="col-xs-12 btn-group-vertical">
-                        <button id="tmw-create-task" type="button" class="btn btn-default btn-block">Create task</button>
-                    </div>
+                <!-- CREATE NEW TASK -->
+                <div id="tmw-create-task-div" class="row">
+                    <button id="tmw-create-task" type="button" class="btn btn-default pull-right">+</button>
                 </div>
+
+                <!-- TREE VIEW -->
+                <div id="tmw-treeview" class="tmw-treeview"></div>
+                <!-- / TREE VIEW -->
             </div>
 
-
-            <!-- TREE VIEW -->
-            <div id="tmw-treeview" class="tmw-treeview"></div>
-            <!-- / TREE VIEW -->
 
         </div>
         <!-- / SIDEBAR -->
@@ -297,7 +240,7 @@
 
             </form>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancele</button>
                 <button id="tmw-task-btn-save" type="button" class="btn btn-primary">Save</button>
                 <button id="tmw-task-btn-delete" type="button" class="btn btn-primary" data-dismiss="modal">Delete</button>
             </div>

@@ -19,26 +19,28 @@ var generatedRequestParameters = function () {
     return parameters;
 };
 
+
+//--------------------------------------------------------------------------------------------------------------------
+
+
+
 var taskTableInit = false;
 var taskTable = function () {
 
-    if (selectedTaskId==0){
-        $('#tmw-main-calendar').addClass('hidden');
-        $('#tmw-task-calendar').fullCalendar('destroy');
+    console.log("selectedTaskId", selectedTaskId);
+
+    if (selectedTaskId==0) {
         if (taskTableInit) {
             $('#tmw-task-table').DataTable().destroy();
             taskTableInit = false;
         }
+        $('#tmw-task-calendar').fullCalendar('destroy');
+
         return;
     }
 
-    $('#tmw-task-calendar').fullCalendar('destroy');
 
-    $('#tmw-main-calendar').removeClass('hidden');
-    taskCalendar();
 
-    console.log('userId = ',userId);
-    console.log('userName = ',userName);
     $.ajax({
         url: 'api/tasks/filter' + generatedRequestParameters(),
         type: 'GET',
@@ -54,14 +56,13 @@ var taskTable = function () {
                 headers: createAuthToken(),
                 success: function (treeData) {
 
-                    var subtasks = [];
 
+                    // make list rows for table only non-root tasks
+                    var subtasks = [];
                     for (var i = 0; i < treeData.length; i++) {
                         subtasks.push(Object.values(treeData[i]));
                     }
-
                     var rows = [];
-
                     for (var i = 0; i < data.length; i++) {
                         var hasChildren = false;
                         for (var j = 0; j < subtasks.length; j++) {
@@ -70,13 +71,12 @@ var taskTable = function () {
                                 break;
                             }
                         }
-
-
                         if ((!hasChildren)&(selectedTaskId !=0)) {
                             rows.push(Object.values(data[i]));
                         }
                     }
 
+                    // convert estimate time from int minute --> format time
                     var setHour;
                     var setMinute;
                     var slotMin = timeSlotHour * 60 + timeSlotMin;
@@ -94,39 +94,34 @@ var taskTable = function () {
                         $('#tmw-task-table').DataTable().destroy();
                         taskTableInit = false;
                     }
-
-                    if (rows.length > 0) {
-
-                        $('#tmw-task-table').css('visibility', 'visible');
-
-                        $('#tmw-task-table').DataTable({
-                            data: rows,
+                    $('#tmw-task-calendar').fullCalendar('destroy');
+                    taskCalendar();
 
 
+                    $('#tmw-task-table').DataTable({
+                        data: rows,
 
-                            columns: [
-                                {title: "ID", visible: false},
-                                {title: "Name"},
-                                {title: "Start Date"},
-                                {title: "Est. Time"},
-                                {title: "Assignee"},
-                                {title: "Status"},
-                                {title: "Priority"}
-                            ],
+                        columns: [
+                            {title: "ID", visible: false},
+                            {title: "Name"},
+                            {title: "Start Date"},
+                            {title: "Est. Time"},
+                            {title: "Assignee"},
+                            {title: "Status"},
+                            {title: "Priority"}
+                        ],
 
-                            paging: false,
-                            info: false,
-                            searching: false
-                        });
+                        paging: false,
+                        info: false,
+                        searching: false
+                    });
 
-                        taskTableInit = true;
+                    taskTableInit = true;
 
-                        if (!$('#tmw-main-calendar').hasClass('hidden')) {
-                            makeTableRowsDraggable();
-                        }
-                    } else {
-                        $('#tmw-task-table').css('visibility', 'hidden');
+                    if(rows.length>0) {
+                        makeTableRowsDraggable();
                     }
+
                 }
             });
         },

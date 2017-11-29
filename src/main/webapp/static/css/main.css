@@ -41,6 +41,8 @@ html, body {
     height: 100vh;
 }
 
+
+
 #tmw-create-task-div {
     width: 45px;
     z-index: 998;
@@ -67,8 +69,25 @@ html, body {
     height: 100vh;
 }
 
+
+#calendar-and-table-area {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    height: 100vh;
+}
+
+
+.tmw-main-calendar {
+    /*flex-grow: 1;*/
+    height: 100vh;
+    overflow-y: scroll;
+}
+
 .tmw-main-table {
-    flex-grow: 1;
+    /*flex-grow: 1;*/
+    margin-top: 10px;
+    height: 100vh;
     overflow-y: scroll;
 }
 

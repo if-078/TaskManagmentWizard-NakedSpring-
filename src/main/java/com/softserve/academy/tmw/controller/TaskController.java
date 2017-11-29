@@ -50,7 +50,13 @@ public class TaskController {
   @PutMapping("/planning")
   @ResponseStatus(HttpStatus.NO_CONTENT)
   boolean updateCalendarTask(@Validated @RequestBody Task task) {
-    return taskService.updateCalendarTask(task);
+
+    System.out.println("=== Start Update Task ===");
+    System.out.println("taskId = " + task.getId());
+    System.out.println("taskName = " + task.getName());
+
+    boolean isUpdateTask = taskService.updateCalendarTask(task);
+    return isUpdateTask;
   }
 
   @GetMapping("/tree/{id}")

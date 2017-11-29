@@ -133,7 +133,7 @@ var taskCalendar = function () {
                         }
                     });
 
-                    makeTableRowsDraggable();
+                    //makeTableRowsDraggable();
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     if (jqXHR.status === 401) {

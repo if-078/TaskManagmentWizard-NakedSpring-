@@ -124,34 +124,27 @@
         <div class="col-xs-9">
             <div class="tmw-main row">
 
-                <!-- BUTTON PLANING -->
-                <!--
-                <div class="form-horizontal">
-                    <div class="form-group">
-                        <div id="tmw-main-header" class="col-xs-3 btn-group-vertical">
-                            <button id="tmw-graphic" type="button" class="btn btn-default btn-block" style="margin: 0;">Team Planning</button>
-                            <button id="tmw-graphic-exit" type="button" class="btn btn-default btn-block hidden" style="margin: 0;">Exit Planning</button>
+
+                <div id="calendar-and-table-area">
+                    <!-- CALENDAR -->
+                    <div id="tmw-main-calendar" class="tmw-main-calendar row">
+                        <div class="col-xs-12">
+                            <div id="tmw-task-calendar"></div>
                         </div>
                     </div>
-                </div>
-                -->
+                    <!-- / CALENDAR -->
 
-                <!-- CALENDAR -->
-                <div id="tmw-main-calendar" class="tmw-main-calendar row hidden">
-                    <div class="col-xs-12">
-                        <div id="tmw-task-calendar"></div>
+                    <!-- TABLE -->
+                    <div id="tmw-main-table" class="tmw-main-table row">
+                        <div class="col-xs-12">
+                            <table id="tmw-task-table" class="tmw-task-table table table-bordered table-hover"
+                                   cellspacing="0" style="width: 100%;"></table>
+                        </div>
                     </div>
+                    <!-- / TABLE -->
                 </div>
-                <!-- / CALENDAR -->
 
-                <!-- TABLE -->
-                <div id="tmw-main-table" class="tmw-main-table row">
-                    <div class="col-xs-12">
-                        <table id="tmw-task-table" class="tmw-task-table table table-bordered table-hover"
-                               cellspacing="0" style="width: 100%;"></table>
-                    </div>
-                </div>
-                <!-- / TABLE -->
+
             </div>
         </div>
         <!-- / MAIN -->

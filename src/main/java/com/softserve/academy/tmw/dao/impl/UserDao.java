@@ -43,7 +43,6 @@ public class UserDao extends EntityDao<User> implements UserDaoInterface {
     jdbcTemplate.update(sql, param, keyHolder);
     entity.setId(keyHolder.getKey().intValue());
 
-    System.out.println(entity.getId());
     long key =java.util.UUID.randomUUID().hashCode();
     String notVerifaed = "insert into tmw.user_activation (user_id, user_key) values (:user_id, :user_key)";
     MapSqlParameterSource source = new MapSqlParameterSource();

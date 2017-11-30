@@ -185,6 +185,14 @@
       <scope>test</scope>
     </dependency>
 
+    <!-- https://mvnrepository.com/artifact/org.hashids/hashids -->
+    <dependency>
+      <groupId>org.hashids</groupId>
+      <artifactId>hashids</artifactId>
+      <version>1.0.1</version>
+    </dependency>
+
+
     <dependency>
       <groupId>log4j</groupId>
       <artifactId>log4j</artifactId>
@@ -213,6 +221,8 @@
           <failOnMissingWebXml>false</failOnMissingWebXml>
         </configuration>
       </plugin>
+
+
 
       <!--<plugin>-->
         <!--<groupId>org.apache.maven.plugins</groupId>-->

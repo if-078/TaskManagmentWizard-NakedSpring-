@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface UserServiceInterface extends EntityServiceInterface<User> {
 
-    boolean verify(int UserId, long UserKey);
+    boolean verify(long key);
 
     User findByEmail(String email);
 

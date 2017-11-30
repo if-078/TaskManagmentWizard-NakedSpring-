@@ -42,27 +42,6 @@ public class UserDao extends EntityDao<User> implements UserDaoInterface {
     param.addValue("email", entity.getEmail());
     jdbcTemplate.update(sql, param, keyHolder);
     entity.setId(keyHolder.getKey().intValue());
-
-    long key =java.util.UUID.randomUUID().hashCode();
-    String notVerifaed = "insert into tmw.user_activation (user_id, user_key) values (:user_id, :user_key)";
-    MapSqlParameterSource source = new MapSqlParameterSource();
-    source.addValue("user_key", key);
-    source.addValue("user_id", entity.getId());
-
-    MimeMessage message = mailSender.createMimeMessage();
-    String messageLink = "http://localhost:8585/api/users/verify/" + entity.getId()+ "?key=";
-    try {
-      message.addRecipient(Message.RecipientType.TO, new InternetAddress(entity.getEmail()));
-      message.setSubject("email verification");
-
-      messageLink = messageLink+ key;
-      message.setContent("Please click link below to confirm your email verification + \n " +
-             "<a href="+ messageLink + ">Your link for verify</a>",  "text/html");
-      mailSender.send(message);
-      jdbcTemplate.update(notVerifaed, source);
-    } catch (MessagingException e) {
-      e.printStackTrace();
-    }
     return entity;
   }
 

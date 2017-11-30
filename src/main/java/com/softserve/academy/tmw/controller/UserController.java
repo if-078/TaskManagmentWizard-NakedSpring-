@@ -15,9 +15,15 @@ public class UserController {
   @Autowired
   UserServiceInterface userService;
 
+  @GetMapping("/all")
+  @ResponseStatus(HttpStatus.OK)
+  List<User> getAllUsers() throws SQLException {
+    return userService.getAll();
+  }
+
   @GetMapping("/team/{taskId}")
   @ResponseStatus(HttpStatus.OK)
-  List<User> getAllUsers(@PathVariable Integer taskId, @RequestParam(name = "userId", required = false) int userId) throws SQLException {
+  List<User> getAllTeamUsers(@PathVariable Integer taskId, @RequestParam(name = "userId", required = false) int userId) throws SQLException {
     return userService.getTeamByTask(taskId, userId);
   }
 

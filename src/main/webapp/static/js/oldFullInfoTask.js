@@ -52,7 +52,7 @@ var showFull = function (id) {
             $('#tmw-task-startDate').val(taskDTO.startDate);
             $('#tmw-task-endDate').val(taskDTO.endDate);
             $('#tmw-task-estimateTime').val(taskDTO.estimateTime);
-            fillSelectUser(taskDTO.assignTo.id);
+            if (taskDTO.assignTo.id != null) fillSelectUser(taskDTO.assignTo.id);
             fillSelectPriority(taskDTO.priority.id);
             fillSelectStatus(taskDTO.status.id);
             fillSelectTags(taskDTO.id);

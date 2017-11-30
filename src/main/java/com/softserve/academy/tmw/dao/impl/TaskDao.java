@@ -75,7 +75,7 @@ public class TaskDao extends EntityDao<Task> implements TaskDaoInterface {
     int diffEstimate = task.getEstimateTime() - task0.getEstimateTime();
     int diffSpent = task.getSpentTime() - task0.getSpentTime();
     int diffLeft = task.getLeftTime() - task0.getLeftTime();
-    refreshEstimateTimeOfParents(task.getId(), diffEstimate, diffSpent, diffLeft);
+    refreshEstimateTimeOfParents(task.getId(), diffSpent, diffLeft);
 
     String sql =
             "UPDATE " + table
@@ -132,7 +132,7 @@ public class TaskDao extends EntityDao<Task> implements TaskDaoInterface {
     }
 
     if (task.getId() != 0)
-    refreshEstimateTimeOfParents(task.getId(), task.getEstimateTime(), task.getSpentTime(), task.getLeftTime());
+    refreshEstimateTimeOfParents(task.getId(), task.getSpentTime(), task.getLeftTime());
 
     String sql = "INSERT INTO " + table
             + " (name, created_date, planning_date, start_date, end_date, estimate_time, spent_time, left_time, assign_to, status_id, "
@@ -249,7 +249,7 @@ public class TaskDao extends EntityDao<Task> implements TaskDaoInterface {
   }
 
   @Override
-  public void refreshEstimateTimeOfParents(int id, int diffEst, int diffSpent, int diffLeft) {
+  public void refreshEstimateTimeOfParents(int id, int diffSpent, int diffLeft) {
     String query = "select * from " + table + " where id = (select parent_id from " + table + " where id = :id)";
     MapSqlParameterSource param = new MapSqlParameterSource();
     String sql =
@@ -266,7 +266,6 @@ public class TaskDao extends EntityDao<Task> implements TaskDaoInterface {
       parentId = tasks.get(0).getParentId();
     } while (parentId != 0);
     for (Task task : tasksFinish) {
-      param.addValue("estimate_time", task.getEstimateTime() + diffEst);
       param.addValue("spent_time", task.getSpentTime() + diffSpent);
       param.addValue("left_time", task.getLeftTime() + diffLeft);
       param.addValue("id", task.getId());

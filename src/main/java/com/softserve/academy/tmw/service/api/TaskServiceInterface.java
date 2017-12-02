@@ -20,7 +20,7 @@ public interface TaskServiceInterface extends EntityServiceInterface<Task> {
   List<Task> getTasksAssignToUser(int userId);
 
   List<TaskTableDTO> getFilteredTasksForTable(int parentId, String[] dates, int[] status,
-      int[] priority, int[] tag);
+      int[] priority, int[] tag, boolean planing, int userId);
 
   List<TaskTreeDTO> findTaskByTree(int id, int userId);
 

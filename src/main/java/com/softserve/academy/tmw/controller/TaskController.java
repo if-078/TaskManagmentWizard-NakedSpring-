@@ -72,9 +72,11 @@ public class TaskController {
       @RequestParam(name = "date", required = false) String[] date,
       @RequestParam(name = "status", required = false) int[] status,
       @RequestParam(name = "priority", required = false) int[] priority,
-      @RequestParam(name = "tag", required = false) int[] tag) {
-
-    return taskService.getFilteredTasksForTable(parentId, date, status, priority, tag);
+      @RequestParam(name = "tag", required = false) int[] tag,
+      @RequestParam(name = "planing", required = false) boolean planing,
+      @RequestParam(name = "userId", required = false) int userId)
+  {
+    return taskService.getFilteredTasksForTable(parentId, date, status, priority, tag, planing, userId);
   }
 
   @GetMapping("/view/{id}")

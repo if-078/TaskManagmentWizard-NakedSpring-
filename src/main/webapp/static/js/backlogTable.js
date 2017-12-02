@@ -43,7 +43,7 @@ var taskTable = function () {
 
 
     $.ajax({
-        url: 'api/tasks/filter' + generatedRequestParameters(),
+        url: 'api/tasks/filter' + generatedRequestParameters() + '&planing=false' + '&userId=' + userId ,
         type: 'GET',
         contentType: 'application/json',
         headers: createAuthToken(),

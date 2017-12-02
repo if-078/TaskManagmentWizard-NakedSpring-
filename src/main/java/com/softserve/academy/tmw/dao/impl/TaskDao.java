@@ -250,12 +250,20 @@ public class TaskDao extends EntityDao<Task> implements TaskDaoInterface {
 
   @Override
   public void refreshEstimateTimeOfParents(int id, int diffSpent, int diffLeft) {
-    String query = "select * from " + table + " where id = (select parent_id from " + table + " where id = :id)";
     MapSqlParameterSource param = new MapSqlParameterSource();
-    String sql =
-            "UPDATE " + table + " SET estimate_time=:estimate_time, spent_time=:spent_time, " +
-                    "left_time=:left_time WHERE id=:id";
+    String sql = "UPDATE " + table + " SET spent_time=:spent_time, left_time=:left_time WHERE id=:id";
+    List<Task> tasks = getParents(id);
+    for (Task task : tasks) {
+      param.addValue("spent_time", task.getSpentTime() + diffSpent);
+      param.addValue("left_time", task.getLeftTime() + diffLeft);
+      param.addValue("id", task.getId());
+      jdbcTemplate.update(sql, param);
+    }
+  }
 
+  @Override
+  public List<Task> getParents(int id) {
+    String query = "select * from " + table + " where id = (select parent_id from " + table + " where id = :id)";
     List<Task> tasks;
     List<Task> tasksFinish = new ArrayList<>();
     int parentId;
@@ -265,12 +273,25 @@ public class TaskDao extends EntityDao<Task> implements TaskDaoInterface {
       id = tasks.get(0).getId();
       parentId = tasks.get(0).getParentId();
     } while (parentId != 0);
-    for (Task task : tasksFinish) {
-      param.addValue("spent_time", task.getSpentTime() + diffSpent);
-      param.addValue("left_time", task.getLeftTime() + diffLeft);
-      param.addValue("id", task.getId());
-      jdbcTemplate.update(sql, param);
-    }
+    return tasksFinish;
   }
 
+  @Override
+  public List<Task> getLastChildrenProject(int projectId) {
+    String query = "select * from " + table +" t1 where project_id = :projectId " +
+            "and not exists (select * from task t2 where t1.id = t2.parent_id)";
+    return jdbcTemplate.query(query, new MapSqlParameterSource("id", projectId), new TaskMapper());
+  }
+
+  @Override
+  public List<Task> getLastChildrenTask(int id) {
+    Task task = findOne(id);
+    List<Task> parents = getParents(id);
+    List<Task> childrenProject = getLastChildrenProject(task.getProjectId());
+    List<Task> lastChildren = new ArrayList<>();
+    for (Task task1 : childrenProject) {
+      if (!parents.contains(task1)) lastChildren.add(task1);
+    }
+    return lastChildren;
+  }
 }

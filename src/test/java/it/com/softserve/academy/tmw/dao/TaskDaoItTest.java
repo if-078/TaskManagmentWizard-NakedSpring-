@@ -60,11 +60,11 @@ public class TaskDaoItTest {
     Timestamp sqlDate = new Timestamp(date.getTime());
     int estTime = 0;
     Task task1 = new Task(taskName + 1, sqlDate, sqlDate, sqlDate, sqlDate, estTime, 1, 1, 1, 0);
-    task1.setId(1);
+    task1.setParentId(1);
     Task task2 = new Task(taskName + 2, sqlDate, sqlDate, sqlDate, sqlDate, estTime, 1, 1, 1, 0);
-    task2.setId(2);
+    task2.setParentId(2);
     Task task3 = new Task(taskName + 3, sqlDate, sqlDate, sqlDate, sqlDate, estTime, 1, 1, 1, 0);
-    task3.setId(43);
+    task3.setParentId(43);
 
     dao.create(task1);
     dao.create(task2);
@@ -76,12 +76,12 @@ public class TaskDaoItTest {
     task3.setName(taskName + " update");
     assertThat(dao.update(task3)).isTrue();
     assertThat(dao.getAll()).isNotEmpty();
-    assertThat(dao.delete(task3.getId())).isTrue();
+    assertThat(dao.delete(task3.getParentId())).isTrue();
     assertThat(dao.getAll().size()).isEqualTo(5);
 
-    assertThat(dao.delete(task1.getId())).isTrue();
-    assertThat(dao.delete(task2.getId())).isTrue();
-    assertThat(dao.delete(task3.getId())).isFalse();
+    assertThat(dao.delete(task1.getParentId())).isTrue();
+    assertThat(dao.delete(task2.getParentId())).isTrue();
+    assertThat(dao.delete(task3.getParentId())).isFalse();
     assertThat(dao.update(task3)).isFalse();
     dao.findOne(777);
   }

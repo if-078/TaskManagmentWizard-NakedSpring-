@@ -3,7 +3,6 @@ package com.softserve.academy.tmw.service.impl;
 import com.softserve.academy.tmw.dao.api.TaskDaoInterface;
 import com.softserve.academy.tmw.dao.api.UserDaoInterface;
 import com.softserve.academy.tmw.dao.api.UsersTasksDaoInterface;
-import com.softserve.academy.tmw.dao.impl.TaskDao;
 import com.softserve.academy.tmw.dao.util.JooqSQLBuilder;
 import com.softserve.academy.tmw.dao.util.wrapper.FilterStateWrapper;
 import com.softserve.academy.tmw.dto.TaskDTO;
@@ -18,12 +17,10 @@ import com.softserve.academy.tmw.service.api.UserServiceInterface;
 import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.List;
+import java.util.*;
+import java.util.function.Consumer;
+import java.util.function.Function;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -171,11 +168,25 @@ public class TaskService implements TaskServiceInterface {
   public List<TaskTableDTO> getFilteredTasksForTable(int parentId, String[] dates, int[] status,
       int[] priority, int[] tag, boolean planing, int userId) {
     FilterStateWrapper wrapper = new FilterStateWrapper();
-    wrapper.setId(parentId);
+    wrapper.setParentId(parentId);
     wrapper.setPriority(priority);
     wrapper.setStatus(status);
     wrapper.setTag(tag);
     wrapper.setDates(dates);
+    List<Integer> targetId = new ArrayList<>();
+    List<TaskTreeDTO> treeDTOS = taskDao.findTaskByTree(parentId, userId);
+    class Wrape{
+    Consumer<List<TaskTreeDTO>>consumer = c -> {
+      for (TaskTreeDTO taskTreeDTO : treeDTOS) {
+        if (taskTreeDTO.isChildren()) this.consumer.accept(taskDao.findTaskByTree(taskTreeDTO.getId(), userId));
+        else targetId.add(taskTreeDTO.getId());
+      }
+    };
+  }
+  Wrape wrape = new Wrape();
+    wrape.consumer.accept(treeDTOS);
+    wrapper.setIdS(targetId);
+
     JooqSQLBuilder builder = new JooqSQLBuilder(wrapper);
     return taskDao.getFilteredTasks(builder);
 
@@ -193,7 +204,7 @@ public class TaskService implements TaskServiceInterface {
       List<TaskTreeDTO> usertasks = new ArrayList<TaskTreeDTO>();
       for(TaskTreeDTO taskTreeDTO : tasksTreeDTO) {
 
-        Task task = taskDao.findOne(taskTreeDTO.getId());
+        Task task = taskDao.findOne(taskTreeDTO.getParentId());
         if (userId==task.getAuthorId()|(userId==task.getAssignTo())){
           usertasks.add(taskTreeDTO);
           continue;
@@ -201,7 +212,7 @@ public class TaskService implements TaskServiceInterface {
 
         List<UsersTasks> usersTasksList = usersTasksDao.getAll();
         for(UsersTasks usersTasks : usersTasksList){
-          if((task.getId()==usersTasks.getTaskId())&(userId==usersTasks.getUserId())){
+          if((task.getParentId()==usersTasks.getTaskId())&(userId==usersTasks.getUserId())){
             usertasks.add(taskTreeDTO);
             continue;
           }

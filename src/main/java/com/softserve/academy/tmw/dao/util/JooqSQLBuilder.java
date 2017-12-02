@@ -45,15 +45,18 @@ public class JooqSQLBuilder {
         join(table("priority")).on(priorityId.eq(field("priority.id"))).
         join(table("status")).on(statusId.eq(field("status.id"))).
         join(table("user")).on(assignTo.eq(field("user.id")));
-    Condition condition = field(parentId).eq(sto.getId());
+    Condition condition = field(id).in(sto.getIdS());
     Select selectConditionStep;
-    condition = condition.and(planningDate.isNull());
+
+
+
+    if (sto.isPlanned()) condition = condition.and(planningDate.isNotNull());
+    else condition = condition.and(planningDate.isNull());
 
     if (sto.getStatus().length > 0) {
 
       List<Integer> list = Arrays.stream(sto.getStatus()).boxed().collect(Collectors.toList());
       condition = condition.and(field(statusId).in(list));
-
 
     }
 
@@ -104,7 +107,7 @@ public class JooqSQLBuilder {
     int[] priority = new int[]{1, 2, 3};
     wrapper.setPriority(priority);
     wrapper.setStatus(status);
-    wrapper.setId(1);
+    wrapper.setParentId(1);
     wrapper.setDates(new String[]{"0", "0"});
     wrapper.setTag(new int[]{1, 2});
     JooqSQLBuilder builder = new JooqSQLBuilder(wrapper);

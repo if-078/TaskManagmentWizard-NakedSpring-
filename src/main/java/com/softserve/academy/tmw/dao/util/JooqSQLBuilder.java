@@ -25,14 +25,18 @@ public class JooqSQLBuilder {
   private Field id = field("task.id");
   private Field name = field("task.name");
   private Field createdDate = field("task.created_date");
+  private Field planningDate = field("task.planning_date");
   private Field startDate = field("task.start_date");
   private Field endDate = field("task.end_date");
   private Field estimateTime = field("task.estimate_time");
+  private Field spentTime = field("task.spent_time");
+  private Field leftTime = field("task.left_time");
   private Field assignTo = field("task.assign_to");
   private Field statusId = field("task.status_id");
   private Field priorityId = field("task.priority_id");
   private Field parentId = field("task.parent_id");
-  private Field planningDate = field("task.planning_date");
+  private Field authorId = field("task.author_id");
+  private Field projectId =field("task.project_id");
   private FilterStateWrapper sto;
 
   public JooqSQLBuilder(FilterStateWrapper sto) {
@@ -83,7 +87,8 @@ public class JooqSQLBuilder {
       List<Integer> list = Arrays.stream(sto.getTag()).boxed().collect(Collectors.toList());
       table = table.join(table("tags_tasks")).on(field(id).eq(field("tags_tasks.task_id")))
           .join(table("tag")).on(field("tags_tasks.tag_id").eq(field("tag.id")));
-      selectConditionStep = creator.select(id, name, createdDate, startDate, endDate, estimateTime,
+      selectConditionStep = creator.select(id, name, createdDate, planningDate, startDate, endDate, estimateTime, spentTime,leftTime,assignTo,
+          statusId, priorityId,authorId,projectId,
           field("user.name").as("user"), field("status.name").as("status"),
           field("priority.name").as("priority"), parentId).from(table)
           .where(condition).and(field("tags_tasks.tag_id").in(list))
@@ -91,7 +96,8 @@ public class JooqSQLBuilder {
           .having(field("tag_id").countDistinct().eq(sto.getTag().length));
     } else {
 
-      selectConditionStep = creator.select(id, name, createdDate, startDate, endDate, estimateTime,
+      selectConditionStep = creator.select(id, name, createdDate, planningDate, startDate, endDate, estimateTime,spentTime,leftTime,assignTo,
+          statusId, priorityId,authorId,projectId,
           field("user.name").as("user")
           , field("status.name").as("status"), field("priority.name").as("priority"), parentId)
           .from(table).where(condition);

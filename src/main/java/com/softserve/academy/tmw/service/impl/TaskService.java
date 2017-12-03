@@ -176,15 +176,16 @@ public class TaskService implements TaskServiceInterface {
     List<Integer> targetId = new ArrayList<>();
     List<TaskTreeDTO> treeDTOS = taskDao.findTaskByTree(parentId, userId);
     class Wrape{
-    Consumer<List<TaskTreeDTO>>consumer = c -> {
-      for (TaskTreeDTO taskTreeDTO : treeDTOS) {
-        if (taskTreeDTO.isChildren()) this.consumer.accept(taskDao.findTaskByTree(taskTreeDTO.getId(), userId));
-        else targetId.add(taskTreeDTO.getId());
+      void findLeafs (List<TaskTreeDTO> trees){
+        for (TaskTreeDTO dto : trees){
+          if (dto.isChildren()) findLeafs(taskDao.findTaskByTree(dto.getId(), userId));
+          targetId.add(dto.getId());
+        }
       }
-    };
+
   }
   Wrape wrape = new Wrape();
-    wrape.consumer.accept(treeDTOS);
+    wrape.findLeafs(treeDTOS);
     wrapper.setIdS(targetId);
 
     JooqSQLBuilder builder = new JooqSQLBuilder(wrapper);

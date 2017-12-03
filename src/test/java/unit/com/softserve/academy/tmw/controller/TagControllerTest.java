@@ -5,7 +5,109 @@
  */
 package unit.com.softserve.academy.tmw.controller;
 
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.softserve.academy.tmw.controller.TagController;
+import com.softserve.academy.tmw.entity.Tag;
+import com.softserve.academy.tmw.service.impl.TagService;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
+import org.mockito.runners.MockitoJUnitRunner;
+import org.skyscreamer.jsonassert.JSONAssert;
+import org.springframework.http.MediaType;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
+
+@RunWith(MockitoJUnitRunner.class)
+@ContextConfiguration(classes = {TagController.class})
+@WebAppConfiguration
 public class TagControllerTest {
-    
+
+  @Mock
+  private TagService tagService;
+  @InjectMocks
+  private TagController controller;
+  private ObjectMapper jsonMapper = new ObjectMapper();
+  private MockMvc mockMvc;
+  Tag simpleTag;
+
+  @Before
+  public void setUp() {
+    MockitoAnnotations.initMocks(this);
+    mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
+    int testId = 1;
+    simpleTag = new Tag();
+    simpleTag.setName("#SimpleName");
+    simpleTag.setUserId(testId);
+    simpleTag.setId(testId);
+    when(tagService.findOne(Mockito.anyInt())).thenReturn(simpleTag);
+    when(tagService.create(simpleTag)).thenReturn(simpleTag);
+    when(tagService.update(simpleTag)).thenReturn(true);
+    when(tagService.delete(Mockito.anyInt())).thenReturn(true);
+  }
+
+  @Test
+  public void shouldCreate() throws Exception {
+
+    MvcResult result = mockMvc.perform(post("/api/tags/")
+        .accept(MediaType.APPLICATION_JSON)
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(jsonMapper.writeValueAsString(simpleTag)))
+        .andExpect(status().isOk()).andReturn();
+
+    JSONAssert.assertEquals(jsonMapper.writeValueAsString(simpleTag),
+        result.getResponse().getContentAsString(), false);
+
+  }
+
+  @Test
+  public void shouldFind() throws Exception {
+
+    MvcResult result = mockMvc.perform(get("/api/tags/" + simpleTag.getId())
+        .accept(MediaType.APPLICATION_JSON)
+        .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isOk()).andReturn();
+
+    JSONAssert.assertEquals(jsonMapper.writeValueAsString(simpleTag),
+        result.getResponse().getContentAsString(), false);
+
+  }
+
+  @Test
+  public void shouldDelete() throws Exception {
+
+    mockMvc.perform(delete("/api/tags/" + simpleTag.getId())
+        .accept(MediaType.APPLICATION_JSON)
+        .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isOk());
+
+  }
+
+  @Test
+  public void shouldUpdate() throws Exception {
+
+    mockMvc.perform(put("/api/tags/")
+        .accept(MediaType.APPLICATION_JSON)
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(jsonMapper.writeValueAsString(simpleTag)))
+        .andExpect(status().isOk()).andReturn();
+
+  }
+
+
 }

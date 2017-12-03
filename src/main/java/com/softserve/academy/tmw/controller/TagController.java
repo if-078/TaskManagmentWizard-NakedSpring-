@@ -33,7 +33,7 @@ public class TagController {
   }
 
   @GetMapping("/{id}")
-  Tag getTag(@PathVariable Integer id) throws SQLException {
+  public Tag getTag(@PathVariable Integer id) throws SQLException {
     return tagService.findOne(id);
   }
 
@@ -47,8 +47,5 @@ public class TagController {
     return tagService.delete(id);
   }
 
-  @DeleteMapping
-  public boolean deleteAllUserTags(@PathVariable Integer uid) {
-    return tagService.deleteAllByUserId(uid);
-  }
+
 }

@@ -22,11 +22,11 @@ import org.mockito.runners.MockitoJUnitRunner;
 @RunWith(MockitoJUnitRunner.class)
 public class TagServiceTest {
 
-  @InjectMocks
-  private TagServiceInterface tagService = new TagService();
-
   @Mock
   private TagDao dao;
+
+  @InjectMocks
+  private TagServiceInterface tagService = new TagService();
 
   @Before
   public void setUp() {
@@ -63,20 +63,6 @@ public class TagServiceTest {
     assertThat(isDeleted).isTrue();
     verify(dao).delete(testId);
   }
-
-    /*@Test
-    public void addTags() {
-        int[] tagsList = new int[4];
-        for (int i = 0; i < tagsList.length; i++) {
-            tagsList[i] = i + 1;
-        }
-        for (int i = 0; i < tagsList.length; i++) {
-            System.out.println(tagsList[i]);
-        }
-        boolean added = dao.setTagsToTask(tagsList, 3);
-        assertThat(added).isTrue();
-
-    }*/
 
 
 }

@@ -5,6 +5,7 @@
  */
 package unit.com.softserve.academy.tmw.controller;
 
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -39,7 +40,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 public class TagControllerTest {
 
   @Mock
-  private TagService tagService;
+  private TagService service;
   @InjectMocks
   private TagController controller;
   private ObjectMapper jsonMapper = new ObjectMapper();
@@ -55,29 +56,30 @@ public class TagControllerTest {
     simpleTag.setName("#SimpleName");
     simpleTag.setUserId(testId);
     simpleTag.setId(testId);
-    when(tagService.findOne(Mockito.anyInt())).thenReturn(simpleTag);
-    when(tagService.create(simpleTag)).thenReturn(simpleTag);
-    when(tagService.update(simpleTag)).thenReturn(true);
-    when(tagService.delete(Mockito.anyInt())).thenReturn(true);
+
   }
 
   @Test
   public void shouldCreate() throws Exception {
 
+    when(service.create(simpleTag)).thenReturn(simpleTag);
     MvcResult result = mockMvc.perform(post("/api/tags/")
         .accept(MediaType.APPLICATION_JSON)
         .contentType(MediaType.APPLICATION_JSON)
         .content(jsonMapper.writeValueAsString(simpleTag)))
-        .andExpect(status().isOk()).andReturn();
+        .andExpect(status().isCreated()).andReturn();
 
     JSONAssert.assertEquals(jsonMapper.writeValueAsString(simpleTag),
         result.getResponse().getContentAsString(), false);
+
+    verify(service).create(simpleTag);
 
   }
 
   @Test
   public void shouldFind() throws Exception {
 
+    when(service.findOne(Mockito.anyInt())).thenReturn(simpleTag);
     MvcResult result = mockMvc.perform(get("/api/tags/" + simpleTag.getId())
         .accept(MediaType.APPLICATION_JSON)
         .contentType(MediaType.APPLICATION_JSON))
@@ -86,28 +88,33 @@ public class TagControllerTest {
     JSONAssert.assertEquals(jsonMapper.writeValueAsString(simpleTag),
         result.getResponse().getContentAsString(), false);
 
+    verify(service).findOne(simpleTag.getId());
+
   }
 
   @Test
   public void shouldDelete() throws Exception {
 
+    when(service.delete(Mockito.anyInt())).thenReturn(true);
     mockMvc.perform(delete("/api/tags/" + simpleTag.getId())
         .accept(MediaType.APPLICATION_JSON)
         .contentType(MediaType.APPLICATION_JSON))
-        .andExpect(status().isOk());
+        .andExpect(status().isNoContent());
 
+    verify(service).delete(simpleTag.getId());
   }
 
   @Test
   public void shouldUpdate() throws Exception {
 
+    when(service.update(simpleTag)).thenReturn(true);
     mockMvc.perform(put("/api/tags/")
         .accept(MediaType.APPLICATION_JSON)
         .contentType(MediaType.APPLICATION_JSON)
         .content(jsonMapper.writeValueAsString(simpleTag)))
-        .andExpect(status().isOk()).andReturn();
+        .andExpect(status().isNoContent());
 
+    verify(service).update(simpleTag);
   }
-
 
 }

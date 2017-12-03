@@ -186,46 +186,26 @@ public class TaskService implements TaskServiceInterface {
       }
 
   }
-  Wrape wrape = new Wrape();
+    Wrape wrape = new Wrape();
     wrape.findLeafs(treeDTOS);
     wrapper.setIdS(targetId);
-
     JooqSQLBuilder builder = new JooqSQLBuilder(wrapper);
-    return taskDao.getFilteredTasks(builder);
 
+    // -- remove root-tasks
+    List<TaskTableDTO> list = taskDao.getFilteredTasks(builder);
+    List<TaskTableDTO> tasksTableDTO = new ArrayList<TaskTableDTO>();
+    for(TaskTableDTO taskTableDTO : list){
+      if (taskDao.findTaskByTree(taskTableDTO.getId(), userId).size()==0) {
+        tasksTableDTO.add(taskTableDTO);
+      }
+    }
+
+    return tasksTableDTO;
   }
 
   @Override
   public List<TaskTreeDTO> findTaskByTree(int id, int userId) {
-    List<TaskTreeDTO> tasksTreeDTO = taskDao.findTaskByTree(id, userId);
-
-    //if id==0 - load projects
-    //show project for user if (userId==autorId or userId==assignTo or userId in team project)
-    //make SQL select
-/*
-    if (id==0){
-      List<TaskTreeDTO> usertasks = new ArrayList<TaskTreeDTO>();
-      for(TaskTreeDTO taskTreeDTO : tasksTreeDTO) {
-
-        Task task = taskDao.findOne(taskTreeDTO.getParentId());
-        if (userId==task.getAuthorId()|(userId==task.getAssignTo())){
-          usertasks.add(taskTreeDTO);
-          continue;
-        }
-
-        List<UsersTasks> usersTasksList = usersTasksDao.getAll();
-        for(UsersTasks usersTasks : usersTasksList){
-          if((task.getParentId()==usersTasks.getTaskId())&(userId==usersTasks.getUserId())){
-            usertasks.add(taskTreeDTO);
-            continue;
-          }
-        }
-
-      }
-      tasksTreeDTO = usertasks;
-    }
-*/
-    return tasksTreeDTO;
+    return taskDao.findTaskByTree(id, userId);
   }
 
   @Override

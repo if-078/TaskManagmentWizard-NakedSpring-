@@ -75,7 +75,10 @@ var taskTable = function () {
                                 break;
                             }
                         }
-                        if ((!hasChildren)&(selectedTaskId !=0)) {
+
+                        //if ((!hasChildren)&(selectedTaskId !=0)) {
+
+                        if ((true)&(selectedTaskId !=0)) {
                             rows.push(Object.values(data[i]));
                         }
                     }

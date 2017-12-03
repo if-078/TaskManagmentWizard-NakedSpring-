@@ -1,6 +1,10 @@
 package com.softserve.academy.tmw.dto;
 
+import com.softserve.academy.tmw.entity.Comment;
 import com.softserve.academy.tmw.entity.Tag;
+
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotBlank;
@@ -10,14 +14,19 @@ public class TaskDTO {
   private int id;
   private String name;
   private String createdDate;
-  private String startDate;
-  private String endDate;
+  private String draftPlanning;
+  private String planningDate;
   private int estimateTime;
+  private int spentTime;
+  private int leftTime;
+  private int author;
   private int assignTo;
   private int statusId;
   private int priorityId;
   private int parentId;
+  private int projectId;
   private Tag tags[];
+  private Comment comments[];
 
   public int getId() {
     return id;
@@ -35,18 +44,32 @@ public class TaskDTO {
 
   @NotBlank
   @Pattern(regexp = "\\d{4}-\\d{2}-\\d{2}")
-  public String getStartDate() {
-    return startDate;
+  public String getDraftPlanning() {
+    return draftPlanning;
   }
 
   @NotBlank
   @Pattern(regexp = "\\d{4}-\\d{2}-\\d{2}")
-  public String getEndDate() {
-    return endDate;
+  public String getPlanningDate() {
+    return planningDate;
   }
 
+  @NotBlank
+  @Min(1)
   public int getEstimateTime() {
     return estimateTime;
+  }
+
+  public int getSpentTime() {
+    return spentTime;
+  }
+
+  public int getLeftTime() {
+    return leftTime;
+  }
+
+  public int getAuthor() {
+    return author;
   }
 
   public int getAssignTo() {
@@ -65,8 +88,16 @@ public class TaskDTO {
     return parentId;
   }
 
+  public int getProjectId() {
+    return projectId;
+  }
+
   public Tag[] getTags() {
     return tags;
+  }
+
+  public Comment[] getComments() {
+    return comments;
   }
 
   public void setId(int id) {
@@ -81,16 +112,28 @@ public class TaskDTO {
     this.createdDate = createdDate;
   }
 
-  public void setStartDate(String startDate) {
-    this.startDate = startDate;
+  public void setDraftPlanning(String draftPlanning) {
+    this.draftPlanning = draftPlanning;
   }
 
-  public void setEndDate(String endDate) {
-    this.endDate = endDate;
+  public void setPlanningDate(String planningDate) {
+    this.planningDate = planningDate;
   }
 
   public void setEstimateTime(int estimateTime) {
     this.estimateTime = estimateTime;
+  }
+
+  public void setSpentTime(int spentTime) {
+    this.spentTime = spentTime;
+  }
+
+  public void setLeftTime(int leftTime) {
+    this.leftTime = leftTime;
+  }
+
+  public void setAuthor(int author) {
+    this.author = author;
   }
 
   public void setAssignTo(int assignTo) {
@@ -109,7 +152,15 @@ public class TaskDTO {
     this.parentId = parentId;
   }
 
+  public void setProjectId(int projectId) {
+    this.projectId = projectId;
+  }
+
   public void setTags(Tag[] tags) {
     this.tags = tags;
+  }
+
+  public void setComments(Comment[] comments) {
+    this.comments = comments;
   }
 }

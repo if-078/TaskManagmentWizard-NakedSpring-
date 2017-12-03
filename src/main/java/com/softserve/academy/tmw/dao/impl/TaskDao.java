@@ -36,7 +36,6 @@ public class TaskDao extends EntityDao<Task> implements TaskDaoInterface {
     String query = "SELECT * FROM " + table + " WHERE id = :id";
     Task task = jdbcTemplate
             .queryForObject(query, new MapSqlParameterSource("id", id), new TaskMapper());
-    System.out.println(task);
     return task;
   }
 
@@ -108,7 +107,7 @@ public class TaskDao extends EntityDao<Task> implements TaskDaoInterface {
     MapSqlParameterSource param = new MapSqlParameterSource();
     KeyHolder keyHolder = new GeneratedKeyHolder();
 
-    java.sql.Timestamp startDate, endDate;
+    java.sql.Timestamp startDate, planningDate;
 
     //if task creating then left_ime = estimate_time
     task.setLeftTime(task.getEstimateTime());
@@ -119,10 +118,10 @@ public class TaskDao extends EntityDao<Task> implements TaskDaoInterface {
       startDate = new java.sql.Timestamp(task.getStartDate().getTime());
     }
 
-    if (task.getEndDate() == null) {
-      endDate = null;
+    if (task.getPlanningDate() == null) {
+      planningDate = null;
     } else {
-      endDate = new java.sql.Timestamp(task.getEndDate().getTime());
+      planningDate = new java.sql.Timestamp(task.getPlanningDate().getTime());
     }
 
     if (task.getStatusId() == 0) {
@@ -144,7 +143,7 @@ public class TaskDao extends EntityDao<Task> implements TaskDaoInterface {
     param.addValue("created_date", new java.sql.Timestamp(new Date().getTime()));
     param.addValue("planning_date", task.getPlanningDate());
     param.addValue("start_date", startDate);
-    param.addValue("end_date", endDate);
+    param.addValue("end_date", startDate);
     param.addValue("estimate_time", task.getEstimateTime());
     param.addValue("spent_time", task.getSpentTime());
     param.addValue("left_time", task.getLeftTime());

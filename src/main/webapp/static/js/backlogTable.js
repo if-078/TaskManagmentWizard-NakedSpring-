@@ -41,7 +41,6 @@ var taskTable = function () {
     }
 
 
-
     $.ajax({
         url: 'api/tasks/filter' + generatedRequestParameters() + '&planing=false' + '&userId=' + userId ,
         type: 'GET',
@@ -82,13 +81,13 @@ var taskTable = function () {
                     var setMinute;
                     var slotMin = timeSlotHour * 60 + timeSlotMin;
                     for (var i = 0; i < rows.length; i++){
-                        rows[i][3] = Math.ceil(rows[i][3]/slotMin) * slotMin;
-                        setHour = '' + parseInt(rows[i][3]/60);
+                        rows[i][6] = Math.ceil(rows[i][6]/slotMin) * slotMin;
+                        setHour = '' + parseInt(rows[i][6]/60);
                         if (setHour.length<2) setHour = '0' + setHour;
-                        setMinute = '' + rows[i][3]%60;
+                        setMinute = '' + rows[i][6]%60;
                         if (setMinute.length<2) setMinute = '0' + setMinute;
-                        rows[i][7] = '' + setHour + ':' + setMinute + ':00';
-                        rows[i][3] = '' + setHour + ' h ' + setMinute + ' min';
+                        rows[i][6] = '' + setHour + ':' + setMinute + ':00';
+                        rows[i][18] = '' + setHour + ':' + setMinute + ':00';
                     }
 
                     if (taskTableInit) {
@@ -104,12 +103,23 @@ var taskTable = function () {
 
                         columns: [
                             {title: "ID", visible: false},
-                            {title: "Name"},
-                            {title: "Start Date"},
-                            {title: "Est. Time"},
-                            {title: "Assignee"},
-                            {title: "Status"},
-                            {title: "Priority"}
+                            {title: "Name", visible: true},
+                            {title: "Create Date", visible: false},
+                            {title: "Planning Date", visible: false},
+                            {title: "Draft Planning", visible: true},
+                            {title: "End Date", visible: false},
+                            {title: "Est. Time", visible: true},
+                            {title: "Spent Time", visible: true},
+                            {title: "Left Time", visible: true},
+                            {title: "AssignTo", visible: false},
+                            {title: "Statud ID", visible: false},
+                            {title: "Priority ID", visible: false},
+                            {title: "Parent ID", visible: false},
+                            {title: "Author ID", visible: false},
+                            {title: "Project ID", visible: false},
+                            {title: "Assignee", visible: true},
+                            {title: "Status", visible: true},
+                            {title: "Priority", visible: true}
                         ],
 
                         paging: false,

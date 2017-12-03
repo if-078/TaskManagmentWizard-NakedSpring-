@@ -53,7 +53,7 @@ public class JooqSQLBuilder {
     Select selectConditionStep;
 
 
-
+    System.out.println("GET PLANNED TASK = " + sto.isPlanned());
     if (sto.isPlanned()) condition = condition.and(planningDate.isNotNull());
     else condition = condition.and(planningDate.isNull());
 

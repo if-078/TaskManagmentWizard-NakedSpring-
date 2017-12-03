@@ -167,11 +167,13 @@ public class TaskService implements TaskServiceInterface {
   @Override
   public List<TaskTableDTO> getFilteredTasksForTable(int parentId, String[] dates, int[] status,
       int[] priority, int[] tag, boolean planing, int userId) {
+
     FilterStateWrapper wrapper = new FilterStateWrapper();
     wrapper.setParentId(parentId);
     wrapper.setPriority(priority);
     wrapper.setStatus(status);
     wrapper.setTag(tag);
+    wrapper.setPlanned(planing);
     wrapper.setDates(dates);
     List<Integer> targetId = new ArrayList<>();
     List<TaskTreeDTO> treeDTOS = taskDao.findTaskByTree(parentId, userId);

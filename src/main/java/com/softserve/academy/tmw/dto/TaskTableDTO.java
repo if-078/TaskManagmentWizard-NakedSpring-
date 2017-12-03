@@ -4,24 +4,24 @@ import java.util.Date;
 
 public class TaskTableDTO {
 
-  private int id;
-  private String name;
-  private Date createdDate;
-  private Date planningDate;
-  private Date startDate;
-  private Date endDate;
-  private int estimateTime;
-  private int spentTime;
-  private int leftTime;
-  private int assignTo;
-  private int statusId;
-  private int priorityId;
-  private int parentId;
-  private int authorId;
-  private int projectId;
-  private String assign;
-  private String status;
-  private String priority;
+  private int id;             // 0
+  private String name;        // 1
+  private Date createdDate;   // 2
+  private Date planningDate;  // 3
+  private Date startDate;     // 4
+  private Date endDate;       // 5
+  private int estimateTime;   // 6
+  private int spentTime;      // 7
+  private int leftTime;       // 8
+  private int assignTo;       // 9
+  private int statusId;       // 10
+  private int priorityId;     // 11
+  private int parentId;       // 12
+  private int authorId;       // 13
+  private int projectId;      // 14
+  private String assign;      // 15
+  private String status;      // 16
+  private String priority;    // 17
 
   public int getId() {
     return id;

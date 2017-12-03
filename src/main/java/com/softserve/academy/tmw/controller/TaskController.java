@@ -76,7 +76,34 @@ public class TaskController {
       @RequestParam(name = "planing", required = false) boolean planing,
       @RequestParam(name = "userId", required = false) int userId)
   {
-    return taskService.getFilteredTasksForTable(parentId, date, status, priority, tag, planing, userId);
+
+    List<TaskTableDTO> tasksTableDTO = taskService.getFilteredTasksForTable(parentId, date, status, priority, tag, planing, userId);
+
+
+    for(TaskTableDTO task : tasksTableDTO){
+      System.out.println("==========================");
+      System.out.println("id = " + task.getId());
+      System.out.println("name = " + task.getName());
+      System.out.println("createDate = " + task.getCreatedDate());
+      System.out.println("planningDate = " + task.getPlanningDate());
+      System.out.println("startDate = " + task.getStartDate());
+      System.out.println("endDate = " + task.getEndDate());
+      System.out.println("estimateTime = " + task.getEstimateTime());
+      System.out.println("spentTime = " + task.getSpentTime());
+      System.out.println("leftTime = " + task.getLeftTime());
+      System.out.println("assignTo = " + task.getAssignTo());
+      System.out.println("statusId = " + task.getStatusId());
+      System.out.println("priorityId = " + task.getPriorityId());
+      System.out.println("parentId = " + task.getParentId());
+      System.out.println("authorId = " + task.getAuthorId());
+      System.out.println("projectId = " + task.getProjectId());
+      System.out.println("Assign Name = " + task.getAssign());
+      System.out.println("Status Name = " + task.getStatus());
+      System.out.println("Priority Name = " + task.getPriority());
+      System.out.println("==========================");
+    }
+
+    return tasksTableDTO;
   }
 
   @GetMapping("/view/{id}")

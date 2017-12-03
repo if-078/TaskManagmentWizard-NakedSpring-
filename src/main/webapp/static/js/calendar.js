@@ -41,7 +41,7 @@ var taskCalendar = function () {
 
             plannedTasks = [];
             $.ajax({
-                url: 'api/tasks/planning',
+                url: 'api/tasks/filter' + generatedRequestParameters() + '&planing=true' + '&userId=' + userId,
                 type: 'GET',
                 contentType: 'application/json',
                 headers: createAuthToken(),

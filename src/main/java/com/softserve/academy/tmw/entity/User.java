@@ -52,6 +52,16 @@ public class User {
   }
 
   @Override
+  public String toString() {
+    return "User{" +
+        "user_id=" + user_id +
+        ", name='" + name + '\'' +
+        ", pass='" + pass + '\'' +
+        ", email='" + email + '\'' +
+        '}';
+  }
+
+  @Override
   public boolean equals(Object obj) {
     if (obj == null) {
       return false;

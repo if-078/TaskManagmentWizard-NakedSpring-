@@ -83,7 +83,7 @@ public class TaskServiceTest {
 //        int countError = 4;
 //        TaskDTO taskDTO = new TaskDTO();
 //        taskDTO.setName(null);
-//        taskDTO.setStartDate(null);
+//        taskDTO.setDraftPlanning(null);
 //        taskDTO.setEndDate(null);
 //        taskDTO.setEstimateTime(null);
 //
@@ -116,7 +116,7 @@ public class TaskServiceTest {
 //    public void shouldBeNotValidFromatStartDateAndEndDateAndEstimateTimeOfTask() {
 //        int countError = 3;
 //        TaskDTO taskDTO = new TaskDTO();
-//        taskDTO.setStartDate("badFormat");
+//        taskDTO.setDraftPlanning("badFormat");
 //        taskDTO.setEndDate("badFormat");
 //        taskDTO.setEstimateTime("badFormat");
 //
@@ -146,7 +146,7 @@ public class TaskServiceTest {
 //        int countError = 0;
 //        TaskDTO taskDTO = new TaskDTO();
 //        taskDTO.setName("newTask");
-//        taskDTO.setStartDate("2017-12-01");
+//        taskDTO.setDraftPlanning("2017-12-01");
 //        taskDTO.setEndDate("2017-12-02");
 //        taskDTO.setEstimateTime("08:00:30");
 //        taskDTO.setStatusId(1);

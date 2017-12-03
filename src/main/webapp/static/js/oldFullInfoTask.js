@@ -1,4 +1,5 @@
 var tags = [];
+var comments = [];
 var taskID = null;
 var taskDTO = {};
 
@@ -47,15 +48,19 @@ var showFull = function (id) {
             window.sessionStorage.setItem("token", token);
             taskDTO = data;
 
-            $('#tmw-task-name').val(taskDTO.name);
-            $('#tmw-task-createDate').val(taskDTO.createdDate);
-            $('#tmw-task-startDate').val(taskDTO.startDate);
-            $('#tmw-task-endDate').val(taskDTO.endDate);
+            console.log(taskDTO);
+            $('#tmw-task-info').text(taskDTO.name);
+            $('#tmw-task-draftPlanning').val(taskDTO.draftPlanning);
+            $('#tmw-task-planningDate').val(taskDTO.planningDate);
             $('#tmw-task-estimateTime').val(taskDTO.estimateTime);
-            fillSelectUser(taskDTO.assignTo.id);
-            fillSelectPriority(taskDTO.priority.id);
-            fillSelectStatus(taskDTO.status.id);
+            $('#tmw-task-spentTime').val(taskDTO.spentTine);
+            $('#tmw-task-leftTime').val(taskDTO.leftTime);
+            $('#tmw-task-author').val(taskDTO.author);
+            taskDTO.assignTo != null ? fillSelectUser(taskDTO.assignTo.id) : $('#tmw-task-assignTo').val('');
+            taskDTO.priority != null ? fillSelectUser(taskDTO.priority.id) : $('#tmw-task-priority').val('');
+            taskDTO.status != null ? fillSelectUser(taskDTO.status.id) : $('#tmw-task-status').val('');
             fillSelectTags(taskDTO.id);
+            fillSelectComments(taskDTO.id);
 
             $('#tmw-modal').modal('show');
         },
@@ -100,11 +105,14 @@ $('#tmw-create-task').on('click', function () {
     clearErrorTask();
     taskDTO = {}
     clearTaskModal();
+    $('#tmw-task-author').val(userName);
     fillSelectUser(null);
     fillSelectPriority(null);
     fillSelectStatus(null);
     fillSelectTags(null);
-    //$('#tmw-tag-multi-select').multiselect('deselectAll', false);
+    fillSelectComments(null);
+    $('#tmw-tag-multi-select').multiselect('deselectAll', false);
+    $('#tmw-comment-multi-select').multiselect('deselectAll', false);
 
     $('#tmw-modal').modal('show');
 });
@@ -116,32 +124,42 @@ function createOrUpdatetask(taskDTO) {
         task =
             {
                 "name": $('#tmw-task-name').val(),
-                "createdDate": $('#tmw-task-createDate').val(),
-                "startDate": $('#tmw-task-startDate').val(),
-                "endDate": $('#tmw-task-endDate').val(),
+                "createdDate": new Date(),
+                "planningDate": $('#tmw-task-planningDate').val(),
+                "draftPlanning": $('#tmw-task-draftPlanning').val(),
                 "estimateTime": $('#tmw-task-estimateTime').val(),
+                "spentTime": $('#tmw-task-spentTime').val(),
+                "leftTime": $('#tmw-task-leftTime').val(),
+                "author": $('#tmw-task-author').val(),
                 "assignTo": $('#tmw-task-assignTo').find(":selected").val(),
                 "statusId": $('#tmw-task-status').find(":selected").val(),
                 "priorityId": $('#tmw-task-priority').find(":selected").val(),
-                "parentId": state.parentid,
+                "parentId": state.parentId,
+                "projectId": state.projectId,
                 "tags": getSelectedTags(),
+                "comments": getSelectedComments()
             }
 
-        createtask(task);
+        createTask(task);
     } else {
         task =
             {
                 "id": taskDTO.id,
                 "name": $('#tmw-task-name').val(),
-                "createdDate": $('#tmw-task-createDate').val(),
-                "startDate": $('#tmw-task-startDate').val(),
-                "endDate": $('#tmw-task-endDate').val(),
+                "createdDate": taskDTO.createdDate,
+                "planningDate": $('#tmw-task-planningDate').val(),
+                "draftPlanning": $('#tmw-task-draftPlanning').val(),
                 "estimateTime": $('#tmw-task-estimateTime').val(),
+                "spentTime": $('#tmw-task-spentTime').val(),
+                "leftTime": $('#tmw-task-leftTime').val(),
+                "author": $('#tmw-task-author').val(),
                 "assignTo": $('#tmw-task-assignTo').find(":selected").val(),
                 "statusId": $('#tmw-task-status').find(":selected").val(),
                 "priorityId": $('#tmw-task-priority').find(":selected").val(),
-                "parentId": state.parentid,
+                "parentId": state.parentId,
+                "projectId": state.projectId,
                 "tags": getSelectedTags(),
+                "comments": getSelectedComments()
             }
 
         updatetask(task);
@@ -164,7 +182,23 @@ function getSelectedTags() {
 
 }
 
-function createtask(task) {
+function getSelectedComments() {
+    var selectedIdOfComments = $('#tmw-comment-multi-select').val();
+    var selectedComments = [];
+
+    for (var i = 0; i < comments.length; i++) {
+        for (var j = 0; j < selectedIdOfComments.length; j++) {
+            if (comments[i].id == selectedIdOfComments[j]) {
+                selectedComments.push(comments[i]);
+                break;
+            }
+        }
+    }
+    return selectedComments;
+
+}
+
+function createTask(task) {
     clearErrorTask();
     taskDTO = {};
     $.ajax({
@@ -230,14 +264,17 @@ function deletetask(taskId) {
 
 function clearTaskModal() {
     $('#tmw-task-name').val('');
-    $('#tmw-task-createDate').val('');
-    $('#tmw-task-startDate').val('');
-    $('#tmw-task-endDate').val('');
+    $('#tmw-task-planningDate').val('');
+    $('#tmw-task-draftPlanning').val('');
     $('#tmw-task-estimateTime').val('');
+    $('#tmw-task-spentTime').val('');
+    $('#tmw-task-leftTime').val('');
+    $('#tmw-task-author').empty();
     $('#tmw-task-assignTo').empty();
     $('#tmw-task-status').empty();
     $('#tmw-task-priority').empty();
     $('#tmw-task-tag').empty();
+    $('#tmw-task-comment').empty();
 }
 
 function fillSelectUser(id) {
@@ -350,7 +387,7 @@ function fillSelectTags(id) {
             });
 
             $('#tmw-tag-multi-select').multiselect({
-                buttonWidth: '570px',
+                buttonWidth: '100%',
                 inheritClass: true,
                 enableCaseInsensitiveFiltering: true,
                 dropRight: true,
@@ -384,7 +421,7 @@ function getTagsByTask(id) {
             var token = jqXHR.getResponseHeader('Authentication');
             window.sessionStorage.setItem("token", token);
 
-            $('#tmw-tag-multi-select').multiselect('select', getIdOfTask(data));
+            $('#tmw-tag-multi-select').multiselect('select', getIdTagsOfTask(data));
 
         },
         error: function (jqXHR, textStatus, errorThrown) {
@@ -397,7 +434,7 @@ function getTagsByTask(id) {
     });
 }
 
-function getIdOfTask(data) {
+function getIdTagsOfTask(data) {
     var arrTagsId = [];
 
     data.map(function (tag) {
@@ -406,6 +443,84 @@ function getIdOfTask(data) {
 
     return arrTagsId;
 }
+
+function fillSelectComments(id) {
+    tags = [];
+    $('#tmw-comment-multi-select').empty();
+    $.ajax({
+        url: 'api/comment/',
+        type: 'GET',
+        contentType: 'application/json',
+        headers: createAuthToken(),
+        success: function (data, textStatus, jqXHR) {
+            comments = data;
+            var token = jqXHR.getResponseHeader('Authentication');
+            window.sessionStorage.setItem("token", token);
+            $.each(data, function (i, comment) {
+                $('#tmw-comment-multi-select').append($('<option>', {
+                    value: comment.id,
+                    text: comment.commentText
+                }));
+            });
+
+            $('#tmw-comment-multi-select').multiselect({
+                buttonWidth: '100%',
+                inheritClass: true,
+                enableCaseInsensitiveFiltering: true,
+                dropRight: true,
+                numberDisplayed: 10,
+            });
+
+            $('#tmw-comment-multi-select').multiselect('deselectAll', false);
+            $('#tmw-comment-multi-select').multiselect('updateButtonText');
+
+            if (id != null) getCommentsByTask(id);
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            if (jqXHR.status === 401) {
+                resetToken();
+            } else {
+                throw new Error("an unexpected error occured: " + errorThrown);
+            }
+        }
+    });
+}
+
+function getCommentsByTask(id) {
+    $('#tmw-comment-multi-select').multiselect('deselectAll', false);
+
+    $.ajax({
+        url: 'api/tasks/' + id + '/comments',
+        type: 'GET',
+        contentType: 'application/json',
+        headers: createAuthToken(),
+        success: function (data, textStatus, jqXHR) {
+            var token = jqXHR.getResponseHeader('Authentication');
+            window.sessionStorage.setItem("token", token);
+
+            $('#tmw-comment-multi-select').multiselect('select', getIdCommentsOfTask(data));
+
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            if (jqXHR.status === 401) {
+                resetToken();
+            } else {
+                throw new Error("an unexpected error occured: " + errorThrown);
+            }
+        }
+    });
+}
+
+function getIdCommentsOfTask(data) {
+    var arrCommentsId = [];
+
+    data.map(function (comment) {
+        arrCommentsId.push(comment.id);
+    });
+
+    return arrCommentsId;
+}
+
 
 function clearErrorTask() {
 

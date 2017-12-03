@@ -1,6 +1,6 @@
 
 var generatedRequestParameters = function () {
-    var parameters = '?parentid=' + state.parentid + '&date=' + state.dateFrom + ',' + state.dateTo;
+    var parameters = '?parentId=' + state.parentId + '&date=' + state.dateFrom + ',' + state.dateTo;
     parameters = parameters + '&status=';
     for (var i = 0; i < state.status.length; i++) {
         parameters = parameters + state.status[i] + ',';
@@ -50,7 +50,7 @@ var taskTable = function () {
             setToken(jqXHR);
 
             $.ajax({
-                url: 'api/tasks/tree/' + state.parentid + '?userId=' + userId,
+                url: 'api/tasks/tree/' + state.parentId + '?userId=' + userId,
                 type: 'GET',
                 contentType: 'application/json',
                 headers: createAuthToken(),

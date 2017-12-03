@@ -211,3 +211,23 @@ li.jstree-leaf > a .jstree-icon {
     /*background: url("imageClosed.gif") 0px 0px no-repeat !important;*/
     /*background-color: blue;*/
 }
+
+div.form-group {
+    margin-bottom: 0;
+}
+
+div.col-md-4 {
+    width: 25%;
+}
+
+div.col-md-10 {
+    width: 33.3%;
+}
+
+div.col-md-12 {
+    width: 50%;
+}
+div.modal-footer button {
+    margin: 10px;
+    margin-bottom: 0px;
+}

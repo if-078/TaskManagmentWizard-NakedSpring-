@@ -211,3 +211,11 @@ li.jstree-leaf > a .jstree-icon {
     /*background: url("imageClosed.gif") 0px 0px no-repeat !important;*/
     /*background-color: blue;*/
 }
+
+
+#tmw-create-task {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+

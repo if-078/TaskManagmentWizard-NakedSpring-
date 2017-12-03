@@ -27,7 +27,11 @@ var generatedRequestParameters = function () {
 var taskTableInit = false;
 var taskTable = function () {
 
-    $('#tmw-task-table').css('visibility', 'visible');
+    if(selectedTaskId != 0) {
+        $('#tmw-task-table').css('visibility', 'visible');
+    }
+
+    console.log('selectedTaskId = ', selectedTaskId );
 
     if (selectedTaskId==0) {
         if (taskTableInit) {

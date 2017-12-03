@@ -64,7 +64,7 @@ public class TaskController {
   @GetMapping("/filter")
   @ResponseStatus(HttpStatus.OK)
   public List<TaskTableDTO> getFilteredTasks(
-      @RequestParam(name = "parentid", required = false) int parentId,
+      @RequestParam(name = "parentId", required = false) int parentId,
       @RequestParam(name = "date", required = false) String[] date,
       @RequestParam(name = "status", required = false) int[] status,
       @RequestParam(name = "priority", required = false) int[] priority,

@@ -18,8 +18,6 @@ import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.function.Consumer;
-import java.util.function.Function;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -211,17 +209,32 @@ public class TaskService implements TaskServiceInterface {
   @Override
   public TaskFullInfoDTO getFullInfo(int id) {
     Task task = taskDao.findOne(id);
+    System.out.println(task);
     TaskFullInfoDTO taskDTO = new TaskFullInfoDTO();
 
     taskDTO.setId(task.getId());
     taskDTO.setName(task.getName());
-    taskDTO.setCreatedDate(task.getCreatedDate());
-    taskDTO.setStartDate(task.getStartDate());
-    taskDTO.setEndDate(task.getEndDate());
+    taskDTO.setPlanningDate(task.getPlanningDate());
+    taskDTO.setDraftPlanning(task.getStartDate());
     taskDTO.setEstimateTime(task.getEstimateTime());
-    taskDTO.setAssignTo(serviceUser.findOne(task.getAssignTo()));
-    taskDTO.setStatus(serviceStatus.findOne(task.getStatusId()));
-    taskDTO.setPriority(servicePriority.findOne(task.getStatusId()));
+    taskDTO.setSpentTime(task.getSpentTime());
+    taskDTO.setLeftTime(task.getLeftTime());
+    if (task.getAssignTo() > 0) {
+      taskDTO.setAssignTo(serviceUser.findOne(task.getAssignTo()));
+    }
+    else taskDTO.setAssignTo(null);
+    if (task.getStatusId() > 0) {
+      taskDTO.setStatus(task.getStatus());
+    }
+    else taskDTO.setStatus(null);
+    if (task.getPriorityId() > 0) {
+      taskDTO.setPriority(task.getPriority());
+    }
+    else taskDTO.setPriority(null);
+    if (task.getAuthorId() > 0) {
+      taskDTO.setAuthor(serviceUser.findOne(task.getAuthorId()).getName());
+    }
+    else taskDTO.setAuthor("");
 
     return taskDTO;
   }

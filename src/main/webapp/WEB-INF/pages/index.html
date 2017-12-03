@@ -165,6 +165,10 @@
                 <div class="form-group">
                     <div class="form-row">
                         <div class="form-group col-md-4">
+                            <label for="tmw-task-author">Author</label>
+                            <input type="text" id="tmw-task-author" class="form-control author" readonly></select>
+                        </div>
+                        <div class="form-group col-md-4">
                             <label for="tmw-task-assignTo">Assign to</label>
                             <select id="tmw-task-assignTo" class="form-control assignTo"></select>
                         </div>
@@ -181,54 +185,70 @@
 
 
                 <div class="form-row">
-                    <div class="form-group col-md-12">
+                    <div class="form-group col-md-10">
                         <label for="tmw-task-estimateTime">Estimate time</label>
                         <input type="text" class="form-control" id="tmw-task-estimateTime" placeholder="hh:mm:ss">
                         <div id="tmw-task-estimateTime-error"></div>
                     </div>
+                    <div class="form-group col-md-10">
+                        <label for="tmw-task-estimateTime">Spent time</label>
+                        <input type="text" class="form-control" id="tmw-task-spentTime" placeholder="hh:mm:ss">
+                        <div id="tmw-task-spentTime-error"></div>
+                    </div>
+                    <div class="form-group col-md-10">
+                        <label for="tmw-task-estimateTime">Left time</label>
+                        <input type="text" class="form-control" id="tmw-task-leftTime" placeholder="hh:mm:ss">
+                        <div id="tmw-task-leftTime-error"></div>
+                    </div>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group col-md-6">
-                        <label for="tmw-task-conteiner-startDate">Start Date</label>
+                        <label for="tmw-task-conteiner-draftPlanning">Draft Planning</label>
                         <div class="form-group">
-                            <div class='input-group date' id="tmw-task-conteiner-startDate">
-                                <input id="tmw-task-startDate" type='text' class="form-control datepicker"
+                            <div class='input-group date' id="tmw-task-conteiner-draftPlanning">
+                                <input id="tmw-task-draftPlanning" type='text' class="form-control datepicker"
                                        data-date-format="yyyy-mm-dd" placeholder='YYYY-MM-DD'/><span
                                     class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                             </div>
-                            <div id="tmw-task-startDate-error"></div>
+                            <div id="tmw-task-draftPlanning-error"></div>
                         </div>
                     </div>
                     <div class="form-group col-md-6">
-                        <label for="tmw-task-conteiner-endDate">End Date</label>
+                        <label for="tmw-task-conteiner-planningDate">Planning Date</label>
                         <div class="form-group">
-                            <div class='input-group date' id="tmw-task-conteiner-endDate">
-                                <input id="tmw-task-endDate" type='text' class="form-control datepicker"
+                            <div class='input-group date' id="tmw-task-conteiner-planningDate">
+                                <input id="tmw-task-planningDate" type='text' class="form-control datepicker"
                                        data-date-format="yyyy-mm-dd" placeholder='YYYY-MM-DD'/><span
                                     class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                             </div>
-                            <div id="tmw-task-endDate-error"></div>
+                            <div id="tmw-task-planningDate-error"></div>
                         </div>
                     </div>
 
-                    <!--
                     <div class="form-row">
                         <div class="form-group col-md-12">
-                            <label for="tmw-task-conteiner-tags">Tags</label> -->
-                            <!-- Build your select: -->
-                    <!--        <div id="tmw-task-conteiner-tags">
+                            <label for="tmw-task-conteiner-tags">Tags</label>
+                             <!--Build your select:-->
+                            <div id="tmw-task-conteiner-tags">
                                 <select id="tmw-tag-multi-select" multiple="multiple"></select>
                             </div>
                         </div>
-                    </div> -->
+                        <div class="form-group col-md-12">
+                            <label for="tmw-task-conteiner-comments">Comments</label>
+                             <!--Build your select:-->
+                            <div id="tmw-task-conteiner-comments">
+                                <select id="tmw-comment-multi-select" multiple="multiple"></select>
+                            </div>
+                        </div>
+                    </div>
 
 
                 </div>
                 <div class="form-row">
-                    <div class="form-group col-md-12">
-                        <textarea class="form-control" rows="2" id="tmw-task-name" placeholder="Name"></textarea>
-                        <div id="tmw-task-name-error"></div>
+                    <div class="form-group col-md-12" style="width: 100%">
+                        <textarea class="form-control" rows="2" id="tmw-task-comment" placeholder="Comment"></textarea>
+                        <div id="tmw-task-comment-error"></div>
                     </div>
                 </div>
 
@@ -315,7 +335,7 @@
 <script src="static/js/timeFilter.js"></script>
 <script src="static/js/statusFilter.js"></script>
 <script src="static/js/backlogTable.js"></script>
-<script src="static/js/fullInfoTask.js"></script>
+<script src="static/js/oldFullInfoTask.js"></script>
 
 <script src="static/js/calendar.js"></script>
 <script src="static/js/loginOrRegistration.js"></script>

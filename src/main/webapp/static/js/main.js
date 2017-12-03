@@ -30,11 +30,13 @@ var selectedTaskText;
 
 // STATE OF APPLIED FILTERS
 var state = {
-    parentid: 0,
+    projectId: 0,
+    parentId: 0,
     dateFrom: 0,
     dateTo: 0,
     status: [],
     priority: [],
-    tag: []
+    tag: [],
+    comments: []
 };
 

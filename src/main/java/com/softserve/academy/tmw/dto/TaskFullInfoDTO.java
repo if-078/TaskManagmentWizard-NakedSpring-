@@ -3,21 +3,22 @@ package com.softserve.academy.tmw.dto;
 import com.softserve.academy.tmw.entity.Priority;
 import com.softserve.academy.tmw.entity.Status;
 import com.softserve.academy.tmw.entity.User;
-import java.sql.Time;
+
 import java.util.Date;
 
 public class TaskFullInfoDTO {
 
   private int id;
   private String name;
-  private Date createdDate;
-  private Date startDate;
-  private Date endDate;
+  private Date planningDate;
+  private Date draftPlanning;
   private String estimateTime;
+  private String spentTime;
+  private String leftTime;
   private User assignTo;
   private Status status;
   private Priority priority;
-
+  private String author;
 
   public int getId() {
     return id;
@@ -35,28 +36,20 @@ public class TaskFullInfoDTO {
     this.name = name;
   }
 
-  public Date getCreatedDate() {
-    return createdDate;
+  public Date getPlanningDate() {
+    return planningDate;
   }
 
-  public void setCreatedDate(Date createdDate) {
-    this.createdDate = createdDate;
+  public void setPlanningDate(Date planningDate) {
+    this.planningDate = planningDate;
   }
 
-  public Date getStartDate() {
-    return startDate;
+  public Date getDraftPlanning() {
+    return draftPlanning;
   }
 
-  public void setStartDate(Date startDate) {
-    this.startDate = startDate;
-  }
-
-  public Date getEndDate() {
-    return endDate;
-  }
-
-  public void setEndDate(Date endDate) {
-    this.endDate = endDate;
+  public void setDraftPlanning(Date draftPlanning) {
+    this.draftPlanning = draftPlanning;
   }
 
   public String getEstimateTime() {
@@ -69,6 +62,26 @@ public class TaskFullInfoDTO {
     minuts = minuts.length() < 2 ? "0" + minuts : minuts;
     this.estimateTime = hours + ":" + minuts + ":00";
   }
+
+  public String getSpentTime() {
+    return spentTime;
+  }
+
+  public void setSpentTime(int spentTime) {
+    int hours = spentTime/60;
+    String minuts = String.valueOf(spentTime%60);
+    minuts = minuts.length() < 2 ? "0" + minuts : minuts;
+    this.estimateTime = hours + ":" + minuts + ":00";  }
+
+  public String getLeftTime() {
+    return leftTime;
+  }
+
+  public void setLeftTime(int leftTime) {
+    int hours = leftTime/60;
+    String minuts = String.valueOf(leftTime%60);
+    minuts = minuts.length() < 2 ? "0" + minuts : minuts;
+    this.estimateTime = hours + ":" + minuts + ":00";  }
 
   public User getAssignTo() {
     return assignTo;
@@ -92,5 +105,13 @@ public class TaskFullInfoDTO {
 
   public void setPriority(Priority priority) {
     this.priority = priority;
+  }
+
+  public String getAuthor() {
+    return author;
+  }
+
+  public void setAuthor(String author) {
+    this.author = author;
   }
 }

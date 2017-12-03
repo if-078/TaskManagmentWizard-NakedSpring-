@@ -17,8 +17,14 @@ public class UserController {
 
   @GetMapping("/team/{taskId}")
   @ResponseStatus(HttpStatus.OK)
-  List<User> getAllUsers(@PathVariable Integer taskId, @RequestParam(name = "userId", required = false) int userId) throws SQLException {
+  List<User> getTeamUsers(@PathVariable Integer taskId, @RequestParam(name = "userId", required = false) int userId) throws SQLException {
     return userService.getTeamByTask(taskId, userId);
+  }
+
+  @GetMapping("/all")
+  @ResponseStatus(HttpStatus.OK)
+  List<User> getAllUsers() throws SQLException {
+    return userService.getAll();
   }
 
   @PostMapping("/add/")

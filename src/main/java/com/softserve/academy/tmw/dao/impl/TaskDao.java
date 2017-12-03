@@ -36,6 +36,7 @@ public class TaskDao extends EntityDao<Task> implements TaskDaoInterface {
     String query = "SELECT * FROM " + table + " WHERE id = :id";
     Task task = jdbcTemplate
             .queryForObject(query, new MapSqlParameterSource("id", id), new TaskMapper());
+    System.out.println(task);
     return task;
   }
 

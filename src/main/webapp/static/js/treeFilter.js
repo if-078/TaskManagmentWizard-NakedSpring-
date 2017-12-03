@@ -48,8 +48,8 @@ $('#tmw-treeview').on('select_node.jstree', function (event, data) {
         $('#tmw-treeview').jstree('open_node', '' + data.node.id);
     }
 
-    state.parentid = data.node.id !== '$' ? data.node.id : 0;
-    selectedTaskId = state.parentid;
+    state.parentId = data.node.id !== '$' ? data.node.id : 0;
+    selectedTaskId = state.parentId;
     selectedTaskText =  data.node.text;
 
     taskTable();

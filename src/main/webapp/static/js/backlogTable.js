@@ -23,15 +23,12 @@ var generatedRequestParameters = function () {
 //--------------------------------------------------------------------------------------------------------------------
 
 
-
 var taskTableInit = false;
 var taskTable = function () {
 
     if(selectedTaskId != 0) {
         $('#tmw-task-table').css('visibility', 'visible');
     }
-
-    console.log('selectedTaskId = ', selectedTaskId );
 
     if (selectedTaskId==0) {
         if (taskTableInit) {
@@ -44,7 +41,6 @@ var taskTable = function () {
         return;
     }
 
-
     $.ajax({
         url: 'api/tasks/filter' + generatedRequestParameters() + '&planing=false' + '&userId=' + userId ,
         type: 'GET',
@@ -53,34 +49,9 @@ var taskTable = function () {
         success: function (data, textStatus, jqXHR) {
             setToken(jqXHR);
 
-            $.ajax({
-                url: 'api/tasks/tree/' + state.parentid + '?userId=' + userId,
-                type: 'GET',
-                contentType: 'application/json',
-                headers: createAuthToken(),
-                success: function (treeData) {
-
-
-                    // make list rows for table only non-root tasks
-                    var subtasks = [];
-                    for (var i = 0; i < treeData.length; i++) {
-                        subtasks.push(Object.values(treeData[i]));
-                    }
                     var rows = [];
                     for (var i = 0; i < data.length; i++) {
-                        var hasChildren = false;
-                        for (var j = 0; j < subtasks.length; j++) {
-                            if ((data[i].id == subtasks[j][0]) && (subtasks[j][2])) {
-                                hasChildren = true;
-                                break;
-                            }
-                        }
-
-                        //if ((!hasChildren)&(selectedTaskId !=0)) {
-
-                        if ((true)&(selectedTaskId !=0)) {
                             rows.push(Object.values(data[i]));
-                        }
                     }
 
                     // convert estimate time from int minute --> format time
@@ -103,7 +74,6 @@ var taskTable = function () {
                     }
                     $('#tmw-task-calendar').fullCalendar('destroy');
                     taskCalendar();
-
 
                     $('#tmw-task-table').DataTable({
                         data: rows,
@@ -139,9 +109,6 @@ var taskTable = function () {
                     if(rows.length>0) {
                         makeTableRowsDraggable();
                     }
-
-                }
-            });
         },
         error: function (jqXHR, textStatus, errorThrown) {
             if (jqXHR.status === 401) {
@@ -152,4 +119,3 @@ var taskTable = function () {
         }
     });
 };
-

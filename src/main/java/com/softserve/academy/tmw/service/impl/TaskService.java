@@ -184,19 +184,26 @@ public class TaskService implements TaskServiceInterface {
       }
 
   }
-  Wrape wrape = new Wrape();
+    Wrape wrape = new Wrape();
     wrape.findLeafs(treeDTOS);
     wrapper.setIdS(targetId);
-
     JooqSQLBuilder builder = new JooqSQLBuilder(wrapper);
-    return taskDao.getFilteredTasks(builder);
 
+    // -- remove root-tasks
+    List<TaskTableDTO> list = taskDao.getFilteredTasks(builder);
+    List<TaskTableDTO> tasksTableDTO = new ArrayList<TaskTableDTO>();
+    for(TaskTableDTO taskTableDTO : list){
+      if (taskDao.findTaskByTree(taskTableDTO.getId(), userId).size()==0) {
+        tasksTableDTO.add(taskTableDTO);
+      }
+    }
+
+    return tasksTableDTO;
   }
 
   @Override
   public List<TaskTreeDTO> findTaskByTree(int id, int userId) {
-    List<TaskTreeDTO> tasksTreeDTO = taskDao.findTaskByTree(id, userId);
-    return tasksTreeDTO;
+    return taskDao.findTaskByTree(id, userId);
   }
 
   @Override

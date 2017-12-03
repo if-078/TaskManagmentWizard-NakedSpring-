@@ -232,7 +232,7 @@ var makeTableRowsDraggable = function () {
     $('#tmw-main-table tbody tr').each(function () {
         var table = $('#tmw-task-table').DataTable();
         var tid = table.row(this).data()[0];
-        var estimateTime = table.row(this).data()[7];
+        var estimateTime = table.row(this).data()[18];
 
         $(this).data('event', {
             id: tid,
@@ -251,9 +251,9 @@ var makeTableRowsDraggable = function () {
                 $(event.currentTarget).addClass('active');
 
                 var table = $('#tmw-task-table').DataTable();
-                estimateTime = (!table.row(this).data()[7] || table.row(this).data()[7] === '00:00:00')
+                estimateTime = (!table.row(this).data()[18] || table.row(this).data()[18] === '00:00:00')
                     ? '08:00:00'
-                    : table.row(this).data()[7];
+                    : table.row(this).data()[18];
 
                 $('#tmw-task-calendar').fullCalendar('getView').calendar.defaultTimedEventDuration = moment.duration(estimateTime);
 

@@ -14,7 +14,7 @@ public class TaskMapperForTable implements RowMapper<TaskTableDTO> {
     dto.setId(resultSet.getInt("id"));
     dto.setName(resultSet.getString("name"));
     dto.setCreatedDate(resultSet.getDate("created_date"));
-    dto.setPlanningDate(resultSet.getDate("planning_date"));
+    dto.setPlanningDate(resultSet.getTimestamp("planning_date"));
     dto.setStartDate(resultSet.getDate("start_date"));
     dto.setEndDate(resultSet.getDate("end_date"));
     dto.setEstimateTime(resultSet.getInt("estimate_time"));

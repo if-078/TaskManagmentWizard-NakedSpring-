@@ -1,6 +1,7 @@
 package com.softserve.academy.tmw.entity;
 
 import java.sql.Time;
+import java.util.Arrays;
 import java.util.Date;
 
 public class Task {
@@ -223,13 +224,29 @@ public class Task {
     this.comments = comments;
   }
 
+  @Override
   public String toString() {
-    String taskStr = "";
-    taskStr += this.getId() + " | " + this.getName() + " | " + this.getCreatedDate() + " | " +
-        this.getPlanningDate() + " | " + this.getStartDate() + " | " + this.getEndDate() + " | " +
-        this.getEstimateTime() + " | " + this.getAssignTo() + " | " + this.getStatusId() + " | " +
-        this.getPriorityId();
-    return taskStr;
+    return "Task{" +
+            "id=" + id +
+            ", name='" + name + '\'' +
+            ", createdDate=" + createdDate +
+            ", planningDate=" + planningDate +
+            ", startDate=" + startDate +
+            ", endDate=" + endDate +
+            ", estimateTime=" + estimateTime +
+            ", spentTime=" + spentTime +
+            ", leftTime=" + leftTime +
+            ", assignTo=" + assignTo +
+            ", statusId=" + statusId +
+            ", priorityId=" + priorityId +
+            ", parentId=" + parentId +
+            ", authorId=" + authorId +
+            ", projectId=" + projectId +
+            ", status=" + status +
+            ", priority=" + priority +
+            ", tags=" + Arrays.toString(tags) +
+            ", comments=" + Arrays.toString(comments) +
+            '}';
   }
 
   @Override

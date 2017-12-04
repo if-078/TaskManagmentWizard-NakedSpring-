@@ -71,7 +71,7 @@ public class TaskFullInfoDTO {
     int hours = spentTime/60;
     String minuts = String.valueOf(spentTime%60);
     minuts = minuts.length() < 2 ? "0" + minuts : minuts;
-    this.estimateTime = hours + ":" + minuts + ":00";  }
+    this.spentTime = hours + ":" + minuts + ":00";  }
 
   public String getLeftTime() {
     return leftTime;
@@ -81,7 +81,7 @@ public class TaskFullInfoDTO {
     int hours = leftTime/60;
     String minuts = String.valueOf(leftTime%60);
     minuts = minuts.length() < 2 ? "0" + minuts : minuts;
-    this.estimateTime = hours + ":" + minuts + ":00";  }
+    this.leftTime = hours + ":" + minuts + ":00";  }
 
   public User getAssignTo() {
     return assignTo;
@@ -113,5 +113,22 @@ public class TaskFullInfoDTO {
 
   public void setAuthor(String author) {
     this.author = author;
+  }
+
+  @Override
+  public String toString() {
+    return "TaskFullInfoDTO{" +
+            "id=" + id +
+            ", name='" + name + '\'' +
+            ", planningDate=" + planningDate +
+            ", draftPlanning=" + draftPlanning +
+            ", estimateTime='" + estimateTime + '\'' +
+            ", spentTime='" + spentTime + '\'' +
+            ", leftTime='" + leftTime + '\'' +
+            ", assignTo=" + assignTo +
+            ", status=" + status +
+            ", priority=" + priority +
+            ", author='" + author + '\'' +
+            '}';
   }
 }

@@ -10,10 +10,8 @@ import com.softserve.academy.tmw.dto.TaskFullInfoDTO;
 import com.softserve.academy.tmw.dto.TaskTableDTO;
 import com.softserve.academy.tmw.dto.TaskTreeDTO;
 import com.softserve.academy.tmw.entity.*;
-import com.softserve.academy.tmw.service.api.EntityServiceInterface;
-import com.softserve.academy.tmw.service.api.TagServiceInterface;
-import com.softserve.academy.tmw.service.api.TaskServiceInterface;
-import com.softserve.academy.tmw.service.api.UserServiceInterface;
+import com.softserve.academy.tmw.service.api.*;
+
 import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -43,6 +41,9 @@ public class TaskService implements TaskServiceInterface {
 
   @Autowired
   private TagServiceInterface tagService;
+
+//  @Autowired
+//  private CommentServiceInterface commentService;
 
   @Autowired
   private EntityServiceInterface<Status> serviceStatus;
@@ -93,18 +94,24 @@ public class TaskService implements TaskServiceInterface {
   public Task createTaskByDTO(TaskDTO taskDTO) {
     Task task = new Task();
     task.setName(taskDTO.getName());
+    task.setAuthorId(taskDTO.getAuthor());
     task.setAssignTo(taskDTO.getAssignTo());
     task.setCreatedDate(new Date());
-    task.setStartDate(getFormatDate(taskDTO.getStartDate()));
-    task.setEndDate(getFormatDate(taskDTO.getEndDate()));
+    task.setStartDate(getFormatDate(taskDTO.getDraftPlanning()));
+    task.setPlanningDate(getFormatDate(taskDTO.getPlanningDate()));
     task.setEstimateTime(taskDTO.getEstimateTime());
+    task.setSpentTime(taskDTO.getSpentTime());
+    task.setLeftTime(taskDTO.getLeftTime());
     task.setPriorityId(taskDTO.getPriorityId());
     task.setParentId(taskDTO.getParentId());
+    task.setProjectId(taskDTO.getProjectId());
     task.setStatusId(taskDTO.getStatusId());
     task.setTags(taskDTO.getTags());
+    task.setComments(taskDTO.getComments());
 
     task = taskDao.create(task);
     tagService.setTagsToTask(Arrays.asList(taskDTO.getTags()), task.getId());
+//    commentService.setCommentsToTask(Arrays.asList(taskDTO.getComments()), task.getId());
     return task;
   }
 
@@ -113,15 +120,20 @@ public class TaskService implements TaskServiceInterface {
     Task task = new Task();
     task.setId(taskDTO.getId());
     task.setName(taskDTO.getName());
+    task.setAuthorId(taskDTO.getAuthor());
     task.setAssignTo(taskDTO.getAssignTo());
-    task.setCreatedDate(new Date());
-    task.setStartDate(getFormatDate(taskDTO.getStartDate()));
-    task.setEndDate(getFormatDate(taskDTO.getEndDate()));
+    task.setCreatedDate(getFormatDate(taskDTO.getCreatedDate()));
+    task.setStartDate(getFormatDate(taskDTO.getDraftPlanning()));
+    task.setPlanningDate(getFormatDate(taskDTO.getPlanningDate()));
     task.setEstimateTime(taskDTO.getEstimateTime());
+    task.setSpentTime(taskDTO.getSpentTime());
+    task.setLeftTime(taskDTO.getLeftTime());
     task.setPriorityId(taskDTO.getPriorityId());
     task.setParentId(taskDTO.getParentId());
+    task.setProjectId(taskDTO.getProjectId());
     task.setStatusId(taskDTO.getStatusId());
     task.setTags(taskDTO.getTags());
+    task.setComments(taskDTO.getComments());
 
     taskDao.update(task);
     tagService.deleteTagsOfTask(task.getId());
@@ -209,7 +221,6 @@ public class TaskService implements TaskServiceInterface {
   @Override
   public TaskFullInfoDTO getFullInfo(int id) {
     Task task = taskDao.findOne(id);
-    System.out.println(task);
     TaskFullInfoDTO taskDTO = new TaskFullInfoDTO();
 
     taskDTO.setId(task.getId());
@@ -224,11 +235,11 @@ public class TaskService implements TaskServiceInterface {
     }
     else taskDTO.setAssignTo(null);
     if (task.getStatusId() > 0) {
-      taskDTO.setStatus(task.getStatus());
+      taskDTO.setStatus(serviceStatus.findOne(task.getStatusId()));
     }
     else taskDTO.setStatus(null);
     if (task.getPriorityId() > 0) {
-      taskDTO.setPriority(task.getPriority());
+      taskDTO.setPriority(servicePriority.findOne(task.getPriorityId()));
     }
     else taskDTO.setPriority(null);
     if (task.getAuthorId() > 0) {

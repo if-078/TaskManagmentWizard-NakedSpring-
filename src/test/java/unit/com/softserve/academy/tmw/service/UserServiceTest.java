@@ -74,7 +74,7 @@ public class UserServiceTest {
 
   @Test
   public void shouldGetUserById() {
-    int userId = 5;
+    Long userId = 5;
 
     User persistedUser = new User();
     persistedUser.setId(userId);
@@ -105,7 +105,7 @@ public class UserServiceTest {
   @Test
   public void shouldUpdateUser() {
     String userName = "SoftServe";
-    int userId = 5;
+    Long userId = 5;
 
     User updatedUser = new User();
     updatedUser.setName(userName);

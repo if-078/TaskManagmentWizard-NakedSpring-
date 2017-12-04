@@ -12,16 +12,6 @@ create table user
 )
 ;
 
-create table user_activation
-(
-	user_key int not null,
-    user_id int not null,
-    constraint fk_user_id foreign key (user_id)
-    references user(id)
-    			on update cascade on delete cascade
-);
-
-
 create table priority
 (
 	id int auto_increment

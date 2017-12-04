@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -41,4 +44,15 @@ public class RegistrationController {
         }
     }
 
+    @GetMapping("/verify/{key}")
+    @ResponseStatus(HttpStatus.CREATED)
+    void verifyUser (@PathVariable String key, HttpServletResponse response){
+        try {
+            boolean  b = userService.verify(key);
+            if (b)
+            response.sendRedirect("http://localhost:8585");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

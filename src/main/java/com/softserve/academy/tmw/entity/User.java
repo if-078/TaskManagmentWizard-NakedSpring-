@@ -8,6 +8,7 @@ public class User {
   private String name;
   private String pass;
   private String email;
+  private boolean isActivated;
 
   public User() {
   }
@@ -16,6 +17,14 @@ public class User {
     this.name = name;
     this.pass = pass;
     this.email = email;
+  }
+
+  public boolean isActivated() {
+    return isActivated;
+  }
+
+  public void setActivated(boolean activated) {
+    isActivated = activated;
   }
 
   public int getId() {

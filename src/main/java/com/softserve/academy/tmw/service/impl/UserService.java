@@ -35,7 +35,10 @@ public class UserService implements UserServiceInterface {
 
   @Override
   public User findOne(int id) {
-    return userDao.findOne(id);
+    User user = userDao.findOne(id);
+    if (user.isActivated())
+    return user;
+    throw new IllegalArgumentException("Un active user");
   }
 
   @Override
@@ -55,15 +58,15 @@ public class UserService implements UserServiceInterface {
     Hashids hashids = new Hashids();
     hashids.encode(user1.getId());
     String verifecationEmailMessage =
-        "http://localhost:8585/add/verify/" + hashids.encode(user1.getId());
+        "http://localhost:8585/register/verify/" + hashids.encode(user1.getId());
     sendEmailToUser(user1, verifecationEmailMessage, "Task Management Wizard email verification");
     return user1;
   }
 
   @Override
-  public boolean verify(long key) {
-
-    return false;
+  public boolean verify(String key) {
+    long id = new Hashids().decode(key)[0];
+    return userDao.verifyUser(id);
   }
 
   @Override
@@ -82,15 +85,13 @@ public class UserService implements UserServiceInterface {
     return usersTasksDao.getTeamByTask(taskId, userId);
   }
 
-  private void sendEmailToUser(User user, String message, String subject) {
+  public void sendEmailToUser(User user, String message, String subject) {
     MimeMessage mimeMessage = mailSender.createMimeMessage();
     try {
       mimeMessage.addRecipient(Message.RecipientType.TO, new InternetAddress(user.getEmail()));
       mimeMessage.setSubject(subject);
       mimeMessage.setContent(message, "text/html");
       mailSender.send(mimeMessage);
-    } catch (AddressException e) {
-      e.printStackTrace();
     } catch (MessagingException e) {
       e.printStackTrace();
     }

@@ -24,7 +24,10 @@ $('#tmw-graphic-exit').click(function () {
     taskTable();
 });
 
+var taskCalendarInit = false;
+
 var plannedTasks = [];
+
 var taskCalendar = function () {
     $.ajax({
         url: '/api/users/team/' + selectedTaskId + '?userId=' + userId,
@@ -48,6 +51,8 @@ var taskCalendar = function () {
                 success: function (data, textStatus, jqXHR) {
                     setToken(jqXHR);
 
+                    taskPlanningTable(data);
+
                     for (var i = 0; i < data.length; i++) {
                         if (data[i].planningDate == null) continue;
 
@@ -70,70 +75,130 @@ var taskCalendar = function () {
                             end: moment(data[i].planningDate).addWorkingTime(parseInt(hours), 'hours', parseInt(minutes), 'minutes', 0, 'seconds'),
 
                             color: setColorTask(data[i]),
-                            est: data[i].estimateTime
+                            est: data[i].estimateTime,
+
+                            createdDate: data[i].createdDate,
+                            planningDate: data[i].planningDate,
+                            startDate: data[i].startDate,
+                            endDate: data[i].endDate,
+                            estimateTime: data[i].estimateTime,
+                            spentTime: data[i].spentTime,
+                            leftTime: data[i].leftTime,
+                            assignTo: data[i].assignTo,
+                            statusId: data[i].statusId,
+                            priorityId: data[i].priorityId,
+                            parentId: data[i].parentId,
+                            authorId: data[i].authorId,
+                            projectId: data[i].projectId,
+
+                            assign: data[i].assign,
+                            status: data[i].status,
+                            priority: data[i].priority,
+
+                            editable: ((userId==data[i].assignTo) || (userId==data[i].authorId))
                         });
                     }
 
-                    $('#tmw-task-calendar').fullCalendar({
-                        schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
-                        editable: true,
-                        droppable: true,
-                        height: 'auto',
-                        timezone: 'local',
-                        minTime: startWorkDay,
-                        maxTime: endWorkDay,
-                        slotDuration: timeSlotDuration,
-                        defaultTimedEventDuration: '00:30:00',
-                        slotWidth: '25',
-                        forceEventDuration: true,
-                        weekends: false,
-                        header: {
-                            left: 'prev,next',
-                            center: 'title',
-                            right: '_timelineDay,_timelineWeek,timelineMonth'
-                        },
-                        views: {
-                            _timelineDay: {
-                                type: 'timeline',
-                                duration: {days: 1},
-                                buttonText: 'Day',
-                                slotLabelFormat: ['H:mm']
+                    if (taskCalendarInit) {
+                        $('#tmw-task-calendar').fullCalendar('removeEvents');
+                        $('#tmw-task-calendar').fullCalendar('renderEvents', plannedTasks, true);
+                    } else {
+                        $('#tmw-task-calendar').fullCalendar({
+                            schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
+                            editable: true,
+                            droppable: true,
+                            height: 'parent', // 'auto',
+                            timezone: 'local',
+                            minTime: startWorkDay,
+                            maxTime: endWorkDay,
+                            slotDuration: timeSlotDuration,
+                            defaultTimedEventDuration: '00:30:00',
+                            slotWidth: '25',
+                            forceEventDuration: true,
+                            weekends: false,
+                            header: {
+                                left: 'prev,next',
+                                center: 'title',
+                                right: '_timelineDay,_timelineWeek,timelineMonth'
                             },
-                            _timelineWeek: {
-                                type: 'timeline',
-                                duration: {weeks: 1},
-                                buttonText: 'Week',
-                                slotLabelFormat: ['dddd, D MMMM', 'H:mm']
-                            }
-                        },
-                        defaultView: '_timelineWeek',
-                        resourceLabelText: 'Users',
-                        resourceAreaWidth: '17%',
-                        resources: resources,
-                        events: plannedTasks,
+                            views: {
+                                _timelineDay: {
+                                    type: 'timeline',
+                                    duration: {days: 1},
+                                    buttonText: 'Day',
+                                    slotLabelFormat: ['H:mm']
+                                },
+                                _timelineWeek: {
+                                    type: 'timeline',
+                                    duration: {weeks: 1},
+                                    buttonText: 'Week',
+                                    slotLabelFormat: ['dddd, D MMMM', 'H:mm']
+                                }
+                            },
+                            defaultView: '_timelineWeek',
+                            resourceLabelText: 'Users',
+                            resourceAreaWidth: '15%',
+                            resources: resources,
+                            events: plannedTasks,
 
 
-                        drop: function (date, jsEvent, ui, resourceId) {
-                            // $(this).remove();
+                            drop: function (date, jsEvent, ui, resourceId) {
+                                var table = $('#tmw-task-table').DataTable();
+                                table.row($(this)).remove().draw();
 
-                            var table = $('#tmw-task-table').DataTable();
-                            table.row($(this)).remove().draw();
+                                if ($('#tmw-task-table tbody tr').length === 0) {
+                                    $('#tmw-task-table').empty();
+                                }
+                            },
 
-                            if ($('#tmw-task-table tbody tr').length === 0) {
-                                $('#tmw-task-table').empty();
-                            }
-                        },
+                            eventReceive: handleCalendarTaskEdit,
+                            eventDrop: handleCalendarTaskEdit,
+                            eventResize: resizeTaskOnCalendar,
 
-                        eventReceive: handleCalendarTaskEdit,
-                        eventDrop: handleCalendarTaskEdit,
-                        eventResize: resizeTaskOnCalendar,
+                            eventClick: function (event) {
+                                showFull(event);
+                            },
 
-                        eventClick: function (event) {
-                            showFull(event);
-                        }
-                    });
+                            eventDragStop: function (event, e) {
+                                var rect = document.querySelector('#tmw-task-table').getBoundingClientRect();
 
-                    //makeTableRowsDraggable();
+                                var isEventOverTable = e.clientX > rect.left && e.clientX < rect.right &&
+                                    e.clientY > rect.top && e.clientY < rect.bottom;
+
+                                if (isEventOverTable) {
+                                    $('#tmw-task-calendar').fullCalendar('removeEvents', event._id);
+
+                                    $('#tmw-task-table').DataTable().rows.add([[
+                                        event.id,               // ID
+                                        event.title,            // Name
+                                        event.createdDate,      // Create Date
+                                        event.planningDate,     // Planning Date
+                                        event.startDate,        // Draft Date
+                                        event.endDate,          // End Date
+                                        event.estimateTime,     // Est. Time
+                                        event.spentTime,        // Spent Time
+                                        event.leftTime,         // Left Time
+                                        event.assignTo,         // Assign To
+                                        event.statusId,         // Status ID
+                                        event.priorityId,       // Priority ID
+                                        event.parentId,         // Parent ID
+                                        event.authorId,         // Author ID
+                                        event.projectId,        // Project ID
+                                        event.assign,           // Assignee
+                                        event.status,           // Status
+                                        event.priority,         // Priority
+                                        event.estimateTime      // Alt. Est. Time
+                                    ]]).draw();
+                                }
+
+                                makeTableRowsDraggable();
+                            },
+
+                            dragRevertDuration: 0
+                        });
+
+                        taskCalendarInit = true;
+                    }
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     if (jqXHR.status === 401) {
@@ -177,9 +242,7 @@ var handleCalendarTaskEdit = function (event) {
     }
 
     updateCalendarTask(event);
-
 };
-
 
 var updateCalendarTask = function (event) {
     $.ajax({
@@ -188,8 +251,6 @@ var updateCalendarTask = function (event) {
         contentType: 'application/json',
 
         success: function (data) {
-
-
             data.assignTo = event.resourceId;
 
             var planningDate = event.start.valueOf();
@@ -197,11 +258,7 @@ var updateCalendarTask = function (event) {
 
             var hours = ('0' + event.end.workingDiff(event.start, 'hours')).slice(-2),
                 minutes = ('0' + event.end.workingDiff(event.start, 'minutes') % 60).slice(-2);
-
             data.estimateTime = parseInt(hours) * 60 + parseInt(minutes);
-
-            //var estimateTime = hours + ':' + minutes + ':00';
-            //data.estimateTime = estimateTime;
 
             $.ajax({
                 url: '/api/tasks/planning',
@@ -218,63 +275,35 @@ var updateCalendarTask = function (event) {
                         success: function (innerData) {
                             event.color = setColorTask(innerData);
                             $('#tmw-task-calendar').fullCalendar('updateEvent', event);
+                            taskCalendar();
                         }
                     });
                 }
             });
         }
     });
-}
+};
 
 
 
-var makeTableRowsDraggable = function () {
-    $('#tmw-main-table tbody tr').each(function () {
-        var table = $('#tmw-task-table').DataTable();
-        var tid = table.row(this).data()[0];
-        var estimateTime = table.row(this).data()[18];
-
-        $(this).data('event', {
-            id: tid,
-            title: $.trim($(this).find('td').first().text()),
-            stick: true,
-            est: estimateTime
-        });
-
-        $(this).draggable({
-            zIndex: 999,
-            revert: true,
-            revertDuration: 0,
-            appendTo: $(document.body),
-
-            helper: function (event) {
-                $(event.currentTarget).addClass('active');
-
-                var table = $('#tmw-task-table').DataTable();
-                estimateTime = (!table.row(this).data()[18] || table.row(this).data()[18] === '00:00:00')
-                    ? '08:00:00'
-                    : table.row(this).data()[18];
-
-                $('#tmw-task-calendar').fullCalendar('getView').calendar.defaultTimedEventDuration = moment.duration(estimateTime);
-
-                return $(event.currentTarget).clone();
-            },
-
-            stop: function () {
-                $('#tmw-main-table tbody tr').removeClass('active');
-            }
-        });
+var updateCalendar = function () {
+    var $calendar = $('#tmw-task-calendar');
+    $calendar.fullCalendar('clientEvents').forEach(function (event) {
+        $calendar.fullCalendar('removeEvents');
     });
 };
 
-
-
 var setColorTask = function (data) {
-    if (data.statusId == 3) return '#4750ff';
-    if (data.priorityId == 1) return '#ff3c38';
-    if (data.priorityId == 2) return '#34ff16';
-    if (data.priorityId == 3) return '#ff53d4';
-
+    if ((data.assignTo==userId) || (data.authorId==userId)) {
+        if (data.statusId == 3) return '#0000ff';
+        if (data.priorityId == 1) return '#ff0000';
+        if (data.priorityId == 2) return '#00f000';
+        if (data.priorityId == 3) return '#f000f0';
+    }else {
+        if (data.statusId == 3) return '#a0a0ff';
+        if (data.priorityId == 1) return '#ffa0a0';
+        if (data.priorityId == 2) return '#a0ffa0';
+        if (data.priorityId == 3) return '#ffa0eb';
+    }
     return '#c2bdc1'
 };
-

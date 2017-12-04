@@ -36,7 +36,9 @@ var taskTable = function () {
             $('#tmw-task-table').DataTable().destroy();
             taskTableInit = false;
         }
+
         $('#tmw-task-calendar').fullCalendar('destroy');
+        taskCalendarInit = false;
 
         return;
     }
@@ -49,19 +51,7 @@ var taskTable = function () {
         success: function (data, textStatus, jqXHR) {
             setToken(jqXHR);
 
-            $.ajax({
-                url: 'api/tasks/tree/' + state.parentId + '?userId=' + userId,
-                type: 'GET',
-                contentType: 'application/json',
-                headers: createAuthToken(),
-                success: function (treeData) {
 
-
-                    // make list rows for table only non-root tasks
-                    var subtasks = [];
-                    for (var i = 0; i < treeData.length; i++) {
-                        subtasks.push(Object.values(treeData[i]));
-                    }
                     var rows = [];
                     for (var i = 0; i < data.length; i++) {
                         rows.push(Object.values(data[i]));
@@ -85,7 +75,7 @@ var taskTable = function () {
                         $('#tmw-task-table').DataTable().destroy();
                         taskTableInit = false;
                     }
-                    $('#tmw-task-calendar').fullCalendar('destroy');
+
                     taskCalendar();
 
                     $('#tmw-task-table').DataTable({
@@ -114,7 +104,9 @@ var taskTable = function () {
 
                         paging: false,
                         info: false,
-                        searching: false
+                        searching: false,
+                        scrollY: '39vh',
+                        scrollCollapse: true
                     });
 
                     taskTableInit = true;
@@ -122,15 +114,65 @@ var taskTable = function () {
                     if (rows.length > 0) {
                         makeTableRowsDraggable();
                     }
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    if (jqXHR.status === 401) {
-                        resetToken();
-                    } else {
-                        throw new Error("an unexpected error occured: " + errorThrown);
-                    }
-                }
-            });
         }
     });
-}
+};
+
+
+var makeTableRowsDraggable = function () {
+    $('#tmw-main-table tbody tr').each(function () {
+
+        var table = $('#tmw-task-table').DataTable();
+
+        if ((table.row(this).data()[9]==userId)||(table.row(this).data()[13]==userId)) {
+
+            var tid = table.row(this).data()[0];
+            var estimateTime = table.row(this).data()[18];
+
+            $(this).data('event', {
+                id: tid,
+                title: $.trim($(this).find('td').first().text()),
+                stick: true,
+                est: estimateTime
+            });
+
+            $(this).draggable({
+                zIndex: 999,
+                revert: true,
+                revertDuration: 0,
+                appendTo: $(document.body),
+
+                helper: function (event) {
+                    $(event.currentTarget).addClass('active');
+
+                    var table = $('#tmw-task-table').DataTable();
+                    estimateTime = (!table.row(this).data()[18] || table.row(this).data()[18] === '00:00:00')
+                        ? '08:00:00'
+                        : table.row(this).data()[18];
+
+                    $('#tmw-task-calendar').fullCalendar('getView').calendar.defaultTimedEventDuration = moment.duration(estimateTime);
+
+                    return $(event.currentTarget).clone();
+                },
+
+                stop: function () {
+                    $('#tmw-main-table tbody tr').removeClass('active');
+                }
+            });
+
+            $(this).addClass('tmw-draggable');
+            $(this).removeClass('tmw-disabled');
+        } else {
+            $(this).addClass('tmw-disabled');
+        }
+    });
+};
+
+
+var undoMakeTableRowsDraggable = function () {
+    $('#tmw-main-table tbody tr').each(function () {
+        $(this).draggable('disable');
+        $(this).removeClass('tmw-draggable');
+    });
+};
+

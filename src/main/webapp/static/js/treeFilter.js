@@ -52,6 +52,11 @@ $('#tmw-treeview').on('select_node.jstree', function (event, data) {
     selectedTaskId = state.parentId;
     selectedTaskText =  data.node.text;
 
+    if (data.node.parent === '$') {
+        $('#tmw-task-calendar').fullCalendar('destroy');
+        taskCalendarInit = false;
+    }
+
     taskTable();
 
 });

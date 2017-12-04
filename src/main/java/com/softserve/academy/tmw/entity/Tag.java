@@ -5,67 +5,79 @@ public class Tag {
   private int id;
   private String name;
   private int userId;
+  private int projectId;
 
-  public Tag(int id, String name, int userId) {
+  public Tag(int id, String name, int userId, int projectId) {
     this.id = id;
     this.name = name;
     this.userId = userId;
+    this.projectId = projectId;
   }
 
   public Tag() {
 
   }
 
+
   public int getId() {
     return id;
+  }
+
+  public void setId(int id) {
+    this.id = id;
   }
 
   public String getName() {
     return name;
   }
 
-  public int getUserId() {
-    return userId;
-  }
-
-  public void setId(int tagId) {
-    this.id = tagId;
-  }
-
   public void setName(String name) {
     this.name = name;
+  }
+
+  public int getUserId() {
+    return userId;
   }
 
   public void setUserId(int userId) {
     this.userId = userId;
   }
 
+  public int getProjectId() {
+    return projectId;
+  }
+
+  public void setProjectId(int projectId) {
+    this.projectId = projectId;
+  }
+
   @Override
   public String toString() {
-    return "Tag{" + "Id=" + id + ", name=" + name + ", userId=" + userId + '}';
+    return "Tag{" +
+        "id=" + id +
+        ", name='" + name + '\'' +
+        ", userId=" + userId +
+        ", projectId=" + projectId +
+        '}';
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+
+    Tag tag = (Tag) o;
+
+    return id == tag.id;
+
   }
 
   @Override
   public int hashCode() {
-    int hash = 7;
-    hash = 89 * hash + this.id;
-    hash = 89 * hash + this.userId;
-    return hash;
+    return id;
   }
-
-  @Override
-  public boolean equals(Object obj) {
-    if (this == obj) {
-      return true;
-    }
-    if (obj == null) {
-      return false;
-    }
-    if (getClass() != obj.getClass()) {
-      return false;
-    }
-    final Tag other = (Tag) obj;
-    return this.id == other.id;
-  }
-
 }

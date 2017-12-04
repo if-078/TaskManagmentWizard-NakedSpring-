@@ -1,9 +1,6 @@
 package com.softserve.academy.tmw.service.api;
 
-import com.softserve.academy.tmw.dto.TaskDTO;
-import com.softserve.academy.tmw.dto.TaskFullInfoDTO;
-import com.softserve.academy.tmw.dto.TaskTableDTO;
-import com.softserve.academy.tmw.dto.TaskTreeDTO;
+import com.softserve.academy.tmw.dto.*;
 import com.softserve.academy.tmw.entity.Comment;
 import com.softserve.academy.tmw.entity.Tag;
 import com.softserve.academy.tmw.entity.Task;
@@ -33,4 +30,8 @@ public interface TaskServiceInterface extends EntityServiceInterface<Task> {
   boolean updateCalendarTask(Task task);
 
   List<Task> getPlannedTasks();
+
+  Task createTaskByJiraDTO(TaskJiraDTO taskJiraDTO);
+
+  int getTaskByJiraKey(String key);
 }

@@ -27,4 +27,6 @@ public interface TaskDaoInterface extends EntityDaoInterface<Task>{
 
     void refreshEstimateTimeOfParents(int id, int diffEstimate, int diffSpent, int diffLeft);
 
+    int getTaskByJiraKey(String key);
+
 }

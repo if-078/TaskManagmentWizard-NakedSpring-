@@ -6,10 +6,7 @@ import com.softserve.academy.tmw.dao.api.UsersTasksDaoInterface;
 import com.softserve.academy.tmw.dao.impl.TaskDao;
 import com.softserve.academy.tmw.dao.util.JooqSQLBuilder;
 import com.softserve.academy.tmw.dao.util.wrapper.FilterStateWrapper;
-import com.softserve.academy.tmw.dto.TaskDTO;
-import com.softserve.academy.tmw.dto.TaskFullInfoDTO;
-import com.softserve.academy.tmw.dto.TaskTableDTO;
-import com.softserve.academy.tmw.dto.TaskTreeDTO;
+import com.softserve.academy.tmw.dto.*;
 import com.softserve.academy.tmw.entity.*;
 import com.softserve.academy.tmw.service.api.EntityServiceInterface;
 import com.softserve.academy.tmw.service.api.TagServiceInterface;
@@ -254,5 +251,22 @@ public class TaskService implements TaskServiceInterface {
       e.printStackTrace();
     }
     return new Time(00, 00, 00);
+  }
+
+  @Override
+  public Task createTaskByJiraDTO(TaskJiraDTO taskJiraDTO) {
+    Task task = new Task();
+    task.setName(taskJiraDTO.getName());
+    task.setPriorityId(taskJiraDTO.getPriorityId());
+    task.setStatusId(taskJiraDTO.getStatusId());
+    task.setJiraKey(taskJiraDTO.getJiraKey());
+
+    task = taskDao.create(task);
+    return task;
+  }
+
+  @Override
+  public int getTaskByJiraKey(String key) {
+    return taskDao.getTaskByJiraKey(key);
   }
 }

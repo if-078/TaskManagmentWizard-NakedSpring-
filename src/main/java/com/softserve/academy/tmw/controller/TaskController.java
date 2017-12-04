@@ -1,9 +1,6 @@
 package com.softserve.academy.tmw.controller;
 
-import com.softserve.academy.tmw.dto.TaskDTO;
-import com.softserve.academy.tmw.dto.TaskFullInfoDTO;
-import com.softserve.academy.tmw.dto.TaskTableDTO;
-import com.softserve.academy.tmw.dto.TaskTreeDTO;
+import com.softserve.academy.tmw.dto.*;
 import com.softserve.academy.tmw.entity.Comment;
 import com.softserve.academy.tmw.entity.Tag;
 import com.softserve.academy.tmw.entity.Task;
@@ -77,12 +74,12 @@ public class TaskController {
     return taskService.getFullInfo(id);
   }
 
-  @PostMapping
+  /*@PostMapping
   @ResponseStatus(HttpStatus.CREATED)
   public Task createTask(@Validated @RequestBody TaskDTO taskDTO) {
     return taskService.createTaskByDTO(taskDTO);
   }
-
+*/
   @PutMapping
   @ResponseStatus(HttpStatus.NO_CONTENT)
   boolean updateTask(@Validated @RequestBody TaskDTO taskDTO) {
@@ -123,5 +120,17 @@ public class TaskController {
   @ResponseStatus(HttpStatus.OK)
   List<Task> getSubtasks(@PathVariable Integer id) {
     return taskService.getSubtasks(id);
+  }
+
+  @PostMapping("/jira-import")
+  @ResponseStatus(HttpStatus.CREATED)
+  public Task importTask(@Validated @RequestBody TaskJiraDTO taskJiraDTO) {
+    return taskService.createTaskByJiraDTO(taskJiraDTO);
+  }
+
+  @GetMapping("/id/{key}")
+  @ResponseStatus(HttpStatus.OK)
+  int getTaskByJiraKey(@PathVariable String key) {
+    return taskService.getTaskByJiraKey(key);
   }
 }

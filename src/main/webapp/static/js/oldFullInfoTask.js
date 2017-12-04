@@ -76,7 +76,7 @@ var showFull = function (id) {
 
 // GET FULL INFORMATION ABOUT THE TASK
 $('#tmw-task-btn-save').on('click', function () {
-    createOrUpdatetask(taskDTO);
+    createOrUpdateTask(taskDTO);
 });
 
 $('#tmw-task-btn-delete').on('click', function () {
@@ -116,19 +116,27 @@ $('#tmw-create-task').on('click', function () {
     $('#tmw-modal').modal('show');
 });
 
-function createOrUpdatetask(taskDTO) {
+function createOrUpdateTask(taskDTO) {
+    console.log(taskDTO);
     var task = {};
+        var est = ($('#tmw-task-estimateTime').val()).split(":");
+        var estimate = Number(est[0]) * 60 + Number(est[1]);
+        var sp = ($('#tmw-task-spentTime').val()).split(":");
+        var spent = Number(sp[0]) * 60 + Number(sp[1]);
+        var lf = ($('#tmw-task-leftTime').val()).split(":");
+        var left = Number(lf[0]) * 60 + Number(lf[1]);
 
     if ($.isEmptyObject(taskDTO)) {
+
         task =
             {
-                "name": $('#tmw-task-name').val(),
+                "name": $('#tmw-task-info').val(),
                 "createdDate": new Date(),
                 "planningDate": $('#tmw-task-planningDate').val(),
                 "draftPlanning": $('#tmw-task-draftPlanning').val(),
-                "estimateTime": $('#tmw-task-estimateTime').val(),
-                "spentTime": $('#tmw-task-spentTime').val(),
-                "leftTime": $('#tmw-task-leftTime').val(),
+                "estimateTime": estimate,
+                "spentTime": spent,
+                "leftTime": left,
                 "author": $('#tmw-task-author').find(":selected").val(),
                 "assignTo": $('#tmw-task-assignTo').find(":selected").val(),
                 "statusId": $('#tmw-task-status').find(":selected").val(),
@@ -144,13 +152,13 @@ function createOrUpdatetask(taskDTO) {
         task =
             {
                 "id": taskDTO.id,
-                "name": $('#tmw-task-name').val(),
+                "name": $('#tmw-task-info').val(),
                 "createdDate": taskDTO.createdDate,
                 "planningDate": $('#tmw-task-planningDate').val(),
                 "draftPlanning": $('#tmw-task-draftPlanning').val(),
-                "estimateTime": $('#tmw-task-estimateTime').val(),
-                "spentTime": $('#tmw-task-spentTime').val(),
-                "leftTime": $('#tmw-task-leftTime').val(),
+                "estimateTime": estimate,
+                "spentTime": spent,
+                "leftTime": left,
                 "author": $('#tmw-task-author').val(),
                 "assignTo": $('#tmw-task-assignTo').find(":selected").val(),
                 "statusId": $('#tmw-task-status').find(":selected").val(),
@@ -160,7 +168,7 @@ function createOrUpdatetask(taskDTO) {
                 "tags": getSelectedTags(),
                 "comments": getSelectedComments()
             }
-
+        console.log(task);
         updateTask(task);
     }
 }

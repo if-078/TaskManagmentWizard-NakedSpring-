@@ -234,6 +234,7 @@ public class TaskService implements TaskServiceInterface {
 
     taskDTO.setId(task.getId());
     taskDTO.setName(task.getName());
+    taskDTO.setCreatedDate(task.getCreatedDate());
     taskDTO.setPlanningDate(task.getPlanningDate());
     taskDTO.setDraftPlanning(task.getStartDate());
     taskDTO.setEstimateTime(task.getEstimateTime());

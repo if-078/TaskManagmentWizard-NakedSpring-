@@ -270,7 +270,7 @@ li.jstree-leaf > a .jstree-icon {
 }
 
 #tmw-btn-switch{
-    z-index: 10000 !important;
+    z-index: 999;
     margin-right: 600px;
 }
 

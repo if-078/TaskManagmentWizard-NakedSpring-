@@ -21,7 +21,8 @@ public class TagDao extends EntityDao<Tag> implements TagDaoInterface {
 
   @Override
   public Tag create(Tag entity) {
-    String sql = "INSERT INTO " + table + " (name, user_id) VALUES (:name, :user_id)";
+    String sql = "INSERT INTO " + table
+        + " (name, user_id, project_id) VALUES (:name, :user_id, :project_id)";
     KeyHolder keyHolder = new GeneratedKeyHolder();
     jdbcTemplate.update(sql, getParameters(entity), keyHolder);
     entity.setId(keyHolder.getKey().intValue());
@@ -30,7 +31,8 @@ public class TagDao extends EntityDao<Tag> implements TagDaoInterface {
 
   @Override
   public boolean update(Tag entity) {
-    String sql = "UPDATE " + table + " SET name = :name, user_id = :user_id WHERE id = :id";
+    String sql = "UPDATE " + table
+        + " SET name = :name, user_id = :user_id, project_id = :project_id WHERE id = :id";
     return jdbcTemplate.update(sql, getParameters(entity)) == 1;
   }
 
@@ -56,7 +58,7 @@ public class TagDao extends EntityDao<Tag> implements TagDaoInterface {
 
   @Override
   public List<Tag> getAllByTaskId(int taskId) {
-    String sql = "SELECT tag.id, tag.name, tag.user_id FROM tag\n"
+    String sql = "SELECT tag.id, tag.name, tag.user_id,  project_id FROM tag\n"
         + "JOIN tags_tasks ON tag.id = tags_tasks.tag_id\n"
         + "WHERE tags_tasks.task_id=:taskId;";
     List<Tag> list =
@@ -86,6 +88,7 @@ public class TagDao extends EntityDao<Tag> implements TagDaoInterface {
     param.addValue("id", entity.getId());
     param.addValue("name", entity.getName());
     param.addValue("user_id", entity.getUserId());
+    param.addValue("project_id", entity.getProjectId());
     return param;
   }
 

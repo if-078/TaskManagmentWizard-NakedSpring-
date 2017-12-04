@@ -55,7 +55,7 @@ public class TagDaoItTest {
     tagsForTest.add(new Tag(7, "#Knife", 3, 1));
     tagsForTest.add(new Tag(8, "#Searching", 3, 1));
     tagsForTest
-        .forEach(item -> assertThat(tagDao.create(item).getName()).isEqualTo(item.getName()));
+        .forEach(item -> assertThat(tagDao.create(item)).isEqualTo(item));
     tagsForTest.forEach(item -> assertThat(tagDao.findOne(item.getId())).isEqualTo(item));
 
     assertThat(tagDao.findOne(tagsForTest.get(7).getId()).getName()).isEqualTo("#Searching");
@@ -77,6 +77,7 @@ public class TagDaoItTest {
   @Test
   public void shouldAddTagsToTaskAndGetTags() {
     userPopulator.createDefaultEntity();
+    taskPopulator.createDefaultEntity();
     List<Tag> tags = new ArrayList<>();
     tags.add(new Tag(1, "#TestTag1", 1, 1));
     tags.add(new Tag(2, "#TestTag2", 1, 1));

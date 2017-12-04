@@ -48,14 +48,16 @@ public class RegistrationController {
 
     @GetMapping("/verify/{key}") //метод крейт при створенні юзера посилає лінку з айдішкою юзера і згенереним ключем, та лінка має тригерети цей контроллер
     @ResponseStatus(HttpStatus.CREATED)
-    boolean verifyUser (@PathVariable Long key, HttpServletRequest request, HttpServletResponse response){
+    void verifyUser (@PathVariable String key, HttpServletRequest request, HttpServletResponse response){
+
+        System.out.println("Ok!");
 
         try {
-            response.sendRedirect("http://localhost:8585/");
+            response.sendRedirect("http://localhost:8585");
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return userService.verify(key);
+     //   userService.verify(Long.parseLong(key));
     }
 
 }

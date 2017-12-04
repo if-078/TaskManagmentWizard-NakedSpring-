@@ -49,8 +49,8 @@ public class TaskServiceTest {
     int countError = 4;
     TaskDTO taskDTO = new TaskDTO();
     taskDTO.setName("");
-    taskDTO.setStartDate("");
-    taskDTO.setEndDate("");
+    //taskDTO.setStartDate("");
+    //taskDTO.setEndDate("");
     taskDTO.setCreatedDate("");
 
     Set<ConstraintViolation<TaskDTO>> violations = validator.validate(taskDTO);

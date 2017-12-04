@@ -34,7 +34,6 @@ public class TaskController {
     this.taskService = taskService;
   }
 
-
   @GetMapping("/planning/{id}")
   @ResponseStatus(HttpStatus.OK)
   public Task getPlannedTask(@PathVariable Integer id) {
@@ -57,7 +56,8 @@ public class TaskController {
 
   @GetMapping("/tree/{id}")
   @ResponseStatus(HttpStatus.OK)
-  List<TaskTreeDTO> getTreeSubtask(@PathVariable Integer id, @RequestParam(name = "userId", required = false) int userId) {
+  List<TaskTreeDTO> getTreeSubtask(@PathVariable Integer id,
+      @RequestParam(name = "userId", required = false) int userId) {
     return taskService.findTaskByTree(id, userId);
   }
 
@@ -70,10 +70,10 @@ public class TaskController {
       @RequestParam(name = "priority", required = false) int[] priority,
       @RequestParam(name = "tag", required = false) int[] tag,
       @RequestParam(name = "planing", required = false) boolean planing,
-      @RequestParam(name = "userId", required = false) int userId)
-  {
+      @RequestParam(name = "userId", required = false) int userId) {
 
-    List<TaskTableDTO> tasksTableDTO = taskService.getFilteredTasksForTable(parentId, date, status, priority, tag, planing, userId);
+    List<TaskTableDTO> tasksTableDTO = taskService
+        .getFilteredTasksForTable(parentId, date, status, priority, tag, planing, userId);
 
     return tasksTableDTO;
   }

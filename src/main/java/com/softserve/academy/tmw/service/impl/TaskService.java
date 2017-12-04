@@ -9,14 +9,24 @@ import com.softserve.academy.tmw.dto.TaskDTO;
 import com.softserve.academy.tmw.dto.TaskFullInfoDTO;
 import com.softserve.academy.tmw.dto.TaskTableDTO;
 import com.softserve.academy.tmw.dto.TaskTreeDTO;
-import com.softserve.academy.tmw.entity.*;
-import com.softserve.academy.tmw.service.api.*;
-
+import com.softserve.academy.tmw.entity.Comment;
+import com.softserve.academy.tmw.entity.Priority;
+import com.softserve.academy.tmw.entity.Status;
+import com.softserve.academy.tmw.entity.Tag;
+import com.softserve.academy.tmw.entity.Task;
+import com.softserve.academy.tmw.service.api.EntityServiceInterface;
+import com.softserve.academy.tmw.service.api.TagServiceInterface;
+import com.softserve.academy.tmw.service.api.TaskServiceInterface;
+import com.softserve.academy.tmw.service.api.UserServiceInterface;
 import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
-
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -187,15 +197,18 @@ public class TaskService implements TaskServiceInterface {
     wrapper.setDates(dates);
     List<Integer> targetId = new ArrayList<>();
     List<TaskTreeDTO> treeDTOS = taskDao.findTaskByTree(parentId, userId);
-    class Wrape{
-      void findLeafs (List<TaskTreeDTO> trees){
-        for (TaskTreeDTO dto : trees){
-          if (dto.isChildren()) findLeafs(taskDao.findTaskByTree(dto.getId(), userId));
+    class Wrape {
+
+      void findLeafs(List<TaskTreeDTO> trees) {
+        for (TaskTreeDTO dto : trees) {
+          if (dto.isChildren()) {
+            findLeafs(taskDao.findTaskByTree(dto.getId(), userId));
+          }
           targetId.add(dto.getId());
         }
       }
 
-  }
+    }
     Wrape wrape = new Wrape();
     wrape.findLeafs(treeDTOS);
     wrapper.setIdS(targetId);
@@ -204,8 +217,8 @@ public class TaskService implements TaskServiceInterface {
     // -- remove root-tasks
     List<TaskTableDTO> list = taskDao.getFilteredTasks(builder);
     List<TaskTableDTO> tasksTableDTO = new ArrayList<TaskTableDTO>();
-    for(TaskTableDTO taskTableDTO : list){
-      if (taskDao.findTaskByTree(taskTableDTO.getId(), userId).size()==0) {
+    for (TaskTableDTO taskTableDTO : list) {
+      if (taskDao.findTaskByTree(taskTableDTO.getId(), userId).size() == 0) {
         tasksTableDTO.add(taskTableDTO);
       }
     }
@@ -232,20 +245,24 @@ public class TaskService implements TaskServiceInterface {
     taskDTO.setLeftTime(task.getLeftTime());
     if (task.getAssignTo() > 0) {
       taskDTO.setAssignTo(serviceUser.findOne(task.getAssignTo()));
+    } else {
+      taskDTO.setAssignTo(null);
     }
-    else taskDTO.setAssignTo(null);
     if (task.getStatusId() > 0) {
       taskDTO.setStatus(serviceStatus.findOne(task.getStatusId()));
+    } else {
+      taskDTO.setStatus(null);
     }
-    else taskDTO.setStatus(null);
     if (task.getPriorityId() > 0) {
       taskDTO.setPriority(servicePriority.findOne(task.getPriorityId()));
+    } else {
+      taskDTO.setPriority(null);
     }
-    else taskDTO.setPriority(null);
     if (task.getAuthorId() > 0) {
       taskDTO.setAuthor(serviceUser.findOne(task.getAuthorId()).getName());
+    } else {
+      taskDTO.setAuthor("");
     }
-    else taskDTO.setAuthor("");
 
     return taskDTO;
   }

@@ -45,13 +45,14 @@ public class TagControllerTest {
   private TagController controller;
   private ObjectMapper jsonMapper = new ObjectMapper();
   private MockMvc mockMvc;
-  Tag simpleTag;
+  private Tag simpleTag;
+  private int testId;
 
   @Before
   public void setUp() {
     MockitoAnnotations.initMocks(this);
     mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
-    int testId = 1;
+    testId = 1;
     simpleTag = new Tag();
     simpleTag.setName("#SimpleName");
     simpleTag.setUserId(testId);
@@ -80,7 +81,7 @@ public class TagControllerTest {
   public void shouldFind() throws Exception {
 
     when(service.findOne(Mockito.anyInt())).thenReturn(simpleTag);
-    MvcResult result = mockMvc.perform(get("/api/tags/" + simpleTag.getId())
+    MvcResult result = mockMvc.perform(get("/api/tags/" + testId)
         .accept(MediaType.APPLICATION_JSON)
         .contentType(MediaType.APPLICATION_JSON))
         .andExpect(status().isOk()).andReturn();
@@ -88,7 +89,7 @@ public class TagControllerTest {
     JSONAssert.assertEquals(jsonMapper.writeValueAsString(simpleTag),
         result.getResponse().getContentAsString(), false);
 
-    verify(service).findOne(simpleTag.getId());
+    verify(service).findOne(testId);
 
   }
 
@@ -96,12 +97,12 @@ public class TagControllerTest {
   public void shouldDelete() throws Exception {
 
     when(service.delete(Mockito.anyInt())).thenReturn(true);
-    mockMvc.perform(delete("/api/tags/" + simpleTag.getId())
+    mockMvc.perform(delete("/api/tags/" + testId)
         .accept(MediaType.APPLICATION_JSON)
         .contentType(MediaType.APPLICATION_JSON))
         .andExpect(status().isNoContent());
 
-    verify(service).delete(simpleTag.getId());
+    verify(service).delete(testId);
   }
 
   @Test

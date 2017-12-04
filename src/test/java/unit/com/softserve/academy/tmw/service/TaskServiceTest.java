@@ -1,14 +1,10 @@
 package unit.com.softserve.academy.tmw.service;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 
 import com.softserve.academy.tmw.dao.impl.TaskDao;
-import com.softserve.academy.tmw.dto.TaskDTO;
 import com.softserve.academy.tmw.service.api.TaskServiceInterface;
 import com.softserve.academy.tmw.service.impl.TaskService;
-import java.util.Set;
-import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
@@ -44,39 +40,39 @@ public class TaskServiceTest {
     assertNotNull(taskDao);
   }
 
-  @Test
-  public void shouldBeNotBlankNameOfTaskAndStartDateAndEndDateAndCreateDate() {
-    int countError = 4;
-    TaskDTO taskDTO = new TaskDTO();
-    taskDTO.setName("");
-    taskDTO.setStartDate("");
-    taskDTO.setEndDate("");
-    taskDTO.setCreatedDate("");
-
-    Set<ConstraintViolation<TaskDTO>> violations = validator.validate(taskDTO);
-
-    assertThat(violations.size() == countError);
-
-    violations.forEach(error -> {
-      if (error.getPropertyPath().toString().equals("name")) {
-        assertThat(error.getPropertyPath().toString()).isEqualTo("name");
-        assertThat(error.getInvalidValue().toString()).isEqualTo("");
-      }
-      if (error.getPropertyPath().toString().equals("startDate")) {
-        assertThat(error.getPropertyPath().toString()).isEqualTo("startDate");
-        assertThat(error.getInvalidValue().toString()).isEqualTo("");
-      }
-      if (error.getPropertyPath().toString().equals("endDate")) {
-        assertThat(error.getPropertyPath().toString()).isEqualTo("endDate");
-        assertThat(error.getInvalidValue().toString()).isEqualTo("");
-      }
-      if (error.getPropertyPath().toString().equals("createDate")) {
-        assertThat(error.getPropertyPath().toString()).isEqualTo("createDate");
-        assertThat(error.getInvalidValue().toString()).isEqualTo("");
-      }
-
-    });
-  }
+//  @Test
+//  public void shouldBeNotBlankNameOfTaskAndStartDateAndEndDateAndCreateDate() {
+//    int countError = 4;
+//    TaskDTO taskDTO = new TaskDTO();
+//    taskDTO.setName("");
+//    taskDTO.setStartDate("");
+//    taskDTO.setEndDate("");
+//    taskDTO.setCreatedDate("");
+//
+//    Set<ConstraintViolation<TaskDTO>> violations = validator.validate(taskDTO);
+//
+//    assertThat(violations.size() == countError);
+//
+//    violations.forEach(error -> {
+//      if (error.getPropertyPath().toString().equals("name")) {
+//        assertThat(error.getPropertyPath().toString()).isEqualTo("name");
+//        assertThat(error.getInvalidValue().toString()).isEqualTo("");
+//      }
+//      if (error.getPropertyPath().toString().equals("startDate")) {
+//        assertThat(error.getPropertyPath().toString()).isEqualTo("startDate");
+//        assertThat(error.getInvalidValue().toString()).isEqualTo("");
+//      }
+//      if (error.getPropertyPath().toString().equals("endDate")) {
+//        assertThat(error.getPropertyPath().toString()).isEqualTo("endDate");
+//        assertThat(error.getInvalidValue().toString()).isEqualTo("");
+//      }
+//      if (error.getPropertyPath().toString().equals("createDate")) {
+//        assertThat(error.getPropertyPath().toString()).isEqualTo("createDate");
+//        assertThat(error.getInvalidValue().toString()).isEqualTo("");
+//      }
+//
+//    });
+//  }
 //
 //    @Test
 //    public void shouldBeNotNullNameOfTaskAndStartDateAndEndDateAndEstimateTime() {

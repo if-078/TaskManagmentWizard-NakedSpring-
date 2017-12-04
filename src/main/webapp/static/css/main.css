@@ -77,31 +77,76 @@ html, body {
     height: 100vh;
 }
 
-
 .tmw-main-calendar {
-    /*flex-grow: 1;*/
-    height: 100vh;
-    overflow-y: scroll;
+    /* flex-grow: 1; */
+    /* height: 100vh; */
+    /* overflow-y: scroll; */
+}
+
+.tmw-main-calendar, .tmw-main-table, .tmw-main-planning-table {
+    height: 50%;
+}
+
+.tmw-main-calendar > div, .tmw-task-calendar, .tmw-main-table > div, .tmw-task-table, .tmw-main-planning-table > div, .tmw-task-planning-table {
+    height: 100%;
 }
 
 .fc-toolbar.fc-header-toolbar {
     margin-bottom: 0px;
 }
 
+
+
+.tmw-main-planning-table {
+    /* flex-grow: 1; */
+    margin-top: -5px;
+    /* height: 100vh; */
+    /* overflow-y: scroll; */
+    user-select: none;
+}
+
+#tmw-task-planning-table {
+    border-collapse: collapse !important;
+}
+
+.tmw-task-planning-table tr.tmw-draggable {
+    cursor: pointer;
+}
+
+.tmw-task-planning-table tr.tmw-disabled {
+    cursor: not-allowed;
+    background-color: #f0f0f0;
+    color: #999999;
+}
+
+
+
 .tmw-main-table {
-    /*flex-grow: 1;*/
+    /* flex-grow: 1; */
     margin-top: 10px;
-    height: 100vh;
-    overflow-y: scroll;
+    /* height: 100vh; */
+    /* overflow-y: scroll; */
+    user-select: none;
 }
 
 #tmw-task-table {
     border-collapse: collapse !important;
 }
 
-.tmw-task-table tr {
+.tmw-task-table tr.tmw-draggable {
     cursor: pointer;
 }
+
+.tmw-task-table tr.tmw-disabled {
+    cursor: not-allowed;
+    background-color: #f0f0f0;
+    color: #999999;
+}
+
+
+
+
+
 
 ul.jstree-container-ul a.jstree-anchor {
     width: 200px;
@@ -217,5 +262,4 @@ li.jstree-leaf > a .jstree-icon {
     padding-top: 5px;
     padding-bottom: 5px;
 }
-
 

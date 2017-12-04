@@ -44,7 +44,7 @@ public class TagDao extends EntityDao<Tag> implements TagDaoInterface {
 
   @Override
   public boolean deleteTagsOfTask(int taskId) {
-    String Sql = "DELETE FROM " + "tmw.tags_tasks" + " WHERE task_id = :task_id";
+    String Sql = "DELETE FROM " + "tags_tasks" + " WHERE task_id = :task_id";
     return jdbcTemplate.update(Sql, new MapSqlParameterSource("task_id", taskId)) > 0;
   }
 
@@ -71,7 +71,7 @@ public class TagDao extends EntityDao<Tag> implements TagDaoInterface {
   public boolean setTagsToTask(List<Tag> tags, int taskId) {
 
     MapSqlParameterSource param = new MapSqlParameterSource();
-    StringBuilder sql = new StringBuilder("INSERT into tmw.tags_tasks (tag_id, task_id) VALUES ");
+    StringBuilder sql = new StringBuilder("INSERT into tags_tasks (tag_id, task_id) VALUES ");
     param.addValue("task", taskId);
     for (int i = 0; i < tags.size(); i++) {
       String tag = "tag" + i;

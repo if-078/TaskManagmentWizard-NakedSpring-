@@ -168,7 +168,7 @@ public class TaskDao extends EntityDao<Task> implements TaskDaoInterface {
   @Override
   public List<Tag> getTagsOfTask(int taskId) {
     String sql =
-        "SELECT tag.id, tag.name, tag.user_id, project_id FROM tmw.tag INNER JOIN tmw.tags_tasks  "
+        "SELECT tag.id, tag.name, tag.user_id, project_id FROM tag INNER JOIN tags_tasks  "
             + "ON tag.id=tags_tasks.tag_id  WHERE tags_tasks.task_id = :tags_tasks.task_id";
 
     List<Tag> tags = jdbcTemplate.query(sql,
@@ -179,7 +179,7 @@ public class TaskDao extends EntityDao<Task> implements TaskDaoInterface {
 
   @Override
   public List<Comment> getCommentsOfTask(int taskId) {
-    String sql = "SELECT id, comment_text, created_date, task_id, user_id FROM tmw.comment "
+    String sql = "SELECT id, comment_text, created_date, task_id, user_id FROM comment "
         + "WHERE task_id = :task_id";
     List<Comment> comments =
         jdbcTemplate.query(sql, new MapSqlParameterSource("task_id", taskId), new CommentMapper());

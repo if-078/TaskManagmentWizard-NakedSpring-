@@ -70,7 +70,7 @@ public class UserDao extends EntityDao<User> implements UserDaoInterface {
   }
 
   public boolean verifyUser (int id, long key){
-    String sql = "update " + table + "set active = 1 where id = (select user_id from tmw.user_activation where user_key = :key)and user_id = :user_id";
+    String sql = "update " + table + "set active = 1 where id = (select user_id from user_activation where user_key = :key)and user_id = :user_id";
     MapSqlParameterSource parameterSource = new MapSqlParameterSource();
     parameterSource.addValue("key", key);
     parameterSource.addValue("user_id", id);

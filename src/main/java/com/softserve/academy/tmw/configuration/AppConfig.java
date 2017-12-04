@@ -16,7 +16,8 @@ import javax.mail.Session;
 import java.util.Properties;
 
 @Configuration
-@PropertySource("classpath:mysql_connection.properties")
+//@PropertySource("classpath:mysql_connection.properties")
+@PropertySource("classpath:postgresql_connection.properties")
 public class AppConfig {
 
   @Value("${jdbc.schema}")

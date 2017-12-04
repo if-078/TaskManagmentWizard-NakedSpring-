@@ -53,7 +53,7 @@ var taskPlanningTable = function (data) {
         paging: false,
         info: false,
         searching: false,
-        scrollY: '40vh',
+        scrollY: '38vh',
         scrollCollapse: true
     });
 

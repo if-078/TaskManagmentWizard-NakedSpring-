@@ -78,6 +78,7 @@ html, body {
 }
 
 .tmw-main-calendar {
+    margin-top: -25px;
     /* flex-grow: 1; */
     /* height: 100vh; */
     /* overflow-y: scroll; */
@@ -261,5 +262,15 @@ li.jstree-leaf > a .jstree-icon {
 #tmw-create-task {
     padding-top: 5px;
     padding-bottom: 5px;
+}
+
+
+.fc-toolbar {
+    padding-left: 200px;
+}
+
+#tmw-btn-switch{
+    z-index: 10000 !important;
+    margin-right: 600px;
 }
 

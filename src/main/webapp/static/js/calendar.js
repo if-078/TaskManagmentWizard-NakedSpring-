@@ -211,6 +211,7 @@ var taskCalendar = function () {
         },
         cache: false
     });
+
 };
 
 //============================================================================================================
@@ -307,3 +308,20 @@ var setColorTask = function (data) {
     }
     return '#c2bdc1'
 };
+
+
+$('#tmw-btn-table-view').on("click", function () {
+    $('#tmw-btn-table-view').addClass('fc-state-active');
+    $('#tmw-btn-calendar-view').removeClass('fc-state-active');
+    $('#tmw-main-calendar').addClass('hidden');
+    $('#tmw-main-planning-table').removeClass('hidden');
+    taskCalendar();
+});
+
+$('#tmw-btn-calendar-view').on("click", function () {
+    $('#tmw-btn-calendar-view').addClass('fc-state-active');
+    $('#tmw-btn-table-view').removeClass('fc-state-active');
+    $('#tmw-main-planning-table').addClass('hidden');
+    $('#tmw-main-calendar').removeClass('hidden');
+    taskCalendar();
+});

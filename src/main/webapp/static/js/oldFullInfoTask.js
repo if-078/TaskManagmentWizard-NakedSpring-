@@ -48,7 +48,10 @@ var showFull = function (id) {
             window.sessionStorage.setItem("token", token);
             taskDTO = data;
 
+            console.log(taskDTO);
             $('#tmw-task-info').text(taskDTO.name);
+            $('#tmw-task-projectId').text(taskDTO.projectId);
+            $('#tmw-task-parentId').text(taskDTO.parentId);
             $('#tmw-task-draftPlanning').val(taskDTO.draftPlanning);
             $('#tmw-task-planningDate').val(taskDTO.planningDate);
             $('#tmw-task-estimateTime').val(taskDTO.estimateTime);
@@ -133,7 +136,7 @@ function createOrUpdateTask(taskDTO) {
 
         task =
             {
-                "name": $('#tmw-task-info').val(),
+                "name": $('#tmw-task-info').text(),
                 "createdDate": new Date(),
                 "planningDate": $('#tmw-task-planningDate').val(),
                 "draftPlanning": $('#tmw-task-draftPlanning').val(),
@@ -145,7 +148,7 @@ function createOrUpdateTask(taskDTO) {
                 "statusId": $('#tmw-task-status').find(":selected").val(),
                 "priorityId": $('#tmw-task-priority').find(":selected").val(),
                 "parentId": state.parentId,
-                "projectId": state.projectId,
+                "projectId": $('#tmw-task-projectId').text(),
                 "tags": getSelectedTags(),
                 "comments": getSelectedComments()
             }
@@ -155,7 +158,7 @@ function createOrUpdateTask(taskDTO) {
         task =
             {
                 "id": taskDTO.id,
-                "name": $('#tmw-task-info').val(),
+                "name": $('#tmw-task-info').text(),
                 "createdDate": taskDTO.createdDate,
                 "planningDate": $('#tmw-task-planningDate').val(),
                 "draftPlanning": $('#tmw-task-draftPlanning').val(),
@@ -166,8 +169,8 @@ function createOrUpdateTask(taskDTO) {
                 "assignTo": $('#tmw-task-assignTo').find(":selected").val(),
                 "statusId": $('#tmw-task-status').find(":selected").val(),
                 "priorityId": $('#tmw-task-priority').find(":selected").val(),
-                "parentId": state.parentId,
-                "projectId": state.projectId,
+                "parentId": taskDTO.parentId,
+                "projectId": taskDTO.projectId,
                 "tags": getSelectedTags(),
                 "comments": getSelectedComments()
             }

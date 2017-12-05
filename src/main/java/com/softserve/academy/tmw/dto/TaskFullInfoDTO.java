@@ -20,6 +20,8 @@ public class TaskFullInfoDTO {
   private Status status;
   private Priority priority;
   private String author;
+  private int parentId;
+  private int projectId;
 
   public int getId() {
     return id;
@@ -122,6 +124,22 @@ public class TaskFullInfoDTO {
 
   public void setAuthor(String author) {
     this.author = author;
+  }
+
+  public int getParentId() {
+    return parentId;
+  }
+
+  public void setParentId(int parentId) {
+    this.parentId = parentId;
+  }
+
+  public int getProjectId() {
+    return projectId;
+  }
+
+  public void setProjectId(int projectId) {
+    this.projectId = projectId;
   }
 
   @Override

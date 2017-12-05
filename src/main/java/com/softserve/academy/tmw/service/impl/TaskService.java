@@ -260,6 +260,8 @@ public class TaskService implements TaskServiceInterface {
     } else {
       taskDTO.setAuthor("");
     }
+    taskDTO.setParentId(task.getParentId());
+    taskDTO.setProjectId(task.getProjectId());
 
     return taskDTO;
   }

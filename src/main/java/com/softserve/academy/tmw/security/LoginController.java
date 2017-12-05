@@ -33,13 +33,16 @@ public class LoginController {
     public ResponseEntity<UserProxy> getAuthenticationToken(@RequestBody UserCredential credential, HttpServletResponse response) {
         logger.info("User with credentials email " + credential.getUserEmail() + " " + credential.getPassword() + " going to login.");
         User user = getUser(credential);
-        if (user != null && passwordEncoder.matches(credential.getPassword(),user.getPass())) {
+        if (user != null && passwordEncoder.matches(credential.getPassword(),user.getPass()) && user.isActivated()) {
             String fullToken = TokenAuthenticationService.createToken(user);
             logger.info("Token created.");
             response.addHeader(HEADER_NAME, fullToken);
             logger.info("User authentication success. User: " + user.getName() + " with email address: " + user.getEmail() + " logged in.");
             return ResponseEntity.ok(new UserProxy(user.getId(), user.getName(), null));
-        } else {
+        } else if (!user.isActivated()) {
+            logger.info("User with email " + credential.getUserEmail() + " is not activated");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }else {
             logger.info("Bad user credentials email: " + credential.getUserEmail() + " " + credential.getPassword());
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }

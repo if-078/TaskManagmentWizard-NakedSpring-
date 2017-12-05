@@ -91,7 +91,7 @@ public class UserServiceTest {
 
   @Test
   public void shouldDeleteUserById() {
-    int userId = 5;
+    Integer userId = 5;
 
     when(userDao.delete(userId)).thenReturn(true);
 
@@ -105,7 +105,7 @@ public class UserServiceTest {
   @Test
   public void shouldUpdateUser() {
     String userName = "SoftServe";
-    int userId = 5;
+    Integer userId = 5;
 
     User updatedUser = new User();
     updatedUser.setName(userName);

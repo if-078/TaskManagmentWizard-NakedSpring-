@@ -54,7 +54,7 @@ html, body {
 }
 
 .tmw-treeview {
-    margin-top: -39px;
+    margin-top: -38px;
     flex-grow: 1;
     overflow-y: scroll;
 }

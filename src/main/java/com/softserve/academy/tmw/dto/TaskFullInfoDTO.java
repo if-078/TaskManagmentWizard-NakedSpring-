@@ -10,6 +10,7 @@ public class TaskFullInfoDTO {
 
   private int id;
   private String name;
+  private Date createdDate;
   private Date planningDate;
   private Date draftPlanning;
   private String estimateTime;
@@ -34,6 +35,14 @@ public class TaskFullInfoDTO {
 
   public void setName(String name) {
     this.name = name;
+  }
+
+  public Date getCreatedDate() {
+    return createdDate;
+  }
+
+  public void setCreatedDate(Date createdDate) {
+    this.createdDate = createdDate;
   }
 
   public Date getPlanningDate() {

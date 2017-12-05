@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("api/tasks")
+  @RequestMapping("api/tasks")
 public class TaskController {
 
   TaskServiceInterface taskService;
@@ -86,31 +86,37 @@ public class TaskController {
 
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
-  public Task createTask(@Validated @RequestBody TaskDTO taskDTO) {
+  public Task create(@Validated @RequestBody TaskDTO taskDTO) {
     return taskService.createTaskByDTO(taskDTO);
+  }
+
+  @PostMapping("/invite")
+  @ResponseStatus(HttpStatus.ACCEPTED)
+  public boolean inviteUserToProject (@RequestBody String email, @RequestBody Integer projectId){
+    return taskService.inviteUserToProject(email, projectId);
   }
 
   @PutMapping
   @ResponseStatus(HttpStatus.NO_CONTENT)
-  boolean updateTask(@Validated @RequestBody TaskDTO taskDTO) {
+  boolean update(@Validated @RequestBody TaskDTO taskDTO) {
     return taskService.updateTaskByDTO(taskDTO);
   }
 
   @DeleteMapping("/{id}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
-  boolean deleteTask(@PathVariable int id) {
+  boolean delete(@PathVariable int id) {
     return taskService.delete(id);
   }
 
   @GetMapping
   @ResponseStatus(HttpStatus.OK)
-  List<Task> getAllTasks() {
+  List<Task> getAll() {
     return taskService.getAll();
   }
 
   @GetMapping("/one/{id}")
   @ResponseStatus(HttpStatus.OK)
-  Task getTask(@PathVariable Integer id) {
+  Task get(@PathVariable Integer id) {
     return taskService.findOne(id);
   }
 

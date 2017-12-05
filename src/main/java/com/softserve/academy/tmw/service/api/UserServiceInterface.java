@@ -6,9 +6,13 @@ import java.util.List;
 
 public interface UserServiceInterface extends EntityServiceInterface<User> {
 
-    boolean verify(long key);
+    boolean verify(String key);
 
     User findByEmail(String email);
 
-  List<User> getTeamByTask(int taskId, int userId);
+    boolean acceptProjectInvitation(String key);
+
+    List<User> getTeamByTask(int taskId, int userId);
+
+    boolean sendEmailToUser(User user, String message, String subject);
 }

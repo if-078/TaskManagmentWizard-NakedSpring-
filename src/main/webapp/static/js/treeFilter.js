@@ -5,13 +5,13 @@ $('#tmw-treeview').jstree({
         data: {
             url: function (node) {
                 switch (node.id) {
+
                     case '#':
                         var rootNode = {
                             id: '$',
                             text: 'All Projects',
                             children: true
                         };
-
                         return 'data:application/json,' + encodeURIComponent(JSON.stringify(rootNode));
 
                     case '$':
@@ -46,6 +46,7 @@ $('#tmw-treeview').on('select_node.jstree', function (event, data) {
     var hasChildren = (data.node.children.length > 0 || !data.node.state.loaded);
     if (hasChildren) {
         $('#tmw-treeview').jstree('open_node', '' + data.node.id);
+        console.log('nodeId = ', data.node.id);
     }
 
     state.parentId = data.node.id !== '$' ? data.node.id : 0;
@@ -53,6 +54,8 @@ $('#tmw-treeview').on('select_node.jstree', function (event, data) {
     selectedTaskText =  data.node.text;
 
     if (data.node.parent === '$') {
+        hideButtonSwitchCalendarTable();
+        hideDraftPlanningTable();
         $('#tmw-task-calendar').fullCalendar('destroy');
         taskCalendarInit = false;
     }
@@ -85,4 +88,14 @@ $('#tmw-treeview').on('dblclick.jstree', function (event, data) {
         showFull(id);
     }
 
+});
+
+
+
+function openNodeAllProjects() {
+    $('#tmw-treeview').jstree('open_node', '$');
+}
+
+$('#loginForm button').on('click', function () {
+    setTimeout(openNodeAllProjects, 1500);
 });

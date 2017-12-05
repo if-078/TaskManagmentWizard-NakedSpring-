@@ -33,4 +33,6 @@ public interface TaskServiceInterface extends EntityServiceInterface<Task> {
   boolean updateCalendarTask(Task task);
 
   List<Task> getPlannedTasks();
+
+  boolean inviteUserToProject(String email, Integer projectId);
 }

@@ -58,9 +58,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 ).permitAll()
                 .antMatchers(HttpMethod.POST, "/login").permitAll()
                 .antMatchers(HttpMethod.POST, "/register").permitAll()
-                .antMatchers(HttpMethod.GET, "/register/verify/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/register/**").permitAll()
                 .anyRequest().authenticated();
-
         // Custom JWT based security filter
         http.addFilterBefore(getTokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
         // disable page caching
@@ -83,5 +82,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         filter.setAuthenticationManager(tokenAuthenticationManager);
         return filter;
     }
-
 }

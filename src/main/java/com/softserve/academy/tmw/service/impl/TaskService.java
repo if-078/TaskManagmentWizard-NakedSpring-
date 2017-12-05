@@ -9,11 +9,7 @@ import com.softserve.academy.tmw.dto.TaskDTO;
 import com.softserve.academy.tmw.dto.TaskFullInfoDTO;
 import com.softserve.academy.tmw.dto.TaskTableDTO;
 import com.softserve.academy.tmw.dto.TaskTreeDTO;
-import com.softserve.academy.tmw.entity.Comment;
-import com.softserve.academy.tmw.entity.Priority;
-import com.softserve.academy.tmw.entity.Status;
-import com.softserve.academy.tmw.entity.Tag;
-import com.softserve.academy.tmw.entity.Task;
+import com.softserve.academy.tmw.entity.*;
 import com.softserve.academy.tmw.service.api.EntityServiceInterface;
 import com.softserve.academy.tmw.service.api.TagServiceInterface;
 import com.softserve.academy.tmw.service.api.TaskServiceInterface;
@@ -27,6 +23,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+
+import org.hashids.Hashids;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -51,9 +49,6 @@ public class TaskService implements TaskServiceInterface {
 
   @Autowired
   private TagServiceInterface tagService;
-
-//  @Autowired
-//  private CommentServiceInterface commentService;
 
   @Autowired
   private EntityServiceInterface<Status> serviceStatus;
@@ -121,7 +116,6 @@ public class TaskService implements TaskServiceInterface {
 
     task = taskDao.create(task);
     tagService.setTagsToTask(Arrays.asList(taskDTO.getTags()), task.getId());
-//    commentService.setCommentsToTask(Arrays.asList(taskDTO.getComments()), task.getId());
     return task;
   }
 
@@ -238,6 +232,7 @@ public class TaskService implements TaskServiceInterface {
 
     taskDTO.setId(task.getId());
     taskDTO.setName(task.getName());
+    taskDTO.setCreatedDate(task.getCreatedDate());
     taskDTO.setPlanningDate(task.getPlanningDate());
     taskDTO.setDraftPlanning(task.getStartDate());
     taskDTO.setEstimateTime(task.getEstimateTime());
@@ -265,6 +260,16 @@ public class TaskService implements TaskServiceInterface {
     }
 
     return taskDTO;
+  }
+
+  @Override
+  public boolean inviteUserToProject(String email, Integer projectId){
+    User user = serviceUser.findByEmail(email);
+    String message = "http://localhost:8585/register/invitationaccept/";
+    Hashids hashids = new Hashids();
+    message += hashids.encode(user.getId(), projectId);
+    String subject = "You have got invitation to the project!!!";
+    return serviceUser.sendEmailToUser(user, message, subject);
   }
 
   private Date getFormatDate(String line) {

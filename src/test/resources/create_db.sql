@@ -12,16 +12,6 @@ create table user
 )
 ;
 
-create table user_activation
-(
-	user_key int not null,
-    user_id int not null,
-    constraint fk_user_id foreign key (user_id)
-    references user(id)
-    			on update cascade on delete cascade
-);
-
-
 create table priority
 (
 	id int auto_increment
@@ -133,13 +123,13 @@ alter table comment
 			on update cascade on delete cascade
 ;
 
-
 create table tag
 (
 	id int auto_increment
 		primary key,
 	name varchar(45) not null,
-	user_id int not null
+	user_id int not null,
+	project_id int not null
 )
 ;
 
@@ -147,10 +137,20 @@ create index fk_Tags_Users1
 	on tag (user_id)
 ;
 
+create index fk_Tags_Project
+	on tag (project_id)
+;
+
 alter table tag
 	add constraint fk_Tags_Users1
 		foreign key (user_id) references tmw.user (id)
 ;
+
+alter table tag
+	add constraint fk_Tags_Project
+		foreign key (project_id) references tmw.task (id)
+;
+
 
 
 create table tags_tasks

@@ -79,17 +79,19 @@ INSERT INTO tmw.comment (comment_text, created_date, task_id, user_id) VALUES ('
 INSERT INTO tmw.comment (comment_text, created_date, task_id, user_id) VALUES ('comment 14', '2017-11-15 00:00:00', 32, 7);
 INSERT INTO tmw.comment (comment_text, created_date, task_id, user_id) VALUES ('comment 15', '2017-11-15 00:00:00', 31, 1);
 
-INSERT INTO tmw.tag (name, user_id) VALUES ('#db', 1);
-INSERT INTO tmw.tag (name, user_id) VALUES ('#dao', 1);
-INSERT INTO tmw.tag (name, user_id) VALUES ('#security', 1);
-INSERT INTO tmw.tag (name, user_id) VALUES ('#java', 1);
-INSERT INTO tmw.tag (name, user_id) VALUES ('#sql', 1);
-INSERT INTO tmw.tag (name, user_id) VALUES ('#ui', 1);
-INSERT INTO tmw.tag (name, user_id) VALUES ('#spring', 1);
-INSERT INTO tmw.tag (name, user_id) VALUES ('#test', 1);
-INSERT INTO tmw.tag (name, user_id) VALUES ('#dto', 1);
-INSERT INTO tmw.tag (name, user_id) VALUES ('#JS', 1);
-INSERT INTO tmw.tag (name, user_id) VALUES ('#documentation', 1);
+
+
+INSERT INTO tmw.tag (name, user_id, project_id) VALUES ('#db', 1, 1);
+INSERT INTO tmw.tag (name, user_id, project_id) VALUES ('#dao', 1, 1);
+INSERT INTO tmw.tag (name, user_id, project_id) VALUES ('#security', 1, 1);
+INSERT INTO tmw.tag (name, user_id, project_id) VALUES ('#java', 1, 1);
+INSERT INTO tmw.tag (name, user_id, project_id) VALUES ('#sql', 1, 1);
+INSERT INTO tmw.tag (name, user_id, project_id) VALUES ('#ui', 1, 1);
+INSERT INTO tmw.tag (name, user_id, project_id) VALUES ('#spring', 1, 1);
+INSERT INTO tmw.tag (name, user_id, project_id) VALUES ('#test', 1, 1);
+INSERT INTO tmw.tag (name, user_id, project_id) VALUES ('#dto', 1, 1);
+INSERT INTO tmw.tag (name, user_id, project_id) VALUES ('#JS', 1, 1);
+INSERT INTO tmw.tag (name, user_id, project_id) VALUES ('#documentation', 1, 1);
 
 INSERT INTO tmw.tags_tasks (tag_id, task_id) VALUES (11, 5);
 INSERT INTO tmw.tags_tasks (tag_id, task_id) VALUES (11, 6);

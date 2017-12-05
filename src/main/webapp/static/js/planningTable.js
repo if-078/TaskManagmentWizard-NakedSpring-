@@ -53,7 +53,7 @@ var taskPlanningTable = function (data) {
         paging: false,
         info: false,
         searching: false,
-        scrollY: '38vh',
+        scrollY: '35.5vh',
         scrollCollapse: true
     });
 
@@ -156,6 +156,14 @@ var makePlanningTableRowsDraggable = function () {
 
 var dataFromPlanningTable = [];
 
+var hideButtonSwitchCalendarTable = function () {
+    $('#tmw-btn-switch').css('visibility', 'hidden');
+};
+hideButtonSwitchCalendarTable();
 
+
+var showButtonSwitchCalendarTable = function () {
+    $('#tmw-btn-switch').css('visibility', 'visible');
+};
 
 

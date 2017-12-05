@@ -9,6 +9,8 @@ import java.sql.Date;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import org.hashids.Hashids;
 import org.jooq.Condition;
 import org.jooq.DSLContext;
 import org.jooq.Field;
@@ -36,7 +38,7 @@ public class JooqSQLBuilder {
   private Field priorityId = field("task.priority_id");
   private Field parentId = field("task.parent_id");
   private Field authorId = field("task.author_id");
-  private Field projectId =field("task.project_id");
+  private Field projectId = field("task.project_id");
   private FilterStateWrapper sto;
 
   public JooqSQLBuilder(FilterStateWrapper sto) {
@@ -46,9 +48,9 @@ public class JooqSQLBuilder {
   public Select buildSql() {
 
     Table table = table("task").
-        join(table("priority")).on(priorityId.eq(field("priority.id"))).
-        join(table("status")).on(statusId.eq(field("status.id"))).
-        join(table("user")).on(assignTo.eq(field("user.id")));
+            join(table("priority")).on(priorityId.eq(field("priority.id"))).
+            join(table("status")).on(statusId.eq(field("status.id"))).
+            join(table("user")).on(assignTo.eq(field("user.id")));
     Condition condition = field(id).in(sto.getIdS());
     Select selectConditionStep;
 
@@ -85,46 +87,24 @@ public class JooqSQLBuilder {
 
       List<Integer> list = Arrays.stream(sto.getTag()).boxed().collect(Collectors.toList());
       table = table.join(table("tags_tasks")).on(field(id).eq(field("tags_tasks.task_id")))
-          .join(table("tag")).on(field("tags_tasks.tag_id").eq(field("tag.id")));
-      selectConditionStep = creator.select(id, name, createdDate, planningDate, startDate, endDate, estimateTime, spentTime,leftTime,assignTo,
-          statusId, priorityId,authorId,projectId,
-          field("user.name").as("user"), field("status.name").as("status"),
-          field("priority.name").as("priority"), parentId).from(table)
-          .where(condition).and(field("tags_tasks.tag_id").in(list))
-          .groupBy(field("task_id"))
-          .having(field("tag_id").countDistinct().eq(sto.getTag().length));
+              .join(table("tag")).on(field("tags_tasks.tag_id").eq(field("tag.id")));
+      selectConditionStep = creator.select(id, name, createdDate, planningDate, startDate, endDate, estimateTime, spentTime, leftTime, assignTo,
+              statusId, priorityId, authorId, projectId,
+              field("user.name").as("user"), field("status.name").as("status"),
+              field("priority.name").as("priority"), parentId).from(table)
+              .where(condition).and(field("tags_tasks.tag_id").in(list))
+              .groupBy(field("task_id"))
+              .having(field("tag_id").countDistinct().eq(sto.getTag().length));
     } else {
 
-      selectConditionStep = creator.select(id, name, createdDate, planningDate, startDate, endDate, estimateTime,spentTime,leftTime,assignTo,
-          statusId, priorityId,authorId,projectId,
-          field("user.name").as("user")
-          , field("status.name").as("status"), field("priority.name").as("priority"), parentId)
-          .from(table).where(condition);
+      selectConditionStep = creator.select(id, name, createdDate, planningDate, startDate, endDate, estimateTime, spentTime, leftTime, assignTo,
+              statusId, priorityId, authorId, projectId,
+              field("user.name").as("user")
+              , field("status.name").as("status"), field("priority.name").as("priority"), parentId)
+              .from(table).where(condition);
 
     }
 
     return selectConditionStep;
   }
-
-  public static void main(String[] args) {
-    FilterStateWrapper wrapper = new FilterStateWrapper();
-    int[] status = new int[]{1, 2, 3};
-    int[] priority = new int[]{1, 2, 3};
-    wrapper.setPriority(priority);
-    wrapper.setStatus(status);
-    wrapper.setParentId(1);
-    wrapper.setDates(new String[]{"0", "0"});
-    wrapper.setTag(new int[]{1, 2});
-    JooqSQLBuilder builder = new JooqSQLBuilder(wrapper);
-    System.out.println(builder.buildSql().getSQL());
-  }
-
 }
-/*        String query = "SELECT task.id, task.name, task.created_date, task.planning_date, task.start_date,
-                    task.end_date, task.estimate_time,\n"
-           + "  user.name as user, status.name as status, priority.name as priority, task.parent_id\n"
-           + "  FROM task\n"
-           + "  LEFT JOIN priority ON task.priority_id = priority.id\n"
-           + "  LEFT JOIN status ON task.status_id = status.id\n"
-           + "  LEFT JOIN user ON task.assign_to = user.id"
-           + "WHERE task.id=:id"; */

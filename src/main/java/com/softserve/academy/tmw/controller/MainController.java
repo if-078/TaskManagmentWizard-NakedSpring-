@@ -19,9 +19,6 @@ public class MainController {
   public String getIndexPage(HttpServletRequest httpServletRequest) {
     String userIp = httpServletRequest.getRemoteAddr();
     logger.info("User with ip: " + userIp + " connected");
-
     return "index";
   }
-
-
 }

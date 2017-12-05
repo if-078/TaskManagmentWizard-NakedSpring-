@@ -101,6 +101,8 @@ $('#tmw-delete-task').on("click", function () {
 });
 
 $('#tmw-create-task').on('click', function () {
+
+    /*
     clearErrorTask();
     taskDTO = {}
     clearTaskModal();
@@ -112,8 +114,9 @@ $('#tmw-create-task').on('click', function () {
     fillSelectComments(null);
     $('#tmw-tag-multi-select').multiselect('deselectAll', false);
     $('#tmw-comment-multi-select').multiselect('deselectAll', false);
-
     $('#tmw-modal').modal('show');
+    */
+
 });
 
 function createOrUpdateTask(taskDTO) {

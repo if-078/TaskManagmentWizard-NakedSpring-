@@ -65,6 +65,7 @@ function doLogin(loginData) {
             userName = data['username'];
             window.sessionStorage.setItem("id", userId);
             window.sessionStorage.setItem("name", userName);
+            openSocket(userId,userName);
             $("#user-login").text("Hello, " + userName);
             setToken(jqXHR);
             $("#logout").show();
@@ -165,6 +166,27 @@ $("#loginForm").validate(
         }
     }
 );
+function openSocket(userId,userName) {
 
+    // Create and init the SockJS object
+    var socket = new SockJS('/ws');
+    socket.send(JSON.stringify({"userId":userId,"userName":userName}))
+    var stompClient = Stomp.over(socket);
+
+    // Subscribe the '/notify' channell
+    stompClient.connect({}, function(frame) {
+        stompClient.subscribe('/user/queue/notify', function(notification) {
+
+            // Call the notify function when receive a notification
+            notify(JSON.parse(notification.body).content);
+
+        });
+    });
+
+    return;
+}
+function notify(message) {
+    $.notify("You was assigned to new task!", "info");
+}
 
 

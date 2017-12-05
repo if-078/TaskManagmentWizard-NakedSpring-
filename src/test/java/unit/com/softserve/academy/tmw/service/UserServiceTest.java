@@ -74,7 +74,7 @@ public class UserServiceTest {
 
   @Test
   public void shouldGetUserById() {
-    Long userId = 5;
+    int userId = 5;
 
     User persistedUser = new User();
     persistedUser.setId(userId);
@@ -91,7 +91,7 @@ public class UserServiceTest {
 
   @Test
   public void shouldDeleteUserById() {
-    int userId = 5;
+    Integer userId = 5;
 
     when(userDao.delete(userId)).thenReturn(true);
 
@@ -105,7 +105,7 @@ public class UserServiceTest {
   @Test
   public void shouldUpdateUser() {
     String userName = "SoftServe";
-    Long userId = 5;
+    Integer userId = 5;
 
     User updatedUser = new User();
     updatedUser.setName(userName);

@@ -156,7 +156,7 @@ var taskCalendar = function () {
                             eventResize: resizeTaskOnCalendar,
 
                             eventClick: function (event) {
-                                showFull(event);
+                                //showFull(event);
                             },
 
                             eventDragStop: function (event, e) {

@@ -53,6 +53,8 @@ $('#tmw-treeview').on('select_node.jstree', function (event, data) {
     selectedTaskText =  data.node.text;
 
     if (data.node.parent === '$') {
+        hideButtonSwitchCalendarTable();
+        hideDraftPlanningTable();
         $('#tmw-task-calendar').fullCalendar('destroy');
         taskCalendarInit = false;
     }

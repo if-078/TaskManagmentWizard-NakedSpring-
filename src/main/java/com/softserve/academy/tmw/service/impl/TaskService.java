@@ -52,9 +52,6 @@ public class TaskService implements TaskServiceInterface {
   @Autowired
   private TagServiceInterface tagService;
 
-//  @Autowired
-//  private CommentServiceInterface commentService;
-
   @Autowired
   private EntityServiceInterface<Status> serviceStatus;
 
@@ -121,7 +118,6 @@ public class TaskService implements TaskServiceInterface {
 
     task = taskDao.create(task);
     tagService.setTagsToTask(Arrays.asList(taskDTO.getTags()), task.getId());
-//    commentService.setCommentsToTask(Arrays.asList(taskDTO.getComments()), task.getId());
     return task;
   }
 
@@ -238,6 +234,7 @@ public class TaskService implements TaskServiceInterface {
 
     taskDTO.setId(task.getId());
     taskDTO.setName(task.getName());
+    taskDTO.setCreatedDate(task.getCreatedDate());
     taskDTO.setPlanningDate(task.getPlanningDate());
     taskDTO.setDraftPlanning(task.getStartDate());
     taskDTO.setEstimateTime(task.getEstimateTime());

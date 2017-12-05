@@ -54,7 +54,7 @@ html, body {
 }
 
 .tmw-treeview {
-    margin-top: -39px;
+    margin-top: -38px;
     flex-grow: 1;
     overflow-y: scroll;
 }
@@ -78,22 +78,31 @@ html, body {
 }
 
 .tmw-main-calendar {
-    margin-top: -25px;
+    margin-top: -29px;
     /* flex-grow: 1; */
     /* height: 100vh; */
     /* overflow-y: scroll; */
 }
 
-.tmw-main-calendar, .tmw-main-table, .tmw-main-planning-table {
+.tmw-main-calendar {
+    height: 51%;
+}
+
+.tmw-main-planning-table {
+    height: 48%;
+}
+
+.tmw-main-table {
     height: 50%;
 }
+
 
 .tmw-main-calendar > div, .tmw-task-calendar, .tmw-main-table > div, .tmw-task-table, .tmw-main-planning-table > div, .tmw-task-planning-table {
     height: 100%;
 }
 
 .fc-toolbar.fc-header-toolbar {
-    margin-bottom: 0px;
+    margin-bottom: -6px;
 }
 
 
@@ -214,7 +223,7 @@ textarea {
 }
 
 .tmw-main-calendar {
-    padding-bottom: 15px;
+    padding-bottom: 0px;
 }
 
 body > tr {
@@ -270,7 +279,22 @@ li.jstree-leaf > a .jstree-icon {
 }
 
 #tmw-btn-switch{
-    z-index: 10000 !important;
+    z-index: 999;
     margin-right: 600px;
+    margin-top: 2px;
 }
 
+#tmw-btn-calendar-view {
+    padding-left: 5px;
+    padding-top: 4px;
+    padding-right: 5px;
+    padding-bottom: 3px;
+}
+
+#tmw-btn-table-view {
+    padding-left: 16px;
+    padding-top: 4px;
+    padding-right: 17px;
+    padding-bottom: 3px;
+    margin-left: -2px;
+}

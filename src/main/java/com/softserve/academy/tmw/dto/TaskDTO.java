@@ -54,8 +54,6 @@ public class TaskDTO {
     return planningDate;
   }
 
-  @NotBlank
-  @Min(1)
   public int getEstimateTime() {
     return estimateTime;
   }

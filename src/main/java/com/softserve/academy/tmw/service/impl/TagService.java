@@ -21,8 +21,8 @@ public class TagService implements TagServiceInterface {
   }
 
   @Override
-  public List<Tag> getAllByUserId(int userId) {
-    return tagDao.getAllByUserId(userId);
+  public List<Tag> getAllByProject(int projectId) {
+    return tagDao.getAllByProject(projectId);
   }
 
   @Override
@@ -41,8 +41,8 @@ public class TagService implements TagServiceInterface {
   }
 
   @Override
-  public boolean deleteAllByUserId(int userId) {
-    return tagDao.deleteAllByUserId(userId);
+  public boolean deleteAllByProject(int projectId) {
+    return tagDao.deleteAllByProject(projectId);
   }
 
   @Override

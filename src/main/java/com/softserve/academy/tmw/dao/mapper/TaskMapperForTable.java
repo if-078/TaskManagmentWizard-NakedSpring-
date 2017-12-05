@@ -32,22 +32,3 @@ public class TaskMapperForTable implements RowMapper<TaskTableDTO> {
     return dto;
   }
 }
-/*   private int id;
-  private String name;
-  private Date createdDate;
-  private Date planningDate;
-  private Date startDate;
-  private Date endDate;
-  private int estimateTime;
-  private int spentTime;
-  private int leftTime;
-  private int assignTo;
-  private int statusId;
-  private int priorityId;
-  private int parentId;
-  private int authorId;
-
-  private int projectId;
-  private String assign;
-  private String status;
-  private String priority; */

@@ -22,8 +22,8 @@ var generatedRequestParameters = function () {
 
 //--------------------------------------------------------------------------------------------------------------------
 
-
 var taskTableInit = false;
+
 var taskTable = function () {
 
     if (selectedTaskId != 0) {
@@ -34,6 +34,8 @@ var taskTable = function () {
         if (taskTableInit) {
             $('#tmw-task-table').css('visibility', 'hidden');
             $('#tmw-task-table').DataTable().destroy();
+            hideButtonSwitchCalendarTable();
+            hideDraftPlanningTable();
             taskTableInit = false;
         }
 
@@ -76,6 +78,8 @@ var taskTable = function () {
                         taskTableInit = false;
                     }
 
+                    showButtonSwitchCalendarTable();
+                    showDraftPlanningTable();
                     taskCalendar();
 
                     $('#tmw-task-table').DataTable({
@@ -105,7 +109,7 @@ var taskTable = function () {
                         paging: false,
                         info: false,
                         searching: false,
-                        scrollY: '39vh',
+                        scrollY: '34.5vh',
                         scrollCollapse: true
                     });
 
@@ -174,5 +178,17 @@ var undoMakeTableRowsDraggable = function () {
         $(this).draggable('disable');
         $(this).removeClass('tmw-draggable');
     });
+};
+
+var hideDraftPlanningTable = function () {
+    $('#tmw-name-table').css('visibility', 'hidden');
+    $('#tmw-task-table').css('visibility', 'hidden');
+};
+hideDraftPlanningTable();
+
+
+var showDraftPlanningTable = function () {
+    $('#tmw-name-table').css('visibility', 'visible');
+    $('#tmw-task-table').css('visibility', 'visible');
 };
 

@@ -43,11 +43,16 @@ $('#tmw-treeview').on('after_close.jstree', function (e, data) {
 // OUTPUT TABLE SUBTASKS FOR SELECTED TASK
 $('#tmw-treeview').on('select_node.jstree', function (event, data) {
 
+    // open node if node has children
     var hasChildren = (data.node.children.length > 0 || !data.node.state.loaded);
     if (hasChildren) {
         $('#tmw-treeview').jstree('open_node', '' + data.node.id);
-        console.log('nodeId = ', data.node.id);
     }
+
+
+    console.log('CLICK nodeId = ', data.node.id);
+
+
 
     state.parentId = data.node.id !== '$' ? data.node.id : 0;
     selectedTaskId = state.parentId;

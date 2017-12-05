@@ -25,8 +25,9 @@ function createAuthToken() {
 
 var userId = window.sessionStorage.getItem('id');
 var userName = window.sessionStorage.getItem('name');
-var selectedTaskId;
-var selectedTaskText;
+var selectedProjectId = 1;
+var selectedTaskId = 0;
+var selectedTaskText = '';
 
 // STATE OF APPLIED FILTERS
 var state = {

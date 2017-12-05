@@ -1,3 +1,5 @@
+var isSelectedNewProject = true;
+
 var timeSlotHour = 0;
 var timeSlotMin = 30;
 

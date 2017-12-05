@@ -5,11 +5,11 @@ import java.util.List;
 
 public interface TagServiceInterface extends EntityServiceInterface<Tag> {
 
-  List<Tag> getAllByUserId(int userId);
+  List<Tag> getAllByProject(int projectId);
 
   List<Tag> getAllByTaskId(int taskId);
 
-  boolean deleteAllByUserId(int userId);
+  boolean deleteAllByProject(int projectId);
 
   boolean deleteTagsOfTask(int taskId);
 

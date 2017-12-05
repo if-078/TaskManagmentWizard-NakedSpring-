@@ -24,28 +24,28 @@ public class CommentController {
   public CommentService commentService;
 
   @GetMapping("/")
-  List<Comment> getAllComment() throws SQLException {
+  List<Comment> getAll() throws SQLException {
     return commentService.getAll();
   }
 
   @PostMapping("/")
-  Comment createComment(@RequestBody Comment comment) throws SQLException {
+  Comment create(@RequestBody Comment comment) throws SQLException {
     return commentService.create(comment);
   }
 
   @GetMapping("/{id}")
-  Comment getComment(@PathVariable Integer id) throws SQLException {
+  Comment get(@PathVariable Integer id) throws SQLException {
     return commentService.findOne(id);
   }
 
   @PutMapping("/")
   @ResponseStatus(HttpStatus.OK)
-  boolean updateComment(@RequestBody Comment comment) throws SQLException {
+  boolean update(@RequestBody Comment comment) throws SQLException {
     return commentService.update(comment);
   }
 
   @DeleteMapping("/{id}")
-  boolean deleteComment(@PathVariable Integer id) throws SQLException {
+  boolean delete(@PathVariable Integer id) throws SQLException {
     return commentService.delete(id);
   }
 

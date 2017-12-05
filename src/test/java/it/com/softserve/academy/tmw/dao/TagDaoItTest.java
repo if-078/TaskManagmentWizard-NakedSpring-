@@ -60,15 +60,15 @@ public class TagDaoItTest {
 
     assertThat(tagDao.findOne(tagsForTest.get(7).getId()).getName()).isEqualTo("#Searching");
     assertThat(tagDao.delete(4)).isTrue();
-    assertThat(tagDao.getAllByUserId(3)).hasSize(3);
+    assertThat(tagDao.getAllByProject(1)).hasSize(7);
     assertThat(tagDao.update(new Tag(1, "#Cat2", 2, 1))).isTrue();
-    assertThat(tagDao.deleteAllByUserId(1)).isTrue();
+    assertThat(tagDao.deleteAllByProject(1)).isTrue();
   }
 
   @Test(expected = EmptyResultDataAccessException.class)
   public void shouldNOTCreateFindOneAndAllUpdateAndDelete() {
-    assertThat(tagDao.getAllByUserId(9999)).isEmpty();
-    assertThat(tagDao.deleteAllByUserId(9999)).isFalse();
+    assertThat(tagDao.getAllByProject(1)).isEmpty();
+    assertThat(tagDao.deleteAllByProject(9999)).isFalse();
     assertThat(tagDao.update(new Tag(2, "atata", 9999, 1))).isFalse();
     assertThat(tagDao.delete(100)).isFalse();
     assertThat(tagDao.findOne(1000).getId()).isIn(0);

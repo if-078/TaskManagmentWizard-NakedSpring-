@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package unit.com.softserve.academy.tmw.controller;
 
 import static org.mockito.Mockito.verify;
@@ -17,6 +12,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.softserve.academy.tmw.controller.TagController;
 import com.softserve.academy.tmw.entity.Tag;
 import com.softserve.academy.tmw.service.impl.TagService;
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -50,6 +47,7 @@ public class TagControllerTest {
 
   @Before
   public void setUp() {
+
     MockitoAnnotations.initMocks(this);
     mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
     testId = 1;
@@ -57,7 +55,6 @@ public class TagControllerTest {
     simpleTag.setName("#SimpleName");
     simpleTag.setUserId(testId);
     simpleTag.setId(testId);
-
   }
 
   @Test
@@ -74,7 +71,6 @@ public class TagControllerTest {
         result.getResponse().getContentAsString(), false);
 
     verify(service).create(simpleTag);
-
   }
 
   @Test
@@ -90,7 +86,6 @@ public class TagControllerTest {
         result.getResponse().getContentAsString(), false);
 
     verify(service).findOne(testId);
-
   }
 
   @Test
@@ -116,6 +111,25 @@ public class TagControllerTest {
         .andExpect(status().isNoContent());
 
     verify(service).update(simpleTag);
+  }
+
+  @Test
+  public void shouldGetAllByProject() throws Exception {
+
+    List<Tag> tags = new ArrayList();
+    tags.add(simpleTag);
+    tags.add(simpleTag);
+
+    when(service.getAllByProject(testId)).thenReturn(tags);
+    MvcResult result = mockMvc.perform(get("/api/tags?projectId=" + testId)
+        .accept(MediaType.APPLICATION_JSON)
+        .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isOk()).andReturn();
+
+    JSONAssert.assertEquals(jsonMapper.writeValueAsString(tags),
+        result.getResponse().getContentAsString(), false);
+
+    verify(service).getAllByProject(testId);
   }
 
 }

@@ -37,9 +37,9 @@ public class TagDao extends EntityDao<Tag> implements TagDaoInterface {
   }
 
   @Override
-  public boolean deleteAllByUserId(int userId) {
-    String Sql = "DELETE FROM " + table + " WHERE user_id = :user_id";
-    return jdbcTemplate.update(Sql, new MapSqlParameterSource("user_id", userId)) > 0;
+  public boolean deleteAllByProject(int projectId) {
+    String Sql = "DELETE FROM " + table + " WHERE project_id = :project_id";
+    return jdbcTemplate.update(Sql, new MapSqlParameterSource("project_id", projectId)) > 0;
   }
 
   @Override
@@ -49,10 +49,11 @@ public class TagDao extends EntityDao<Tag> implements TagDaoInterface {
   }
 
   @Override
-  public List<Tag> getAllByUserId(int userId) {
-    String sql = "SELECT * FROM " + table + " WHERE user_id = :userId";
+  public List<Tag> getAllByProject(int projectId) {
+    String sql = "SELECT * FROM " + table + " WHERE project_id = :project_id";
     List<Tag> list =
-        jdbcTemplate.query(sql, new MapSqlParameterSource("userId", userId), new TagMapper());
+        jdbcTemplate
+            .query(sql, new MapSqlParameterSource("project_id", projectId), new TagMapper());
     return list;
   }
 

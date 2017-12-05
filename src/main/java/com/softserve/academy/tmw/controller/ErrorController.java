@@ -20,7 +20,7 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 public class ErrorController {
 
   private static final String FALLBACKOPTION = "Error of validation";
-
+  
   @Autowired
   private MessageSource messageSource;
 

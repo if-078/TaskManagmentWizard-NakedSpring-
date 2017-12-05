@@ -50,4 +50,14 @@ public class RegistrationController {
       e.printStackTrace();
     }
   }
+  @GetMapping("/invitationaccept/{key}")
+  @ResponseStatus(HttpStatus.ACCEPTED)
+  void acceptInvitation (@PathVariable String key, HttpServletResponse response){
+    try {
+          if (userService.acceptProjectInvitation(key))
+              response.sendRedirect("http://localhost:8585");
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
 }

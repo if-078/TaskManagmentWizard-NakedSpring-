@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("api/tasks")
+  @RequestMapping("api/tasks")
 public class TaskController {
 
   TaskServiceInterface taskService;
@@ -88,6 +88,12 @@ public class TaskController {
   @ResponseStatus(HttpStatus.CREATED)
   public Task create(@Validated @RequestBody TaskDTO taskDTO) {
     return taskService.createTaskByDTO(taskDTO);
+  }
+
+  @PostMapping("/invite")
+  @ResponseStatus(HttpStatus.ACCEPTED)
+  public boolean inviteUserToProject (@RequestBody String email, @RequestBody Integer projectId){
+    return taskService.inviteUserToProject(email, projectId);
   }
 
   @PutMapping

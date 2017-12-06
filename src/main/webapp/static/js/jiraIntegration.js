@@ -30,8 +30,6 @@ $('#jira-integration').on('click', function () {
                 console.log("Credential send");
                 projectsModelData = $.parseJSON(data);
                 var obj = projectsModelData[0];
-                console.log(obj.key);
-                console.log(projectsModelData[0].name);
                 $.each(projectsModelData, function () {
                     var ul = document.getElementById("jira-projects-list");
                     var li = document.createElement("li");
@@ -44,6 +42,14 @@ $('#jira-integration').on('click', function () {
                     keys[b] = projectsModelData[b].key;
                     b++;
                 });
+                $(".a-class").on('click', function (event) {
+                    console.log(c);
+                    console.log(this.textContent);
+                    chooseProject = this.textContent;
+                    key = (this.id).replace(/^\D+/g, '');
+                    chooseProject = projectsModelData[key];
+                    $("#choose-project-text").html("You will import project: " + this.textContent + " with key " + key);
+                });
             },
             cache: false,
             fail: (function ($xhr) {
@@ -55,39 +61,44 @@ $('#jira-integration').on('click', function () {
         $('#jira-modal-choose-project').modal('show');
 
 
-
         var chooseProject;
         var keys = [];
         var key;
         var b = 0;
-
-
         console.log("keys " + keys);
         var c = 0;
         $('.a-class').each(function () {
             console.log(c);
-
-
             c++;
-        });
-        $('#a-element-' + c).on('click', function (event) {
-            console.log(c);
-            console.log(this.textContent);
-            chooseProject = this.textContent;
-            key = (event.target.id).match("\d");
-            console.log("key" + key);
-            var div = document.getElementById("choose-project-text");
-            div.appendChild(document.createTextNode("You will import project: " + this.textContent + " with key " + key));
         });
 
 
         $('#jira-project-ok').on('click', function () {
+            var urlGetIssues = {
+                "link": "https://" + jLink + "/rest/api/2/search?jql=project=" + chooseProject.key,
+                "creds": encode,
+                "projectKey": chooseProject.key
+            }
+            $.ajax({
+                url: 'api/jira/get-issues',
+                data: JSON.stringify(urlGetIssues),
+                type: 'POST',
+                contentType: 'application/json',
+                headers: createAuthToken(),
+                success: function (data) {
+                    createJiraTask(project);
+                },
+                cache: false
+            }).fail(function ($xhr) {
+                console.log("comment DON`T ADDED");
+            });
             var project = {
                 "name": chooseProject,
-                "jiraKey": key
+                "jiraKey": key,
+                "parentId":0
             };
-            createJiraTask(project);
-            getProjectId(key);
+
+
 
 
         })

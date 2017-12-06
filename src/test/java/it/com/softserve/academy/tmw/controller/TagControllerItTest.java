@@ -33,7 +33,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {TestDaoConfig.class, TestServiceConfig.class, TagController.class})
 @DirtiesContext(classMode = ClassMode.BEFORE_EACH_TEST_METHOD)
-public class TagControllerTest {
+public class TagControllerItTest {
 
 
   @Autowired

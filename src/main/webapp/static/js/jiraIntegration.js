@@ -77,19 +77,21 @@ $('#jira-integration').on('click', function () {
             console.log(chooseProject);
             console.log(chooseProject.key);
 
-            var urlGetIssues = {
-                "link": "https://" + jLink + "/rest/api/2/search?jql=project=" + chooseProject.key,
-                "creds": encode,
-                "projectKey": chooseProject.key
-            }
+            var urlGetIssues = "https://" + jLink + "/rest/api/2/search?jql=project=" + chooseProject.key;
+
             $.ajax({
                 url: 'api/jira/get-issues',
-                data: JSON.stringify(urlGetIssues),
+                data: JSON.stringify({
+                    "url": urlGetIssues,
+                    "creds": encode,
+                    "projectKey": chooseProject.key
+                }),
                 type: 'POST',
                 contentType: 'application/json',
                 headers: createAuthToken(),
                 success: function (data) {
-                    createJiraTask(project);
+                    console.log(data);
+                    //createJiraTask(project);
                     console.log(data);
                 },
                 cache: false

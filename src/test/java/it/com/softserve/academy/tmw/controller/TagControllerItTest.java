@@ -8,8 +8,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.softserve.academy.tmw.controller.TagController;
 import com.softserve.academy.tmw.entity.Tag;
-import com.softserve.academy.tmw.service.impl.TagService;
-import it.com.softserve.academy.tmw.dao.TestDaoConfig;
+import it.com.softserve.academy.tmw.dao.TestConfig;
 import it.com.softserve.academy.tmw.dao.utility.TaskPopulator;
 import it.com.softserve.academy.tmw.dao.utility.UserPopulator;
 import java.util.ArrayList;
@@ -31,13 +30,9 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {TestDaoConfig.class, TestServiceConfig.class, TagController.class})
+@ContextConfiguration(classes = {TestConfig.class})
 @DirtiesContext(classMode = ClassMode.BEFORE_EACH_TEST_METHOD)
-public class TagControllerTest {
-
-
-  @Autowired
-  private TagService service;
+public class TagControllerItTest {
 
   @Autowired
   private UserPopulator userPopulator;

@@ -28,7 +28,6 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 @RunWith(MockitoJUnitRunner.class)
-@ContextConfiguration(classes = {TaskController.class})
 @WebAppConfiguration
 public class TaskControllerTest {
 

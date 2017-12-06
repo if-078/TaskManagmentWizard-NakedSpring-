@@ -108,7 +108,7 @@ public class TaskController {
     return taskService.getAll();
   }
 
-  @GetMapping("/one/{id}")
+  @GetMapping("/{id}")
   @ResponseStatus(HttpStatus.OK)
   Task get(@PathVariable Integer id) {
     return taskService.findOne(id);

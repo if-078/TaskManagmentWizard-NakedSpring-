@@ -25,7 +25,7 @@ function createAuthToken() {
 
 var userId = window.sessionStorage.getItem('id');
 var userName = window.sessionStorage.getItem('name');
-var selectedProjectId = 1;
+var selectedProjectId = 0;
 var selectedTaskId = 0;
 var selectedTaskText = '';
 

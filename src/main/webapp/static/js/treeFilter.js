@@ -1,4 +1,3 @@
-
 // CREATE TREEVIEW
 $('#tmw-treeview').jstree({
     core: {
@@ -32,7 +31,6 @@ $('#tmw-treeview').jstree({
 });
 
 
-
 // REMOVE NODES IN A TREE
 $('#tmw-treeview').on('after_close.jstree', function (e, data) {
     var tree = $('#tmw-treeview').jstree(true);
@@ -40,7 +38,10 @@ $('#tmw-treeview').on('after_close.jstree', function (e, data) {
     tree._model.data[data.node.id].state.loaded = false;
 });
 
-// OUTPUT TABLE SUBTASKS FOR SELECTED TASK
+
+
+
+
 $('#tmw-treeview').on('select_node.jstree', function (event, data) {
 
     // open node if node has children
@@ -49,26 +50,70 @@ $('#tmw-treeview').on('select_node.jstree', function (event, data) {
         $('#tmw-treeview').jstree('open_node', '' + data.node.id);
     }
 
-
     console.log('CLICK nodeId = ', data.node.id);
-
-
 
     state.parentId = data.node.id !== '$' ? data.node.id : 0;
     selectedTaskId = state.parentId;
-    selectedTaskText =  data.node.text;
+    selectedTaskText = data.node.text;
 
-    if (data.node.parent === '$') {
+    // is selected node AllProjects
+    if (data.node.id === '$') {
+
         hideButtonSwitchCalendarTable();
-        hideDraftPlanningTable();
-        $('#tmw-task-calendar').fullCalendar('destroy');
+
+        if (taskPlanningTableInit) {
+            $('#tmw-task-planning-table').DataTable().destroy();
+            taskPlanningTableInit = false;
+        }
+        hidePlanningTable();
+
         taskCalendarInit = false;
+        $('#tmw-task-calendar').fullCalendar('destroy');
+
+        if (taskTableInit) {
+            $('#tmw-task-table').DataTable().destroy();
+            taskTableInit = false;
+        }
+        $('#tmw-main-table').css('visibility', 'hidden');
+        hideDraftPlanningTable();
+
+        selectedProjectId = 0;
+        isSelectedNewProject = true;
+
+        return;
     }
 
-    taskTable();
+
+
+    $.ajax({
+        url: '/api/tasks/' + data.node.id,
+        type: 'GET',
+        contentType: 'application/json',
+
+        success: function (task) {
+
+            var taskProjectId = task.projectId;
+            if (selectedProjectId == taskProjectId) {
+                isSelectedNewProject = false;
+            } else {
+                taskCalendarInit = false;
+                $('#tmw-task-calendar').fullCalendar('destroy');
+                isSelectedNewProject = true;
+            }
+            selectedProjectId = taskProjectId;
+
+            showButtonSwitchCalendarTable();
+            if (isSelectedCalendar) {
+                taskCalendar();
+            } else {
+                taskPlanningTable();
+            }
+
+            taskTable();
+        }
+    });
 
 });
-
 
 
 // CREATE TOOLTIPE TASK
@@ -83,7 +128,6 @@ var aTree = function () {
 };
 
 
-
 // DOUBLE-CLICK ON ANY-TASK
 $('#tmw-treeview').on('dblclick.jstree', function (event, data) {
 
@@ -94,7 +138,6 @@ $('#tmw-treeview').on('dblclick.jstree', function (event, data) {
     }
 
 });
-
 
 
 function openNodeAllProjects() {

@@ -69,7 +69,6 @@ public class TaskController {
   @GetMapping("/deletePlanning/{id}")
   @ResponseStatus(HttpStatus.OK)
   boolean deletePlanning(@PathVariable Integer id) {
-    System.out.println("Request delete planning taskId = " + id);
     return taskService.deletePlanning(id);
 }
 

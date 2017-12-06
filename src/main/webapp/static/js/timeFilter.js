@@ -83,15 +83,3 @@ $('#tmw-reset-btn').click(function () {
 
     showDataOnCalendarAndTable();
 });
-
-
-var testData = new Date(1512374400000);
-var localDate = '' + testData.getYear();
-localDate = localDate + '-' + testData.getMonth();
-localDate = localDate + '-' + testData.getDate();
-localDate = localDate + ' ' + testData.getHours();
-localDate = localDate + ':' + testData.getMinutes();
-
-var myDate = moment(1512374400000).format('YYYY-MM-DD hh:mm');
-
-console.log('DATE = ', myDate);

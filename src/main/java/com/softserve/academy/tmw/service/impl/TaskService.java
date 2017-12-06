@@ -14,10 +14,8 @@ import com.softserve.academy.tmw.entity.Priority;
 import com.softserve.academy.tmw.entity.Status;
 import com.softserve.academy.tmw.entity.Tag;
 import com.softserve.academy.tmw.entity.Task;
-import com.softserve.academy.tmw.service.api.EntityServiceInterface;
-import com.softserve.academy.tmw.service.api.TagServiceInterface;
-import com.softserve.academy.tmw.service.api.TaskServiceInterface;
-import com.softserve.academy.tmw.service.api.UserServiceInterface;
+import com.softserve.academy.tmw.service.api.*;
+
 import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -51,6 +49,9 @@ public class TaskService implements TaskServiceInterface {
 
   @Autowired
   private TagServiceInterface tagService;
+
+  @Autowired
+  private CommentServiceInterface commentService;
 
   @Autowired
   private EntityServiceInterface<Status> serviceStatus;
@@ -130,7 +131,7 @@ public class TaskService implements TaskServiceInterface {
     task.setAssignTo(taskDTO.getAssignTo());
     task.setCreatedDate(getFormatDate(taskDTO.getCreatedDate()));
     task.setStartDate(getFormatDate(taskDTO.getDraftPlanning()));
-    task.setPlanningDate(getFormatDate(taskDTO.getPlanningDate()));
+    task.setPlanningDate(new Date(Long.parseLong(taskDTO.getPlanningDate())));
     task.setEstimateTime(taskDTO.getEstimateTime());
     task.setSpentTime(taskDTO.getSpentTime());
     task.setLeftTime(taskDTO.getLeftTime());
@@ -144,6 +145,8 @@ public class TaskService implements TaskServiceInterface {
     taskDao.update(task);
     tagService.deleteTagsOfTask(task.getId());
     tagService.setTagsToTask(Arrays.asList(taskDTO.getTags()), task.getId());
+    commentService.deleteCommentsOfTask(task.getId());
+    commentService.setCommentsToTask(Arrays.asList(taskDTO.getComments()));
 
     return false;
   }
@@ -260,6 +263,8 @@ public class TaskService implements TaskServiceInterface {
     } else {
       taskDTO.setAuthor("");
     }
+    taskDTO.setParentId(task.getParentId());
+    taskDTO.setProjectId(task.getProjectId());
 
     return taskDTO;
   }

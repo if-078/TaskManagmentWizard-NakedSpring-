@@ -4,7 +4,7 @@ $('#tmw-time-all-btn').click(function () {
     $('#tmw-info-selected-time').html('Selected Time : All');
     state.dateFrom = 0;
     state.dateTo = 0;
-    taskTable();
+    showDataOnCalendarAndTable();
 });
 
 // ON CLICK - SELECT TIME - TODAY
@@ -13,8 +13,7 @@ $('#tmw-time-today-btn').click(function () {
     var currentData = new Date();
     state.dateFrom = currentData.setHours(0, 0, 0, 0);
     state.dateTo = currentData.setHours(23, 59, 59, 999);
-
-    taskTable();
+    showDataOnCalendarAndTable();
 });
 
 // ON CLICK - SELECT TIME - WEEK
@@ -25,8 +24,7 @@ $('#tmw-time-week-btn').click(function () {
 
     state.dateFrom = currentData.setHours(0, 0, 0, 0) - (numberDay - 1) * 24 * 60 * 60 * 1000;
     state.dateTo = currentData.setHours(23, 59, 59, 999) + (8 - numberDay) * 24 * 60 * 60 * 1000;
-
-    taskTable();
+    showDataOnCalendarAndTable();
 });
 
 // ON CLICK - SELECT TIME - CUSTOM
@@ -52,7 +50,7 @@ $('#tmw-time-custom-apply-btn').click(function (e) {
 
     $('#tmw-time-btn-group > button, #tmw-time-custom-btn').removeClass('active');
     $('#tmw-time-custom-btn').addClass('active');
-    taskTable();
+    showDataOnCalendarAndTable();
 });
 
 $('#tmw-time-custom-cancel-btn').click(function (e) {
@@ -73,7 +71,7 @@ $('#tmw-apply-btn').click(function () {
         state.tag = $("#tagBox").val().split(",");
     } else state.tag = [];
 
-    taskTable();
+    showDataOnCalendarAndTable();
 });
 
 // ON CLICK RESET FILTERS --> STATUS, PRIORITY, TAG
@@ -83,6 +81,6 @@ $('#tmw-reset-btn').click(function () {
     state.tag = [];
     $("#statusBox, #priorityBox, #tagBox").combobox('clear');
 
-    taskTable();
+    showDataOnCalendarAndTable();
 });
 

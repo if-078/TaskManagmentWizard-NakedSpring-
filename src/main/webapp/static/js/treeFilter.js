@@ -55,64 +55,7 @@ $('#tmw-treeview').on('select_node.jstree', function (event, data) {
     state.parentId = data.node.id !== '$' ? data.node.id : 0;
     selectedTaskId = state.parentId;
     selectedTaskText = data.node.text;
-
-    // is selected node AllProjects
-    if (data.node.id === '$') {
-
-        hideButtonSwitchCalendarTable();
-
-        if (taskPlanningTableInit) {
-            $('#tmw-task-planning-table').DataTable().destroy();
-            taskPlanningTableInit = false;
-        }
-        hidePlanningTable();
-
-        taskCalendarInit = false;
-        $('#tmw-task-calendar').fullCalendar('destroy');
-
-        if (taskTableInit) {
-            $('#tmw-task-table').DataTable().destroy();
-            taskTableInit = false;
-        }
-        $('#tmw-main-table').css('visibility', 'hidden');
-        hideDraftPlanningTable();
-
-        selectedProjectId = 0;
-        isSelectedNewProject = true;
-
-        return;
-    }
-
-
-
-    $.ajax({
-        url: '/api/tasks/' + data.node.id,
-        type: 'GET',
-        contentType: 'application/json',
-
-        success: function (task) {
-
-            var taskProjectId = task.projectId;
-            if (selectedProjectId == taskProjectId) {
-                isSelectedNewProject = false;
-            } else {
-                taskCalendarInit = false;
-                $('#tmw-task-calendar').fullCalendar('destroy');
-                isSelectedNewProject = true;
-            }
-            selectedProjectId = taskProjectId;
-
-            showButtonSwitchCalendarTable();
-            if (isSelectedCalendar) {
-                taskCalendar();
-            } else {
-                taskPlanningTable();
-            }
-
-            taskTable();
-        }
-    });
-
+    showDataOnCalendarAndTable();
 });
 
 
@@ -147,3 +90,65 @@ function openNodeAllProjects() {
 $('#loginForm button').on('click', function () {
     setTimeout(openNodeAllProjects, 1500);
 });
+
+
+var showDataOnCalendarAndTable = function () {
+
+    // is selected node AllProjects
+    if (state.parentId == 0) {
+
+        hideButtonSwitchCalendarTable();
+
+        if (taskPlanningTableInit) {
+            $('#tmw-task-planning-table').DataTable().destroy();
+            taskPlanningTableInit = false;
+        }
+        hidePlanningTable();
+
+        taskCalendarInit = false;
+        $('#tmw-task-calendar').fullCalendar('destroy');
+
+        if (taskTableInit) {
+            $('#tmw-task-table').DataTable().destroy();
+            taskTableInit = false;
+        }
+        $('#tmw-main-table').css('visibility', 'hidden');
+        hideDraftPlanningTable();
+
+        selectedProjectId = 0;
+        isSelectedNewProject = true;
+
+        return;
+    }
+
+
+
+    $.ajax({
+        url: '/api/tasks/' + state.parentId,
+        type: 'GET',
+        contentType: 'application/json',
+
+        success: function (task) {
+
+            var taskProjectId = task.projectId;
+            if (selectedProjectId == taskProjectId) {
+                isSelectedNewProject = false;
+            } else {
+                taskCalendarInit = false;
+                $('#tmw-task-calendar').fullCalendar('destroy');
+                isSelectedNewProject = true;
+            }
+            selectedProjectId = taskProjectId;
+
+            showButtonSwitchCalendarTable();
+            if (isSelectedCalendar) {
+                taskCalendar();
+            } else {
+                taskPlanningTable();
+            }
+
+            taskTable();
+        }
+    });
+
+};

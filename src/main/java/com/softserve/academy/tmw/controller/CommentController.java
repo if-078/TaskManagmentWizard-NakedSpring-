@@ -38,6 +38,11 @@ public class CommentController {
     return commentService.findOne(id);
   }
 
+  @GetMapping("/task/{id}")
+  List<Comment> getCommentsByTaskId(@PathVariable Integer id) throws SQLException {
+    return commentService.getCommentsByTaskId(id);
+  }
+
   @PutMapping("/")
   @ResponseStatus(HttpStatus.OK)
   boolean updateComment(@RequestBody Comment comment) throws SQLException {

@@ -2,13 +2,14 @@ package com.softserve.academy.tmw.service.impl;
 
 import com.softserve.academy.tmw.dao.impl.CommentDao;
 import com.softserve.academy.tmw.entity.Comment;
+import com.softserve.academy.tmw.service.api.CommentServiceInterface;
 import com.softserve.academy.tmw.service.api.EntityServiceInterface;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CommentService implements EntityServiceInterface<Comment> {
+public class CommentService implements CommentServiceInterface {
 
   @Autowired
   CommentDao dao;
@@ -38,4 +39,18 @@ public class CommentService implements EntityServiceInterface<Comment> {
     return dao.create(entity);
   }
 
+  @Override
+  public boolean setCommentsToTask(List<Comment> comments) {
+    return dao.setCommentsToTask(comments);
+  }
+
+  @Override
+  public boolean deleteCommentsOfTask(int taskId) {
+    return dao.deleteCommentsOfTask(taskId);
+  }
+
+  @Override
+  public List<Comment> getCommentsByTaskId(int taskId) {
+    return dao.getCommentsByTaskId(taskId);
+  }
 }

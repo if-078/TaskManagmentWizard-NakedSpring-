@@ -48,12 +48,12 @@ var showFull = function (id) {
             window.sessionStorage.setItem("token", token);
             taskDTO = data;
 
-            console.log(taskDTO);
+            var date = ((new Date(taskDTO.planningDate + 7200000)).toISOString()).split("T");
             $('#tmw-task-info').text(taskDTO.name);
             $('#tmw-task-projectId').text(taskDTO.projectId);
             $('#tmw-task-parentId').text(taskDTO.parentId);
             $('#tmw-task-draftPlanning').val(taskDTO.draftPlanning);
-            $('#tmw-task-planningDate').val(taskDTO.planningDate);
+            if (taskDTO.planningDate != null) $('#tmw-task-planningDate').val(date[0] + " " + date[1].slice(0,-5));
             $('#tmw-task-estimateTime').val(taskDTO.estimateTime);
             $('#tmw-task-spentTime').val(taskDTO.spentTime);
             $('#tmw-task-leftTime').val(taskDTO.leftTime);
@@ -63,6 +63,7 @@ var showFull = function (id) {
             taskDTO.status != null ? fillSelectStatus(taskDTO.status.id) : $('#tmw-task-status').val('');
             fillSelectTags(taskDTO.id);
             fillSelectComments(taskDTO.id);
+
 
             $('#tmw-modal').modal('show');
         },
@@ -86,6 +87,21 @@ $('#tmw-task-btn-delete').on('click', function () {
     deleteTask(taskDTO.id);
 });
 
+$("#tmw-show-comment").on('click', function () {
+    show();
+});
+
+$("#tmw-save-comment").on('click', function () {
+    addComment();
+});
+
+var show = function () {
+    $('#tmw-task-comment').toggle();
+    $('#tmw-task-comments').toggle();
+    $('#tmw-save-comment').toggle();
+};
+
+
 $('#tmw-task-table').on('dblclick', 'tr:not(:first)', 'tr', function () {
     var table = $('#tmw-task-table').DataTable();
     var taskId = table.row(this).data()[0];
@@ -103,42 +119,23 @@ $('#tmw-delete-task').on("click", function () {
     deleteTask(taskID);
 });
 
-$('#tmw-create-task').on('click', function () {
-
-    /*
-    clearErrorTask();
-    taskDTO = {}
-    clearTaskModal();
-    $('#tmw-task-author').val(userName);
-    fillSelectUser(null);
-    fillSelectPriority(null);
-    fillSelectStatus(null);
-    fillSelectTags(null);
-    fillSelectComments(null);
-    $('#tmw-tag-multi-select').multiselect('deselectAll', false);
-    $('#tmw-comment-multi-select').multiselect('deselectAll', false);
-    $('#tmw-modal').modal('show');
-    */
-
-});
-
 function createOrUpdateTask(taskDTO) {
-    console.log(taskDTO);
     var task = {};
-        var est = ($('#tmw-task-estimateTime').val()).split(":");
-        var estimate = Number(est[0]) * 60 + Number(est[1]);
-        var sp = ($('#tmw-task-spentTime').val()).split(":");
-        var spent = Number(sp[0]) * 60 + Number(sp[1]);
-        var lf = ($('#tmw-task-leftTime').val()).split(":");
-        var left = Number(lf[0]) * 60 + Number(lf[1]);
+    var est = ($('#tmw-task-estimateTime').val()).split(":");
+    var estimate = Number(est[0]) * 60 + Number(est[1]);
+    var sp = ($('#tmw-task-spentTime').val()).split(":");
+    var spent = Number(sp[0]) * 60 + Number(sp[1]);
+    var lf = ($('#tmw-task-leftTime').val()).split(":");
+    var left = Number(lf[0]) * 60 + Number(lf[1]);
+    var date = $('#tmw-task-planningDate').val().replace(' ', 'T') + ".000Z";
 
     if ($.isEmptyObject(taskDTO)) {
 
         task =
             {
                 "name": $('#tmw-task-info').text(),
-                "createdDate": new Date(),
-                "planningDate": $('#tmw-task-planningDate').val(),
+                "createdDate": new Date().getTime(),
+                "planningDate": new Date().getTime() - 7200000,
                 "draftPlanning": $('#tmw-task-draftPlanning').val(),
                 "estimateTime": estimate,
                 "spentTime": spent,
@@ -160,7 +157,7 @@ function createOrUpdateTask(taskDTO) {
                 "id": taskDTO.id,
                 "name": $('#tmw-task-info').text(),
                 "createdDate": taskDTO.createdDate,
-                "planningDate": $('#tmw-task-planningDate').val(),
+                "planningDate": new Date(date).getTime() - 7200000,
                 "draftPlanning": $('#tmw-task-draftPlanning').val(),
                 "estimateTime": estimate,
                 "spentTime": spent,
@@ -175,40 +172,29 @@ function createOrUpdateTask(taskDTO) {
                 "comments": getSelectedComments()
             }
         console.log(task);
+        show();
         updateTask(task);
     }
 }
 
 function getSelectedTags() {
     var selectedIdOfTags = $('#tmw-tag-multi-select').val();
-    var seletedTags = [];
+    var selectedTags = [];
 
     for (var i = 0; i < tags.length; i++) {
         for (var j = 0; j < selectedIdOfTags.length; j++) {
             if (tags[i].id == selectedIdOfTags[j]) {
-                seletedTags.push(tags[i]);
+                selectedTags.push(tags[i]);
                 break;
             }
         }
     }
-    return seletedTags;
+    return selectedTags;
 
 }
 
 function getSelectedComments() {
-    var selectedIdOfComments = $('#tmw-comment-multi-select').val();
-    var selectedComments = [];
-
-    for (var i = 0; i < comments.length; i++) {
-        for (var j = 0; j < selectedIdOfComments.length; j++) {
-            if (comments[i].id == selectedIdOfComments[j]) {
-                selectedComments.push(comments[i]);
-                break;
-            }
-        }
-    }
-    return selectedComments;
-
+    return comments;
 }
 
 function createTask(task) {
@@ -287,7 +273,7 @@ function clearTaskModal() {
     $('#tmw-task-status').empty();
     $('#tmw-task-priority').empty();
     $('#tmw-task-tag').empty();
-    $('#tmw-task-comment').empty();
+    $('#tmw-task-comments').empty();
 }
 
 function fillSelectUserAssign(id) {
@@ -489,10 +475,10 @@ function getIdTagsOfTask(data) {
 }
 
 function fillSelectComments(id) {
-    tags = [];
-    $('#tmw-comment-multi-select').empty();
+    comments = [];
+    $('#tmw-task-comments').empty();
     $.ajax({
-        url: 'api/comment/',
+        url: 'api/comment/task/' + id,
         type: 'GET',
         contentType: 'application/json',
         headers: createAuthToken(),
@@ -500,25 +486,7 @@ function fillSelectComments(id) {
             comments = data;
             var token = jqXHR.getResponseHeader('Authentication');
             window.sessionStorage.setItem("token", token);
-            $.each(data, function (i, comment) {
-                $('#tmw-comment-multi-select').append($('<option>', {
-                    value: comment.id,
-                    text: comment.commentText
-                }));
-            });
-
-            $('#tmw-comment-multi-select').multiselect({
-                buttonWidth: '100%',
-                inheritClass: true,
-                enableCaseInsensitiveFiltering: true,
-                dropRight: true,
-                numberDisplayed: 10,
-            });
-
-            $('#tmw-comment-multi-select').multiselect('deselectAll', false);
-            $('#tmw-comment-multi-select').multiselect('updateButtonText');
-
-            if (id != null) getCommentsByTask(id);
+            getComments(data);
         },
         error: function (jqXHR, textStatus, errorThrown) {
             if (jqXHR.status === 401) {
@@ -530,41 +498,30 @@ function fillSelectComments(id) {
     });
 }
 
-function getCommentsByTask(id) {
-    $('#tmw-comment-multi-select').multiselect('deselectAll', false);
-
-    $.ajax({
-        url: 'api/tasks/' + id + '/comments',
-        type: 'GET',
-        contentType: 'application/json',
-        headers: createAuthToken(),
-        success: function (data, textStatus, jqXHR) {
-            var token = jqXHR.getResponseHeader('Authentication');
-            window.sessionStorage.setItem("token", token);
-
-            $('#tmw-comment-multi-select').multiselect('select', getIdCommentsOfTask(data));
-
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-            if (jqXHR.status === 401) {
-                resetToken();
-            } else {
-                throw new Error("an unexpected error occured: " + errorThrown);
-            }
-        }
+var getComments = function (data) {
+    $.each(data, function (i, comment) {
+        var date = (new Date(comment.createdDate + 7200000).toISOString()).split("T");
+        $('#tmw-task-comments').append('<p><span style="font-weight: bold">' +
+            'Author: ' + comment.user + '   "</span><a id = "comment' + comment.id +
+            '" style="font-style: italic; border: thick">' +
+            comment.commentText + '</a><span style="font-weight: bold">"  Created: ' + date[0] + '  ' +
+            date[1].slice(0, -5) + '</span></p>').css('text-align', 'center');
     });
 }
 
-function getIdCommentsOfTask(data) {
-    var arrCommentsId = [];
-
-    data.map(function (comment) {
-        arrCommentsId.push(comment.id);
+var addComment = function () {
+    var comment = [];
+    comment.push({
+        "commentText": $('#tmw-task-comment').val(),
+        "createdDate": new Date().getTime(),
+        "taskId": taskDTO.id,
+        "userId": userId,
+        "user": userName
     });
-
-    return arrCommentsId;
+    $('#tmw-task-comment').val('');
+    comments.push(comment[0]);
+    getComments(comment);
 }
-
 
 function clearErrorTask() {
 
@@ -630,4 +587,5 @@ function showErrorsOfForm(data) {
             $('#tmw-task-estimateTime-error').text(data.fieldErrors[i].message).css('color', 'red');
         }
     }
+
 }

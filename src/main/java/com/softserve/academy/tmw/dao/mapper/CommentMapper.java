@@ -14,9 +14,10 @@ public class CommentMapper implements RowMapper<Comment> {
     Comment comment = new Comment();
     comment.setId(rs.getInt("id"));
     comment.setCommentText(rs.getString("comment_text"));
-    comment.setCreatedDate(rs.getTimestamp("created_date").toLocalDateTime());
+    comment.setCreatedDate(rs.getTimestamp("created_date"));
     comment.setTaskId(rs.getInt("task_id"));
     comment.setUserId(rs.getInt("user_id"));
+    comment.setUser(rs.getString("name"));
     return comment;
   }
 

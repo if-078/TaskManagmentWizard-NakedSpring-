@@ -1,14 +1,17 @@
 package com.softserve.academy.tmw.entity;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 public class Comment {
 
   private int id;
   private String commentText;
-  private LocalDateTime createdDate = LocalDateTime.now();
+  private Date createdDate;
   private int taskId;
   private int userId;
+  private String user;
 
   public Comment() {
   }
@@ -36,11 +39,11 @@ public class Comment {
     this.commentText = commentText;
   }
 
-  public LocalDateTime getCreatedDate() {
+  public Date getCreatedDate() {
     return createdDate;
   }
 
-  public void setCreatedDate(LocalDateTime createdDate) {
+  public void setCreatedDate(Date createdDate) {
     this.createdDate = createdDate;
   }
 
@@ -58,5 +61,25 @@ public class Comment {
 
   public void setUserId(int userId) {
     this.userId = userId;
+  }
+
+  public String getUser() {
+    return user;
+  }
+
+  public void setUser(String user) {
+    this.user = user;
+  }
+
+  @Override
+  public String toString() {
+    return "Comment{" +
+            "id=" + id +
+            ", commentText='" + commentText + '\'' +
+            ", createdDate=" + createdDate +
+            ", taskId=" + taskId +
+            ", userId=" + userId +
+            ", user='" + user + '\'' +
+            '}';
   }
 }

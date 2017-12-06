@@ -171,10 +171,11 @@ var taskCalendar = function () {
                                         event.priority,         // Priority
                                         event.estimateTime      // Alt. Est. Time
                                     ]]).draw();
-                                }
 
-                                makeTableRowsDraggable();
-                                deleteTaskPlanning(event.id);
+                                    makeTableRowsDraggable();
+                                    deleteTaskPlanning(event.id);
+                                }
+                                
                             },
 
                             dragRevertDuration: 0

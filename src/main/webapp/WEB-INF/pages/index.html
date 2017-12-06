@@ -354,6 +354,7 @@
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 <button id="jira-ok" type="button" class="btn btn-primary">Ok</button>
             </div>
+
         </div>
     </div>
 
@@ -367,11 +368,19 @@
                 <h5 class="modal-title">Choose Jira project to import tasks</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
             </div>
+
+
+
             <form>
                 <div class="form-row">
                     <div class="form-group col-md-12">
-                        <label for="jira-project-key">Project key</label>
-                        <input type="text" class="form-control" id="jira-project-key">
+                        <ul id="jira-projects-list"></ul>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <div id="choose-project-text"></div>
                     </div>
                 </div>
 

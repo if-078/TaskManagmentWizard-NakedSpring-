@@ -3,9 +3,6 @@ package com.softserve.academy.tmw.dto;
 import java.sql.Time;
 import java.util.Date;
 
-/**
- * Created by Sveta Ovcharuk on 30.11.2017.
- */
 public class TaskJiraDTO {
     private String name;
     /*private Date createdDate;

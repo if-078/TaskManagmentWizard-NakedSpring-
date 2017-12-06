@@ -83,4 +83,3 @@ $('#tmw-reset-btn').click(function () {
 
     showDataOnCalendarAndTable();
 });
-

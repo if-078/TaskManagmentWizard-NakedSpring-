@@ -64,7 +64,6 @@ var showFull = function (id) {
             fillSelectTags(taskDTO.id);
             fillSelectComments(taskDTO.id);
 
-
             $('#tmw-modal').modal('show');
         },
         error: function (jqXHR, textStatus, errorThrown) {
@@ -176,6 +175,7 @@ function createOrUpdateTask(taskDTO) {
                 "comments": getSelectedComments()
             }
 
+            showComment();
         createTask(task);
     } else {
         task =
@@ -247,6 +247,7 @@ function createTask(task) {
 }
 
 function updateTask(task) {
+    taskDTO = {};
     clearErrorTask();
     $.ajax({
         url: '/api/tasks',
@@ -278,6 +279,7 @@ function deleteTask(taskId) {
         success: function () {
             refreshTree("delete", taskId);
             taskTable();
+            taskDTO = {};
         },
         error: function (jqXHR) {
 
@@ -509,7 +511,6 @@ function fillSelectComments(id) {
         contentType: 'application/json',
         headers: createAuthToken(),
         success: function (data, textStatus, jqXHR) {
-            comments = data;
             var token = jqXHR.getResponseHeader('Authentication');
             window.sessionStorage.setItem("token", token);
             getComments(data);

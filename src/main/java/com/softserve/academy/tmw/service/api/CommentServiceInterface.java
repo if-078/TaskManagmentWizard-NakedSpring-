@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface CommentServiceInterface extends EntityServiceInterface<Comment>{
 
-    boolean setCommentsToTask(List<Comment> commentList);
+    boolean setCommentsToTask(List<Comment> commentList, int taskId);
 
     boolean deleteCommentsOfTask(int taskId);
 

@@ -58,7 +58,7 @@ public class CommentDao extends EntityDao<Comment> implements CommentDaoInterfac
   }
 
   @Override
-  public boolean setCommentsToTask(List<Comment> comments) {
+  public boolean setCommentsToTask(List<Comment> comments, int taskId) {
     if (comments.size() == 0) return false;
     MapSqlParameterSource param = new MapSqlParameterSource();
     StringBuilder sql = new StringBuilder("INSERT into tmw.comment (comment_text, created_date, task_id, user_id) VALUES ");
@@ -70,10 +70,9 @@ public class CommentDao extends EntityDao<Comment> implements CommentDaoInterfac
       sql.append("(:" + text + ", :" + date + ", :" + task + ", :" + user + "),");
       param.addValue(text, comments.get(i).getCommentText());
       param.addValue(date, comments.get(i).getCreatedDate());
-      param.addValue(task, comments.get(i).getTaskId());
+      param.addValue(task, (taskId == 0) ? comments.get(i).getTaskId() : taskId);
       param.addValue(user, comments.get(i).getUserId());
     }
-    System.out.println(sql);
     sql.setLength(sql.length() - 1);
     return jdbcTemplate.update(sql.toString(), param) > 0;
 

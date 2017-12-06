@@ -40,8 +40,8 @@ public class CommentService implements CommentServiceInterface {
   }
 
   @Override
-  public boolean setCommentsToTask(List<Comment> comments) {
-    return dao.setCommentsToTask(comments);
+  public boolean setCommentsToTask(List<Comment> comments, int taskId) {
+    return dao.setCommentsToTask(comments, taskId);
   }
 
   @Override

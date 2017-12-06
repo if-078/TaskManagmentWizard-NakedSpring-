@@ -124,28 +124,12 @@ public class TaskDao extends EntityDao<Task> implements TaskDaoInterface {
 
     java.sql.Timestamp startDate, planningDate;
 
-    //if task creating then left_ime = estimate_time
     task.setLeftTime(task.getEstimateTime());
 
-    if (task.getStartDate() == null) {
-      startDate = null;
-    } else {
-      startDate = new java.sql.Timestamp(task.getStartDate().getTime());
-    }
-
-    if (task.getPlanningDate() == null) {
-      planningDate = null;
-    } else {
-      planningDate = new java.sql.Timestamp(task.getPlanningDate().getTime());
-    }
-
-    if (task.getStatusId() == 0) {
-      task.setStatusId(1);
-    }
-    if (task.getPriorityId() == 0) {
-      task.setPriorityId(1);
-    }
-
+    startDate = (task.getStartDate() == null) ? null : new java.sql.Timestamp(task.getStartDate().getTime());
+    planningDate = (task.getPlanningDate() == null) ? null : new java.sql.Timestamp(task.getPlanningDate().getTime());
+    task.setStatusId((task.getStatusId() == 0) ? 1 : task.getStatusId());
+    task.setPriorityId((task.getPriorityId() == 0) ? 1 :task.getPriorityId());
     if (task.getId() != 0) {
       refreshEstimateTimeOfParents(task.getId(), task.getSpentTime(), task.getLeftTime());
     }
@@ -173,7 +157,8 @@ public class TaskDao extends EntityDao<Task> implements TaskDaoInterface {
 
     jdbcTemplate.update(sql, param, keyHolder);
     task.setId(keyHolder.getKey().intValue());
-
+    if (task.getParentId() == 0) jdbcTemplate.update("UPDATE " + table + " SET project_id = " + task.getId() +
+                    " WHERE id = " + task.getId(), new MapSqlParameterSource());
     return task;
   }
 

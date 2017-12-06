@@ -117,6 +117,8 @@ public class TaskService implements TaskServiceInterface {
 
     task = taskDao.create(task);
     tagService.setTagsToTask(Arrays.asList(taskDTO.getTags()), task.getId());
+    commentService.setCommentsToTask(Arrays.asList(taskDTO.getComments()), task.getId());
+
     return task;
   }
 
@@ -144,7 +146,7 @@ public class TaskService implements TaskServiceInterface {
     tagService.deleteTagsOfTask(task.getId());
     tagService.setTagsToTask(Arrays.asList(taskDTO.getTags()), task.getId());
     commentService.delete(task.getId());
-    commentService.setCommentsToTask(Arrays.asList(taskDTO.getComments()));
+    commentService.setCommentsToTask(Arrays.asList(taskDTO.getComments()), 0);
 
     return false;
   }

@@ -229,7 +229,7 @@ var handleCalendarTaskEdit = function (event) {
 
 var updateCalendarTask = function (event) {
     $.ajax({
-        url: '/api/tasks/planning/' + event.id,
+        url: '/api/tasks/' + event.id,
         type: 'GET',
         contentType: 'application/json',
 
@@ -244,14 +244,14 @@ var updateCalendarTask = function (event) {
             data.estimateTime = parseInt(hours) * 60 + parseInt(minutes);
 
             $.ajax({
-                url: '/api/tasks/planning',
+                url: '/api/tasks/setPlanning',
                 data: JSON.stringify(data),
                 type: 'PUT',
                 contentType: 'application/json',
 
                 success: function () {
                     $.ajax({
-                        url: '/api/tasks/planning/' + event.id,
+                        url: '/api/tasks/' + event.id,
                         type: 'GET',
                         contentType: 'application/json',
 

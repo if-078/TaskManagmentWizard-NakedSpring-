@@ -34,26 +34,6 @@ public class TaskController {
     this.taskService = taskService;
   }
 
-  @GetMapping("/planning/{id}")
-  @ResponseStatus(HttpStatus.OK)
-  public Task getPlannedTask(@PathVariable Integer id) {
-    return taskService.findOne(id);
-  }
-
-  @GetMapping("/planning")
-  @ResponseStatus(HttpStatus.OK)
-  public List<Task> getPlannedTasks() {
-    return taskService.getPlannedTasks();
-  }
-
-  @PutMapping("/planning")
-  @ResponseStatus(HttpStatus.NO_CONTENT)
-  boolean updateCalendarTask(@Validated @RequestBody Task task) {
-
-    boolean isUpdateTask = taskService.updateCalendarTask(task);
-    return isUpdateTask;
-  }
-
   @GetMapping("/tree/{id}")
   @ResponseStatus(HttpStatus.OK)
   List<TaskTreeDTO> getTreeSubtask(@PathVariable Integer id,
@@ -76,6 +56,14 @@ public class TaskController {
         .getFilteredTasksForTable(parentId, date, status, priority, tag, planing, userId);
 
     return tasksTableDTO;
+  }
+
+  @PutMapping("/setPlanning")
+  @ResponseStatus(HttpStatus.NO_CONTENT)
+  boolean updateCalendarTask(@Validated @RequestBody Task task) {
+
+    boolean isUpdateTask = taskService.updateCalendarTask(task);
+    return isUpdateTask;
   }
 
   @GetMapping("/view/{id}")

@@ -401,7 +401,7 @@ function fillSelectTags(id) {
     tags = [];
     $('#tmw-tag-multi-select').empty();
     $.ajax({
-        url: 'api/tags',
+        url: 'api/tags/' + selectedProjectId,
         type: 'GET',
         contentType: 'application/json',
         headers: createAuthToken(),

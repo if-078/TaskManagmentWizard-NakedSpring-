@@ -89,6 +89,7 @@ $('#jira-integration').on('click', function () {
                 type: 'POST',
                 contentType: 'application/json',
                 headers: createAuthToken(),
+<<<<<<< HEAD
                 success: function (data) {
                     var project = {
                         "name": chooseProject.name,
@@ -100,6 +101,25 @@ $('#jira-integration').on('click', function () {
 
                     createJiraTask(project);
                     //console.log(data);
+=======
+
+                success: function () {
+
+                        $.ajax({
+                            url: 'api/tasks/jira-import',
+                            data: JSON.stringify(chooseProject),
+                            type: 'POST',
+                            contentType: 'application/json',
+                            headers: createAuthToken(),
+                            success: function (data) {
+                                console.log("TASK CREATED");
+                            },
+                            cache: false
+                        }).fail(function ($xhr) {
+                            console.log("task DON`T CREATED");
+                        });
+
+>>>>>>> 7c8ab58d6e576d31330df7193f6201ff9319d393
                 },
                 cache: false
             }).fail(function ($xhr) {

@@ -74,6 +74,9 @@ $('#jira-integration').on('click', function () {
 
 
         $('#jira-project-ok').on('click', function () {
+            console.log(chooseProject);
+            console.log(chooseProject.key);
+
             var urlGetIssues = {
                 "link": "https://" + jLink + "/rest/api/2/search?jql=project=" + chooseProject.key,
                 "creds": encode,
@@ -87,10 +90,11 @@ $('#jira-integration').on('click', function () {
                 headers: createAuthToken(),
                 success: function (data) {
                     createJiraTask(project);
+                    console.log(data);
                 },
                 cache: false
             }).fail(function ($xhr) {
-                console.log("comment DON`T ADDED");
+                console.log("issues don`t get");
             });
             var project = {
                 "name": chooseProject,

@@ -19,7 +19,16 @@ public class JiraService {
 
     }
 
-    public String get(String uri, String credentials) {
+    public String getProjects(String uri, String credentials) {
+        headers.add("Authorization", "Basic " + credentials);
+        HttpEntity<String> requestEntity = new HttpEntity<String>("", headers);
+        ResponseEntity<String> responseEntity = rest.exchange(uri, HttpMethod.GET, requestEntity, String.class);
+        this.setStatus(responseEntity.getStatusCode());
+        System.out.println(responseEntity.getBody().toString());
+        return responseEntity.getBody();
+    }
+
+    public String getIssues(String uri, String credentials) {
         headers.add("Authorization", "Basic " + credentials);
         HttpEntity<String> requestEntity = new HttpEntity<String>("", headers);
         ResponseEntity<String> responseEntity = rest.exchange(uri, HttpMethod.GET, requestEntity, String.class);

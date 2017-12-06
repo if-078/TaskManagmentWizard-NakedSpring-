@@ -78,6 +78,7 @@ public class UserServiceTest {
 
     User persistedUser = new User();
     persistedUser.setId(userId);
+    persistedUser.setActivated(true);
 
     when(userDao.findOne(userId)).thenReturn(persistedUser);
 

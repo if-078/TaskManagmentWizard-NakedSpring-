@@ -27,12 +27,7 @@ public class NotificationService {
    */
 
   public void notify(Notification notification, String username) {
-    messagingTemplate.convertAndSendToUser(
-      username, 
-      "/queue/notify", 
-      notification
-    );
-    return;
+    messagingTemplate.convertAndSendToUser(username,"/queue/notify", notification);
   }
   
 } // class NotificationService

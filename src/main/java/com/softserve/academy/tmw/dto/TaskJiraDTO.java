@@ -12,7 +12,15 @@ public class TaskJiraDTO {
     private int statusId;
     private int priorityId;
     private String jiraKey;
+    private int parentId;
 
+    public int getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(int parentId) {
+        this.parentId = parentId;
+    }
 
     public String getName() {
         return name;

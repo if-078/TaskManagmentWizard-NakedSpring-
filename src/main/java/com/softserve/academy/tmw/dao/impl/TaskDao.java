@@ -250,7 +250,7 @@ public class TaskDao extends EntityDao<Task> implements TaskDaoInterface {
 
   @Override
   public void refreshEstimateTimeOfParents(int id, int diffEst, int diffSpent, int diffLeft) {
-    String query = "select * from " + table + " where id = (select parentId from " + table + " where id = :id)";
+    String query = "select * from " + table + " where id = (select parent_id from " + table + " where id = :id)";
     List<Task> tasks;
     List<Task> tasksFinish = new ArrayList<>();
     int parentId;

@@ -24,12 +24,7 @@ public class TagController {
   private TagService tagService;
 
   @GetMapping
-  List<Tag> getAll() {
-    return tagService.getAll();
-  }
-
-  @GetMapping("/project/{projectId}")
-  List<Tag> getByProject(@PathVariable Integer projectId) {
+  List<Tag> getByProject(@RequestParam(name = "projectId", required = false) int projectId) {
     return tagService.getAllByProject(projectId);
   }
 

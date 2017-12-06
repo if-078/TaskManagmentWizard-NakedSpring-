@@ -21,6 +21,9 @@ var taskPlanningTable = function () {
             var setMinute;
             var slotMin = timeSlotHour * 60 + timeSlotMin;
             for (var i = 0; i < rows.length; i++) {
+
+                rows[i][3] = moment(rows[i][3]).format('YYYY-MM-DD hh:mm');
+
                 rows[i][6] = Math.ceil(rows[i][6] / slotMin) * slotMin;
                 setHour = '' + parseInt(rows[i][6] / 60);
                 if (setHour.length < 2) setHour = '0' + setHour;

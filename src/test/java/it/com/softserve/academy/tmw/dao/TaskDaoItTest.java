@@ -91,9 +91,9 @@ public class TaskDaoItTest {
     Comment comment2 = new Comment("Comment2", 1, 1);
     Comment comment3 = new Comment("Comment3", 1, 1);
     LocalDateTime createdDate = LocalDateTime.now();
-    comment1.setCreatedDate(createdDate);
-    comment2.setCreatedDate(createdDate);
-    comment3.setCreatedDate(createdDate);
+    //comment1.setCreatedDate(createdDate);
+    //comment2.setCreatedDate(createdDate);
+    //comment3.setCreatedDate(createdDate);
     List<Comment> commentsList = new ArrayList<Comment>();
     commentsList.add(comment1);
     commentsList.add(comment2);

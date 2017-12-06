@@ -9,6 +9,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 
 import javax.mail.Authenticator;
 import javax.mail.PasswordAuthentication;
@@ -17,6 +18,7 @@ import java.util.Properties;
 
 @Configuration
 @PropertySource("classpath:mysql_connection.properties")
+@EnableWebSecurity
 public class AppConfig {
 
   @Value("${jdbc.schema}")

@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("api/tasks")
+  @RequestMapping("api/tasks")
 public class TaskController {
 
   TaskServiceInterface taskService;
@@ -85,6 +85,12 @@ public class TaskController {
     return taskService.createTaskByDTO(taskDTO);
   }
 
+  @PostMapping("/invite")
+  @ResponseStatus(HttpStatus.ACCEPTED)
+  public boolean inviteUserToProject (@RequestBody String email, @RequestBody Integer projectId){
+    return taskService.inviteUserToProject(email, projectId);
+  }
+
   @PutMapping
   @ResponseStatus(HttpStatus.NO_CONTENT)
   boolean update(@Validated @RequestBody TaskDTO taskDTO) {
@@ -125,6 +131,19 @@ public class TaskController {
   @ResponseStatus(HttpStatus.OK)
   List<Task> getSubtasks(@PathVariable Integer id) {
     return taskService.getSubtasks(id);
+  }
+
+  @PutMapping("/invite/{userId}/{projectId}")
+  @ResponseStatus(HttpStatus.NO_CONTENT)
+  boolean inviteUser( @PathVariable int userId, @PathVariable int projectId, @RequestBody String invitedUserEmail) {
+    invitedUserEmail = invitedUserEmail.substring(1, invitedUserEmail.length()-1);
+    System.out.println("userId = " + userId);
+    System.out.println("projectId = " + projectId);
+    System.out.println("invitedUserEmail = " + invitedUserEmail);
+
+    taskService.inviteUserToProject(invitedUserEmail, projectId);
+
+    return true;
   }
 
 }

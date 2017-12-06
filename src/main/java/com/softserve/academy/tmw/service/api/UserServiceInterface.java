@@ -10,5 +10,9 @@ public interface UserServiceInterface extends EntityServiceInterface<User> {
 
     User findByEmail(String email);
 
+    boolean acceptProjectInvitation(String key);
+
     List<User> getTeamByTask(int taskId, int userId);
+
+    boolean sendEmailToUser(User user, String message, String subject);
 }

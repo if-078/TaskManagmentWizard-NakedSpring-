@@ -6,7 +6,7 @@ $('#tmw-btn-send-invite').on('click', function () {
     var inviteUserEmail = document.getElementById("tmw-invite-email").value;
 
     $.ajax({
-        url: '/api/users/invite/' + userId + '/' + selectedProjectId,
+        url: '/api/tasks/invite/' + userId + '/' + selectedProjectId,
         data: JSON.stringify(inviteUserEmail),
         type: 'PUT',
         contentType: 'application/json'
@@ -15,4 +15,3 @@ $('#tmw-btn-send-invite').on('click', function () {
     $('#inviteUser').modal('hide');
 
 });
-

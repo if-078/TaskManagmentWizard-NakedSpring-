@@ -1,67 +1,91 @@
 var taskPlanningTableInit = false;
 
-var taskPlanningTable = function (data) {
+var taskPlanningTable = function () {
 
-    var rows = [];
-    for (var i = 0; i < data.length; i++) {
-        rows.push(Object.values(data[i]));
-    }
-
-    // convert estimate time from int minute --> format time
-    var setHour;
-    var setMinute;
-    var slotMin = timeSlotHour * 60 + timeSlotMin;
-    for (var i = 0; i < rows.length; i++) {
-        rows[i][6] = Math.ceil(rows[i][6] / slotMin) * slotMin;
-        setHour = '' + parseInt(rows[i][6] / 60);
-        if (setHour.length < 2) setHour = '0' + setHour;
-        setMinute = '' + rows[i][6] % 60;
-        if (setMinute.length < 2) setMinute = '0' + setMinute;
-        rows[i][6] = '' + setHour + ':' + setMinute + ':00';
-    }
-
-    if (taskPlanningTableInit) {
-        $('#tmw-task-planning-table').DataTable().destroy();
-        taskPlanningTableInit = false;
-    }
+    $.ajax({
+        url: 'api/tasks/filter' + generatedRequestParameters() + '&planing=true' + '&userId=' + userId,
+        type: 'GET',
+        contentType: 'application/json',
+        headers: createAuthToken(),
+        success: function (data, textStatus, jqXHR) {
+            setToken(jqXHR);
 
 
-    $('#tmw-task-planning-table').DataTable({
-        data: rows,
+            var rows = [];
+            for (var i = 0; i < data.length; i++) {
+                rows.push(Object.values(data[i]));
+            }
 
-        columns: [
-            {title: "ID", visible: false},
-            {title: "Name", visible: true},
-            {title: "Create Date", visible: false},
-            {title: "Planning Date", visible: true},
-            {title: "Draft Planning", visible: false},
-            {title: "End Date", visible: false},
-            {title: "Est. Time", visible: true},
-            {title: "Spent Time", visible: true},
-            {title: "Left Time", visible: true},
-            {title: "AssignTo", visible: false},
-            {title: "Statud ID", visible: false},
-            {title: "Priority ID", visible: false},
-            {title: "Parent ID", visible: false},
-            {title: "Author ID", visible: false},
-            {title: "Project ID", visible: false},
-            {title: "Assignee", visible: true},
-            {title: "Status", visible: true},
-            {title: "Priority", visible: true}
-        ],
+            // convert estimate time from int minute --> format time
+            var setHour;
+            var setMinute;
+            var slotMin = timeSlotHour * 60 + timeSlotMin;
+            for (var i = 0; i < rows.length; i++) {
+                rows[i][6] = Math.ceil(rows[i][6] / slotMin) * slotMin;
+                setHour = '' + parseInt(rows[i][6] / 60);
+                if (setHour.length < 2) setHour = '0' + setHour;
+                setMinute = '' + rows[i][6] % 60;
+                if (setMinute.length < 2) setMinute = '0' + setMinute;
+                rows[i][6] = '' + setHour + ':' + setMinute + ':00';
+            }
 
-        paging: false,
-        info: false,
-        searching: false,
-        scrollY: '35.5vh',
-        scrollCollapse: true
+            if (taskPlanningTableInit) {
+                $('#tmw-task-planning-table').DataTable().destroy();
+                taskPlanningTableInit = false;
+            }
+            $('#tmw-main-planning-table').css('visibility', 'hidden');
+            showPlanningTable();
+
+
+            $('#tmw-task-planning-table').DataTable({
+                data: rows,
+
+                columns: [
+                    {title: "ID", visible: false},
+                    {title: "Name", visible: true},
+                    {title: "Create Date", visible: false},
+                    {title: "Planning Date", visible: true},
+                    {title: "Draft Planning", visible: false},
+                    {title: "End Date", visible: false},
+                    {title: "Est. Time", visible: true},
+                    {title: "Spent Time", visible: true},
+                    {title: "Left Time", visible: true},
+                    {title: "AssignTo", visible: false},
+                    {title: "Statud ID", visible: false},
+                    {title: "Priority ID", visible: false},
+                    {title: "Parent ID", visible: false},
+                    {title: "Author ID", visible: false},
+                    {title: "Project ID", visible: false},
+                    {title: "Assignee", visible: true},
+                    {title: "Status", visible: true},
+                    {title: "Priority", visible: true}
+                ],
+
+                paging: false,
+                info: false,
+                searching: false,
+                scrollY: '35.5vh',
+                scrollCollapse: true
+            });
+
+            $('#tmw-main-planning-table').css('visibility', 'visible');
+            taskPlanningTableInit = true;
+
+            if (rows.length > 0) {
+                makePlanningTableRowsDraggable();
+            }
+
+            showPlanningTable();
+
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            if (jqXHR.status === 401) {
+                resetToken();
+            } else {
+                throw new Error("an unexpected error occured: " + errorThrown);
+            }
+        }
     });
-
-    taskPlanningTableInit = true;
-
-    if (rows.length > 0) {
-        makePlanningTableRowsDraggable();
-    }
 
 
 };
@@ -164,6 +188,15 @@ hideButtonSwitchCalendarTable();
 
 var showButtonSwitchCalendarTable = function () {
     $('#tmw-btn-switch').css('visibility', 'visible');
+};
+
+var hidePlanningTable = function () {
+    $('#tmw-task-planning-table').css('visibility', 'hidden');
+};
+
+
+var showPlanningTable = function () {
+    $('#tmw-task-planning-table').css('visibility', 'visible');
 };
 
 

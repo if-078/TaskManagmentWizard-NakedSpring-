@@ -31,25 +31,25 @@ public class StatusController {
   }
 
   @GetMapping
-  public List<Status> getStatuses() throws SQLException, JsonProcessingException {
+  public List<Status> get() throws SQLException, JsonProcessingException {
     return service.getAll();
 
   }
 
   @PostMapping
-  public Status createStatus(@RequestBody Status status) throws SQLException {
+  public Status create(@RequestBody Status status) throws SQLException {
     return service.create(status);
   }
 
   @DeleteMapping
-  boolean deleteStatus(@RequestBody String json) throws SQLException, IOException {
+  boolean delete(@RequestBody String json) throws SQLException, IOException {
     Status status = new Status();
     status = objectMapper.readValue(json, Status.class);
     return service.delete(status.getId());
   }
 
   @PutMapping
-  boolean updateStatus(@RequestBody String json) throws SQLException, IOException {
+  boolean update(@RequestBody String json) throws SQLException, IOException {
     Status statusObj = objectMapper.readValue(json, Status.class);
     return service.update(statusObj);
   }

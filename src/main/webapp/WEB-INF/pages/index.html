@@ -114,6 +114,9 @@
                 <!-- TREE VIEW -->
                 <div id="tmw-treeview" class="tmw-treeview"></div>
                 <!-- / TREE VIEW -->
+                <div id="tmw-invite" class="tmw-invite col-xs-11">
+                    <button id="tmw-invite-btn" class="btn btn-default btn-block" type="button">Invite</button>
+                </div>
             </div>
 
 
@@ -345,6 +348,30 @@
     </div>
 </div>
 
+
+<div class="modal fade" id="inviteUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Invite User</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="tmw-invite-email">Enter email</label>
+                    <input id="tmw-invite-email" type="email" class="form-control" placeholder="email" name="invite-email">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button id="tmw-btn-send-invite" type="button" class="btn btn-primary">Invite</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 </body>
 
 <script src="static/js/main.js"></script>
@@ -357,6 +384,7 @@
 
 <script src="static/js/calendar.js"></script>
 <script src="static/js/planningTable.js"></script>
+<script src="static/js/inviteUser.js"></script>
 <script src="static/js/loginOrRegistration.js"></script>
 
 

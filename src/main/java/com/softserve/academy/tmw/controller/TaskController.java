@@ -86,31 +86,31 @@ public class TaskController {
 
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
-  public Task createTask(@Validated @RequestBody TaskDTO taskDTO) {
+  public Task create(@Validated @RequestBody TaskDTO taskDTO) {
     return taskService.createTaskByDTO(taskDTO);
   }
 
   @PutMapping
   @ResponseStatus(HttpStatus.NO_CONTENT)
-  boolean updateTask(@Validated @RequestBody TaskDTO taskDTO) {
+  boolean update(@Validated @RequestBody TaskDTO taskDTO) {
     return taskService.updateTaskByDTO(taskDTO);
   }
 
   @DeleteMapping("/{id}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
-  boolean deleteTask(@PathVariable int id) {
+  boolean delete(@PathVariable int id) {
     return taskService.delete(id);
   }
 
   @GetMapping
   @ResponseStatus(HttpStatus.OK)
-  List<Task> getAllTasks() {
+  List<Task> getAll() {
     return taskService.getAll();
   }
 
-  @GetMapping("/one/{id}")
+  @GetMapping("/{id}")
   @ResponseStatus(HttpStatus.OK)
-  Task getTask(@PathVariable Integer id) {
+  Task get(@PathVariable Integer id) {
     return taskService.findOne(id);
   }
 
@@ -131,4 +131,5 @@ public class TaskController {
   List<Task> getSubtasks(@PathVariable Integer id) {
     return taskService.getSubtasks(id);
   }
+
 }

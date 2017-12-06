@@ -25,7 +25,14 @@ public class JiraController {
     @PostMapping("/get-projects")
     @ResponseStatus(HttpStatus.OK)
     public String getProjects(@RequestBody JiraCredential jiraCredential) {
-        String json = jiraService.get(jiraCredential.getUrl(), jiraCredential.getCreds());
+        String json = jiraService.getProjects(jiraCredential.getUrl(), jiraCredential.getCreds());
+        return json;
+    }
+
+    @PostMapping("/get-issues")
+    @ResponseStatus(HttpStatus.OK)
+    public String getIssues(@RequestBody JiraCredential jiraCredential, String key) {
+        String json = jiraService.getIssues(jiraCredential.getUrl(), jiraCredential.getCreds());
         return json;
     }
 }

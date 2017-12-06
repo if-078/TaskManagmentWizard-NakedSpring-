@@ -74,17 +74,22 @@ $('#jira-integration').on('click', function () {
 
 
         $('#jira-project-ok').on('click', function () {
-            var urlGetIssues = {
-                "link": "https://" + jLink + "/rest/api/2/search?jql=project=" + chooseProject.key,
-                "creds": encode,
-                "projectKey": chooseProject.key
-            }
+            console.log(chooseProject);
+            console.log(chooseProject.key);
+
+            var urlGetIssues = "https://" + jLink + "/rest/api/2/search?jql=project=" + chooseProject.key;
+
             $.ajax({
                 url: 'api/jira/get-issues',
-                data: JSON.stringify(urlGetIssues),
+                data: JSON.stringify({
+                    "url": urlGetIssues,
+                    "creds": encode,
+                    "projectKey": chooseProject.key
+                }),
                 type: 'POST',
                 contentType: 'application/json',
                 headers: createAuthToken(),
+
                 success: function () {
 
                         $.ajax({
@@ -104,7 +109,7 @@ $('#jira-integration').on('click', function () {
                 },
                 cache: false
             }).fail(function ($xhr) {
-                console.log("comment DON`T ADDED");
+                console.log("issues don`t get");
             });
             var project = {
                 "name": chooseProject,

@@ -79,4 +79,4 @@ release.properties
 pom.xml.releaseBackup
 pom.xml.tag
 /bin/
-/logs/
+logs/*

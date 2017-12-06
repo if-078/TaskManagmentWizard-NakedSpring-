@@ -67,16 +67,5 @@ public class UserController {
     return userService.delete(id);
   }
 
-  @PutMapping("/invite/{userId}/{projectId}")
-  @ResponseStatus(HttpStatus.NO_CONTENT)
-  boolean inviteUser( @PathVariable int userId, @PathVariable int projectId, @RequestBody String invitedUserEmail) {
-    invitedUserEmail = invitedUserEmail.substring(1, invitedUserEmail.length()-1);
-    System.out.println("userId = " + userId);
-    System.out.println("projectId = " + projectId);
-    System.out.println("invitedUserEmail = " + invitedUserEmail);
 
-    // ToDo
-
-    return true;
-  }
 }

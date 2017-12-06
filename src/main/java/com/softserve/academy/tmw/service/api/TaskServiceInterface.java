@@ -35,4 +35,6 @@ public interface TaskServiceInterface extends EntityServiceInterface<Task> {
   boolean deletePlanning(int id);
 
   List<Task> getPlannedTasks();
+
+  boolean inviteUserToProject(String email, Integer projectId);
 }

@@ -79,9 +79,34 @@ var showFull = function (id) {
 
 
 // GET FULL INFORMATION ABOUT THE TASK
-$('#tmw-task-btn-save, #tmw-create-task').on('click', function () {
-    console.log(taskDTO);
+$('#tmw-task-btn-save').on('click', function () {
     createOrUpdateTask(taskDTO);
+});
+
+$('#tmw-create-task').on('click', function() {
+    var date = new Date();
+    var day = date.getDate() + "";
+    if (day.length < 2) day = '0' + day;
+    day = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + day;
+    $('#tmw-task-info').hide();
+    $('#tmw-task-name').show();
+                $('#tmw-task-projectId').text(selectedProjectId);
+                $('#tmw-task-parentId').text(selectedTaskId);
+                $('#tmw-task-draftPlanning').val(day);
+                $('#tmw-task-estimateTime').val("08:00:00");
+                $('#tmw-task-spentTime').val("00:00:00");
+                $('#tmw-task-leftTime').val("08:00:00");
+                fillSelectUserAuthor(null);
+                fillSelectUserAssign(null);
+                fillSelectPriority(null);
+                fillSelectStatus(null);
+                fillSelectTags(null);
+                fillSelectComments(null);
+    $('#tmw-modal').modal('show');
+    $('#tmw-task-name').blur(function() {
+        $(this).hide();
+        $('#tmw-task-info').show().text($('#tmw-task-name').val());
+    });
 });
 
 $('#tmw-task-btn-delete').on('click', function () {
@@ -134,21 +159,21 @@ function createOrUpdateTask(taskDTO) {
 
         task =
             {
-                "name": "New Task",
+                "name": $('#tmw-task-info').text(),
                 "createdDate": new Date().getTime(),
                 "planningDate": new Date().getTime() - 7200000,
-                "draftPlanning": new Date().getTime(),
-                "estimateTime": 480,
-                "spentTime": 0,
-                "leftTime": 480,
-                "author": userName,
-                "assignTo": userName,
-                "statusId": 1,
-                "priorityId": 3,
-                "parentId": 0,
-                "projectId":0,
-                "tags": null,
-                "comments": null
+                "draftPlanning": $('#tmw-task-draftPlanning').val(),
+                "estimateTime": estimate,
+                "spentTime": spent,
+                "leftTime": left,
+                "author": $('#tmw-task-author').find(":selected").val(),
+                "assignTo": $('#tmw-task-assignTo').find(":selected").val(),
+                "statusId": $('#tmw-task-status').find(":selected").val(),
+                "priorityId": $('#tmw-task-priority').find(":selected").val(),
+                "parentId": state.parentId,
+                "projectId": $('#tmw-task-projectId').text(),
+                "tags": getSelectedTags(),
+                "comments": getSelectedComments()
             }
 
         createTask(task);
@@ -172,8 +197,7 @@ function createOrUpdateTask(taskDTO) {
                 "tags": getSelectedTags(),
                 "comments": getSelectedComments()
             }
-        console.log(task);
-        show();
+        showComment();
         updateTask(task);
     }
 }
@@ -478,6 +502,7 @@ function getIdTagsOfTask(data) {
 function fillSelectComments(id) {
     comments = [];
     $('#tmw-task-comments').empty();
+    if (id != null)
     $.ajax({
         url: 'api/comment/task/' + id,
         type: 'GET',
@@ -503,7 +528,7 @@ var getComments = function (data) {
     $.each(data, function (i, comment) {
         var date = (new Date(comment.createdDate + 7200000).toISOString()).split("T");
         $('#tmw-task-comments').append('<div><span style="font-weight: bold; margin-bottom: 0">' +
-            'Author: ' + comment.user +  ' Created: ' + date[0] + '  ' + date[1].slice(0, -5) +
+            'Author: ' + comment.user +  '.   Created: ' + date[0] + '  ' + date[1].slice(0, -5) +
             '</span><p id = "comment' + comment.id + '" style="font-style: italic; border: thick; ' +
             'test-decoration: none">' + comment.commentText + '</p></div>').css('text-align', 'left');
     });

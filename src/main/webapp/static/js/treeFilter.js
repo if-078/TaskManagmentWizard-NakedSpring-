@@ -96,6 +96,10 @@ var showDataOnCalendarAndTable = function () {
     if (state.parentId == 0) {
 
         hideButtonSwitchCalendarTable();
+        selectedProjectId = 0;
+
+        $('#tagBox').combobox('clear');
+        $('#tagBox').combobox('reload');
 
         if (taskPlanningTableInit) {
             $('#tmw-task-planning-table').DataTable().destroy();
@@ -113,7 +117,6 @@ var showDataOnCalendarAndTable = function () {
         $('#tmw-main-table').css('visibility', 'hidden');
         hideDraftPlanningTable();
 
-        selectedProjectId = 0;
         isSelectedNewProject = true;
 
         return;
@@ -137,6 +140,8 @@ var showDataOnCalendarAndTable = function () {
                 isSelectedNewProject = true;
             }
             selectedProjectId = taskProjectId;
+            $('#tagBox').combobox('clear');
+           $('#tagBox').combobox('reload');
 
             showButtonSwitchCalendarTable();
             if (isSelectedCalendar) {

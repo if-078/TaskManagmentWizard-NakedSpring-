@@ -14,11 +14,10 @@ function boxMessage() {
   console.log("Load succes");
 }
 
-var projectId = 46;
 
 var tagLoader = function (param, success, error) {
   $.ajax({
-    url: 'api/tags?projectId=' + projectId,
+    url: 'api/tags?projectId=' + selectedProjectId,
     type: 'GET',
     contentType: 'application/json',
     dataType: 'json',

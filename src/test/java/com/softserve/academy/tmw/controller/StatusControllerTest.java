@@ -1,4 +1,4 @@
-package unit.com.softserve.academy.tmw.controller;
+package com.softserve.academy.tmw.controller;
 
 
 import static org.mockito.Mockito.verify;
@@ -7,10 +7,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.softserve.academy.tmw.controller.PriorityController;
-import com.softserve.academy.tmw.controller.StatusController;
-import com.softserve.academy.tmw.entity.Priority;
-import com.softserve.academy.tmw.service.impl.PriorityService;
+import com.softserve.academy.tmw.entity.Status;
+import com.softserve.academy.tmw.service.impl.StatusService;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.Before;
@@ -31,15 +29,15 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 @RunWith(MockitoJUnitRunner.class)
 @ContextConfiguration(classes = {StatusController.class})
 @WebAppConfiguration
-public class PriorityControllerTest {
+public class StatusControllerTest {
 
   @Mock
-  private PriorityService service;
+  private StatusService service;
   @InjectMocks
-  private PriorityController controller;
+  private StatusController controller;
   private ObjectMapper jsonMapper = new ObjectMapper();
   private MockMvc mockMvc;
-  private Priority simplePriority;
+  private Status simpleStatus;
   private int testId;
 
   @Before
@@ -47,24 +45,24 @@ public class PriorityControllerTest {
     testId = 1;
     MockitoAnnotations.initMocks(this);
     mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
-    simplePriority = new Priority();
-    simplePriority.setName("someName");
-    simplePriority.setId(testId);
+    simpleStatus = new Status();
+    simpleStatus.setName("someName");
+    simpleStatus.setId(testId);
   }
 
   @Test
   public void shouldFindAll() throws Exception {
-    List<Priority> priorities = new ArrayList();
-    priorities.add(simplePriority);
-    priorities.add(simplePriority);
+    List<Status> statuses = new ArrayList();
+    statuses.add(simpleStatus);
+    statuses.add(simpleStatus);
 
-    when(service.getAll()).thenReturn(priorities);
-    MvcResult result = mockMvc.perform(get("/api//priority")
+    when(service.getAll()).thenReturn(statuses);
+    MvcResult result = mockMvc.perform(get("/api/status")
         .accept(MediaType.APPLICATION_JSON)
         .contentType(MediaType.APPLICATION_JSON))
         .andExpect(status().isOk()).andReturn();
 
-    JSONAssert.assertEquals(jsonMapper.writeValueAsString(priorities),
+    JSONAssert.assertEquals(jsonMapper.writeValueAsString(statuses),
         result.getResponse().getContentAsString(), false);
 
     verify(service).getAll();

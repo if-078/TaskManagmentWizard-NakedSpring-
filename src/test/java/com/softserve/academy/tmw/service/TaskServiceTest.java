@@ -1,4 +1,4 @@
-package unit.com.softserve.academy.tmw.service;
+package com.softserve.academy.tmw.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;

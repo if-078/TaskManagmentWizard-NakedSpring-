@@ -1,4 +1,4 @@
-package unit.com.softserve.academy.tmw.controller;
+package com.softserve.academy.tmw.controller;
 
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -9,7 +9,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.softserve.academy.tmw.controller.TagController;
 import com.softserve.academy.tmw.entity.Tag;
 import com.softserve.academy.tmw.service.impl.TagService;
 import java.util.ArrayList;

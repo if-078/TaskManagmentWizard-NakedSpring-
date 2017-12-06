@@ -1,4 +1,4 @@
-package unit.com.softserve.academy.tmw.controller;
+package com.softserve.academy.tmw.controller;
 
 
 import static org.mockito.Mockito.verify;
@@ -9,7 +9,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.softserve.academy.tmw.controller.UserController;
 import com.softserve.academy.tmw.entity.User;
 import com.softserve.academy.tmw.service.impl.UserService;
 import java.util.ArrayList;

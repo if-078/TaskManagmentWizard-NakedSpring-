@@ -165,7 +165,7 @@ var makePlanningTableRowsDraggable = function () {
                             dataFromPlanningTable.priority          // Priority
                         ]]).draw();
                     }
-
+                    deleteTaskPlanning(dataFromPlanningTable.id);
 
                 }
             });

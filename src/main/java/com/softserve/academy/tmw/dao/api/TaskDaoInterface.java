@@ -33,4 +33,6 @@ public interface TaskDaoInterface extends EntityDaoInterface<Task>{
 
     List<Task> getLastChildrenTask(int id);
 
+    boolean deleteTaskPlanning(int id);
+
 }

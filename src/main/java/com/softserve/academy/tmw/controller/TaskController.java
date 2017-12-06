@@ -66,6 +66,14 @@ public class TaskController {
     return isUpdateTask;
   }
 
+  @GetMapping("/deletePlanning/{id}")
+  @ResponseStatus(HttpStatus.OK)
+  boolean deletePlanning(@PathVariable Integer id) {
+    System.out.println("Request delete planning taskId = " + id);
+    return taskService.deletePlanning(id);
+}
+
+
   @GetMapping("/view/{id}")
   @ResponseStatus(HttpStatus.OK)
   TaskFullInfoDTO getFullInfoByUser(@PathVariable Integer id) {

@@ -174,6 +174,7 @@ var taskCalendar = function () {
                                 }
 
                                 makeTableRowsDraggable();
+                                deleteTaskPlanning(event.id);
                             },
 
                             dragRevertDuration: 0
@@ -268,6 +269,15 @@ var updateCalendarTask = function (event) {
 };
 
 
+var deleteTaskPlanning = function (id) {
+    $.ajax({
+        url: '/api/tasks/deletePlanning/' + id,
+        type: 'GET',
+        contentType: 'application/json',
+        success: function () {}
+    });
+};
+
 
 var updateCalendar = function () {
     var $calendar = $('#tmw-task-calendar');
@@ -321,5 +331,6 @@ $('#tmw-btn-calendar-view').on("click", function () {
     isSelectedNewProject = true;
 
     taskCalendar();
+    taskTable();
 
 });

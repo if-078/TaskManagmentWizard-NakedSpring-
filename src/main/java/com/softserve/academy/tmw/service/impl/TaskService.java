@@ -159,6 +159,11 @@ public class TaskService implements TaskServiceInterface {
   }
 
   @Override
+  public boolean deletePlanning(int id){
+    return taskDao.deleteTaskPlanning(id);
+  }
+
+  @Override
   public List<Task> getPlannedTasks() {
     return taskDao.getPlannedTasks();
   }

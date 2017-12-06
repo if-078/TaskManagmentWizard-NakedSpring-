@@ -10,10 +10,8 @@ import com.softserve.academy.tmw.dto.TaskFullInfoDTO;
 import com.softserve.academy.tmw.dto.TaskTableDTO;
 import com.softserve.academy.tmw.dto.TaskTreeDTO;
 import com.softserve.academy.tmw.entity.*;
-import com.softserve.academy.tmw.service.api.EntityServiceInterface;
-import com.softserve.academy.tmw.service.api.TagServiceInterface;
-import com.softserve.academy.tmw.service.api.TaskServiceInterface;
-import com.softserve.academy.tmw.service.api.UserServiceInterface;
+import com.softserve.academy.tmw.service.api.*;
+
 import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -145,7 +143,7 @@ public class TaskService implements TaskServiceInterface {
     taskDao.update(task);
     tagService.deleteTagsOfTask(task.getId());
     tagService.setTagsToTask(Arrays.asList(taskDTO.getTags()), task.getId());
-    commentService.deleteCommentsOfTask(task.getId());
+    commentService.delete(task.getId());
     commentService.setCommentsToTask(Arrays.asList(taskDTO.getComments()));
 
     return false;

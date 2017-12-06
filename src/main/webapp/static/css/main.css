@@ -41,8 +41,6 @@ html, body {
     height: 100vh;
 }
 
-
-
 #tmw-create-task-div {
     width: 45px;
     z-index: 998;
@@ -59,8 +57,6 @@ html, body {
     overflow-y: scroll;
 }
 
-
-
 .tmw-main {
     display: flex;
     flex-direction: column;
@@ -68,7 +64,6 @@ html, body {
     padding-bottom: 20px;
     height: 100vh;
 }
-
 
 #calendar-and-table-area {
     display: flex;
@@ -79,12 +74,6 @@ html, body {
 
 .tmw-main-calendar {
     margin-top: -29px;
-    /* flex-grow: 1; */
-    /* height: 100vh; */
-    /* overflow-y: scroll; */
-}
-
-.tmw-main-calendar {
     height: 51%;
 }
 
@@ -96,8 +85,8 @@ html, body {
     height: 50%;
 }
 
-
-.tmw-main-calendar > div, .tmw-task-calendar, .tmw-main-table > div, .tmw-task-table, .tmw-main-planning-table > div, .tmw-task-planning-table {
+.tmw-main-calendar > div, .tmw-task-calendar, .tmw-main-table > div,
+.tmw-task-table, .tmw-main-planning-table > div, .tmw-task-planning-table {
     height: 100%;
 }
 
@@ -105,58 +94,34 @@ html, body {
     margin-bottom: -6px;
 }
 
-
-
 .tmw-main-planning-table {
-    /* flex-grow: 1; */
     margin-top: -5px;
-    /* height: 100vh; */
-    /* overflow-y: scroll; */
     user-select: none;
 }
-
-#tmw-task-planning-table {
-    border-collapse: collapse !important;
-}
-
-.tmw-task-planning-table tr.tmw-draggable {
-    cursor: pointer;
-}
-
-.tmw-task-planning-table tr.tmw-disabled {
-    cursor: not-allowed;
-    background-color: #f0f0f0;
-    color: #999999;
-}
-
-
 
 .tmw-main-table {
-    /* flex-grow: 1; */
     margin-top: 10px;
-    /* height: 100vh; */
-    /* overflow-y: scroll; */
     user-select: none;
 }
 
-#tmw-task-table {
+#tmw-task-planning-table, #tmw-task-table {
     border-collapse: collapse !important;
 }
 
-.tmw-task-table tr.tmw-draggable {
+table.dataTable thead .sorting {
+    cursor: default;
+}
+
+tr.tmw-draggable, tr.tmw-draggable:hover, .table>tbody>tr.tmw-draggable.active>td {
     cursor: pointer;
+    background-color: #ffffff !important;
 }
 
-.tmw-task-table tr.tmw-disabled {
-    cursor: not-allowed;
-    background-color: #f0f0f0;
-    color: #999999;
+tr.tmw-disabled, tr.tmw-disabled:hover, .table>tbody>tr.tmw-disabled.active>td {
+    cursor: zoom-in;
+    background-color: #f5ffff !important;
+    color: #777777 !important;
 }
-
-
-
-
-
 
 ul.jstree-container-ul a.jstree-anchor {
     width: 200px;

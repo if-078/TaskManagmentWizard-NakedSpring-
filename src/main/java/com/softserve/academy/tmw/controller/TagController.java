@@ -28,7 +28,7 @@ public class TagController {
     return tagService.getAll();
   }
 
-  @GetMapping("/projectId")
+  @GetMapping("/project/{projectId}")
   List<Tag> getByProject(@PathVariable Integer projectId) {
     return tagService.getAllByProject(projectId);
   }

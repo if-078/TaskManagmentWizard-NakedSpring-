@@ -401,7 +401,7 @@ function fillSelectTags(id) {
     tags = [];
     $('#tmw-tag-multi-select').empty();
     $.ajax({
-        url: 'api/tags/' + selectedProjectId,
+        url: 'api/tags/project/' + selectedProjectId,
         type: 'GET',
         contentType: 'application/json',
         headers: createAuthToken(),
@@ -501,11 +501,10 @@ function fillSelectComments(id) {
 var getComments = function (data) {
     $.each(data, function (i, comment) {
         var date = (new Date(comment.createdDate + 7200000).toISOString()).split("T");
-        $('#tmw-task-comments').append('<p><span style="font-weight: bold">' +
-            'Author: ' + comment.user + '   "</span><a id = "comment' + comment.id +
-            '" style="font-style: italic; border: thick">' +
-            comment.commentText + '</a><span style="font-weight: bold">"  Created: ' + date[0] + '  ' +
-            date[1].slice(0, -5) + '</span></p>').css('text-align', 'center');
+        $('#tmw-task-comments').append('<div><span style="font-weight: bold; margin-bottom: 0">' +
+            'Author: ' + comment.user +  ' Created: ' + date[0] + '  ' + date[1].slice(0, -5) +
+            '</span><p id = "comment' + comment.id + '" style="font-style: italic; border: thick; ' +
+            'test-decoration: none">' + comment.commentText + '</p></div>').css('text-align', 'left');
     });
 }
 

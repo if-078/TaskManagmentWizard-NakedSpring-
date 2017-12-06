@@ -54,6 +54,7 @@ public class TagDao extends EntityDao<Tag> implements TagDaoInterface {
     List<Tag> list =
         jdbcTemplate
             .query(sql, new MapSqlParameterSource("project_id", projectId), new TagMapper());
+    System.out.println(list);
     return list;
   }
 

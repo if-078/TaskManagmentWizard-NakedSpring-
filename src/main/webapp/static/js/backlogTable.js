@@ -166,7 +166,7 @@ var hideDraftPlanningTable = function () {
     $('#tmw-name-table').css('visibility', 'hidden');
     $('#tmw-task-table').css('visibility', 'hidden');
 };
-
+$('#tmw-name-table').css('visibility', 'hidden');
 
 
 var showDraftPlanningTable = function () {

@@ -319,7 +319,7 @@ $('#tmw-btn-calendar-view').on("click", function () {
 
     isSelectedCalendar = true;
     isSelectedNewProject = true;
-    
+
     taskCalendar();
 
 });

@@ -8,31 +8,123 @@ $('#jira-integration').on('click', function () {
 
 
     $('#jira-ok').on('click', function () {
-        var jLink = $('#jira-link').val();
+        /*var jLink = $('#jira-link').val();
         var jUsername = $('#jira-login').val();
-        var jPassword = $('#jira-password').val();
+        var jPassword = $('#jira-password').val();*/
+        var jLink = "tmw-sveta.atlassian.net";
+        var jUsername = "ovcharuksveta@ukr.net";
+        var jPassword = "svetasveta";
         console.log(jUsername);
         console.log(jPassword);
 
         var jiraToken = jUsername + ":" + jPassword;
+        var encode = btoa(jiraToken);
 
         var jUrl = "https://" + jLink + "/rest/api/2/project";
+ var  projectsModelData=[];
+       $.ajax({
+               url: 'api/jira/get-projects',
+               data: JSON.stringify({"url":jUrl,
+               "creds":encode}),
+               type: 'POST',
+               contentType: 'application/json',
+               headers: createAuthToken(),
+               success: function (data) {
+                   console.log("Credential send");
+                   //console.log(data);
+                   projectsModelData=data;
+                 },
+                               cache: false
+                           }).fail(function ($xhr) {
+                               console.log("task DON`T CREATED");
+                           });
 
-        var encode = btoa(jiraToken);
-        console.log(encode);
+                   $('#jira-modal-authorization').modal('hide');
+                   $('#jira-modal-choose-project').modal('show');
+                   console.log("login to jira");
+
+
+            
+                   console.log("----------------------------");
+                   console.log( projectsModelData);
+                   console.log("----------------------------");
+                   console.log( projectsModelData[0]);
+                   //console.log(data.name);
+                   console.log( projectsModelData[0].key);
+                   console.log( projectsModelData[0].name);
 
 
 
-        $.ajax({
+                   var chooseProject;
+                   var keys = [];
+                   var key;
+
+                   var b = 0;
+                   $.each( projectsModelData, function() {
+                       var ul = document.getElementById("jira-projects-list");
+                       var li = document.createElement("li");
+                       var a = document.createElement("a");
+                       a.setAttribute('class', 'a-class')
+                       a.setAttribute('id', 'a-element-' + b);
+                       a.appendChild(document.createTextNode( projectsModelData[b].name));
+                       li.appendChild(a);
+                       ul.appendChild(li);
+                       keys[b] =  projectsModelData[b].key;
+                       b++;
+                   });
+
+console.log("keys " + keys);
+                   var c = 0;
+                   $('.a-class').each(function() {
+                        console.log(c);
+
+                   
+                       c++;
+                   });
+                   $('#a-element-'+c).on('click', function (event) {
+                       console.log(c);
+                       console.log(this.textContent);
+                       chooseProject = this.textContent;
+                       key=(event.target.id).match("\d");
+                       console.log("key" + key);
+                       var div = document.getElementById("choose-project-text");
+                       div.appendChild(document.createTextNode("You will import project: " + this.textContent + " with key " + key));
+                   });
+
+
+
+
+                   $('#jira-project-ok').on('click', function () {
+                    var project = {
+                        "name": chooseProject,
+                        "jiraKey": key
+                    };
+                    createJiraTask(project);
+                    getProjectId(key);
+
+                   
+               })
+
+
+
+
+
+              
+
+       /* console.log(encode);
+
+
+
+       /* $.ajax({
             //url: "https://sveta-site.atlassian.net/rest/auth/1/session",
             //url: "https://sveta-site.atlassian.net/rest/api/latest/issue/FP-3",
             //url: "https://http://ssu-jira.softserveinc.com/rest/api/2/issue/TTT-3",
             //headers: JSON.stringify(jiraData),
-            /*headers: {
+            *//*headers: {
                 'Access-Control-Allow-Origin': "https://tmw-sveta.atlassian.net",
                 'Access-Control-Allow-Headers': "Origin, X-Requested-With, Content-Type, Accept",
                 'Authorization': 'Basic ' + encode
-            },*/
+            },*//*
             url: jUrl,
             //Origin: 'https://tmw-sveta.atlassian.net',
             crossDomain: true,
@@ -52,7 +144,6 @@ $('#jira-integration').on('click', function () {
                 var key;
 
                 var b = 0;
-                var array = ['first', 'second', 'n-th'];
                 $.each(data.key, function() {
                     var ul = document.getElementById("jira-projects-list");
                     var li = document.createElement("li");
@@ -111,10 +202,10 @@ $('#jira-integration').on('click', function () {
                                     }
                                     task = {
                                         "name": this.fields.summary,
-                                        /*"createdDate": this.fields.created,
+                                        *//*"createdDate": this.fields.created,
                                         //"startDate": ,
                                         "endDate": this.fields.duedate,
-                                        "estimateTime": this.fields.aggregatetimeestimate,*/
+                                        "estimateTime": this.fields.aggregatetimeestimate,*//*
                                         "assignTo": assignTo,
                                         "statusId": this.fields.status.statusCategory.id,
                                         "priorityId": this.fields.priority.id,
@@ -132,11 +223,11 @@ $('#jira-integration').on('click', function () {
                                         $.each(data.issues.subtasks, function() {
                                             subtask = {
                                                 "name": this.fields.summary,
-                                                /*"createdDate": this.fields.created,
+                                                *//*"createdDate": this.fields.created,
                                                 //"startDate": ,
                                                 "endDate": this.fields.duedate,
                                                 "estimateTime": this.fields.aggregatetimeestimate,
-                                                "assignTo": this.fields.assignee,*/
+                                                "assignTo": this.fields.assignee,*//*
                                                 "statusId": this.fields.status.statusCategory.id,
                                                 "priorityId": this.fields.priority.id,
                                                 "parentId": taskIdByJiraKey,
@@ -186,11 +277,11 @@ $('#jira-integration').on('click', function () {
                                             })
                                         }
 
-                                        /*$each(data.labels, function() {
+                                        *//*$each(data.labels, function() {
                                             if (this != null) {
 
                                             }
-                                        })*/
+                                        })*//*
                                     },
                                     error: function() {
                                         console.log("error while get issue to add comment")
@@ -207,7 +298,7 @@ $('#jira-integration').on('click', function () {
             error: function () {
                 console.log("error login to jira")
             }
-        });
+        });*/
     })
 });
 

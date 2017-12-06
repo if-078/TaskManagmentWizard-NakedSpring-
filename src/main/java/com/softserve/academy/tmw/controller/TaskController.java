@@ -124,7 +124,7 @@ public class TaskController {
 
   @PostMapping("/jira-import")
   @ResponseStatus(HttpStatus.CREATED)
-  public Task importTask(@Validated @RequestBody TaskJiraDTO taskJiraDTO) {
+  public Task importTask(@RequestBody TaskJiraDTO taskJiraDTO) {
     return taskService.createTaskByJiraDTO(taskJiraDTO);
   }
 

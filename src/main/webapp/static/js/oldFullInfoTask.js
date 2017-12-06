@@ -79,7 +79,8 @@ var showFull = function (id) {
 
 
 // GET FULL INFORMATION ABOUT THE TASK
-$('#tmw-task-btn-save').on('click', function () {
+$('#tmw-task-btn-save, #tmw-create-task').on('click', function () {
+    console.log(taskDTO);
     createOrUpdateTask(taskDTO);
 });
 
@@ -88,14 +89,14 @@ $('#tmw-task-btn-delete').on('click', function () {
 });
 
 $("#tmw-show-comment").on('click', function () {
-    show();
+    showComment();
 });
 
 $("#tmw-save-comment").on('click', function () {
     addComment();
 });
 
-var show = function () {
+var showComment = function () {
     $('#tmw-task-comment').toggle();
     $('#tmw-task-comments').toggle();
     $('#tmw-save-comment').toggle();
@@ -133,21 +134,21 @@ function createOrUpdateTask(taskDTO) {
 
         task =
             {
-                "name": $('#tmw-task-info').text(),
+                "name": "New Task",
                 "createdDate": new Date().getTime(),
                 "planningDate": new Date().getTime() - 7200000,
-                "draftPlanning": $('#tmw-task-draftPlanning').val(),
-                "estimateTime": estimate,
-                "spentTime": spent,
-                "leftTime": left,
-                "author": $('#tmw-task-author').find(":selected").val(),
-                "assignTo": $('#tmw-task-assignTo').find(":selected").val(),
-                "statusId": $('#tmw-task-status').find(":selected").val(),
-                "priorityId": $('#tmw-task-priority').find(":selected").val(),
-                "parentId": state.parentId,
-                "projectId": $('#tmw-task-projectId').text(),
-                "tags": getSelectedTags(),
-                "comments": getSelectedComments()
+                "draftPlanning": new Date().getTime(),
+                "estimateTime": 480,
+                "spentTime": 0,
+                "leftTime": 480,
+                "author": userName,
+                "assignTo": userName,
+                "statusId": 1,
+                "priorityId": 3,
+                "parentId": 0,
+                "projectId":0,
+                "tags": null,
+                "comments": null
             }
 
         createTask(task);
@@ -401,7 +402,7 @@ function fillSelectTags(id) {
     tags = [];
     $('#tmw-tag-multi-select').empty();
     $.ajax({
-        url: 'api/tags/project/' + selectedProjectId,
+        url: 'api/tags?projectId=' + selectedProjectId,
         type: 'GET',
         contentType: 'application/json',
         headers: createAuthToken(),

@@ -54,6 +54,14 @@ public class UserDao extends EntityDao<User> implements UserDaoInterface {
     return jdbcTemplate.queryForObject(sql, param, super.mapper);
   }
 
+  public boolean attachUserToProject (long userId, long projectId){
+    String sql = "insert into tmw.users_tasks (user_id, task_id) values (:userId , :projectId)";
+    MapSqlParameterSource params = new MapSqlParameterSource();
+    params.addValue("userId", userId);
+    params.addValue("projectId", projectId);
+    return jdbcTemplate.update(sql, params) >0;
+  }
+
   public boolean verifyUser (long id){
     String sql = "update " + table + " set active = 1 where id = :id";
     MapSqlParameterSource parameterSource = new MapSqlParameterSource();

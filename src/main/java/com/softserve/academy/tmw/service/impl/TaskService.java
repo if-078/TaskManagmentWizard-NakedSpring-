@@ -9,11 +9,7 @@ import com.softserve.academy.tmw.dto.TaskDTO;
 import com.softserve.academy.tmw.dto.TaskFullInfoDTO;
 import com.softserve.academy.tmw.dto.TaskTableDTO;
 import com.softserve.academy.tmw.dto.TaskTreeDTO;
-import com.softserve.academy.tmw.entity.Comment;
-import com.softserve.academy.tmw.entity.Priority;
-import com.softserve.academy.tmw.entity.Status;
-import com.softserve.academy.tmw.entity.Tag;
-import com.softserve.academy.tmw.entity.Task;
+import com.softserve.academy.tmw.entity.*;
 import com.softserve.academy.tmw.service.api.*;
 
 import java.sql.Time;
@@ -25,6 +21,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+
+import org.hashids.Hashids;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -131,7 +129,7 @@ public class TaskService implements TaskServiceInterface {
     task.setAssignTo(taskDTO.getAssignTo());
     task.setCreatedDate(getFormatDate(taskDTO.getCreatedDate()));
     task.setStartDate(getFormatDate(taskDTO.getDraftPlanning()));
-    task.setPlanningDate(new Date(Long.parseLong(taskDTO.getPlanningDate())));
+    task.setPlanningDate(getFormatDate(taskDTO.getPlanningDate()));
     task.setEstimateTime(taskDTO.getEstimateTime());
     task.setSpentTime(taskDTO.getSpentTime());
     task.setLeftTime(taskDTO.getLeftTime());
@@ -145,7 +143,7 @@ public class TaskService implements TaskServiceInterface {
     taskDao.update(task);
     tagService.deleteTagsOfTask(task.getId());
     tagService.setTagsToTask(Arrays.asList(taskDTO.getTags()), task.getId());
-    commentService.deleteCommentsOfTask(task.getId());
+    commentService.delete(task.getId());
     commentService.setCommentsToTask(Arrays.asList(taskDTO.getComments()));
 
     return false;
@@ -273,6 +271,15 @@ public class TaskService implements TaskServiceInterface {
 
     return taskDTO;
   }
+    @Override
+    public boolean inviteUserToProject(String email, Integer projectId){
+        User user = serviceUser.findByEmail(email);
+        String message = "http://localhost:8585/register/invitationaccept/";
+        Hashids hashids = new Hashids();
+        message += hashids.encode(user.getId(), projectId);
+        String subject = "You have got invitation to the project!!!";
+        return serviceUser.sendEmailToUser(user, message, subject);
+    }
 
   private Date getFormatDate(String line) {
     try {

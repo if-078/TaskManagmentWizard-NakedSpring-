@@ -29,7 +29,6 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 @RunWith(MockitoJUnitRunner.class)
-@ContextConfiguration(classes = {UserController.class})
 @WebAppConfiguration
 public class UserControllerTest {
 

@@ -1,5 +1,6 @@
 package it.com.softserve.academy.tmw.dao;
 
+import com.softserve.academy.tmw.controller.TagController;
 import it.com.softserve.academy.tmw.dao.utility.CommentPopulator;
 import it.com.softserve.academy.tmw.dao.utility.PriorityPopulator;
 import it.com.softserve.academy.tmw.dao.utility.RolePopulator;
@@ -24,14 +25,17 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import java.util.Properties;
 
 @Configuration
-@ComponentScan(basePackages = {"com.softserve.academy.tmw.dao"})
-public class TestDaoConfig {
+@ComponentScan(basePackages = {"com.softserve.academy.tmw.dao","com.softserve.academy.tmw.service"})
+public class TestConfig {
 
   @Bean
   public DataSource dataSource() {
     return new EmbeddedDatabaseBuilder().setType(EmbeddedDatabaseType.H2)
         .addScript("classpath:create_db.sql").build();
   }
+
+  @Bean
+  public TagController getTagController() {return new TagController();}
 
   @Bean
   public UserPopulator getUserPop() {

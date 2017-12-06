@@ -31,7 +31,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 
 @RunWith(MockitoJUnitRunner.class)
-@ContextConfiguration(classes = {TagController.class})
 @WebAppConfiguration
 public class TagControllerTest {
 

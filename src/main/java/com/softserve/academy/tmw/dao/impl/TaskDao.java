@@ -106,6 +106,18 @@ public class TaskDao extends EntityDao<Task> implements TaskDaoInterface {
   }
 
   @Override
+  public boolean deleteTaskPlanning(int id) {
+    MapSqlParameterSource param = new MapSqlParameterSource();
+
+    String sql = "UPDATE " + table + " SET planning_date=:planning_date WHERE id=:id";
+
+    param.addValue("planning_date", null);
+    param.addValue("id", id);
+    return jdbcTemplate.update(sql, param) >= 1;
+  }
+
+
+  @Override
   public Task create(Task task) {
     MapSqlParameterSource param = new MapSqlParameterSource();
     KeyHolder keyHolder = new GeneratedKeyHolder();

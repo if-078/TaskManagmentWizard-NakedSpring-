@@ -245,7 +245,7 @@ li.jstree-leaf > a .jstree-icon {
 
 #tmw-btn-switch{
     z-index: 999;
-    margin-right: 600px;
+    width: 200px;
     margin-top: 2px;
 }
 

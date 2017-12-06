@@ -1,4 +1,4 @@
-package unit.com.softserve.academy.tmw.service;
+package com.softserve.academy.tmw.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
@@ -70,23 +70,6 @@ public class UserServiceTest {
 
     verify(userDao).findByEmail(userByEmail.getEmail());
 
-  }
-
-  @Test
-  public void shouldGetUserById() {
-    int userId = 5;
-
-    User persistedUser = new User();
-    persistedUser.setId(userId);
-
-    when(userDao.findOne(userId)).thenReturn(persistedUser);
-
-    User userById = userService.findOne(persistedUser.getId());
-
-    assertThat(userById).isNotNull();
-    assertThat(userById.getId()).isEqualTo(userId);
-
-    verify(userDao).findOne(userId);
   }
 
   @Test

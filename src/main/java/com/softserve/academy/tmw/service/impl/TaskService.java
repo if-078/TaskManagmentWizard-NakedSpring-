@@ -51,6 +51,9 @@ public class TaskService implements TaskServiceInterface {
   private TagServiceInterface tagService;
 
   @Autowired
+  private CommentServiceInterface commentService;
+
+  @Autowired
   private EntityServiceInterface<Status> serviceStatus;
 
   @Autowired
@@ -142,6 +145,8 @@ public class TaskService implements TaskServiceInterface {
     taskDao.update(task);
     tagService.deleteTagsOfTask(task.getId());
     tagService.setTagsToTask(Arrays.asList(taskDTO.getTags()), task.getId());
+    commentService.deleteCommentsOfTask(task.getId());
+    commentService.setCommentsToTask(Arrays.asList(taskDTO.getComments()));
 
     return false;
   }
@@ -151,6 +156,11 @@ public class TaskService implements TaskServiceInterface {
   public boolean updateCalendarTask(Task task) {
     taskDao.update(task);
     return false;
+  }
+
+  @Override
+  public boolean deletePlanning(int id){
+    return taskDao.deleteTaskPlanning(id);
   }
 
   @Override
@@ -258,19 +268,20 @@ public class TaskService implements TaskServiceInterface {
     } else {
       taskDTO.setAuthor("");
     }
+    taskDTO.setParentId(task.getParentId());
+    taskDTO.setProjectId(task.getProjectId());
 
     return taskDTO;
   }
-
-  @Override
-  public boolean inviteUserToProject(String email, Integer projectId){
-    User user = serviceUser.findByEmail(email);
-    String message = "http://localhost:8585/register/invitationaccept/";
-    Hashids hashids = new Hashids();
-    message += hashids.encode(user.getId(), projectId);
-    String subject = "You have got invitation to the project!!!";
-    return serviceUser.sendEmailToUser(user, message, subject);
-  }
+    @Override
+    public boolean inviteUserToProject(String email, Integer projectId){
+        User user = serviceUser.findByEmail(email);
+        String message = "http://localhost:8585/register/invitationaccept/";
+        Hashids hashids = new Hashids();
+        message += hashids.encode(user.getId(), projectId);
+        String subject = "You have got invitation to the project!!!";
+        return serviceUser.sendEmailToUser(user, message, subject);
+    }
 
   private Date getFormatDate(String line) {
     try {

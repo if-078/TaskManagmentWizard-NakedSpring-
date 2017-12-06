@@ -1,4 +1,3 @@
-
 var generatedRequestParameters = function () {
     var parameters = '?parentId=' + state.parentId + '&date=' + state.dateFrom + ',' + state.dateTo;
     parameters = parameters + '&status=';
@@ -26,25 +25,6 @@ var taskTableInit = false;
 
 var taskTable = function () {
 
-    if (selectedTaskId != 0) {
-        $('#tmw-task-table').css('visibility', 'visible');
-    }
-
-    if (selectedTaskId == 0) {
-        if (taskTableInit) {
-            $('#tmw-task-table').css('visibility', 'hidden');
-            $('#tmw-task-table').DataTable().destroy();
-            hideButtonSwitchCalendarTable();
-            hideDraftPlanningTable();
-            taskTableInit = false;
-        }
-
-        $('#tmw-task-calendar').fullCalendar('destroy');
-        taskCalendarInit = false;
-
-        return;
-    }
-
     $.ajax({
         url: 'api/tasks/filter' + generatedRequestParameters() + '&planing=false' + '&userId=' + userId,
         type: 'GET',
@@ -54,70 +34,72 @@ var taskTable = function () {
             setToken(jqXHR);
 
 
-                    var rows = [];
-                    for (var i = 0; i < data.length; i++) {
-                        rows.push(Object.values(data[i]));
-                    }
+            var rows = [];
+            for (var i = 0; i < data.length; i++) {
+                rows.push(Object.values(data[i]));
+            }
 
-                    // convert estimate time from int minute --> format time
-                    var setHour;
-                    var setMinute;
-                    var slotMin = timeSlotHour * 60 + timeSlotMin;
-                    for (var i = 0; i < rows.length; i++) {
-                        rows[i][6] = Math.ceil(rows[i][6] / slotMin) * slotMin;
-                        setHour = '' + parseInt(rows[i][6] / 60);
-                        if (setHour.length < 2) setHour = '0' + setHour;
-                        setMinute = '' + rows[i][6] % 60;
-                        if (setMinute.length < 2) setMinute = '0' + setMinute;
-                        rows[i][6] = '' + setHour + ':' + setMinute + ':00';
-                        rows[i][18] = '' + setHour + ':' + setMinute + ':00';
-                    }
+            // convert estimate time from int minute --> format time
+            var setHour;
+            var setMinute;
+            var slotMin = timeSlotHour * 60 + timeSlotMin;
+            for (var i = 0; i < rows.length; i++) {
+                rows[i][6] = Math.ceil(rows[i][6] / slotMin) * slotMin;
+                setHour = '' + parseInt(rows[i][6] / 60);
+                if (setHour.length < 2) setHour = '0' + setHour;
+                setMinute = '' + rows[i][6] % 60;
+                if (setMinute.length < 2) setMinute = '0' + setMinute;
+                rows[i][6] = '' + setHour + ':' + setMinute + ':00';
+                rows[i][18] = '' + setHour + ':' + setMinute + ':00';
+            }
 
-                    if (taskTableInit) {
-                        $('#tmw-task-table').DataTable().destroy();
-                        taskTableInit = false;
-                    }
+            if (taskTableInit) {
+                $('#tmw-task-table').DataTable().destroy();
+                taskTableInit = false;
+            }
+            $('#tmw-main-table').css('visibility', 'hidden');
+            showDraftPlanningTable();
 
-                    showButtonSwitchCalendarTable();
-                    showDraftPlanningTable();
-                    taskCalendar();
 
-                    $('#tmw-task-table').DataTable({
-                        data: rows,
+            $('#tmw-task-table').DataTable({
+                data: rows,
 
-                        columns: [
-                            {title: "ID", visible: false},
-                            {title: "Name", visible: true},
-                            {title: "Create Date", visible: false},
-                            {title: "Planning Date", visible: false},
-                            {title: "Draft Planning", visible: true},
-                            {title: "End Date", visible: false},
-                            {title: "Est. Time", visible: true},
-                            {title: "Spent Time", visible: true},
-                            {title: "Left Time", visible: true},
-                            {title: "AssignTo", visible: false},
-                            {title: "Statud ID", visible: false},
-                            {title: "Priority ID", visible: false},
-                            {title: "Parent ID", visible: false},
-                            {title: "Author ID", visible: false},
-                            {title: "Project ID", visible: false},
-                            {title: "Assignee", visible: true},
-                            {title: "Status", visible: true},
-                            {title: "Priority", visible: true}
-                        ],
+                columns: [
+                    {title: "ID", visible: false},
+                    {title: "Name", visible: true},
+                    {title: "Create Date", visible: false},
+                    {title: "Planning Date", visible: false},
+                    {title: "Draft Planning", visible: true},
+                    {title: "End Date", visible: false},
+                    {title: "Est. Time", visible: true},
+                    {title: "Spent Time", visible: true},
+                    {title: "Left Time", visible: true},
+                    {title: "AssignTo", visible: false},
+                    {title: "Statud ID", visible: false},
+                    {title: "Priority ID", visible: false},
+                    {title: "Parent ID", visible: false},
+                    {title: "Author ID", visible: false},
+                    {title: "Project ID", visible: false},
+                    {title: "Assignee", visible: true},
+                    {title: "Status", visible: true},
+                    {title: "Priority", visible: true}
+                ],
 
-                        paging: false,
-                        info: false,
-                        searching: false,
-                        scrollY: '34.5vh',
-                        scrollCollapse: true
-                    });
+                paging: false,
+                info: false,
+                searching: false,
+                scrollY: '34.5vh',
+                scrollCollapse: true
+            });
 
-                    taskTableInit = true;
+            $('#tmw-main-table').css('visibility', 'visible');
+            taskTableInit = true;
 
-                    if (rows.length > 0) {
-                        makeTableRowsDraggable();
-                    }
+            if ((rows.length > 0) & (isSelectedCalendar)) {
+                makeTableRowsDraggable();
+            }
+
+
         }
     });
 };
@@ -128,7 +110,7 @@ var makeTableRowsDraggable = function () {
 
         var table = $('#tmw-task-table').DataTable();
 
-        if ((table.row(this).data()[9]==userId)||(table.row(this).data()[13]==userId)) {
+        if ((table.row(this).data()[9] == userId) || (table.row(this).data()[13] == userId)) {
 
             var tid = table.row(this).data()[0];
             var estimateTime = table.row(this).data()[18];
@@ -184,11 +166,12 @@ var hideDraftPlanningTable = function () {
     $('#tmw-name-table').css('visibility', 'hidden');
     $('#tmw-task-table').css('visibility', 'hidden');
 };
-hideDraftPlanningTable();
+$('#tmw-name-table').css('visibility', 'hidden');
 
 
 var showDraftPlanningTable = function () {
     $('#tmw-name-table').css('visibility', 'visible');
     $('#tmw-task-table').css('visibility', 'visible');
 };
+
 

@@ -1,5 +1,6 @@
 package com.softserve.academy.tmw.dao.impl;
 
+import com.softserve.academy.tmw.dao.api.CommentDaoInterface;
 import com.softserve.academy.tmw.dao.mapper.CommentMapper;
 import com.softserve.academy.tmw.entity.Comment;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,9 +12,11 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 @PropertySource("classpath:tables.properties")
-public class CommentDao extends EntityDao<Comment> {
+public class CommentDao extends EntityDao<Comment> implements CommentDaoInterface {
 
   public CommentDao(@Value("${comment}") String table) {
     super(table, new CommentMapper());
@@ -45,6 +48,44 @@ public class CommentDao extends EntityDao<Comment> {
 
     return jdbcTemplate.update(sql, param) == 1;
 
+  }
+
+  @Override
+  public boolean deleteCommentsOfTask(int taskId) {
+    String Sql = "DELETE FROM tmw.comment WHERE task_id = :task_id";
+    return jdbcTemplate.update(Sql, new MapSqlParameterSource("task_id", taskId)) > 0;
+
+  }
+
+  @Override
+  public boolean setCommentsToTask(List<Comment> comments) {
+    if (comments.size() == 0) return false;
+    MapSqlParameterSource param = new MapSqlParameterSource();
+    StringBuilder sql = new StringBuilder("INSERT into tmw.comment (comment_text, created_date, task_id, user_id) VALUES ");
+    for (int i = 0; i < comments.size(); i++) {
+      String text = "text" + i;
+      String date = "date" + i;
+      String task = "task" + i;
+      String user = "user" + i;
+      sql.append("(:" + text + ", :" + date + ", :" + task + ", :" + user + "),");
+      param.addValue(text, comments.get(i).getCommentText());
+      param.addValue(date, comments.get(i).getCreatedDate());
+      param.addValue(task, comments.get(i).getTaskId());
+      param.addValue(user, comments.get(i).getUserId());
+    }
+    System.out.println(sql);
+    sql.setLength(sql.length() - 1);
+    return jdbcTemplate.update(sql.toString(), param) > 0;
+
+  }
+
+  @Override
+  public List<Comment> getCommentsByTaskId(int taskId) {
+    String sql =
+            "SELECT c.*, u.name FROM " + table + " as c join tmw.user as u on c.user_id = u.id WHERE task_id = :taskId";
+    List<Comment> list =
+            jdbcTemplate.query(sql, new MapSqlParameterSource("taskId", taskId), new CommentMapper());
+    return list;
   }
 
   @Autowired

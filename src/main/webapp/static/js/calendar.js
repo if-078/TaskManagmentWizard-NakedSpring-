@@ -1,30 +1,13 @@
+var isSelectedNewProject = true;
+var isSelectedCalendar = true;
+var taskCalendarInit = false;
+
 var timeSlotHour = 0;
 var timeSlotMin = 30;
 
 var startWorkDay = '09:00';
 var endWorkDay = '17:00';
 var timeSlotDuration = '0' + timeSlotHour + ':' + timeSlotMin + ':00';
-
-$('#tmw-graphic').click(function () {
-    $('#tmw-main-calendar').removeClass('hidden');
-
-    $('#tmw-graphic').addClass('hidden');
-    $('#tmw-graphic-exit').removeClass('hidden');
-
-    taskCalendar();
-});
-
-$('#tmw-graphic-exit').click(function () {
-    $('#tmw-main-calendar').addClass('hidden');
-
-    $('#tmw-graphic').removeClass('hidden');
-    $('#tmw-graphic-exit').addClass('hidden');
-
-    $('#tmw-task-calendar').fullCalendar('destroy');
-    taskTable();
-});
-
-var taskCalendarInit = false;
 
 var plannedTasks = [];
 
@@ -51,7 +34,6 @@ var taskCalendar = function () {
                 success: function (data, textStatus, jqXHR) {
                     setToken(jqXHR);
 
-                    taskPlanningTable(data);
 
                     for (var i = 0; i < data.length; i++) {
                         if (data[i].planningDate == null) continue;
@@ -99,7 +81,7 @@ var taskCalendar = function () {
                         });
                     }
 
-                    if (taskCalendarInit) {
+                    if (!isSelectedNewProject) {
                         $('#tmw-task-calendar').fullCalendar('removeEvents');
                         $('#tmw-task-calendar').fullCalendar('renderEvents', plannedTasks, true);
                     } else {
@@ -192,6 +174,7 @@ var taskCalendar = function () {
                                 }
 
                                 makeTableRowsDraggable();
+                                deleteTaskPlanning(event.id);
                             },
 
                             dragRevertDuration: 0
@@ -247,7 +230,7 @@ var handleCalendarTaskEdit = function (event) {
 
 var updateCalendarTask = function (event) {
     $.ajax({
-        url: '/api/tasks/planning/' + event.id,
+        url: '/api/tasks/' + event.id,
         type: 'GET',
         contentType: 'application/json',
 
@@ -262,14 +245,14 @@ var updateCalendarTask = function (event) {
             data.estimateTime = parseInt(hours) * 60 + parseInt(minutes);
 
             $.ajax({
-                url: '/api/tasks/planning',
+                url: '/api/tasks/setPlanning',
                 data: JSON.stringify(data),
                 type: 'PUT',
                 contentType: 'application/json',
 
                 success: function () {
                     $.ajax({
-                        url: '/api/tasks/planning/' + event.id,
+                        url: '/api/tasks/' + event.id,
                         type: 'GET',
                         contentType: 'application/json',
 
@@ -285,6 +268,15 @@ var updateCalendarTask = function (event) {
     });
 };
 
+
+var deleteTaskPlanning = function (id) {
+    $.ajax({
+        url: '/api/tasks/deletePlanning/' + id,
+        type: 'GET',
+        contentType: 'application/json',
+        success: function () {}
+    });
+};
 
 
 var updateCalendar = function () {
@@ -311,17 +303,34 @@ var setColorTask = function (data) {
 
 
 $('#tmw-btn-table-view').on("click", function () {
+
     $('#tmw-btn-table-view').addClass('fc-state-active');
     $('#tmw-btn-calendar-view').removeClass('fc-state-active');
     $('#tmw-main-calendar').addClass('hidden');
     $('#tmw-main-planning-table').removeClass('hidden');
-    taskCalendar();
+
+    isSelectedCalendar = false;
+
+    taskCalendarInit = false;
+    $('#tmw-task-calendar').fullCalendar('destroy');
+
+    taskPlanningTable();
+
+    taskTable();
+
 });
 
 $('#tmw-btn-calendar-view').on("click", function () {
+
     $('#tmw-btn-calendar-view').addClass('fc-state-active');
     $('#tmw-btn-table-view').removeClass('fc-state-active');
     $('#tmw-main-planning-table').addClass('hidden');
     $('#tmw-main-calendar').removeClass('hidden');
+
+    isSelectedCalendar = true;
+    isSelectedNewProject = true;
+
     taskCalendar();
+    taskTable();
+
 });

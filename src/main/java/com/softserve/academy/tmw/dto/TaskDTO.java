@@ -48,8 +48,6 @@ public class TaskDTO {
     return draftPlanning;
   }
 
-  @NotBlank
-  @Pattern(regexp = "\\d{4}-\\d{2}-\\d{2}")
   public String getPlanningDate() {
     return planningDate;
   }

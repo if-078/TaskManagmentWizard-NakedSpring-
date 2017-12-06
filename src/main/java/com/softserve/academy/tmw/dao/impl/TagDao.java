@@ -70,7 +70,7 @@ public class TagDao extends EntityDao<Tag> implements TagDaoInterface {
 
   @Override
   public boolean setTagsToTask(List<Tag> tags, int taskId) {
-
+    if (tags.size() == 0) return false;
     MapSqlParameterSource param = new MapSqlParameterSource();
     StringBuilder sql = new StringBuilder("INSERT into tmw.tags_tasks (tag_id, task_id) VALUES ");
     param.addValue("task", taskId);
@@ -80,7 +80,6 @@ public class TagDao extends EntityDao<Tag> implements TagDaoInterface {
       param.addValue(tag, tags.get(i).getId());
     }
     sql.setLength(sql.length() - 1);
-    System.out.println(sql);
     return jdbcTemplate.update(sql.toString(), param) > 0;
   }
 

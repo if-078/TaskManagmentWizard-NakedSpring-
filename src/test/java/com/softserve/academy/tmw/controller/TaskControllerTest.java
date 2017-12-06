@@ -1,4 +1,4 @@
-package unit.com.softserve.academy.tmw.controller;
+package com.softserve.academy.tmw.controller;
 
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -7,7 +7,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.softserve.academy.tmw.controller.TaskController;
 import com.softserve.academy.tmw.dto.TaskDTO;
 import com.softserve.academy.tmw.entity.Task;
 import com.softserve.academy.tmw.service.impl.TaskService;
@@ -69,7 +68,7 @@ public class TaskControllerTest {
   @Test
   public void shouldGetOne() throws Exception {
     when(service.findOne(testId)).thenReturn(simpleTask);
-    MvcResult result = mockMvc.perform(get("/api/tasks/one/" + testId)
+    MvcResult result = mockMvc.perform(get("/api/tasks/" + testId)
         .accept(MediaType.APPLICATION_JSON)
         .contentType(MediaType.APPLICATION_JSON))
         .andExpect(status().isOk()).andReturn();

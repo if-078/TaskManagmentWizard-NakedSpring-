@@ -1,47 +1,32 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!--EasyUI-->
-    <link rel="stylesheet" type="text/css" href="static/dev_pack/jqeasyui/themes/default/easyui.css">
-    <link rel="stylesheet" type="text/css" href="static/dev_pack/jqeasyui/themes/icon.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!--EasyUI-->
+  <link rel="stylesheet" type="text/css" href="static/dev_pack/jqeasyui/themes/default/easyui.css">
+  <link rel="stylesheet" type="text/css" href="static/dev_pack/jqeasyui/themes/icon.css">
+  <!--EasyUI-->
 
-    <script>
-        var _draggable = $.fn.draggable;
+  <script>
+      var _draggable = $.fn.draggable;
 
-        Object.defineProperty($.fn, 'draggable', {
-            value: _draggable,
-            enumerable: false,
-            writable: false,
-            configurable: false
-        });
-    </script>
+          Object.defineProperty($.fn, 'draggable', {
+              value: _draggable,
+              enumerable: false,
+              writable: false,
+              configurable: false
+          });
+  </script>
 
-    <!--EasyUI-->
-    <script src="static/dev_pack/jqeasyui/jquery.easyui.min.js"></script>
+  <script src="static/dev_pack/jqeasyui/jquery.easyui.min.js"></script>
 
-    <script type="text/javascript">
-        function setFilerValues() {
-            var myFilter = new Filter($("#start").val(), $("#end").val());
-            myFilter.setPriority($("#priorityBox").val().split(","));
-            myFilter.setStatus($("#statusBox").val().split(","));
-            myFilter.setTag($("#tagBox").val().split(","));
-            alert('action');
-            console.log(JSON.stringify(myFilter));
-            return myFilter
-        }
-
-        function boxMessage() {
-            var d = new Date();
-            var strDate = d.getFullYear() + "/" + (d.getMonth() + 1) + "/" + (d.getDate());
-        }
-    </script>
+  <script type="text/javascript" src="static/js/filtersPart.js"></script>
 </head>
 <body>
 
-<div >
-    <input id="statusBox" class="easyui-tagbox" style="width:100%;" data-options="
+<div>
+  <input id="statusBox" class="easyui-tagbox" style="width:100%;" data-options="
                    url: 'api/status',
                    method: 'get',
                    mode: 'remote',
@@ -54,8 +39,8 @@
                    onLoadSuccess:boxMessage
                    "/>
 </div>
-<div >
-    <input id="priorityBox" class="easyui-tagbox" style="width:100%;"  data-options="
+<div>
+  <input id="priorityBox" class="easyui-tagbox" style="width:100%;" data-options="
                    url: 'api/priority',
                    method: 'get',
                    mode: 'remote',
@@ -68,10 +53,9 @@
                    onLoadSuccess:boxMessage
                    "/>
 </div>
-<div >
-    <input id="tagBox" class="easyui-tagbox"  style="width:100%;" data-options="
-                   url: 'api/tags',
-                   method: 'get',
+<div>
+  <input id="tagBox" class="easyui-tagbox" style="width:100%;" data-options="
+                   loader: tagLoader,
                    mode: 'remote',
                    valueField: 'id',
                    textField: 'name',

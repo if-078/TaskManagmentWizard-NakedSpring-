@@ -246,6 +246,18 @@ public class TaskService implements TaskServiceInterface {
       }
     }
 
+    //-- set Author name
+    List<User> users = userDao.getAll();
+    for(TaskTableDTO taskTableDTO : tasksTableDTO){
+      for(User user : users){
+        if(taskTableDTO.getAuthorId()==user.getId()){
+          taskTableDTO.setAuthor(user.getName());
+        }
+      }
+    }
+
+
+
     return tasksTableDTO;
   }
 

@@ -1,38 +1,38 @@
 package com.softserve.academy.tmw.controller;
 
 import com.softserve.academy.tmw.entity.JiraCredential;
-import com.softserve.academy.tmw.service.impl.JiraService;
-import io.jsonwebtoken.lang.Collections;
+import com.softserve.academy.tmw.service.impl.JiraClientService;
+import net.rcarz.jiraclient.JiraException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
 import java.util.List;
 
 @RestController
 @RequestMapping("api/jira")
 public class JiraController {
 
-    private JiraService jiraService;
+
+    private JiraClientService jiraClientService;
 
     @Autowired
-    public JiraController(JiraService jiraService) {
-        this.jiraService = jiraService;
+    public JiraController(JiraClientService jiraClientService) {
+
+        this.jiraClientService=jiraClientService;
     }
 
     @PostMapping("/get-projects")
     @ResponseStatus(HttpStatus.OK)
-    public String getProjects(@RequestBody JiraCredential jiraCredential) {
-        String json = jiraService.getProjects(jiraCredential.getUrl(), jiraCredential.getCreds());
-        return json;
+    public String getProjects(@RequestBody JiraCredential jiraCredential) throws JiraException {
+
+
+        return jiraClientService.getProjectsJson(jiraCredential.getUrl(),jiraCredential.getCreds());
     }
 
-    @PostMapping("/get-issues")
+   /* @PostMapping("/get-issues")
     @ResponseStatus(HttpStatus.OK)
-    public String getIssues(@RequestBody JiraCredential jiraCredential, String key) {
-        String json = jiraService.getIssues(jiraCredential.getUrl(), jiraCredential.getCreds());
-        return json;
-    }
+    public String getIssues(@RequestBody JiraCredential jiraCredential, String key) throws JiraException {
+
+    }*/
 }

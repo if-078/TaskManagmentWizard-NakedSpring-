@@ -16,20 +16,21 @@ $('#jira-integration').on('click', function () {
         var jiraToken = jUsername + ":" + jPassword;
         var encode = btoa(jiraToken);
         var jUrl = "https://" + jLink + "/rest/api/2/project";
+        var urlCreds={
+        "jClientUrl":jLink,
+        "url":jUrl,
+        "name":jUsername,
+        "password":jPassword,
+        "creds":encode}
         var projectsModelData = [];
         $.ajax({
             url: 'api/jira/get-projects',
-            data: JSON.stringify({
-                "url": jUrl,
-                "creds": encode
-            }),
+            data: JSON.stringify(urlCreds),
             type: 'POST',
             contentType: 'application/json',
             headers: createAuthToken(),
             success: function (data) {
-                console.log("Credential send");
                 projectsModelData = $.parseJSON(data);
-                var obj = projectsModelData[0];
                 $.each(projectsModelData, function () {
                     var ul = document.getElementById("jira-projects-list");
                     var li = document.createElement("li");
@@ -60,26 +61,33 @@ $('#jira-integration').on('click', function () {
         $('#jira-modal-authorization').modal('hide');
         $('#jira-modal-choose-project').modal('show');
 
+ $('#jira-project-ok').on('click', function () {
+                            var project = {
+                                "name": projectsModelData.name,
+                                "jiraKey": projectsModelData.key
+                            };
+                            createJiraTask(project);
+                            getProjectId(key);
 
-        var chooseProject;
-        var keys = [];
-        var key;
-        var b = 0;
-        console.log("keys " + keys);
-        var c = 0;
-        $('.a-class').each(function () {
-            console.log(c);
-            c++;
+                            var urlGetIssues = "https://" + jLink + "/rest/api/2/search?jql=project=" + key;
+
+                            $.ajax({
+                                url: urlGetIssues,
+                                type: "GET",
+                                data: JSON.stringify(),
+                                dataType: "json",
+                                beforeSend: function(xhr, settings) { xhr.setRequestHeader('Authorization','Basic ' + encode); },
+                                contentType: "application/json",
+                                success: function (data) {
+                                    $('#jira-modal-choose-project').hide();
+                                   }
+
         });
 
+});
 
-        $('#jira-project-ok').on('click', function () {
-            console.log(chooseProject);
-            console.log(chooseProject.key);
 
-            var urlGetIssues = "https://" + jLink + "/rest/api/2/search?jql=project=" + chooseProject.key;
-
-            $.ajax({
+           /* $.ajax({
                 url: 'api/jira/get-issues',
                 data: JSON.stringify({
                     "url": urlGetIssues,
@@ -89,42 +97,77 @@ $('#jira-integration').on('click', function () {
                 type: 'POST',
                 contentType: 'application/json',
                 headers: createAuthToken(),
-<<<<<<< HEAD
-                success: function (data) {
-                    var project = {
-                        "name": chooseProject.name,
-                        "jiraKey": chooseProject.key,
-                        "parentId": 0
-                    };
-                    //console.log(data);
-                    console.log(project);
-
-                    createJiraTask(project);
-                    //console.log(data);
-=======
 
                 success: function () {
 
-                        $.ajax({
-                            url: 'api/tasks/jira-import',
-                            data: JSON.stringify(chooseProject),
-                            type: 'POST',
-                            contentType: 'application/json',
-                            headers: createAuthToken(),
-                            success: function (data) {
-                                console.log("TASK CREATED");
-                            },
-                            cache: false
-                        }).fail(function ($xhr) {
-                            console.log("task DON`T CREATED");
-                        });
 
->>>>>>> 7c8ab58d6e576d31330df7193f6201ff9319d393
+                       var task = {};
+                       var subtask = {};
+
+                       $.each(data.issues, function() {
+                           if (this.fields.parent == null) {
+                               var assignTo;
+                               if (this.fields.assignee == null) {
+                                   assignTo = null;
+                               } else if ((this.fields.assignee.emailAddress == jUsername) || (this.fields.assignee.key = jUsername)) {
+                                   assignTo = userId;
+                               }
+                               task = {
+                                   "name": this.fields.summary,
+                                   "createdDate": this.fields.created,
+                                   "assignTo": assignTo,
+                                   "statusId": this.fields.status.statusCategory.id,
+                                   "priorityId": this.fields.priority.id,
+                                   "parentId": projectIdByJiraKey,
+                                   "jiraKey": this.key
+                               };
+
+                               $.ajax({
+                                   url: 'api/tasks/jira-import-task',
+                                   data: JSON.stringify(task),
+                                   type: 'POST',
+                                   contentType: 'application/json',
+                                   headers: createAuthToken(),
+                                   success: function (data) {
+
+                                       console.log("TASK CREATED");
+                                   },
+                                   cache: false
+                               }).fail(function ($xhr) {
+                                   console.log("task DON`T CREATED");
+                               });
+
+                               getTaskId(task.jiraKey);
+
+
+                               if (this.subtasks != null) {
+                                   $.each(data.issues.subtasks, function() {
+                                       subtask = {
+                                           "name": this.fields.summary,
+
+                                           "createdDate": this.fields.created,
+                                           "assignTo": this.fields.assignee,
+
+                                           "statusId": this.fields.status.statusCategory.id,
+                                           "priorityId": this.fields.priority.id,
+                                           "parentId": taskIdByJiraKey,
+                                           //"tags":
+                                           "jiraKey": this.key
+                                       };
+                                   });
+                               }
+                           }
+                       });
+
+
+
+
+
                 },
                 cache: false
             }).fail(function ($xhr) {
                 console.log("issues don`t get");
-            });
+            });*/
             /*var project = {
                 "name": chooseProject,
                 "jiraKey": key,
@@ -250,24 +293,24 @@ $('#jira-integration').on('click', function () {
 
 
                                             if (this.subtasks != null) {
-                                                $.each(data.issues.subtasks, function() {
-                                                    subtask = {
-                                                        "name": this.fields.summary,
-                                                        */
-        /*"createdDate": this.fields.created,
-                                                        //"startDate": ,
-                                                        "endDate": this.fields.duedate,
-                                                        "estimateTime": this.fields.aggregatetimeestimate,
-                                                        "assignTo": this.fields.assignee,*/
-        /*
-                                                        "statusId": this.fields.status.statusCategory.id,
-                                                        "priorityId": this.fields.priority.id,
-                                                        "parentId": taskIdByJiraKey,
-                                                        //"tags":
-                                                        "jiraKey": this.key
-                                                    };
-                                                });
-                                            }
+                                                                                             $.each(data.issues.subtasks, function() {
+                                                                                                 subtask = {
+                                                                                                     "name": this.fields.summary,
+                                                                                                     */
+                                                     /*"createdDate": this.fields.created,
+                                                                                                     //"startDate": ,
+                                                                                                     "endDate": this.fields.duedate,
+                                                                                                     "estimateTime": this.fields.aggregatetimeestimate,
+                                                                                                     "assignTo": this.fields.assignee,*/
+                                                     /*
+                                                                                                     "statusId": this.fields.status.statusCategory.id,
+                                                                                                     "priorityId": this.fields.priority.id,
+                                                                                                     "parentId": taskIdByJiraKey,
+                                                                                                     //"tags":
+                                                                                                     "jiraKey": this.key
+                                                                                                 };
+                                                                                             });
+                                                                                         }
 
                                             console.log(this);
                                             console.log(this.fields.summary);
@@ -333,8 +376,8 @@ $('#jira-integration').on('click', function () {
                         console.log("error login to jira")
                     }
                 });*/
-    })
-});
+    });
+
 
 
 function createJiraTask(task) {

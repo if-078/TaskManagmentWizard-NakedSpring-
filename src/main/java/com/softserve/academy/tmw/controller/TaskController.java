@@ -122,10 +122,16 @@ public class TaskController {
     return taskService.getSubtasks(id);
   }
 
-  @PostMapping("/jira-import")
+  @PostMapping("/jira-import-task")
   @ResponseStatus(HttpStatus.CREATED)
   public Task importTask(@RequestBody TaskJiraDTO taskJiraDTO) {
     return taskService.createTaskByJiraDTO(taskJiraDTO);
+  }
+
+  @PostMapping("/jira-import-project")
+  @ResponseStatus(HttpStatus.CREATED)
+  public Task importProject(@RequestBody ProjectJiraDTO projectJiraDTO) {
+    return taskService.createProjectByJiraDTO(projectJiraDTO);
   }
 
   @GetMapping("/id/{key}")

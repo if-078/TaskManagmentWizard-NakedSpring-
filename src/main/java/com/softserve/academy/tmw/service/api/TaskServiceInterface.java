@@ -33,5 +33,7 @@ public interface TaskServiceInterface extends EntityServiceInterface<Task> {
 
   Task createTaskByJiraDTO(TaskJiraDTO taskJiraDTO);
 
+  Task createProjectByJiraDTO(ProjectJiraDTO projectJiraDTO);
+
   int getTaskByJiraKey(String key);
 }

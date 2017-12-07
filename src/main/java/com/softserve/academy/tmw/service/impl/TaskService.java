@@ -13,14 +13,11 @@ import com.softserve.academy.tmw.service.api.TagServiceInterface;
 import com.softserve.academy.tmw.service.api.TaskServiceInterface;
 import com.softserve.academy.tmw.service.api.UserServiceInterface;
 import java.sql.Time;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.List;
+import java.util.*;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -260,10 +257,30 @@ public class TaskService implements TaskServiceInterface {
     task.setPriorityId(taskJiraDTO.getPriorityId());
     task.setStatusId(taskJiraDTO.getStatusId());
     task.setJiraKey(taskJiraDTO.getJiraKey());
+    task.setAssignTo(taskJiraDTO.getAssignTo());
+    task.setParentId(taskJiraDTO.getParentId());
+    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ", Locale.getDefault());
+    try {
+      task.setCreatedDate(dateFormat.parse(taskJiraDTO.getCreatedDate()));
+    } catch (ParseException e) {
+      e.printStackTrace();
+    }
 
     task = taskDao.create(task);
     return task;
   }
+
+  @Override
+  public Task createProjectByJiraDTO(ProjectJiraDTO projectJiraDTO) {
+    Task task = new Task();
+    task.setName(projectJiraDTO.getName());
+    task.setJiraKey(projectJiraDTO.getJiraKey());
+    task.setParentId(projectJiraDTO.getParentId());
+
+    task = taskDao.create(task);
+    return task;
+  }
+
 
   @Override
   public int getTaskByJiraKey(String key) {

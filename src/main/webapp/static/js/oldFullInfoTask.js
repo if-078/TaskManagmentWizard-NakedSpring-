@@ -27,7 +27,7 @@ var refreshTree = function (method, data) {
         }
         default:
     }
-    taskTable();
+    showDataOnCalendarAndTable();
 };
 
 
@@ -61,8 +61,10 @@ var showFull = function (id) {
             taskDTO.assignTo != null ? fillSelectUserAssign(taskDTO.assignTo.id) : $('#tmw-task-assignTo').val('');
             taskDTO.priority != null ? fillSelectPriority(taskDTO.priority.id) : $('#tmw-task-priority').val('');
             taskDTO.status != null ? fillSelectStatus(taskDTO.status.id) : $('#tmw-task-status').val('');
-            fillSelectTags(taskDTO.id);
             fillSelectComments(taskDTO.id);
+                    $('#tagBoxModal').combobox('clear');
+                    $('#tagBoxModal').combobox('reload');
+                    $('#tag-input-modal span:first').css({"width": "100%", "border": "1px solid", "border-color": "#ccc"});
 
             $('#tmw-modal').modal('show');
         },
@@ -78,6 +80,7 @@ var showFull = function (id) {
 
 
 // GET FULL INFORMATION ABOUT THE TASK
+
 $('#tmw-task-btn-save').on('click', function () {
     createOrUpdateTask(taskDTO);
 });
@@ -99,8 +102,11 @@ $('#tmw-create-task').on('click', function() {
                 fillSelectUserAssign(null);
                 fillSelectPriority(null);
                 fillSelectStatus(null);
-                fillSelectTags(null);
                 fillSelectComments(null);
+                    $('#tagBoxModal').combobox('clear');
+                    $('#tagBoxModal').combobox('reload');
+                    $('#tag-input-modal span:first').css({"width": "100%", "border": "1px solid", "border-color": "#ccc"});
+
     $('#tmw-modal').modal('show');
     $('#tmw-task-name').blur(function() {
         $(this).hide();
@@ -217,7 +223,8 @@ $('#tmw-create-tag').on('click', (function() {
         contentType: 'application/json',
         headers: createAuthToken(),
         success: function (data, textStatus, jqXHR) {
-            fillSelectTags(taskDTO.id);
+                    $('#tagBoxModal').combobox('clear');
+                    $('#tagBoxModal').combobox('reload');
         },
         error: function (jqXHR, textStatus, errorThrown) {
             if (jqXHR.status === 401) {
@@ -263,7 +270,16 @@ function createTask(task) {
             $('#tmw-modal').modal('hide');
             refreshTree("create", data);
             clearTaskModal();
-            taskTable();
+
+            if (task.parentId == 0) {
+//                $('#tmw-treeview').jstree('close_All');
+                $('#tmw-treeview').jstree('open_node', '' + 0);
+                console.log("create project");
+            }
+            else {
+                  showDataOnCalendarAndTable();
+
+            }
         },
         cache: false
     }).fail(function ($xhr) {
@@ -287,7 +303,7 @@ function updateTask(task) {
             $('#tmw-modal').modal('hide');
             refreshTree("update", task);
             clearTaskModal();
-            taskTable();
+            showDataOnCalendarAndTable();
         },
         cache: false
     }).fail(function ($xhr) {
@@ -306,7 +322,7 @@ function deleteTask(taskId) {
         headers: createAuthToken(),
         success: function () {
             refreshTree("delete", taskId);
-            taskTable();
+            showDataOnCalendarAndTable();
             taskDTO = {};
         },
         error: function (jqXHR) {
@@ -461,9 +477,10 @@ function fillSelectTags(id) {
         contentType: 'application/json',
         headers: createAuthToken(),
         success: function (data, textStatus, jqXHR) {
-            tags = data;
             var token = jqXHR.getResponseHeader('Authentication');
             window.sessionStorage.setItem("token", token);
+            tags = data;
+            console.log(tags);
             $.each(data, function (i, tag) {
                 $('#tmw-tag-multi-select').append($('<option>', {
                     value: tag.id,

@@ -5,6 +5,7 @@ import com.softserve.academy.tmw.dto.TaskFullInfoDTO;
 import com.softserve.academy.tmw.dto.TaskTableDTO;
 import com.softserve.academy.tmw.dto.TaskTreeDTO;
 import com.softserve.academy.tmw.entity.Comment;
+import com.softserve.academy.tmw.entity.SpentTime;
 import com.softserve.academy.tmw.entity.Tag;
 import com.softserve.academy.tmw.entity.Task;
 import java.util.List;
@@ -39,4 +40,8 @@ public interface TaskServiceInterface extends EntityServiceInterface<Task> {
   boolean inviteUserToProject(String email, Integer projectId);
 
   boolean hasPermissionToUpdate(int userId, int taskId);
+
+  boolean logTimeByTask(SpentTime spentTime);
+
+  int getTotalSpentTimeByTask(int taskId);
 }

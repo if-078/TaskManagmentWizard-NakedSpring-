@@ -1,5 +1,6 @@
 package com.softserve.academy.tmw.service.impl;
 
+import com.softserve.academy.tmw.dao.api.SpentTimeDaoInterface;
 import com.softserve.academy.tmw.dao.api.TaskDaoInterface;
 import com.softserve.academy.tmw.dao.api.UserDaoInterface;
 import com.softserve.academy.tmw.dao.api.UsersTasksDaoInterface;
@@ -62,6 +63,9 @@ public class TaskService implements TaskServiceInterface {
 
   @Autowired
   private UsersTasksDaoInterface usersTasksDao;
+
+  @Autowired
+  private SpentTimeDaoInterface spentTimeDao;
 
   @Override
   public List<Task> getAll() {
@@ -256,8 +260,6 @@ public class TaskService implements TaskServiceInterface {
       }
     }
 
-
-
     return tasksTableDTO;
   }
 
@@ -313,6 +315,24 @@ public class TaskService implements TaskServiceInterface {
         String subject = "You have got invitation to the project!!!";
         return serviceUser.sendEmailToUser(user, message, subject);
     }
+
+
+    @Override
+    public boolean logTimeByTask(SpentTime spentTime) {
+      spentTimeDao.create(spentTime);
+
+      // To Do
+      // update spent time for task
+      // refresh spent time by parent
+
+      return true;
+    }
+
+    @Override
+    public int getTotalSpentTimeByTask(int taskId){
+      return spentTimeDao.getTotalSpentTimeByTask(taskId);
+    }
+
 
   private Date getFormatDate(String line) {
     try {

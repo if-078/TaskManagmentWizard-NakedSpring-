@@ -44,7 +44,7 @@ public class TaskController {
   @GetMapping("/filter")
   @ResponseStatus(HttpStatus.OK)
   public List<TaskTableDTO> getFilteredTasks(
-      @RequestParam(name = "parentId", required = false) int parentId,
+      @RequestParam(name = "taskId", required = false) int taskId,
       @RequestParam(name = "date", required = false) String[] date,
       @RequestParam(name = "status", required = false) int[] status,
       @RequestParam(name = "priority", required = false) int[] priority,
@@ -52,8 +52,10 @@ public class TaskController {
       @RequestParam(name = "planing", required = false) boolean planing,
       @RequestParam(name = "userId", required = false) int userId) {
 
+
+
     List<TaskTableDTO> tasksTableDTO = taskService
-        .getFilteredTasksForTable(parentId, date, status, priority, tag, planing, userId);
+        .getFilteredTasksForTable(taskId, date, status, priority, tag, planing, userId);
 
     return tasksTableDTO;
   }
@@ -63,19 +65,22 @@ public class TaskController {
   boolean updateCalendarTask(@Validated @RequestBody Task task, @PathVariable Integer userId) {
 
     if (taskService.hasPermissionToUpdate(userId, task.getId())) {
-      System.out.println("Has permission to update");
       return taskService.updateCalendarTask(task);
     }
 
-    System.out.println("Not permission to update");
     return false;
   }
 
-  @GetMapping("/deletePlanning/{id}")
+  @GetMapping("/deletePlanning/{taskId}/{userId}")
   @ResponseStatus(HttpStatus.OK)
-  boolean deletePlanning(@PathVariable Integer id) {
-    return taskService.deletePlanning(id);
-}
+  boolean deletePlanning(@PathVariable Integer taskId, @PathVariable Integer userId) {
+
+    if (taskService.hasPermissionToUpdate(userId, taskId)) {
+      return taskService.deletePlanning(taskId);
+    }
+
+    return false;
+  }
 
 
   @GetMapping("/view/{id}")

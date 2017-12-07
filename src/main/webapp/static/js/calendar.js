@@ -273,7 +273,7 @@ var updateCalendarTask = function (event) {
 
 var deleteTaskPlanning = function (id) {
     $.ajax({
-        url: '/api/tasks/deletePlanning/' + id,
+        url: '/api/tasks/deletePlanning/' + id + '/' + userId,
         type: 'GET',
         contentType: 'application/json',
         success: function () {}

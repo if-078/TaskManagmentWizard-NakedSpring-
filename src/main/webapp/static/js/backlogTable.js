@@ -1,5 +1,5 @@
 var generatedRequestParameters = function () {
-    var parameters = '?parentId=' + state.parentId + '&date=' + state.dateFrom + ',' + state.dateTo;
+    var parameters = '?taskId=' + state.parentId + '&date=' + state.dateFrom + ',' + state.dateTo;
     parameters = parameters + '&status=';
     for (var i = 0; i < state.status.length; i++) {
         parameters = parameters + state.status[i] + ',';

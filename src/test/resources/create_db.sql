@@ -92,6 +92,31 @@ create index fk_users_tasks_Users1
 	on users_tasks (user_id)
 ;
 
+
+create table spent_time
+(
+	id int auto_increment
+		primary key,
+	user_id int not null,
+	task_id int not null,
+	time int,
+	constraint fk_spent_time_Users1
+		foreign key (user_id) references tmw.user (id)
+			on update cascade on delete cascade,
+	constraint fk_spent_time_Tasks1
+		foreign key (task_id) references tmw.task (id)
+			on update cascade on delete cascade
+)
+;
+
+create index fk_spent_time_Tasks1
+	on users_tasks (task_id)
+;
+
+create index fk_spent_time_Users1
+	on users_tasks (user_id)
+;
+
 create table comment
 (
 	id int auto_increment

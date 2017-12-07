@@ -1,26 +1,15 @@
 package com.softserve.academy.tmw.dto;
 
-import java.sql.Time;
-import java.util.Date;
 
 public class TaskJiraDTO {
+
     private String name;
-    /*private Date createdDate;
-    private Date endDate;
-    private Time estimateTime;
-    private int assignTo;*/
+    private String createdDate;
+    private int assignTo;
     private int statusId;
     private int priorityId;
     private String jiraKey;
     private int parentId;
-
-    public int getParentId() {
-        return parentId;
-    }
-
-    public void setParentId(int parentId) {
-        this.parentId = parentId;
-    }
 
     public String getName() {
         return name;
@@ -28,6 +17,22 @@ public class TaskJiraDTO {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(String createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public int getAssignTo() {
+        return assignTo;
+    }
+
+    public void setAssignTo(int assignTo) {
+        this.assignTo = assignTo;
     }
 
     public int getStatusId() {
@@ -52,5 +57,13 @@ public class TaskJiraDTO {
 
     public void setJiraKey(String jiraKey) {
         this.jiraKey = jiraKey;
+    }
+
+    public int getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(int parentId) {
+        this.parentId = parentId;
     }
 }

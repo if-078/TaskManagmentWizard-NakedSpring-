@@ -1,4 +1,3 @@
-
 // ON CLICK - SELECT TIME - ALL
 $('#tmw-time-all-btn').click(function () {
     $('#tmw-info-selected-time').html('Selected Time : All');
@@ -56,7 +55,6 @@ $('#tmw-time-custom-apply-btn').click(function (e) {
 $('#tmw-time-custom-cancel-btn').click(function (e) {
 
 });
-
 
 
 //ON CLICK APPLY FILTERS --> STATUS, PRIORITY, TAG

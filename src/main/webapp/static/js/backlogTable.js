@@ -57,7 +57,6 @@ var taskTable = function () {
             }
 
 
-
             if (taskTableInit) {
                 $('#tmw-task-table').DataTable().destroy();
                 taskTableInit = false;
@@ -183,10 +182,10 @@ var showDraftPlanningTable = function () {
 
 var convertMinuteToHoursAndMinute = function (timeMinutes) {
 
-    var tempHours = parseInt(timeMinutes/60);
-    if ((''+tempHours).length<2) tempHours = '0' + tempHours;
-    var tempMinutes = parseInt(timeMinutes%60);
-    if ((''+tempMinutes).length<2) tempMinutes = '0' + tempMinutes;
+    var tempHours = parseInt(timeMinutes / 60);
+    if (('' + tempHours).length < 2) tempHours = '0' + tempHours;
+    var tempMinutes = parseInt(timeMinutes % 60);
+    if (('' + tempMinutes).length < 2) tempMinutes = '0' + tempMinutes;
 
     return ('' + tempHours + ':' + tempMinutes + ':00');
 }

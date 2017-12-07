@@ -40,10 +40,10 @@ var taskCalendar = function () {
 
                         var readEstimateTime = parseInt(data[i].estimateTime);
 
-                        var hours = parseInt(readEstimateTime/60);
-                        if ((''+hours).length<2) hours = '0' + hours;
-                        var minutes = parseInt(readEstimateTime%60);
-                        if ((''+minutes).length<2) minutes = '0' + minutes;
+                        var hours = parseInt(readEstimateTime / 60);
+                        if (('' + hours).length < 2) hours = '0' + hours;
+                        var minutes = parseInt(readEstimateTime % 60);
+                        if (('' + minutes).length < 2) minutes = '0' + minutes;
 
                         data[i].estimateTime = '' + hours + ':' + minutes + ':00';
 
@@ -64,8 +64,8 @@ var taskCalendar = function () {
                             startDate: data[i].startDate,
                             endDate: data[i].endDate,
                             estimateTime: data[i].estimateTime,
-                            spentTime: convertMinuteToHoursAndMinute( data[i].spentTime ),
-                            leftTime: convertMinuteToHoursAndMinute( data[i].leftTime ),
+                            spentTime: convertMinuteToHoursAndMinute(data[i].spentTime),
+                            leftTime: convertMinuteToHoursAndMinute(data[i].leftTime),
                             assignTo: data[i].assignTo,
                             statusId: data[i].statusId,
                             priorityId: data[i].priorityId,
@@ -77,8 +77,8 @@ var taskCalendar = function () {
                             status: data[i].status,
                             priority: data[i].priority,
 
-                            editable: ((userId==data[i].assignTo) || (userId==data[i].authorId) ||
-                                        (firstManagerId==userId) || (secondaryManagerId==userId))
+                            editable: ((userId == data[i].assignTo) || (userId == data[i].authorId) ||
+                            (firstManagerId == userId) || (secondaryManagerId == userId))
                         });
                     }
 
@@ -277,7 +277,8 @@ var deleteTaskPlanning = function (id) {
         url: '/api/tasks/deletePlanning/' + id + '/' + userId,
         type: 'GET',
         contentType: 'application/json',
-        success: function () {}
+        success: function () {
+        }
     });
 };
 
@@ -290,13 +291,13 @@ var updateCalendar = function () {
 };
 
 var setColorTask = function (data) {
-    if ((data.assignTo==userId) || (data.authorId==userId) ||
-        (firstManagerId==userId) || (secondaryManagerId==userId)) {
+    if ((data.assignTo == userId) || (data.authorId == userId) ||
+        (firstManagerId == userId) || (secondaryManagerId == userId)) {
         if (data.statusId == 3) return '#0000ff';
         if (data.priorityId == 1) return '#ff0000';
         if (data.priorityId == 2) return '#00f000';
         if (data.priorityId == 3) return '#f000f0';
-    }else {
+    } else {
         if (data.statusId == 3) return '#a0a0ff';
         if (data.priorityId == 1) return '#ffa0a0';
         if (data.priorityId == 2) return '#a0ffa0';

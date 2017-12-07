@@ -22,7 +22,6 @@ function createAuthToken() {
 }
 
 
-
 var userId = window.sessionStorage.getItem('id');
 var userName = window.sessionStorage.getItem('name');
 var selectedProjectId = 0;

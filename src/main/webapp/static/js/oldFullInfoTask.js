@@ -61,8 +61,12 @@ var showFull = function (id) {
             taskDTO.assignTo != null ? fillSelectUserAssign(taskDTO.assignTo.id) : $('#tmw-task-assignTo').val('');
             taskDTO.priority != null ? fillSelectPriority(taskDTO.priority.id) : $('#tmw-task-priority').val('');
             taskDTO.status != null ? fillSelectStatus(taskDTO.status.id) : $('#tmw-task-status').val('');
-            fillSelectTags(taskDTO.id);
+//            fillSelectTags(taskDTO.id);
             fillSelectComments(taskDTO.id);
+                    $('#tagBoxModal').combobox('clear');
+                    $('#tagBoxModal').combobox('reload');
+                    $('#tag-input-modal span:first').css({"width": "100%", "border": "1px solid", "border-color": "#ccc"});
+                    $('#tag-input-modal a').css("background-color", "#777");
 
             $('#tmw-modal').modal('show');
         },
@@ -78,6 +82,9 @@ var showFull = function (id) {
 
 
 // GET FULL INFORMATION ABOUT THE TASK
+//$('#tag-input-modal span:first').css({"width": "100%", "border-color": "#ccc"});
+//$('#tag-input-modal a').css({"background-color": "#ccc","color": "#ccc"});
+
 $('#tmw-task-btn-save').on('click', function () {
     createOrUpdateTask(taskDTO);
 });
@@ -99,7 +106,7 @@ $('#tmw-create-task').on('click', function() {
                 fillSelectUserAssign(null);
                 fillSelectPriority(null);
                 fillSelectStatus(null);
-                fillSelectTags(null);
+//                fillSelectTags(null);
                 fillSelectComments(null);
     $('#tmw-modal').modal('show');
     $('#tmw-task-name').blur(function() {
@@ -217,7 +224,8 @@ $('#tmw-create-tag').on('click', (function() {
         contentType: 'application/json',
         headers: createAuthToken(),
         success: function (data, textStatus, jqXHR) {
-            fillSelectTags(null);
+                    $('#tagBoxModal').combobox('clear');
+                    $('#tagBoxModal').combobox('reload');
         },
         error: function (jqXHR, textStatus, errorThrown) {
             if (jqXHR.status === 401) {

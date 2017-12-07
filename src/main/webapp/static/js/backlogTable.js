@@ -50,7 +50,7 @@ var taskTable = function () {
                 setMinute = '' + rows[i][6] % 60;
                 if (setMinute.length < 2) setMinute = '0' + setMinute;
                 rows[i][6] = '' + setHour + ':' + setMinute + ':00';
-                rows[i][18] = '' + setHour + ':' + setMinute + ':00';
+                rows[i][19] = '' + setHour + ':' + setMinute + ':00';
 
                 rows[i][7] = convertMinuteToHoursAndMinute(rows[i][7]);
                 rows[i][8] = convertMinuteToHoursAndMinute(rows[i][8]);
@@ -84,6 +84,7 @@ var taskTable = function () {
                     {title: "Parent ID", visible: false},
                     {title: "Author ID", visible: false},
                     {title: "Project ID", visible: false},
+                    {title: "Author", visible: true},
                     {title: "Assignee", visible: true},
                     {title: "Status", visible: true},
                     {title: "Priority", visible: true}
@@ -118,7 +119,7 @@ var makeTableRowsDraggable = function () {
             (firstManagerId == userId) || (secondaryManagerId == userId)) {
 
             var tid = table.row(this).data()[0];
-            var estimateTime = table.row(this).data()[18];
+            var estimateTime = table.row(this).data()[19];
 
             $(this).data('event', {
                 id: tid,
@@ -137,9 +138,9 @@ var makeTableRowsDraggable = function () {
                     $(event.currentTarget).addClass('active');
 
                     var table = $('#tmw-task-table').DataTable();
-                    estimateTime = (!table.row(this).data()[18] || table.row(this).data()[18] === '00:00:00')
+                    estimateTime = (!table.row(this).data()[19] || table.row(this).data()[19] === '00:00:00')
                         ? '08:00:00'
-                        : table.row(this).data()[18];
+                        : table.row(this).data()[19];
 
                     $('#tmw-task-calendar').fullCalendar('getView').calendar.defaultTimedEventDuration = moment.duration(estimateTime);
 

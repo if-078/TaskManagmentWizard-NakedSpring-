@@ -19,12 +19,21 @@ public class TaskTableDTO {
   private int parentId;       // 12
   private int authorId;       // 13
   private int projectId;      // 14
-  private String assign;      // 15
-  private String status;      // 16
-  private String priority;    // 17
+  private String author = "Nick"; // 15
+  private String assign;      //  15 -> 16
+  private String status;      //  16 -> 17
+  private String priority;    // 17 ->18
 
   public int getId() {
     return id;
+  }
+
+  public String getAuthor() {
+    return author;
+  }
+
+  public void setAuthor(String author) {
+    this.author = author;
   }
 
   public void setId(int id) {

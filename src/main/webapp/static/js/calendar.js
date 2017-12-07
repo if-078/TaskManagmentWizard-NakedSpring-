@@ -73,6 +73,7 @@ var taskCalendar = function () {
                             authorId: data[i].authorId,
                             projectId: data[i].projectId,
 
+                            author: data[i].author,
                             assign: data[i].assign,
                             status: data[i].status,
                             priority: data[i].priority,
@@ -167,6 +168,7 @@ var taskCalendar = function () {
                                         event.parentId,         // Parent ID
                                         event.authorId,         // Author ID
                                         event.projectId,        // Project ID
+                                        event.author,           // Author
                                         event.assign,           // Assignee
                                         event.status,           // Status
                                         event.priority,         // Priority

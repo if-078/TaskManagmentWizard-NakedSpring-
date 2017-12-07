@@ -64,6 +64,7 @@ var taskPlanningTable = function () {
                     {title: "Parent ID", visible: false},
                     {title: "Author ID", visible: false},
                     {title: "Project ID", visible: false},
+                    {title: "Author", visible: true},
                     {title: "Assignee", visible: true},
                     {title: "Status", visible: true},
                     {title: "Priority", visible: true}
@@ -131,9 +132,10 @@ var makePlanningTableRowsDraggable = function () {
                     dataFromPlanningTable.parentId = table.row(this).data()[12];        // Parent ID
                     dataFromPlanningTable.authorId = table.row(this).data()[13];        // Author ID
                     dataFromPlanningTable.projectId = table.row(this).data()[14];       // Project ID
-                    dataFromPlanningTable.assign = table.row(this).data()[15];          // Assignee
-                    dataFromPlanningTable.status = table.row(this).data()[16];          // Status
-                    dataFromPlanningTable.priority = table.row(this).data()[17];        // Priority
+                    dataFromPlanningTable.author = table.row(this).data()[15];          // Author
+                    dataFromPlanningTable.assign = table.row(this).data()[16];          // Assignee
+                    dataFromPlanningTable.status = table.row(this).data()[17];          // Status
+                    dataFromPlanningTable.priority = table.row(this).data()[18];        // Priority
 
                     return $(event.currentTarget).clone();
                 },
@@ -169,6 +171,7 @@ var makePlanningTableRowsDraggable = function () {
                             dataFromPlanningTable.parentId,         // Parent ID
                             dataFromPlanningTable.authorId,         // Author ID
                             dataFromPlanningTable.projectId,        // Project ID
+                            dataFromPlanningTable.author,           // Author
                             dataFromPlanningTable.assign,           // Assignee
                             dataFromPlanningTable.status,           // Status
                             dataFromPlanningTable.priority          // Priority

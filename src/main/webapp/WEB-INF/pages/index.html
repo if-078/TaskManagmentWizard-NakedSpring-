@@ -383,6 +383,43 @@
     </div>
 </div>
 
+
+<div class="modal fade" id="tmw-log-time-task" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title">Log Time for Task</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+
+            <div class="modal-body">
+                <div class="form-row">
+                    <div class="form-group col-md-6 tmw-log-form-group">
+                        <label for="tmw-spent-time-input">Spent time</label>
+                        <input id="tmw-spent-time-input" type="text" class="form-control" placeholder="input Spent Time">
+                        <div id="tmw-task-spent-time-error"></div>
+                    </div>
+                    <div class="form-group col-md-6 tmw-log-form-group">
+                        <label for="tmw-left-time-input">Left time</label>
+                        <input id="tmw-left-time-input"type="text" class="form-control" placeholder="input Left Time">
+                        <div id="tmw-task-left-time-error"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="tmw-spent-footer" class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button id="tmw-btn-spent-time" type="button" class="btn btn-primary">Log</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 </body>
 
 <script src="static/js/main.js"></script>
@@ -396,6 +433,7 @@
 <script src="static/js/calendar.js"></script>
 <script src="static/js/planningTable.js"></script>
 <script src="static/js/inviteUser.js"></script>
+<script src="static/js/logSpentLeftTime.js"></script>
 <script src="static/js/loginOrRegistration.js"></script>
 
 

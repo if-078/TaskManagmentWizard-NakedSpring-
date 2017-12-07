@@ -263,3 +263,8 @@ li.jstree-leaf > a .jstree-icon {
     padding-bottom: 3px;
     margin-left: -2px;
 }
+
+#tmw-spent-footer {
+    margin-top: -25px;
+}
+

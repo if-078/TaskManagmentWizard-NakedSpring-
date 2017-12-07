@@ -4,6 +4,8 @@ public class JiraCredential {
     private String url;
     private String creds;
 
+    private String key;
+
     public String getUrl() {
         return url;
     }
@@ -18,5 +20,13 @@ public class JiraCredential {
 
     public void setCreds(String creds) {
         this.creds = creds;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 }

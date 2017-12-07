@@ -27,28 +27,24 @@ $('#jira-integration').on('click', function () {
             contentType: 'application/json',
             headers: createAuthToken(),
             success: function (data) {
-                console.log("Credential send");
-                projectsModelData = $.parseJSON(data);
-                var obj = projectsModelData[0];
-                $.each(projectsModelData, function () {
+                projectsModelData=data;
+                $.each(data, function () {
                     var ul = document.getElementById("jira-projects-list");
                     var li = document.createElement("li");
                     var a = document.createElement("a");
                     a.setAttribute('class', 'a-class');
                     a.setAttribute('id', 'a-element-' + b);
-                    a.appendChild(document.createTextNode(projectsModelData[b].name));
+                    a.appendChild(document.createTextNode(data[b].name));
                     li.appendChild(a);
                     ul.appendChild(li);
-                    keys[b] = projectsModelData[b].key;
+                    keys[b] = data[b].key;
                     b++;
                 });
                 $(".a-class").on('click', function (event) {
-                    console.log(c);
-                    console.log(this.textContent);
                     chooseProject = this.textContent;
                     key = (this.id).replace(/^\D+/g, '');
                     chooseProject = projectsModelData[key];
-                    $("#choose-project-text").html("You will import project: " + this.textContent + " with key " + key);
+                    $("#choose-project-text").html("You will import project: " + chooseProject.name + " with key " + chooseProject.key);
                 });
             },
             cache: false,
@@ -65,7 +61,6 @@ $('#jira-integration').on('click', function () {
         var keys = [];
         var key;
         var b = 0;
-        console.log("keys " + keys);
         var c = 0;
         $('.a-class').each(function () {
             console.log(c);
@@ -74,7 +69,7 @@ $('#jira-integration').on('click', function () {
 
 
         $('#jira-project-ok').on('click', function () {
-            console.log(chooseProject);
+            console.log(chooseProject.name);
             console.log(chooseProject.key);
 
             var urlGetIssues = "https://" + jLink + "/rest/api/2/search?jql=project=" + chooseProject.key;
@@ -89,7 +84,7 @@ $('#jira-integration').on('click', function () {
                 type: 'POST',
                 contentType: 'application/json',
                 headers: createAuthToken(),
-<<<<<<< HEAD
+/*<<<<<<< HEAD
                 success: function (data) {
                     var project = {
                         "name": chooseProject.name,
@@ -101,7 +96,7 @@ $('#jira-integration').on('click', function () {
 
                     createJiraTask(project);
                     //console.log(data);
-=======
+=======*/
 
                 success: function () {
 
@@ -119,7 +114,7 @@ $('#jira-integration').on('click', function () {
                             console.log("task DON`T CREATED");
                         });
 
->>>>>>> 7c8ab58d6e576d31330df7193f6201ff9319d393
+
                 },
                 cache: false
             }).fail(function ($xhr) {

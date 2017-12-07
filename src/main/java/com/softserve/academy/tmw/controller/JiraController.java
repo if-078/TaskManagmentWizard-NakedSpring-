@@ -24,14 +24,14 @@ public class JiraController {
 
     @PostMapping("/get-projects")
     @ResponseStatus(HttpStatus.OK)
-    public String getProjects(@RequestBody JiraCredential jiraCredential) {
-        String json = jiraService.getProjects(jiraCredential.getUrl(), jiraCredential.getCreds());
+    public List getProjects(@RequestBody JiraCredential jiraCredential) {
+        List json = jiraService.getProjects(jiraCredential.getUrl(), jiraCredential.getCreds());
         return json;
     }
 
     @PostMapping("/get-issues")
     @ResponseStatus(HttpStatus.OK)
-    public String getIssues(@RequestBody JiraCredential jiraCredential, String key) {
+    public String getIssues(@RequestBody JiraCredential jiraCredential) {
         String json = jiraService.getIssues(jiraCredential.getUrl(), jiraCredential.getCreds());
         return json;
     }

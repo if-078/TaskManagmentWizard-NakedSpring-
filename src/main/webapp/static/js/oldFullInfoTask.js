@@ -27,7 +27,7 @@ var refreshTree = function (method, data) {
         }
         default:
     }
-    taskTable();
+    showDataOnCalendarAndTable();
 };
 
 
@@ -66,7 +66,6 @@ var showFull = function (id) {
                     $('#tagBoxModal').combobox('clear');
                     $('#tagBoxModal').combobox('reload');
                     $('#tag-input-modal span:first').css({"width": "100%", "border": "1px solid", "border-color": "#ccc"});
-                    $('#tag-input-modal a').css("background-color", "#777");
 
             $('#tmw-modal').modal('show');
         },
@@ -106,8 +105,11 @@ $('#tmw-create-task').on('click', function() {
                 fillSelectUserAssign(null);
                 fillSelectPriority(null);
                 fillSelectStatus(null);
-//                fillSelectTags(null);
                 fillSelectComments(null);
+                    $('#tagBoxModal').combobox('clear');
+                    $('#tagBoxModal').combobox('reload');
+                    $('#tag-input-modal span:first').css({"width": "100%", "border": "1px solid", "border-color": "#ccc"});
+
     $('#tmw-modal').modal('show');
     $('#tmw-task-name').blur(function() {
         $(this).hide();
@@ -271,7 +273,16 @@ function createTask(task) {
             $('#tmw-modal').modal('hide');
             refreshTree("create", data);
             clearTaskModal();
-            taskTable();
+
+            if (task.parentId == 0) {
+//                $('#tmw-treeview').jstree('close_All');
+                $('#tmw-treeview').jstree('open_node', '' + 0);
+                console.log("create project");
+            }
+            else {
+                  showDataOnCalendarAndTable();
+
+            }
         },
         cache: false
     }).fail(function ($xhr) {
@@ -295,7 +306,7 @@ function updateTask(task) {
             $('#tmw-modal').modal('hide');
             refreshTree("update", task);
             clearTaskModal();
-            taskTable();
+            showDataOnCalendarAndTable();
         },
         cache: false
     }).fail(function ($xhr) {
@@ -314,7 +325,7 @@ function deleteTask(taskId) {
         headers: createAuthToken(),
         success: function () {
             refreshTree("delete", taskId);
-            taskTable();
+            showDataOnCalendarAndTable();
             taskDTO = {};
         },
         error: function (jqXHR) {

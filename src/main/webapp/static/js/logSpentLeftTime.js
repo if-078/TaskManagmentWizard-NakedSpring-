@@ -1,13 +1,18 @@
 
+
+
+
+
+
 /*
 $('#t????????').on('click', function () {
     $('#tmw-log-time-task').modal('show');
 });
 */
 
-$('#tmw-btn-spent-time').on('click', function () {
-    var spentTime = document.getElementById("spent-time").value;
-    console.log('spentTime = ', spentTime);
+$('#tmw-btn-add-spent-time').on('click', function () {
+    var spentTime = document.getElementById("tmw-set-spent-time").value;
+    console.log('set spent time = ', spentTime);
 
     /*
     $.ajax({
@@ -18,6 +23,6 @@ $('#tmw-btn-spent-time').on('click', function () {
     });
     */
 
-    $('#tmw-log-time-task').modal('hide');
+    $('#tmw-worklog').modal('hide');
 
 });

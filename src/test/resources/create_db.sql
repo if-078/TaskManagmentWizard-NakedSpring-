@@ -99,7 +99,8 @@ create table spent_time
 		primary key,
 	user_id int not null,
 	task_id int not null,
-	time int,
+	date timestamp null,
+	log_time int,
 	constraint fk_spent_time_Users1
 		foreign key (user_id) references tmw.user (id)
 			on update cascade on delete cascade,

@@ -8,10 +8,10 @@ public class SpentTime {
     private int id;
     private int userId;
     private int taskId;
-    Date date;
-    int logTime;
-    String userName;
-    String taskName;
+    private Date date;
+    private int logTime;
+    private String userName;
+    private String taskName;
 
     public SpentTime(int userId, int taskId, Date date, int logTime) {
         this.userId = userId;

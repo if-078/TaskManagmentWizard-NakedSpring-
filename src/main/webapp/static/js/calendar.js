@@ -64,8 +64,8 @@ var taskCalendar = function () {
                             startDate: data[i].startDate,
                             endDate: data[i].endDate,
                             estimateTime: data[i].estimateTime,
-                            spentTime: data[i].spentTime,
-                            leftTime: data[i].leftTime,
+                            spentTime: convertMinuteToHoursAndMinute( data[i].spentTime ),
+                            leftTime: convertMinuteToHoursAndMinute( data[i].leftTime ),
                             assignTo: data[i].assignTo,
                             statusId: data[i].statusId,
                             priorityId: data[i].priorityId,
@@ -261,7 +261,8 @@ var updateCalendarTask = function (event) {
                         success: function (innerData) {
                             event.color = setColorTask(innerData);
                             $('#tmw-task-calendar').fullCalendar('updateEvent', event);
-                            taskCalendar();
+                            //taskCalendar();
+                            showDataOnCalendarAndTable();
                         }
                     });
                 }

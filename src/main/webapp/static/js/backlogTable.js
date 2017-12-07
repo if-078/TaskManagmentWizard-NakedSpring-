@@ -51,7 +51,12 @@ var taskTable = function () {
                 if (setMinute.length < 2) setMinute = '0' + setMinute;
                 rows[i][6] = '' + setHour + ':' + setMinute + ':00';
                 rows[i][18] = '' + setHour + ':' + setMinute + ':00';
+
+                rows[i][7] = convertMinuteToHoursAndMinute(rows[i][7]);
+                rows[i][8] = convertMinuteToHoursAndMinute(rows[i][8]);
             }
+
+
 
             if (taskTableInit) {
                 $('#tmw-task-table').DataTable().destroy();
@@ -174,5 +179,16 @@ var showDraftPlanningTable = function () {
     $('#tmw-name-table').css('visibility', 'visible');
     $('#tmw-task-table').css('visibility', 'visible');
 };
+
+
+var convertMinuteToHoursAndMinute = function (timeMinutes) {
+
+    var tempHours = parseInt(timeMinutes/60);
+    if ((''+tempHours).length<2) tempHours = '0' + tempHours;
+    var tempMinutes = parseInt(timeMinutes%60);
+    if ((''+tempMinutes).length<2) tempMinutes = '0' + tempMinutes;
+
+    return ('' + tempHours + ':' + tempMinutes + ':00');
+}
 
 

@@ -32,6 +32,9 @@ var taskPlanningTable = function () {
                 setMinute = '' + rows[i][6] % 60;
                 if (setMinute.length < 2) setMinute = '0' + setMinute;
                 rows[i][6] = '' + setHour + ':' + setMinute + ':00';
+
+                rows[i][7] = convertMinuteToHoursAndMinute(rows[i][7]);
+                rows[i][8] = convertMinuteToHoursAndMinute(rows[i][8]);
             }
 
             if (taskPlanningTableInit) {

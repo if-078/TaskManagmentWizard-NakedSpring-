@@ -141,9 +141,6 @@ var showDataOnCalendarAndTable = function () {
                     firstManagerId = taskProject.authorId;
                     secondaryManagerId = taskProject.assignTo;
 
-                    console.log('FirstManagerId = ', firstManagerId );
-                    console.log('SecondaryManagerId = ', secondaryManagerId);
-
                     if (selectedProjectId == taskProjectId) {
                         isSelectedNewProject = false;
                     } else {

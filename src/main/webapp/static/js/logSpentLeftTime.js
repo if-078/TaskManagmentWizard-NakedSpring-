@@ -1,8 +1,12 @@
 
-//tmw-btn-task-worklog
+$('#tmw-btn-task-worklog').on('click', function () {
+
+    $('#tmw-worklog').modal('show');
+    console.log('currentEditTaskId = ', currentEditTaskId);
 
 
 
+});
 
 /*
 $('#t????????').on('click', function () {

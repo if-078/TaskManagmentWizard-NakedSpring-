@@ -33,6 +33,9 @@ var refreshTree = function (method, data) {
 
 // SHOW FULL INFORMATION ABOUT THE TASK
 var showFull = function (id) {
+
+    currentEditTaskId = id;
+
     taskDTO = {};
     clearTaskModal();
     clearErrorTask();

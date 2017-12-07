@@ -29,6 +29,7 @@ var selectedTaskId = 0;
 var selectedTaskText = '';
 var firstManagerId = 0;
 var secondaryManagerId = 0;
+var currentEditTaskId = 0;
 
 // STATE OF APPLIED FILTERS
 var state = {

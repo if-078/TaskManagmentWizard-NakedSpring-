@@ -202,6 +202,34 @@ function createOrUpdateTask(taskDTO) {
     }
 }
 
+$('#tmw-create-tag').on('click', (function() {
+    var tagName = $('#tmw-tag-name').val();
+    $('#tmw-tag-name').val('');
+    var tag = {
+        "name": tagName,
+        "userId": userId,
+        "projectId": selectedProjectId
+    }
+    $.ajax({
+        url: 'api/tags',
+        data: JSON.stringify(tag),
+        type: 'POST',
+        contentType: 'application/json',
+        headers: createAuthToken(),
+        success: function (data, textStatus, jqXHR) {
+            fillSelectTags(null);
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            if (jqXHR.status === 401) {
+                resetToken();
+            } else {
+                throw new Error("an unexpected error occured: " + errorThrown);
+            }
+        }
+    });
+
+}));
+
 function getSelectedTags() {
     var selectedIdOfTags = $('#tmw-tag-multi-select').val();
     var selectedTags = [];

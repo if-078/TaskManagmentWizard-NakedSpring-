@@ -461,9 +461,10 @@ function fillSelectTags(id) {
         contentType: 'application/json',
         headers: createAuthToken(),
         success: function (data, textStatus, jqXHR) {
-            tags = data;
             var token = jqXHR.getResponseHeader('Authentication');
             window.sessionStorage.setItem("token", token);
+            tags = data;
+            console.log(tags);
             $.each(data, function (i, tag) {
                 $('#tmw-tag-multi-select').append($('<option>', {
                     value: tag.id,

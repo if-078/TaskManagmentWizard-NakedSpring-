@@ -217,7 +217,7 @@ $('#tmw-create-tag').on('click', (function() {
         contentType: 'application/json',
         headers: createAuthToken(),
         success: function (data, textStatus, jqXHR) {
-            fillSelectTags(null);
+            fillSelectTags(taskDTO.id);
         },
         error: function (jqXHR, textStatus, errorThrown) {
             if (jqXHR.status === 401) {

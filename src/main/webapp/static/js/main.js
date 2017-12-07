@@ -28,6 +28,8 @@ var userName = window.sessionStorage.getItem('name');
 var selectedProjectId = 0;
 var selectedTaskId = 0;
 var selectedTaskText = '';
+var firstManagerId = 0;
+var secondaryManagerId = 0;
 
 // STATE OF APPLIED FILTERS
 var state = {

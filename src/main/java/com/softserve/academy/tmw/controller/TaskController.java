@@ -58,12 +58,17 @@ public class TaskController {
     return tasksTableDTO;
   }
 
-  @PutMapping("/setPlanning")
+  @PutMapping("/setPlanning/{userId}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
-  boolean updateCalendarTask(@Validated @RequestBody Task task) {
+  boolean updateCalendarTask(@Validated @RequestBody Task task, @PathVariable Integer userId) {
 
-    boolean isUpdateTask = taskService.updateCalendarTask(task);
-    return isUpdateTask;
+    if (taskService.hasPermissionToUpdate(userId, task.getId())) {
+      System.out.println("Has permission to update");
+      return taskService.updateCalendarTask(task);
+    }
+
+    System.out.println("Not permission to update");
+    return false;
   }
 
   @GetMapping("/deletePlanning/{id}")

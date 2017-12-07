@@ -77,7 +77,8 @@ var taskCalendar = function () {
                             status: data[i].status,
                             priority: data[i].priority,
 
-                            editable: ((userId==data[i].assignTo) || (userId==data[i].authorId))
+                            editable: ((userId==data[i].assignTo) || (userId==data[i].authorId) ||
+                                        (firstManagerId==userId) || (secondaryManagerId==userId))
                         });
                     }
 
@@ -175,7 +176,7 @@ var taskCalendar = function () {
                                     makeTableRowsDraggable();
                                     deleteTaskPlanning(event.id);
                                 }
-                                
+
                             },
 
                             dragRevertDuration: 0
@@ -246,7 +247,7 @@ var updateCalendarTask = function (event) {
             data.estimateTime = parseInt(hours) * 60 + parseInt(minutes);
 
             $.ajax({
-                url: '/api/tasks/setPlanning',
+                url: '/api/tasks/setPlanning/' + userId,
                 data: JSON.stringify(data),
                 type: 'PUT',
                 contentType: 'application/json',
@@ -288,7 +289,8 @@ var updateCalendar = function () {
 };
 
 var setColorTask = function (data) {
-    if ((data.assignTo==userId) || (data.authorId==userId)) {
+    if ((data.assignTo==userId) || (data.authorId==userId) ||
+        (firstManagerId==userId) || (secondaryManagerId==userId)) {
         if (data.statusId == 3) return '#0000ff';
         if (data.priorityId == 1) return '#ff0000';
         if (data.priorityId == 2) return '#00f000';

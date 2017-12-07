@@ -101,7 +101,8 @@ var makePlanningTableRowsDraggable = function () {
 
         var table = $('#tmw-task-planning-table').DataTable();
 
-        if ((table.row(this).data()[9] == userId) || (table.row(this).data()[13] == userId)) {
+        if ((table.row(this).data()[9] == userId) || (table.row(this).data()[13] == userId) ||
+            (firstManagerId == userId) || (secondaryManagerId == userId)) {
 
             $(this).draggable({
                 zIndex: 999,

@@ -110,7 +110,8 @@ var makeTableRowsDraggable = function () {
 
         var table = $('#tmw-task-table').DataTable();
 
-        if ((table.row(this).data()[9] == userId) || (table.row(this).data()[13] == userId)) {
+        if ((table.row(this).data()[9] == userId) || (table.row(this).data()[13] == userId) ||
+            (firstManagerId == userId) || (secondaryManagerId == userId)) {
 
             var tid = table.row(this).data()[0];
             var estimateTime = table.row(this).data()[18];

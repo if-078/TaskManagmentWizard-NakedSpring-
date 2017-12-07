@@ -151,6 +151,25 @@ public class TaskService implements TaskServiceInterface {
     return false;
   }
 
+  @Override
+  public boolean hasPermissionToUpdate(int userId, int taskId) {
+
+    Task task = taskDao.findOne(taskId);
+    int projectId = task.getProjectId();
+    Task taskProject = taskDao.findOne(projectId);
+
+    int firstManager = taskProject.getAuthorId();
+    int secondManager = taskProject.getAssignTo();
+    int authorTask = task.getAuthorId();
+    int assignTask = task.getAssignTo();
+
+    if ((userId==firstManager)||(userId==secondManager)||(userId==authorTask)||(userId==assignTask)) {
+      return true;
+    }
+
+    return false;
+  }
+
 
   @Override
   public boolean updateCalendarTask(Task task) {

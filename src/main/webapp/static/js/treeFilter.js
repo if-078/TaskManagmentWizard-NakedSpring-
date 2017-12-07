@@ -39,9 +39,6 @@ $('#tmw-treeview').on('after_close.jstree', function (e, data) {
 });
 
 
-
-
-
 $('#tmw-treeview').on('select_node.jstree', function (event, data) {
 
     // open node if node has children
@@ -118,10 +115,11 @@ var showDataOnCalendarAndTable = function () {
         hideDraftPlanningTable();
 
         isSelectedNewProject = true;
+        firstManagerId = 0;
+        secondaryManagerId = 0;
 
         return;
     }
-
 
 
     $.ajax({
@@ -132,25 +130,41 @@ var showDataOnCalendarAndTable = function () {
         success: function (task) {
 
             var taskProjectId = task.projectId;
-            if (selectedProjectId == taskProjectId) {
-                isSelectedNewProject = false;
-            } else {
-                taskCalendarInit = false;
-                $('#tmw-task-calendar').fullCalendar('destroy');
-                isSelectedNewProject = true;
-            }
-            selectedProjectId = taskProjectId;
-            $('#tagBox').combobox('clear');
-           $('#tagBox').combobox('reload');
 
-            showButtonSwitchCalendarTable();
-            if (isSelectedCalendar) {
-                taskCalendar();
-            } else {
-                taskPlanningTable();
-            }
+            $.ajax({
+                url: '/api/tasks/' + taskProjectId,
+                type: 'GET',
+                contentType: 'application/json',
 
-            taskTable();
+                success: function (taskProject) {
+
+                    firstManagerId = taskProject.authorId;
+                    secondaryManagerId = taskProject.assignTo;
+
+                    console.log('FirstManagerId = ', firstManagerId );
+                    console.log('SecondaryManagerId = ', secondaryManagerId);
+
+                    if (selectedProjectId == taskProjectId) {
+                        isSelectedNewProject = false;
+                    } else {
+                        taskCalendarInit = false;
+                        $('#tmw-task-calendar').fullCalendar('destroy');
+                        isSelectedNewProject = true;
+                    }
+                    selectedProjectId = taskProjectId;
+                    $('#tagBox').combobox('clear');
+                    $('#tagBox').combobox('reload');
+
+                    showButtonSwitchCalendarTable();
+                    if (isSelectedCalendar) {
+                        taskCalendar();
+                    } else {
+                        taskPlanningTable();
+                    }
+
+                    taskTable();
+                }
+            });
         }
     });
 

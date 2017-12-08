@@ -2,13 +2,10 @@ package com.softserve.academy.tmw.controller;
 
 import com.softserve.academy.tmw.entity.JiraCredential;
 import com.softserve.academy.tmw.service.impl.JiraService;
-import io.jsonwebtoken.lang.Collections;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -31,8 +28,8 @@ public class JiraController {
 
     @PostMapping("/get-issues")
     @ResponseStatus(HttpStatus.OK)
-    public String getIssues(@RequestBody JiraCredential jiraCredential) {
-        String json = jiraService.getIssues(jiraCredential.getUrl(), jiraCredential.getCreds());
-        return json;
+    public void getIssues(@RequestBody JiraCredential jiraCredential) {
+        jiraService.getIssues(jiraCredential.getUrl(), jiraCredential.getCreds());
+
     }
 }

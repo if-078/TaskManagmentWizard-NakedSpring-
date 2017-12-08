@@ -45,7 +45,6 @@ $('#tmw-btn-task-worklog').on('click', function () {
     });
 
 
-
 });
 
 /*
@@ -54,9 +53,13 @@ $('#t????????').on('click', function () {
 });
 */
 
+var count = 0;
 $('#tmw-btn-add-spent-time').on('click', function () {
-    var spentTime = document.getElementById("tmw-set-spent-time").value;
-    console.log('set spent time = ', spentTime);
+
+    $('#tmw-worklog').modal('hide');
+
+    //var spentTime = document.getElementById("tmw-set-spent-time").value;
+    console.log('count = ', ++count);
 
     /*
     $.ajax({
@@ -67,9 +70,8 @@ $('#tmw-btn-add-spent-time').on('click', function () {
     });
     */
 
-    $('#tmw-worklog').modal('hide');
-
 });
+
 
 
 var convertMinuteToHoursAndMinuteForWorkLog = function (timeMinutes) {

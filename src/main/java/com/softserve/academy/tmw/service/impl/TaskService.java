@@ -342,8 +342,20 @@ public class TaskService implements TaskServiceInterface {
           temp.add(spentTime);
         }
       }
+      List<User> users = userDao.getAll();
+      for (SpentTime spentTime : temp ){
+        for(User user : users){
+          if(spentTime.getUserId()==user.getId()){
+            spentTime.setUserName(user.getName());
+          }
+        }
+      }
 
-      return null;
+      for (SpentTime t : temp){
+        System.out.println("Nane = " + t.getUserName() + "   spentTime = " + t.getLogTime());
+      }
+
+      return temp;
     }
 
     @Override

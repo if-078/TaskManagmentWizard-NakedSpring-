@@ -23,8 +23,6 @@ public class SpentTimeDao extends EntityDao<SpentTime> implements SpentTimeDaoIn
     @Override
     public SpentTime create(SpentTime entity) {
 
-        System.out.println("logTime = " + entity.getLogTime());
-
         String sql = "INSERT INTO " + table +
                 " (user_id, task_id, date, log_time) VALUES (:user_id, :task_id, :date_t, :log_time)";
         MapSqlParameterSource param = new MapSqlParameterSource();

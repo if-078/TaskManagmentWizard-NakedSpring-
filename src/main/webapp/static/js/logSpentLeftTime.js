@@ -1,17 +1,11 @@
 $('#tmw-btn-task-worklog').on('click', function () {
 
-
-    console.log('currentEditTaskId = ', currentEditTaskId);
-
-
     $.ajax({
         url: '/api/tasks/' + currentEditTaskId,
         type: 'GET',
         contentType: 'application/json',
 
         success: function (task) {
-
-            console.log('task leftTime = ', task.leftTime);
 
             $.ajax({
                 url: 'api/tasks/tree/' + currentEditTaskId + '?userId=' + userId,
@@ -27,19 +21,17 @@ $('#tmw-btn-task-worklog').on('click', function () {
 
                         success: function (workLogByTask) {
 
-
+                            console.log(workLogByTask);
 
                             document.getElementById("tmw-total-spent-time").value = convertMinuteToHoursAndMinuteForWorkLog(task.spentTime);
                             document.getElementById("tmw-set-spent-time").value = '00:00';
                             document.getElementById("tmw-set-left-time").value = convertMinuteToHoursAndMinuteForWorkLog(task.leftTime);
 
                             if (data.length == 0) {
-                                console.log('setEnable');
                                 //document.getElementById("tmw-set-spent-time").setAttribute("disabled", false);
                                 //document.getElementById("tmw-set-left-time").setAttribute("disabled", false);
                                 $('#tmw-btn-add-spent-time').removeClass('disabled');
                             } else {
-                                console.log('setDisable');
                                 //document.getElementById("tmw-set-spent-time").setAttribute("disabled", true);
                                 //document.getElementById("tmw-set-left-time").setAttribute("disabled", true);
                                 $('#tmw-btn-add-spent-time').addClass('disabled');

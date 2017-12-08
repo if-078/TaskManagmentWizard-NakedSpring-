@@ -268,3 +268,12 @@ li.jstree-leaf > a .jstree-icon {
     margin-top: -25px;
 }
 
+#tmw-worklog-dialog {
+    padding-top: 140px;
+    padding-left: 15px;
+    padding-right: 30px;
+}
+
+#tmw-btn-add-spent-time {
+    margin-right: 15px;
+}

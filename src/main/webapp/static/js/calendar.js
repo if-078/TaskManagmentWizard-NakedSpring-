@@ -140,7 +140,7 @@ var taskCalendar = function () {
                             eventResize: resizeTaskOnCalendar,
 
                             eventClick: function (event) {
-                                $('#tmw-log-time-task').modal('show');
+                                $('#tmw-worklog').modal('show');
                             },
 
                             eventDragStop: function (event, e) {
@@ -247,6 +247,8 @@ var updateCalendarTask = function (event) {
             var hours = ('0' + event.end.workingDiff(event.start, 'hours')).slice(-2),
                 minutes = ('0' + event.end.workingDiff(event.start, 'minutes') % 60).slice(-2);
             data.estimateTime = parseInt(hours) * 60 + parseInt(minutes);
+
+            console.log(data);
 
             $.ajax({
                 url: '/api/tasks/setPlanning/' + userId,

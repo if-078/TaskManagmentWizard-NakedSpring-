@@ -32,10 +32,10 @@ public class JiraService {
 
     }
 
-    public List getProjects(String uri, String credentials) {
-        headers.add("Authorization", "Basic " + credentials);
+    public List getProjects(JiraCredential credentials) {
+        headers.add("Authorization", "Basic " + credentials.getCreds());
         HttpEntity<String> requestEntity = new HttpEntity<String>("", headers);
-        ResponseEntity<String> responseEntity = rest.exchange(uri, HttpMethod.GET, requestEntity, String.class);
+        ResponseEntity<String> responseEntity = rest.exchange(credentials.getUrl(), HttpMethod.GET, requestEntity, String.class);
         this.setStatus(responseEntity.getStatusCode());
         System.out.println(responseEntity.getBody().toString());
         JSONArray jsonArray = new JSONArray(responseEntity.getBody());
@@ -62,6 +62,7 @@ public class JiraService {
         TaskJiraDTO project = new TaskJiraDTO();
         project.setJiraKey(credentials.getProjectKey());
         project.setName(credentials.getProjectName());
+        project.setAuthorId(credentials.getUserId());
         Task projectTask = new Task();
         try {
             projectTask = jiraIntegrationDao.create(dtoToTask(project));
@@ -80,6 +81,7 @@ public class JiraService {
                 rootTaskDto.setPriorityId(issue.getJSONObject("fields").getJSONObject("priority").getInt("id"));
                 rootTaskDto.setJiraKey(issue.getString("key"));
                 rootTaskDto.setParentId(projectTask.getId());
+                rootTaskDto.setAuthorId(credentials.getUserId());
                 if (issue.getJSONObject("fields").optJSONObject("assignee") != null) {
                     if (issue.getJSONObject("fields").getJSONObject("assignee").get("emailAddress").equals(credentials.getName()) || issue.getJSONObject("fields").getJSONObject("assignee").get("key").equals(credentials.getName())) {
                         rootTaskDto.setAssignTo(credentials.getUserId());
@@ -102,6 +104,7 @@ public class JiraService {
                             subTaskDto.setPriorityId(subIssue.getJSONObject("fields").getJSONObject("priority").getInt("id"));
                             subTaskDto.setJiraKey(subIssue.getString("key"));
                             subTaskDto.setParentId(rootTaskId);
+                            subTaskDto.setAuthorId(credentials.getUserId());
                             if (issue.getJSONObject("fields").optJSONObject("assignee") != null) {
                                 if (issue.getJSONObject("fields").getJSONObject("assignee").get("emailAddress").equals(credentials.getName()) || issue.getJSONObject("fields").getJSONObject("assignee").get("key").equals(credentials.getName())) {
                                     subTaskDto.setAssignTo(credentials.getUserId());
@@ -137,6 +140,7 @@ public class JiraService {
         task.setStatusId(taskJiraDTO.getStatusId());
         task.setJiraKey(taskJiraDTO.getJiraKey());
         task.setParentId(taskJiraDTO.getParentId());
+        task.setAuthorId(taskJiraDTO.getAuthorId());
 
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ", Locale.getDefault());
         if (taskJiraDTO.getCreatedDate() != null) {

@@ -6,6 +6,7 @@ public class TaskJiraDTO {
     private String name;
     private String createdDate;
     private int assignTo;
+    private int authorId;
     private int statusId;
     private int priorityId;
     private String jiraKey;
@@ -33,6 +34,14 @@ public class TaskJiraDTO {
 
     public void setAssignTo(int assignTo) {
         this.assignTo = assignTo;
+    }
+
+    public int getAuthorId() {
+        return authorId;
+    }
+
+    public void setAuthorId(int authorId) {
+        this.authorId = authorId;
     }
 
     public int getStatusId() {

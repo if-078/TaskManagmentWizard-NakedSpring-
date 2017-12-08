@@ -7,15 +7,15 @@ $('#jira-integration').on('click', function () {
 
 
     $('#jira-ok').on('click', function () {
-        /*var jLink = $('#jira-link').val();
+        var jLink = $('#jira-link').val();
         var jUsername = $('#jira-login').val();
-        var jPassword = $('#jira-password').val();*/
-        var jLink = "tmw-sveta.atlassian.net";
+        var jPassword = $('#jira-password').val();
+        /*var jLink = "https://tmw-sveta.atlassian.net";
         var jUsername = "ovcharuksveta@ukr.net";
-        var jPassword = "svetasveta";
+        var jPassword = "svetasveta";*/
         var jiraToken = jUsername + ":" + jPassword;
         var encode = btoa(jiraToken);
-        var jUrl = "https://" + jLink + "/rest/api/2/project";
+        var jUrl = jLink + "/rest/api/2/project";
         var projectsModelData = [];
         $.ajax({
             url: 'api/jira/get-projects',
@@ -75,7 +75,7 @@ $('#jira-integration').on('click', function () {
             console.log(chooseProject.name);
             console.log(chooseProject.key);
 
-            var urlGetIssues = "https://" + jLink + "/rest/api/2/search?jql=project=" + chooseProject.key;
+            var urlGetIssues = jLink + "/rest/api/2/search?jql=project=" + chooseProject.key;
 
             $.ajax({
                 url: 'api/jira/get-issues',

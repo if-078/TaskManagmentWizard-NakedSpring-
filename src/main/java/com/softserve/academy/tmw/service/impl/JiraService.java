@@ -19,8 +19,6 @@ import java.util.*;
 @Service
 public class JiraService {
     @Autowired
-    private TaskService taskService;
-    @Autowired
     private JiraIntegrationDao jiraIntegrationDao;
     private RestTemplate rest;
     private HttpHeaders headers;
@@ -64,8 +62,9 @@ public class JiraService {
         TaskJiraDTO project = new TaskJiraDTO();
         project.setJiraKey(credentials.getProjectKey());
         project.setName(credentials.getProjectName());
+        Task projectTask = new Task();
         try {
-            Task projectTask = jiraIntegrationDao.create(dtoToTask(project));
+            projectTask = jiraIntegrationDao.create(dtoToTask(project));
         } catch (Exception e) {
             e.getCause();
             e.printStackTrace();
@@ -80,19 +79,21 @@ public class JiraService {
                 rootTaskDto.setStatusId(issue.getJSONObject("fields").getJSONObject("status").getJSONObject("statusCategory").getInt("id"));
                 rootTaskDto.setPriorityId(issue.getJSONObject("fields").getJSONObject("priority").getInt("id"));
                 rootTaskDto.setJiraKey(issue.getString("key"));
+                rootTaskDto.setParentId(projectTask.getId());
                 if (issue.getJSONObject("fields").optJSONObject("assignee") != null) {
                     if (issue.getJSONObject("fields").getJSONObject("assignee").get("emailAddress").equals(credentials.getName()) || issue.getJSONObject("fields").getJSONObject("assignee").get("key").equals(credentials.getName())) {
                         rootTaskDto.setAssignTo(credentials.getUserId());
                     } else {
                         rootTaskDto.setAssignTo(0);
                     }
-
                 }
-                Task rootTask = taskService.createTaskByJiraDTO(rootTaskDto);
+
+                Task rootTask = jiraIntegrationDao.create(dtoToTask(rootTaskDto));
                 int rootTaskId = rootTask.getId();
+
                 for (int a = 0; a < issues.length(); a++) {
                     JSONObject subIssue = issues.getJSONObject(a);
-                    if (issue.getJSONObject("fields").getJSONObject("issuetype").getBoolean("subtask") == true) {
+                    if (subIssue.getJSONObject("fields").getJSONObject("issuetype").getBoolean("subtask")) {
                         if (subIssue.getJSONObject("fields").getJSONObject("parent").getString("key").equals(rootTaskDto.getJiraKey())) {
                             TaskJiraDTO subTaskDto = new TaskJiraDTO();
                             subTaskDto.setName(subIssue.getJSONObject("fields").getString("summary"));
@@ -100,13 +101,16 @@ public class JiraService {
                             subTaskDto.setStatusId(subIssue.getJSONObject("fields").getJSONObject("status").getJSONObject("statusCategory").getInt("id"));
                             subTaskDto.setPriorityId(subIssue.getJSONObject("fields").getJSONObject("priority").getInt("id"));
                             subTaskDto.setJiraKey(subIssue.getString("key"));
-                            if ((subIssue.getJSONObject("fields").getJSONObject("assignee").get("emailAddress").equals(credentials.getName()) || issue.getJSONObject("fields").getJSONObject("assignee").get("key").equals(credentials.getName()))) {
-                                rootTaskDto.setAssignTo(credentials.getUserId());
-                            } else {
-                                rootTaskDto.setAssignTo(0);
+                            subTaskDto.setParentId(rootTaskId);
+                            if (issue.getJSONObject("fields").optJSONObject("assignee") != null) {
+                                if (issue.getJSONObject("fields").getJSONObject("assignee").get("emailAddress").equals(credentials.getName()) || issue.getJSONObject("fields").getJSONObject("assignee").get("key").equals(credentials.getName())) {
+                                    subTaskDto.setAssignTo(credentials.getUserId());
+                                } else {
+                                    subTaskDto.setAssignTo(0);
+                                }
                             }
 
-                            Task subTask = jiraIntegrationDao.create(dtoToTask(subTaskDto));
+                            jiraIntegrationDao.create(dtoToTask(subTaskDto));
                         } else {
                             continue;
                         }

@@ -43,16 +43,13 @@ public class JiraIntegrationDao extends EntityDao<Task> {
         if (task.getPriorityId() == 0) {
             task.setPriorityId(1);
         }
-
-        //refreshEstimateTimeOfParents(task.getId(), task.getEstimateTime(), task.getSpentTime(), task.getLeftTime());
-
         String sql = "INSERT INTO " + table
                 + " (name, created_date, planning_date, start_date, end_date, estimate_time, spent_time, left_time, assign_to, status_id, "
                 + "priority_id, parent_id, author_id, project_id, jira_key) VALUES (:name, :created_date, :planning_date, :start_date, :end_date, :estimate_time, "
                 + ":spent_time, :left_time, :assign_to, :status_id, :priority_id, :parent_id, :author_id, :project_id, :jira_key)";
 
         param.addValue("name", task.getName());
-        param.addValue("created_date", new java.sql.Timestamp(new Date().getTime()));
+        param.addValue("created_date", task.getCreatedDate());
         param.addValue("planning_date", task.getPlanningDate());
         param.addValue("start_date", startDate);
         param.addValue("end_date", endDate);

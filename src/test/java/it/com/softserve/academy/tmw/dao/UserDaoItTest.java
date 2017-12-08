@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 
 import com.softserve.academy.tmw.dao.api.UserDaoInterface;
 import com.softserve.academy.tmw.entity.User;
+import it.com.softserve.academy.tmw.configuration.TestConfig;
 import it.com.softserve.academy.tmw.dao.utility.UserPopulator;
 import java.sql.SQLException;
 import org.junit.Test;

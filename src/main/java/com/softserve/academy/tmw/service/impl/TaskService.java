@@ -329,13 +329,21 @@ public class TaskService implements TaskServiceInterface {
       task.setLeftTime(leftTime);
       taskDao.update(task);
 
-
-
-      // To Do
-      // update spent time for task
-      // refresh spent time by parent
-
       return true;
+    }
+
+    @Override
+    public  List<SpentTime> getWorkLogByTask (int taskId, int userId){
+
+      List<SpentTime> listSpentTime = spentTimeDao.getAll();
+      List<SpentTime> temp = new ArrayList<SpentTime>();
+      for (SpentTime spentTime : listSpentTime){
+        if (taskId==spentTime.getTaskId()){
+          temp.add(spentTime);
+        }
+      }
+
+      return null;
     }
 
     @Override

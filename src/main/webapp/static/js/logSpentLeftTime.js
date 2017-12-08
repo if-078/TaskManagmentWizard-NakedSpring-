@@ -20,24 +20,34 @@ $('#tmw-btn-task-worklog').on('click', function () {
 
                 success: function (data) {
 
-                    document.getElementById("tmw-total-spent-time").value = convertMinuteToHoursAndMinuteForWorkLog(task.spentTime);
-                    document.getElementById("tmw-set-spent-time").value = '00:00';
-                    document.getElementById("tmw-set-left-time").value = convertMinuteToHoursAndMinuteForWorkLog(task.leftTime);
+                    $.ajax({
+                        url: '/api/tasks/workLog/' + currentEditTaskId + '/' + userId,
+                        type: 'GET',
+                        contentType: 'application/json',
 
-                    if (data.length == 0) {
-                        console.log('setEnable');
-                        //document.getElementById("tmw-set-spent-time").setAttribute("disabled", false);
-                        //document.getElementById("tmw-set-left-time").setAttribute("disabled", false);
-                        $('#tmw-btn-add-spent-time').removeClass('disabled');
-                    } else {
-                        console.log('setDisable');
-                        //document.getElementById("tmw-set-spent-time").setAttribute("disabled", true);
-                        //document.getElementById("tmw-set-left-time").setAttribute("disabled", true);
-                        $('#tmw-btn-add-spent-time').addClass('disabled');
-                    }
+                        success: function (workLogByTask) {
 
-                    $('#tmw-worklog').modal('show');
 
+
+                            document.getElementById("tmw-total-spent-time").value = convertMinuteToHoursAndMinuteForWorkLog(task.spentTime);
+                            document.getElementById("tmw-set-spent-time").value = '00:00';
+                            document.getElementById("tmw-set-left-time").value = convertMinuteToHoursAndMinuteForWorkLog(task.leftTime);
+
+                            if (data.length == 0) {
+                                console.log('setEnable');
+                                //document.getElementById("tmw-set-spent-time").setAttribute("disabled", false);
+                                //document.getElementById("tmw-set-left-time").setAttribute("disabled", false);
+                                $('#tmw-btn-add-spent-time').removeClass('disabled');
+                            } else {
+                                console.log('setDisable');
+                                //document.getElementById("tmw-set-spent-time").setAttribute("disabled", true);
+                                //document.getElementById("tmw-set-left-time").setAttribute("disabled", true);
+                                $('#tmw-btn-add-spent-time').addClass('disabled');
+                            }
+
+                            $('#tmw-worklog').modal('show');
+                        }
+                    });
                 }
             });
         }
@@ -84,5 +94,6 @@ var convertMinuteToHoursAndMinuteForWorkLog = function (timeMinutes) {
 
 
 var converHoursAndMinuteToMinutes = function (time) {
-    return +time.substring(0,2)*60 + +time.substring(3,5);;
+    return +time.substring(0, 2) * 60 + +time.substring(3, 5);
+    ;
 };

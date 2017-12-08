@@ -43,5 +43,7 @@ public interface TaskServiceInterface extends EntityServiceInterface<Task> {
 
   boolean logTimeByTask(int userId, int taskId, int logTime, int spentTime);
 
+  List<SpentTime> getWorkLogByTask (int taskId, int userId);
+
   int getTotalSpentTimeByTask(int taskId);
 }

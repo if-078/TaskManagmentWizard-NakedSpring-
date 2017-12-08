@@ -212,7 +212,7 @@ var showPlanningTable = function () {
 };
 
 
-$('#tmw-task-plannig-table').on('dblclick', 'tr:not(:first)', 'tr', function () {
+$('#tmw-task-planning-table').on('dblclick', 'tr:not(:first)', 'tr', function () {
     var table = $('#tmw-task-planning-table').DataTable();
     var taskId = table.row(this).data()[0];
     $(this).addClass('active').siblings().removeClass('active');

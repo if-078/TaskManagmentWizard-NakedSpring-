@@ -49,9 +49,12 @@ public class CommentDaoItTest {
 
     comments.forEach(item -> assertThat(dao.create(item)).isEqualTo(item));
 
+    assertThat(dao.getCommentsByTaskId(testId)).isEqualTo(comments);
+
     assertThat(dao.delete(1)).isTrue();
     assertThat(dao.delete(2)).isTrue();
-    // assertThat(dao.findOne(3)).isEqualTo(comments.get(2));
+
+    assertThat(dao.getCommentsByTaskId(testId).get(0)).isEqualTo(comments.get(2));
   }
 
 

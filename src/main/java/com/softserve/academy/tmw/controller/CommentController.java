@@ -29,6 +29,7 @@ public class CommentController {
   }
 
   @PostMapping("/")
+  @ResponseStatus(HttpStatus.CREATED)
   Comment create(@RequestBody Comment comment) throws SQLException {
     return commentService.create(comment);
   }
@@ -50,6 +51,7 @@ public class CommentController {
   }
 
   @DeleteMapping("/{id}")
+  @ResponseStatus(HttpStatus.NO_CONTENT)
   boolean delete(@PathVariable Integer id) throws SQLException {
     return commentService.delete(id);
   }

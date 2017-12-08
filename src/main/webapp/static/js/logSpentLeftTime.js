@@ -31,7 +31,6 @@ $('#tmw-btn-task-worklog').on('click', function () {
 
                             }
 
-                            console.log(workLogUsers);
 
                             document.getElementById("tmw-total-spent-time").value = convertMinuteToHoursAndMinuteForWorkLog(totalSpentTime);
                             document.getElementById("tmw-set-spent-time").value = '00:00';

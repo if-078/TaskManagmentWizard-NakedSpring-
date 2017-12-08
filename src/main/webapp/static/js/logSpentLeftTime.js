@@ -1,4 +1,3 @@
-
 $('#tmw-btn-task-worklog').on('click', function () {
 
 
@@ -12,7 +11,7 @@ $('#tmw-btn-task-worklog').on('click', function () {
 
         success: function (task) {
 
-        console.log('task leftTime = ', task.leftTime);
+            console.log('task leftTime = ', task.leftTime);
 
             $.ajax({
                 url: 'api/tasks/tree/' + currentEditTaskId + '?userId=' + userId,
@@ -25,12 +24,12 @@ $('#tmw-btn-task-worklog').on('click', function () {
                     document.getElementById("tmw-set-spent-time").value = '00:00';
                     document.getElementById("tmw-set-left-time").value = convertMinuteToHoursAndMinuteForWorkLog(task.leftTime);
 
-                    if (data.length==0){
+                    if (data.length == 0) {
                         console.log('setEnable');
                         //document.getElementById("tmw-set-spent-time").setAttribute("disabled", false);
                         //document.getElementById("tmw-set-left-time").setAttribute("disabled", false);
                         $('#tmw-btn-add-spent-time').removeClass('disabled');
-                    }else{
+                    } else {
                         console.log('setDisable');
                         //document.getElementById("tmw-set-spent-time").setAttribute("disabled", true);
                         //document.getElementById("tmw-set-left-time").setAttribute("disabled", true);
@@ -47,11 +46,6 @@ $('#tmw-btn-task-worklog').on('click', function () {
 
 });
 
-/*
-$('#t????????').on('click', function () {
-    $('#tmw-log-time-task').modal('show');
-});
-*/
 
 var count = 0;
 $('#tmw-btn-add-spent-time').on('click', function () {
@@ -61,17 +55,30 @@ $('#tmw-btn-add-spent-time').on('click', function () {
     //var spentTime = document.getElementById("tmw-set-spent-time").value;
     console.log('count = ', ++count);
 
-    /*
+    //var myObj = { "name":"John", "age":31, "city":"New York" };
+
+    var spentTime = {
+
+        "userId":userId,
+        "taskId":currentEditTaskId,
+        "date":"2017-10-01",
+        "logTime":100
+    };
+
+    console.log(spentTime);
+
     $.ajax({
-        url: '/api/tasks/logtask/' + userId + '/' + selectedProjectId,
-        data: JSON.stringify(spentTime),
-        type: 'PUT',
-        contentType: 'application/json'
+        url: 'api/tasks/logTask' + '?userId=' + userId + '&taskId=' + currentEditTaskId + '&logTime=' + 100,
+        type: 'GET',
+        contentType: 'application/json',
+
+        success: function () {
+
+        }
     });
-    */
+
 
 });
-
 
 
 var convertMinuteToHoursAndMinuteForWorkLog = function (timeMinutes) {

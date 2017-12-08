@@ -5,6 +5,7 @@ import com.softserve.academy.tmw.dto.TaskFullInfoDTO;
 import com.softserve.academy.tmw.dto.TaskTableDTO;
 import com.softserve.academy.tmw.dto.TaskTreeDTO;
 import com.softserve.academy.tmw.entity.Comment;
+import com.softserve.academy.tmw.entity.SpentTime;
 import com.softserve.academy.tmw.entity.Tag;
 import com.softserve.academy.tmw.entity.Task;
 import com.softserve.academy.tmw.service.api.TaskServiceInterface;
@@ -78,6 +79,20 @@ public class TaskController {
     if (taskService.hasPermissionToUpdate(userId, taskId)) {
       return taskService.deletePlanning(taskId);
     }
+
+    return false;
+  }
+
+
+  @GetMapping("/logTask")
+  @ResponseStatus(HttpStatus.NO_CONTENT)
+  boolean addStentTime(@RequestParam(name = "userId", required = false) int userId,
+                       @RequestParam(name = "taskId", required = false) int taskId,
+                       @RequestParam(name = "logTime", required = false) int logTime) {
+
+    System.out.println("userIs = " + userId);
+    System.out.println("taskId = " + taskId);
+    System.out.println("logTime = " + logTime);
 
     return false;
   }

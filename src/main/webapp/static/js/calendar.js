@@ -248,6 +248,8 @@ var updateCalendarTask = function (event) {
                 minutes = ('0' + event.end.workingDiff(event.start, 'minutes') % 60).slice(-2);
             data.estimateTime = parseInt(hours) * 60 + parseInt(minutes);
 
+            console.log(data);
+
             $.ajax({
                 url: '/api/tasks/setPlanning/' + userId,
                 data: JSON.stringify(data),

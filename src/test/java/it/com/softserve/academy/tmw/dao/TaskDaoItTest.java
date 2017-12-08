@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import com.softserve.academy.tmw.dao.impl.CommentDao;
 import com.softserve.academy.tmw.dao.impl.TaskDao;
 import com.softserve.academy.tmw.entity.Comment;
+import it.com.softserve.academy.tmw.configuration.TestConfig;
 import it.com.softserve.academy.tmw.dao.utility.PriorityPopulator;
 import it.com.softserve.academy.tmw.dao.utility.StatusPopulator;
 import it.com.softserve.academy.tmw.dao.utility.TaskPopulator;

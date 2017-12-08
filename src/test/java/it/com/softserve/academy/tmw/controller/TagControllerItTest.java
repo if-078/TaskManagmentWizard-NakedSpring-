@@ -8,7 +8,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.softserve.academy.tmw.controller.TagController;
 import com.softserve.academy.tmw.entity.Tag;
-import it.com.softserve.academy.tmw.dao.TestConfig;
+import it.com.softserve.academy.tmw.configuration.TestConfig;
 import it.com.softserve.academy.tmw.dao.utility.TaskPopulator;
 import it.com.softserve.academy.tmw.dao.utility.UserPopulator;
 import java.util.ArrayList;

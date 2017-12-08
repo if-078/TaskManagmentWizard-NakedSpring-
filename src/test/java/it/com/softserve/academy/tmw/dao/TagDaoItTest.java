@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import com.softserve.academy.tmw.dao.impl.TagDao;
 import com.softserve.academy.tmw.dao.impl.TaskDao;
 import com.softserve.academy.tmw.entity.Tag;
+import it.com.softserve.academy.tmw.configuration.TestConfig;
 import it.com.softserve.academy.tmw.dao.utility.TaskPopulator;
 import it.com.softserve.academy.tmw.dao.utility.UserPopulator;
 import java.util.ArrayList;
@@ -35,7 +36,7 @@ public class TagDaoItTest {
 
 
   @Before
-  public void createFewUsers() {
+  public void createFewUsersAndTask() {
     userPopulator.createDefaultEntity();
     userPopulator.createDefaultEntity();
     userPopulator.createDefaultEntity();

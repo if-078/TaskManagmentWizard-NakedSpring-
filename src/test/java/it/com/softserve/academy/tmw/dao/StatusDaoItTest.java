@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import com.softserve.academy.tmw.dao.impl.StatusDao;
 import com.softserve.academy.tmw.entity.Status;
+import it.com.softserve.academy.tmw.configuration.TestConfig;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

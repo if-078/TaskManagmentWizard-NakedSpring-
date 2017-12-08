@@ -26,7 +26,7 @@ $('#tmw-btn-task-worklog').on('click', function () {
                             var workLogUsers = '';
                             for(var i=0 ; i<workLogByTask.length; i++){
                                 totalSpentTime = totalSpentTime + workLogByTask[i].logTime;
-                                workLogUsers = workLogUsers + workLogByTask[i].date + ' - ' + workLogByTask[i].userName + ' - ' +
+                                workLogUsers = workLogUsers + (i+1) + '. ' + workLogByTask[i].userName + '   ' + workLogByTask[i].date + '    ' +
                                     convertMinuteToHoursAndMinuteForWorkLog(workLogByTask[i].logTime) + '\n';
 
                             }

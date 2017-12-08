@@ -3,16 +3,13 @@ package com.softserve.academy.tmw.dao.impl;
 import com.softserve.academy.tmw.dao.api.CommentDaoInterface;
 import com.softserve.academy.tmw.dao.mapper.CommentMapper;
 import com.softserve.academy.tmw.entity.Comment;
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 @Repository
 @PropertySource("classpath:tables.properties")
@@ -59,9 +56,12 @@ public class CommentDao extends EntityDao<Comment> implements CommentDaoInterfac
 
   @Override
   public boolean setCommentsToTask(List<Comment> comments, int taskId) {
-    if (comments.size() == 0) return false;
+    if (comments.size() == 0) {
+      return false;
+    }
     MapSqlParameterSource param = new MapSqlParameterSource();
-    StringBuilder sql = new StringBuilder("INSERT into tmw.comment (comment_text, created_date, task_id, user_id) VALUES ");
+    StringBuilder sql = new StringBuilder(
+        "INSERT into tmw.comment (comment_text, created_date, task_id, user_id) VALUES ");
     for (int i = 0; i < comments.size(); i++) {
       String text = "text" + i;
       String date = "date" + i;
@@ -81,20 +81,11 @@ public class CommentDao extends EntityDao<Comment> implements CommentDaoInterfac
   @Override
   public List<Comment> getCommentsByTaskId(int taskId) {
     String sql =
-            "SELECT c.*, u.name FROM " + table + " as c join tmw.user as u on c.user_id = u.id WHERE task_id = :taskId";
+        "SELECT c.*, u.name FROM " + table
+            + " as c join tmw.user as u on c.user_id = u.id WHERE task_id = :taskId";
     List<Comment> list =
-            jdbcTemplate.query(sql, new MapSqlParameterSource("taskId", taskId), new CommentMapper());
+        jdbcTemplate.query(sql, new MapSqlParameterSource("taskId", taskId), new CommentMapper());
     return list;
-  }
-
-  @Autowired
-  public void setTable(@Value("${comment}") String table) {
-    this.table = table;
-  }
-
-  @Autowired
-  public void setMapper(RowMapper<Comment> mapper) {
-    this.mapper = mapper;
   }
 
 

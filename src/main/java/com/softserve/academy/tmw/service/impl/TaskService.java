@@ -318,14 +318,44 @@ public class TaskService implements TaskServiceInterface {
 
 
     @Override
-    public boolean logTimeByTask(SpentTime spentTime) {
+    public boolean logTimeByTask(int userId, int taskId, int logTime, int leftTime) {
+
+      SpentTime spentTime = new SpentTime(userId, taskId, new Date(), logTime);
+
       spentTimeDao.create(spentTime);
 
-      // To Do
-      // update spent time for task
-      // refresh spent time by parent
+      Task task = taskDao.findOne(taskId);
+      task.setSpentTime(logTime);
+      task.setLeftTime(leftTime);
+      taskDao.update(task);
 
       return true;
+    }
+
+    @Override
+    public  List<SpentTime> getWorkLogByTask (int taskId, int userId){
+
+      List<SpentTime> listSpentTime = spentTimeDao.getAll();
+      List<SpentTime> temp = new ArrayList<SpentTime>();
+      for (SpentTime spentTime : listSpentTime){
+        if (taskId==spentTime.getTaskId()){
+          temp.add(spentTime);
+        }
+      }
+      List<User> users = userDao.getAll();
+      for (SpentTime spentTime : temp ){
+        for(User user : users){
+          if(spentTime.getUserId()==user.getId()){
+            spentTime.setUserName(user.getName());
+          }
+        }
+      }
+
+      for (SpentTime t : temp){
+        System.out.println("Nane = " + t.getUserName() + "   spentTime = " + t.getLogTime());
+      }
+
+      return temp;
     }
 
     @Override

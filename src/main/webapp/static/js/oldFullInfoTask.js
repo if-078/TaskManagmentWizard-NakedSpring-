@@ -67,6 +67,13 @@ var showFull = function (id) {
             fillSelectTags(taskDTO.id);
             $('#tag-input-modal span:first').css({"width": "100%", "border": "1px solid", "border-color": "#ccc"});
 
+            if (userId == firstManagerId || userId == secondaryManagerId) {
+            $('#tmw-invite-btn').show();
+            }
+            else {
+            $('#tmw-invite-btn').hide();
+            }
+
             $('#tmw-modal').modal('show');
         },
         error: function (jqXHR, textStatus, errorThrown) {
@@ -663,5 +670,7 @@ function showErrorsOfForm(data) {
             $('#tmw-task-estimateTime-error').text(data.fieldErrors[i].message).css('color', 'red');
         }
     }
+
+
 
 }

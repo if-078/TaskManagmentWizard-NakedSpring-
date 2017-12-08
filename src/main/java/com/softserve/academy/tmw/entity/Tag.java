@@ -14,6 +14,12 @@ public class Tag {
     this.projectId = projectId;
   }
 
+  public Tag(String name, int userId, int projectId) {
+    this.name = name;
+    this.userId = userId;
+    this.projectId = projectId;
+  }
+
   public Tag() {
 
   }

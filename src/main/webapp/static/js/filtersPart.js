@@ -11,7 +11,7 @@ function boxMessage() {
   var d = new Date();
   var strDate = d.getFullYear() + "/" + (d.getMonth() + 1) + "/"
       + (d.getDate());
-  console.log("Load succes");
+  // console.log("Load succes");
 }
 
 

@@ -128,6 +128,7 @@ public class TaskService implements TaskServiceInterface {
 
   @Override
   public boolean updateTaskByDTO(TaskDTO taskDTO) {
+
     Task task = new Task();
     task.setId(taskDTO.getId());
     task.setName(taskDTO.getName());
@@ -150,7 +151,7 @@ public class TaskService implements TaskServiceInterface {
     tagService.deleteTagsOfTask(task.getId());
     tagService.setTagsToTask(Arrays.asList(taskDTO.getTags()), task.getId());
     commentService.delete(task.getId());
-    commentService.setCommentsToTask(Arrays.asList(taskDTO.getComments()), 0);
+    commentService.setCommentsToTask(Arrays.asList(taskDTO.getComments()), task.getId());
 
     return false;
   }
@@ -297,9 +298,9 @@ public class TaskService implements TaskServiceInterface {
       taskDTO.setPriority(null);
     }
     if (task.getAuthorId() > 0) {
-      taskDTO.setAuthor(serviceUser.findOne(task.getAuthorId()).getName());
+      taskDTO.setAuthor(serviceUser.findOne(task.getAuthorId()));
     } else {
-      taskDTO.setAuthor("");
+      taskDTO.setAuthor(null);
     }
     taskDTO.setParentId(task.getParentId());
     taskDTO.setProjectId(task.getProjectId());
@@ -335,7 +336,7 @@ public class TaskService implements TaskServiceInterface {
 
 
   private Date getFormatDate(String line) {
-    try {
+      try {
       return new SimpleDateFormat("yyyy-MM-dd").parse(line);
     } catch (ParseException e) {
       e.printStackTrace();

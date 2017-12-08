@@ -49,7 +49,6 @@ var showFull = function (id) {
             var token = jqXHR.getResponseHeader('Authentication');
             window.sessionStorage.setItem("token", token);
             taskDTO = data;
-            console.log(taskDTO);
 
             var date = ((new Date(taskDTO.planningDate + 7200000)).toISOString()).split("T");
             $('#tmw-task-info').text(taskDTO.name);
@@ -66,7 +65,7 @@ var showFull = function (id) {
             taskDTO.status != null ? fillSelectStatus(taskDTO.status.id) : $('#tmw-task-status').val('');
             fillSelectComments(taskDTO.id);
             fillSelectTags(taskDTO.id);
-            $('#tag-input-modal span:first').css({"width": "100%", "border": "1px solid", "border-color": "#ccc"});
+                    $('#tag-input-modal span:first').css({"width": "100%", "border": "1px solid", "border-color": "#ccc"});
 
             $('#tmw-modal').modal('show');
         },
@@ -84,9 +83,6 @@ var showFull = function (id) {
 // GET FULL INFORMATION ABOUT THE TASK
 
 $('#tmw-task-btn-save').on('click', function () {
-    getTagsAll();
-    tags = getSelectedTags();
-    console.log(tags);
     createOrUpdateTask(taskDTO);
 });
 
@@ -97,20 +93,20 @@ $('#tmw-create-task').on('click', function() {
     day = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + day;
     $('#tmw-task-info').hide();
     $('#tmw-task-name').show();
-    $('#tmw-task-projectId').text(selectedProjectId);
-    $('#tmw-task-parentId').text(selectedTaskId);
-    $('#tmw-task-draftPlanning').val(day);
-    $('#tmw-task-estimateTime').val("08:00:00");
-    $('#tmw-task-spentTime').val("00:00:00");
-    $('#tmw-task-leftTime').val("08:00:00");
-    fillSelectUserAuthor(null);
-    fillSelectUserAssign(null);
-    fillSelectPriority(null);
-    fillSelectStatus(null);
-    fillSelectComments(null);
-    $('#tagBoxModal').combobox('clear');
-    $('#tagBoxModal').combobox('reload');
-    $('#tag-input-modal span:first').css({"width": "100%", "border": "1px solid", "border-color": "#ccc"});
+                $('#tmw-task-projectId').text(selectedProjectId);
+                $('#tmw-task-parentId').text(selectedTaskId);
+                $('#tmw-task-draftPlanning').val(day);
+                $('#tmw-task-estimateTime').val("08:00:00");
+                $('#tmw-task-spentTime').val("00:00:00");
+                $('#tmw-task-leftTime').val("08:00:00");
+                fillSelectUserAuthor(null);
+                fillSelectUserAssign(null);
+                fillSelectPriority(null);
+                fillSelectStatus(null);
+                fillSelectComments(null);
+                    $('#tagBoxModal').combobox('clear');
+                    $('#tagBoxModal').combobox('reload');
+                    $('#tag-input-modal span:first').css({"width": "100%", "border": "1px solid", "border-color": "#ccc"});
 
     $('#tmw-modal').modal('show');
     $('#tmw-task-name').blur(function() {
@@ -182,7 +178,7 @@ function createOrUpdateTask(taskDTO) {
                 "priorityId": $('#tmw-task-priority').find(":selected").val(),
                 "parentId": state.parentId,
                 "projectId": $('#tmw-task-projectId').text(),
-                "tags": tags,
+                "tags": getSelectedTags(),
                 "comments": getSelectedComments()
             }
 
@@ -204,7 +200,7 @@ function createOrUpdateTask(taskDTO) {
                 "priorityId": $('#tmw-task-priority').find(":selected").val(),
                 "parentId": taskDTO.parentId,
                 "projectId": taskDTO.projectId,
-                "tags": tags,
+                "tags": getSelectedTags(),
                 "comments": getSelectedComments()
             }
         updateTask(task);
@@ -226,7 +222,7 @@ $('#tmw-create-tag').on('click', (function() {
         contentType: 'application/json',
         headers: createAuthToken(),
         success: function (data, textStatus, jqXHR) {
-            inputSelectedTags(data);
+                    inputSelectedTags(createdTag);
         },
         error: function (jqXHR, textStatus, errorThrown) {
             if (jqXHR.status === 401) {
@@ -256,7 +252,6 @@ function getSelectedTags() {
             }
         }
     }
-    console.log(tags);
     return tags;
 }
 
@@ -265,7 +260,6 @@ function getSelectedComments() {
 }
 
 function createTask(task) {
-    console.log(task);
     clearErrorTask();
     taskDTO = {};
     $.ajax({
@@ -276,7 +270,6 @@ function createTask(task) {
         headers: createAuthToken(),
         success: function (data) {
             $('#tmw-modal').modal('hide');
-            if ($('#tmw-task-comment').css('display') != 'none')
             showComment();
             refreshTree("create", data);
             clearTaskModal();
@@ -287,7 +280,7 @@ function createTask(task) {
                 console.log("create project");
             }
             else {
-                showDataOnCalendarAndTable();
+                  showDataOnCalendarAndTable();
 
             }
         },
@@ -312,7 +305,6 @@ function updateTask(task) {
         headers: createAuthToken(),
         success: function () {
             $('#tmw-modal').modal('hide');
-            if ($('#tmw-task-comment').css('display') != 'none')
             showComment();
             refreshTree("update", task);
             clearTaskModal();
@@ -336,7 +328,6 @@ function deleteTask(taskId) {
         success: function () {
             refreshTree("delete", taskId);
             showDataOnCalendarAndTable();
-            if ($('#tmw-task-comment').css('display') != 'none')
             showComment();
             taskDTO = {};
         },
@@ -488,33 +479,6 @@ function fillSelectTags(id) {
     $('#tagBoxModal').combobox('clear');
     $('#tagBoxModal').combobox('reload');
 
-    getTagsAll();
-    if (id != null)
-        $.ajax({
-            url: 'api/tasks/' + id + '/tags',
-            type: 'GET',
-            contentType: 'application/json',
-            headers: createAuthToken(),
-            success: function (data, textStatus, jqXHR) {
-                var token = jqXHR.getResponseHeader('Authentication');
-                window.sessionStorage.setItem("token", token);
-
-                for (var i = 0; i < data.length; i++) {
-                    inputSelectedTags(data[i]);
-                }
-
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                if (jqXHR.status === 401) {
-                    resetToken();
-                } else {
-                    throw new Error("an unexpected error occured: " + errorThrown);
-                }
-            }
-        });
-}
-
-function getTagsAll() {
     $.ajax({
         url: 'api/tags?projectId=' + selectedProjectId,
         type: 'GET',
@@ -535,6 +499,29 @@ function getTagsAll() {
         }
     });
 
+    if (id != null)
+    $.ajax({
+        url: 'api/tasks/' + id + '/tags',
+        type: 'GET',
+        contentType: 'application/json',
+        headers: createAuthToken(),
+        success: function (data, textStatus, jqXHR) {
+            var token = jqXHR.getResponseHeader('Authentication');
+            window.sessionStorage.setItem("token", token);
+
+            for (var i = 0; i < data.length; i++) {
+                inputSelectedTags(data[i]);
+            }
+
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            if (jqXHR.status === 401) {
+                resetToken();
+            } else {
+                throw new Error("an unexpected error occured: " + errorThrown);
+            }
+        }
+    });
 }
 
 function inputSelectedTags(tag) {
@@ -557,28 +544,63 @@ function inputSelectedTags(tag) {
 
 }
 
+function getTagsByTask(id) {
+    $('#tmw-tag-multi-select').multiselect('deselectAll', false);
+
+    $.ajax({
+        url: 'api/tasks/' + id + '/tags',
+        type: 'GET',
+        contentType: 'application/json',
+        headers: createAuthToken(),
+        success: function (data, textStatus, jqXHR) {
+            var token = jqXHR.getResponseHeader('Authentication');
+            window.sessionStorage.setItem("token", token);
+
+            $('#tmw-tag-multi-select').multiselect('select', getIdTagsOfTask(data));
+
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            if (jqXHR.status === 401) {
+                resetToken();
+            } else {
+                throw new Error("an unexpected error occured: " + errorThrown);
+            }
+        }
+    });
+}
+
+function getIdTagsOfTask(data) {
+    var arrTagsId = [];
+
+    data.map(function (tag) {
+        arrTagsId.push(tag.id);
+    });
+
+    return arrTagsId;
+}
+
 function fillSelectComments(id) {
     comments = [];
     $('#tmw-task-comments').empty();
     if (id != null)
-        $.ajax({
-            url: 'api/comment/task/' + id,
-            type: 'GET',
-            contentType: 'application/json',
-            headers: createAuthToken(),
-            success: function (data, textStatus, jqXHR) {
-                var token = jqXHR.getResponseHeader('Authentication');
-                window.sessionStorage.setItem("token", token);
-                getComments(data);
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                if (jqXHR.status === 401) {
-                    resetToken();
-                } else {
-                    throw new Error("an unexpected error occured: " + errorThrown);
-                }
+    $.ajax({
+        url: 'api/comment/task/' + id,
+        type: 'GET',
+        contentType: 'application/json',
+        headers: createAuthToken(),
+        success: function (data, textStatus, jqXHR) {
+            var token = jqXHR.getResponseHeader('Authentication');
+            window.sessionStorage.setItem("token", token);
+            getComments(data);
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            if (jqXHR.status === 401) {
+                resetToken();
+            } else {
+                throw new Error("an unexpected error occured: " + errorThrown);
             }
-        });
+        }
+    });
 }
 
 var getComments = function (data) {

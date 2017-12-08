@@ -29,7 +29,7 @@ public class UserService implements UserServiceInterface {
   private JavaMailSender mailSender;
 
   @Override
-  public List getAll() {
+  public List<User> getAll() {
     return userDao.getAll();
   }
 

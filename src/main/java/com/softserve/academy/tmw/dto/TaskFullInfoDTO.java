@@ -19,7 +19,7 @@ public class TaskFullInfoDTO {
   private User assignTo;
   private Status status;
   private Priority priority;
-  private String author;
+  private User author;
   private int parentId;
   private int projectId;
 
@@ -118,11 +118,11 @@ public class TaskFullInfoDTO {
     this.priority = priority;
   }
 
-  public String getAuthor() {
+  public User getAuthor() {
     return author;
   }
 
-  public void setAuthor(String author) {
+  public void setAuthor(User author) {
     this.author = author;
   }
 

@@ -325,7 +325,7 @@ public class TaskService implements TaskServiceInterface {
       spentTimeDao.create(spentTime);
 
       Task task = taskDao.findOne(taskId);
-      task.setSpentTime(logTime);
+      task.setSpentTime(taskDao.findOne(taskId).getSpentTime() + logTime);
       task.setLeftTime(leftTime);
       taskDao.update(task);
 
@@ -351,9 +351,6 @@ public class TaskService implements TaskServiceInterface {
         }
       }
 
-      for (SpentTime t : temp){
-        System.out.println("Nane = " + t.getUserName() + "   spentTime = " + t.getLogTime());
-      }
 
       return temp;
     }

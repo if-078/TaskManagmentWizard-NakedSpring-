@@ -35,6 +35,8 @@ var refreshTree = function (method, data) {
 var showFull = function (id) {
 
     currentEditTaskId = id;
+    console.log('INPUT in showFull');
+    console.log('id = ', id);
 
     taskDTO = {};
     clearTaskModal();

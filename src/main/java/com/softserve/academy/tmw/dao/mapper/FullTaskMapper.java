@@ -17,7 +17,7 @@ public class FullTaskMapper implements RowMapper<Task> {
     Task task = new Task(rs.getInt("id"), rs.getString("name"), rs.getDate("created_date"),
         rs.getDate("planning_date"), rs.getDate("start_date"), rs.getDate("end_date"),
         rs.getInt("estimate_time"), rs.getInt("spent_time"), rs.getInt("left_time"), rs.getInt("assign_to"),
-        rs.getInt("status_id"), rs.getInt("priority_id"), rs.getInt("parent_id"), rs.getInt("author_id"), rs.getInt("project_id"), rs.getString("jira_key"));
+        rs.getInt("status_id"), rs.getInt("priority_id"), rs.getInt("parent_id"), rs.getInt("author_id"), rs.getInt("project_id"));
 
     Priority priority = new Priority(rs.getInt("priority_id"), rs.getString("priority_name"));
     task.setPriority(priority);

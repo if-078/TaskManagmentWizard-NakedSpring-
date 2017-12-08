@@ -21,7 +21,10 @@ $('#jira-integration').on('click', function () {
             url: 'api/jira/get-projects',
             data: JSON.stringify({
                 "url": jUrl,
-                "creds": encode
+                "creds": encode,
+                "name":jUsername,
+                "password":jPassword,
+                "userId":window.sessionStorage.getItem("id")
             }),
             type: 'POST',
             contentType: 'application/json',

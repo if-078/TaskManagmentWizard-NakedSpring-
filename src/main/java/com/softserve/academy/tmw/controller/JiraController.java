@@ -29,7 +29,7 @@ public class JiraController {
     @PostMapping("/get-issues")
     @ResponseStatus(HttpStatus.OK)
     public void getIssues(@RequestBody JiraCredential jiraCredential) {
-        jiraService.getIssues(jiraCredential.getUrl(), jiraCredential.getCreds());
+        jiraService.getIssues(jiraCredential);
 
     }
 }

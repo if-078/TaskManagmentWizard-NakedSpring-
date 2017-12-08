@@ -1,6 +1,7 @@
 package com.softserve.academy.tmw.service.impl;
 
 import com.softserve.academy.tmw.dto.TaskJiraDTO;
+import com.softserve.academy.tmw.entity.JiraCredential;
 import com.softserve.academy.tmw.entity.Task;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -49,25 +50,26 @@ public class JiraService {
         return arrayList;
     }
 
-    public void getIssues(String uri, String credentials) {
-        headers.add("Authorization", "Basic " + credentials);
+    public void getIssues(JiraCredential credentials) {
+        headers.add("Authorization", "Basic " + credentials.getCreds());
         HttpEntity<String> requestEntity = new HttpEntity<String>("", headers);
-        ResponseEntity<String> responseEntity = rest.exchange(uri, HttpMethod.GET, requestEntity, String.class);
+        ResponseEntity<String> responseEntity = rest.exchange(credentials.getUrl(), HttpMethod.GET, requestEntity, String.class);
         this.setStatus(responseEntity.getStatusCode());
-        System.out.println(responseEntity.getBody().toString());
         JSONArray issues = new JSONObject(responseEntity.getBody()).getJSONArray("issues");
-        Map rootTasks = new HashMap();
-        List subTasks = new ArrayList();
         for (int i = 0; i < issues.length(); i++) {
             JSONObject issue = issues.getJSONObject(i);
-            if (issue.getJSONObject("field").getJSONObject("issueType").getString("subtask").equals("false")) {
+            if (issue.getJSONObject("fields").getJSONObject("issuetype").getBoolean("subtask") == false) {
                 TaskJiraDTO rootTaskDto = new TaskJiraDTO();
-                rootTaskDto.setName(issue.getJSONObject("field").getString("summary"));
-                rootTaskDto.setCreatedDate(issue.getJSONObject("field").getString("created"));
-                rootTaskDto.setStatusId(issue.getJSONObject("field").getJSONObject("status").getJSONObject("statusCategory").getInt("id"));
-                rootTaskDto.setPriorityId(issue.getJSONObject("field").getJSONObject("priority").getInt("id"));
+                rootTaskDto.setName(issue.getJSONObject("fields").getString("summary"));
+                rootTaskDto.setCreatedDate(issue.getJSONObject("fields").getString("created"));
+                rootTaskDto.setStatusId(issue.getJSONObject("fields").getJSONObject("status").getJSONObject("statusCategory").getInt("id"));
+                rootTaskDto.setPriorityId(issue.getJSONObject("fields").getJSONObject("priority").getInt("id"));
                 rootTaskDto.setJiraKey(issue.getString("key"));
-                rootTaskDto.setAssignTo(issue.getInt("assignTo"));
+                if ((issue.getJSONObject("fields").getJSONObject("assignee").get("emailAddress").equals(credentials.getName()) || issue.getJSONObject("fields").getJSONObject("assignee").get("key").equals(credentials.getName()))) {
+                    rootTaskDto.setAssignTo(credentials.getUserId());
+                } else {
+                    rootTaskDto.setAssignTo(0);
+                }
                 Task rootTask = taskService.createTaskByJiraDTO(rootTaskDto);
 
                 int rootTaskId = rootTask.getId();
@@ -75,12 +77,16 @@ public class JiraService {
                     if (issue.getJSONObject("parent").getString("key").equals(rootTaskDto.getJiraKey())) {
                         JSONObject subIssue = issues.getJSONObject(a);
                         TaskJiraDTO subTaskDto = new TaskJiraDTO();
-                        subTaskDto.setName(issue.getJSONObject("field").getString("summary"));
-                        subTaskDto.setCreatedDate(issue.getJSONObject("field").getString("created"));
-                        subTaskDto.setStatusId(issue.getJSONObject("field").getJSONObject("status").getJSONObject("statusCategory").getInt("id"));
-                        subTaskDto.setPriorityId(issue.getJSONObject("field").getJSONObject("priority").getInt("id"));
+                        subTaskDto.setName(issue.getJSONObject("fields").getString("summary"));
+                        subTaskDto.setCreatedDate(issue.getJSONObject("fields").getString("created"));
+                        subTaskDto.setStatusId(issue.getJSONObject("fields").getJSONObject("status").getJSONObject("statusCategory").getInt("id"));
+                        subTaskDto.setPriorityId(issue.getJSONObject("fields").getJSONObject("priority").getInt("id"));
                         subTaskDto.setJiraKey(issue.getString("key"));
-                        subTaskDto.setAssignTo(issue.getInt("assignTo"));
+                        if ((issue.getJSONObject("fields").getJSONObject("assignee").get("emailAddress").equals(credentials.getName()) || issue.getJSONObject("fields").getJSONObject("assignee").get("key").equals(credentials.getName()))) {
+                            rootTaskDto.setAssignTo(credentials.getUserId());
+                        } else {
+                            rootTaskDto.setAssignTo(0);
+                        }
                         Task subTask = taskService.createTaskByJiraDTO(subTaskDto);
                     }
                 }

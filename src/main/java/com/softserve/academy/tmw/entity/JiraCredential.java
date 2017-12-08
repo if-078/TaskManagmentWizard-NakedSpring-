@@ -3,8 +3,17 @@ package com.softserve.academy.tmw.entity;
 public class JiraCredential {
     private String url;
     private String creds;
-
+    private String name;
     private String key;
+    private Integer userId;
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
 
     public String getUrl() {
         return url;
@@ -28,5 +37,13 @@ public class JiraCredential {
 
     public void setKey(String key) {
         this.key = key;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

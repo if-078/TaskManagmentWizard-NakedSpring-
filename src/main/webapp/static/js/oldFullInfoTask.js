@@ -62,7 +62,7 @@ var showFull = function (id) {
             $('#tmw-task-estimateTime').val(taskDTO.estimateTime);
             $('#tmw-task-spentTime').val(taskDTO.spentTime);
             $('#tmw-task-leftTime').val(taskDTO.leftTime);
-            taskDTO.author != null ? fillSelectUserAuthor(taskDTO.author.id) : $('#tmw-task-author').val('');
+            fillSelectUserAuthor(userId);
             taskDTO.assignTo != null ? fillSelectUserAssign(taskDTO.assignTo.id) : $('#tmw-task-assignTo').val('');
             taskDTO.priority != null ? fillSelectPriority(taskDTO.priority.id) : $('#tmw-task-priority').val('');
             taskDTO.status != null ? fillSelectStatus(taskDTO.status.id) : $('#tmw-task-status').val('');
@@ -109,7 +109,7 @@ $('#tmw-create-task').on('click', function() {
     $('#tmw-task-estimateTime').val("08:00:00");
     $('#tmw-task-spentTime').val("00:00:00");
     $('#tmw-task-leftTime').val("08:00:00");
-    fillSelectUserAuthor(null);
+    fillSelectUserAuthor(userId);
     fillSelectUserAssign(null);
     fillSelectPriority(null);
     fillSelectStatus(null);

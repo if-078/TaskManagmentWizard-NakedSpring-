@@ -133,10 +133,11 @@ public class TaskDao extends EntityDao<Task> implements TaskDaoInterface {
       refreshEstimateTimeOfParents(task.getId(), task.getSpentTime(), task.getLeftTime());
     }
 
+
     String sql = "INSERT INTO " + table
         + " (name, created_date, planning_date, start_date, end_date, estimate_time, spent_time, left_time, assign_to, status_id, "
-        + "priority_id, parent_id, author_id, project_id) VALUES (:name, :created_date, :planning_date, :start_date, :end_date, :estimate_time, "
-        + ":spent_time, :left_time, :assign_to, :status_id, :priority_id, :parent_id, :author_id, :project_id)";
+        + "priority_id, parent_id, author_id, project_id, jira_key) VALUES (:name, :created_date, :planning_date, :start_date, :end_date, :estimate_time, "
+        + ":spent_time, :left_time, :assign_to, :status_id, :priority_id, :parent_id, :author_id, :project_id, :jira_key)";
 
     param.addValue("name", task.getName());
     param.addValue("created_date", new java.sql.Timestamp(new Date().getTime()));
@@ -152,6 +153,7 @@ public class TaskDao extends EntityDao<Task> implements TaskDaoInterface {
     param.addValue("parent_id", task.getParentId());
     param.addValue("author_id", task.getAuthorId());
     param.addValue("project_id", task.getProjectId());
+    param.addValue("jira_key", task.getJiraKey());
     param.addValue("id", task.getId());
 
     jdbcTemplate.update(sql, param, keyHolder);
@@ -261,6 +263,7 @@ public class TaskDao extends EntityDao<Task> implements TaskDaoInterface {
   }
 
   @Override
+
   public void refreshEstimateTimeOfParents(int id, int diffSpent, int diffLeft) {
     MapSqlParameterSource param = new MapSqlParameterSource();
     String sql =
@@ -278,6 +281,7 @@ public class TaskDao extends EntityDao<Task> implements TaskDaoInterface {
   public List<Task> getParents(int id) {
     String query = "select * from " + table + " where id = (select parent_id from " + table
         + " where id = :id)";
+
     List<Task> tasks;
     List<Task> tasksFinish = new ArrayList<>();
     int parentId;
@@ -298,6 +302,7 @@ public class TaskDao extends EntityDao<Task> implements TaskDaoInterface {
   }
 
   @Override
+
   public List<Task> getLastChildrenTask(int id) {
     Task task = findOne(id);
     List<Task> parents = getParents(id);
@@ -310,4 +315,14 @@ public class TaskDao extends EntityDao<Task> implements TaskDaoInterface {
     }
     return lastChildren;
   }
+
+  public int getTaskByJiraKey(String key) {
+    String query = "SELECT id FROM " + table + " WHERE jira_key = :jira_key";
+    Task task = jdbcTemplate
+            .queryForObject(query, new MapSqlParameterSource("jira_key", key), new TaskMapper());
+    int id = task.getId();
+    return id;
+  }
+
+
 }

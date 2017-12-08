@@ -1,9 +1,6 @@
 package com.softserve.academy.tmw.controller;
 
-import com.softserve.academy.tmw.dto.TaskDTO;
-import com.softserve.academy.tmw.dto.TaskFullInfoDTO;
-import com.softserve.academy.tmw.dto.TaskTableDTO;
-import com.softserve.academy.tmw.dto.TaskTreeDTO;
+import com.softserve.academy.tmw.dto.*;
 import com.softserve.academy.tmw.entity.Comment;
 import com.softserve.academy.tmw.entity.SpentTime;
 import com.softserve.academy.tmw.entity.Tag;
@@ -110,11 +107,13 @@ public class TaskController {
     return taskService.createTaskByDTO(taskDTO);
   }
 
+
   @PostMapping("/invite")
   @ResponseStatus(HttpStatus.ACCEPTED)
   public boolean inviteUserToProject (@RequestBody String email, @RequestBody Integer projectId){
     return taskService.inviteUserToProject(email, projectId);
   }
+
 
   @PutMapping
   @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -158,6 +157,7 @@ public class TaskController {
     return taskService.getSubtasks(id);
   }
 
+
   @PutMapping("/invite/{userId}/{projectId}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
   boolean inviteUser( @PathVariable int userId, @PathVariable int projectId, @RequestBody String invitedUserEmail) {
@@ -170,5 +170,6 @@ public class TaskController {
 
     return true;
   }
+
 
 }

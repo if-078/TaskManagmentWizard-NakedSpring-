@@ -2,6 +2,8 @@ package com.softserve.academy.tmw.configuration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.tomcat.jdbc.pool.DataSource;
+import org.apache.tomcat.jdbc.pool.PoolConfiguration;
+import org.apache.tomcat.jdbc.pool.PoolProperties;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -35,6 +37,9 @@ public class AppConfig {
 
   @Bean
   public DataSource getDataSource() {
+    PoolConfiguration configuration= new PoolProperties();
+    configuration.setMaxActive(1000);
+    configuration.setMaxIdle(900);
     DataSource dataSource = new DataSource();
     dataSource.setDriverClassName(driver);
     dataSource.setUrl(url);
@@ -76,4 +81,6 @@ public class AppConfig {
     sender.setSession(session);
     return sender;
   }
+
 }
+

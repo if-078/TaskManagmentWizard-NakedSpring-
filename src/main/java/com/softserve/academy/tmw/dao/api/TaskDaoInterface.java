@@ -35,4 +35,6 @@ public interface TaskDaoInterface extends EntityDaoInterface<Task>{
 
     boolean deleteTaskPlanning(int id);
 
+    int getTaskByJiraKey(String key);
+
 }

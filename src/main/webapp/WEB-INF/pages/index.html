@@ -120,6 +120,19 @@
             </div>
 
 
+            <!-- BUTTON JIRA -->
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <div class="col-xs-12 btn-group-vertical">
+                        <button id="jira-integration" type="button" class="btn btn-default btn-block">Jira integration</button>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
         </div>
         <!-- / SIDEBAR -->
 
@@ -135,6 +148,7 @@
                         <button id="tmw-btn-table-view" type="button" class="fc-button fc-state-default fc-corner-right"> Table </button>
                     </div>
 
+
                     <!-- PLANNING TABLE -->
                     <div id="tmw-main-planning-table" class="tmw-main-planning-table row hidden">
                         <div class="col-xs-12">
@@ -148,7 +162,8 @@
                     <div id="tmw-main-calendar" class="tmw-main-calendar row">
                         <div class="col-xs-12">
                             <div id="tmw-task-calendar" class="tmw-task-calendar"></div>
-                        </div>
+
+
                     </div>
                     <!-- / CALENDAR -->
 
@@ -298,7 +313,102 @@
         </div>
     </div>
 </div>
+
+
+<!-- Modal Jira-->
+<div class="modal fade" id="jira-modal-authorization" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="jiraModalLabel">Login to your Jira account</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form>
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <label for="jira-link">Login</label>
+                        <input type="text" class="form-control" id="jira-link">
+                    </div>
+                </div>
+
+
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <label for="jira-login">Login</label>
+                        <input type="text" class="form-control" id="jira-login">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <label for="jira-password">Password</label>
+                        <input type="text" class="form-control" id="jira-password">
+                    </div>
+                </div>
+
+
+
+            </form>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button id="jira-ok" type="button" class="btn btn-primary">Ok</button>
+            </div>
+
+        </div>
+    </div>
+
 </div>
+
+<div class="modal fade" id="jira-modal-choose-project" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" aria-hidden="true">
+            <div class="modal-header">
+                <h5 class="modal-title">Choose Jira project to import tasks</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <form>
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <ul id="jira-projects-list"></ul>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <div id="choose-project-text"></div>
+                    </div>
+                </div>
+
+            </form>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button id="jira-project-ok" type="button" class="btn btn-primary">Ok</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="jira-modal-success" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" aria-hidden="true">
+            <div class="modal-header">
+                <h5 class="modal-title">Successful import</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 
 
 
@@ -443,6 +553,7 @@
 <script src="static/js/inviteUser.js"></script>
 <script src="static/js/logSpentLeftTime.js"></script>
 <script src="static/js/loginOrRegistration.js"></script>
+<script src="static/js/jiraIntegration.js"></script>
 
 
 </html>

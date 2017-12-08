@@ -34,6 +34,12 @@ public class TagController {
     return tagService.create(tag);
   }
 
+  @PostMapping("/task/{id}")
+  @ResponseStatus(HttpStatus.NO_CONTENT)
+  public boolean setTagsToTask(@PathVariable Integer id, @RequestBody List<Tag> tag) {
+    return tagService.setTagsToTask(tag, id);
+  }
+
   @GetMapping("/{id}")
   public Tag get(@PathVariable Integer id) {
     return tagService.findOne(id);

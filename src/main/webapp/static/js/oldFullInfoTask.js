@@ -35,9 +35,6 @@ var refreshTree = function (method, data) {
 
 // SHOW FULL INFORMATION ABOUT THE TASK
 var showFull = function (id) {
-
-    currentEditTaskId = id;
-
     taskDTO = {};
     clearTaskModal();
     clearErrorTask();
@@ -52,7 +49,6 @@ var showFull = function (id) {
             var token = jqXHR.getResponseHeader('Authentication');
             window.sessionStorage.setItem("token", token);
             taskDTO = data;
-            console.log(taskDTO);
 
             var date = ((new Date(taskDTO.planningDate + 7200000)).toISOString()).split("T");
             $('#tmw-task-info').text(taskDTO.name);
@@ -87,9 +83,6 @@ var showFull = function (id) {
 // GET FULL INFORMATION ABOUT THE TASK
 
 $('#tmw-task-btn-save').on('click', function () {
-    getTagsAll();
-    tags = getSelectedTags();
-    console.log(tags);
     createOrUpdateTask(taskDTO);
 });
 
@@ -230,6 +223,9 @@ $('#tmw-create-tag').on('click', (function() {
         headers: createAuthToken(),
         success: function (data, textStatus, jqXHR) {
             inputSelectedTags(data);
+            getTagsAll();
+            tagsAll.push(data);
+            tags = getSelectedTags();
         },
         error: function (jqXHR, textStatus, errorThrown) {
             if (jqXHR.status === 401) {
@@ -259,7 +255,6 @@ function getSelectedTags() {
             }
         }
     }
-    console.log(tags);
     return tags;
 }
 
@@ -268,7 +263,6 @@ function getSelectedComments() {
 }
 
 function createTask(task) {
-    console.log(task);
     clearErrorTask();
     taskDTO = {};
     $.ajax({
@@ -284,10 +278,10 @@ function createTask(task) {
             refreshTree("create", data);
             clearTaskModal();
 
+            openNodeAllProjects();
             if (task.parentId == 0) {
 //                $('#tmw-treeview').jstree('close_All');
-                $('#tmw-treeview').jstree('open_node', '' + 0);
-                console.log("create project");
+//                $('#tmw-treeview').jstree('open_node', '' + 0);
             }
             else {
                 showDataOnCalendarAndTable();
@@ -306,7 +300,6 @@ function createTask(task) {
 function updateTask(task) {
     taskDTO = {};
     clearErrorTask();
-    console.log(task);
     $.ajax({
         url: '/api/tasks',
         data: JSON.stringify(task),
@@ -534,7 +527,6 @@ function getTagsAll() {
         },
         error: function () {
             error.apply(this, arguments);
-            console.log("tags not loaded some error");
         }
     });
 
@@ -547,12 +539,11 @@ function inputSelectedTags(tag) {
     var span = '<span class="tagbox-label" tagbox-index="' + i +
         '" style="height: 18px; line-height: 18px;">' + tag.name + '<a href="javascript:;" ' +
         'class="tagbox-remove"></a></span>';
-    if (createdTag == null) {
+    if (i == 0) {
         $('#tag-input-modal span:first span:first').after(span);
     }
     else {
         $('#tag-input-modal span:first span:last').after(span);
-        createdTag = null;
     }
     $('#tag-input-modal span:first').removeClass("textbox-focused").append('<input type="hidden" class=' +
         '"textbox-value" name value="' + tag.id + '">');

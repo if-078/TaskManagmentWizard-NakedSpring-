@@ -51,7 +51,7 @@ public class TokenAuthenticationFilter extends AbstractAuthenticationProcessingF
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
         SecurityContextHolder.clearContext();
-        System.out.println(failed.getMessage());
+       // System.out.println(failed.getMessage());
         response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
     }
 }

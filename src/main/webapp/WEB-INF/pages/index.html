@@ -9,9 +9,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
     <!-- Bootstrap v3.x -->
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css"
+          href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css"
+          integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
 
     <!-- jsTree -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css">
@@ -47,7 +49,8 @@
     <link href="static/lib/fullcalendar-scheduler/scheduler.min.css" rel="stylesheet">
 
     <!-- Bootstrap Datepicker -->
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker3.min.css">
+    <link rel="stylesheet" type="text/css"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker3.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js"></script>
 
     <!-- Moment.js Business Time Plugin -->>
@@ -131,14 +134,19 @@
                 <div id="calendar-and-table-area">
 
                     <div id="tmw-btn-switch" class="fc-button-group">
-                        <button id="tmw-btn-calendar-view" type="button" class="fc-button fc-state-default fc-corner-left fc-state-active">Calendar</button>
-                        <button id="tmw-btn-table-view" type="button" class="fc-button fc-state-default fc-corner-right"> Table </button>
+                        <button id="tmw-btn-calendar-view" type="button"
+                                class="fc-button fc-state-default fc-corner-left fc-state-active">Calendar
+                        </button>
+                        <button id="tmw-btn-table-view" type="button"
+                                class="fc-button fc-state-default fc-corner-right"> Table
+                        </button>
                     </div>
 
                     <!-- PLANNING TABLE -->
                     <div id="tmw-main-planning-table" class="tmw-main-planning-table row hidden">
                         <div class="col-xs-12">
-                            <table id="tmw-task-planning-table" class="tmw-task-planning-table table table-bordered table-hover"
+                            <table id="tmw-task-planning-table"
+                                   class="tmw-task-planning-table table table-bordered table-hover"
                                    cellspacing="0" style="width: 100%;"></table>
                         </div>
                     </div>
@@ -257,8 +265,8 @@
                     <div class="form-row">
                         <div id="tag-input-modal" class="form-group col-md-12" style="margin-bottom: 0; width:100%">
                             <label for="tagBoxModal">Tags</label>
-                             <!--Build your select:-->
-                                <input id="tagBoxModal" class="easyui-tagbox" style="width:100%;" data-options="
+                            <!--Build your select:-->
+                            <input id="tagBoxModal" class="easyui-tagbox" style="width:100%;" data-options="
                    loader: tagLoader,
                    mode: 'remote',
                    valueField: 'id',
@@ -276,9 +284,12 @@
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-12" style="width: 100%">
-                        <input type="button" id="tmw-show-comment" value="Show/Hide comments" style="border-radius: 4px; margin: 10px; margin-left: 0; border-color: #c8c8c8">
-                        <input type="button" id="tmw-create-tag" value="Create new tag" style="border-radius: 4px; border-color: #c8c8c8; margin: 10px; margin-left: 0">
-                        <input type="text" id="tmw-tag-name" placeholder="New tag" style="border-radius: 4px; width: 47%">
+                        <input type="button" id="tmw-show-comment" value="Show/Hide comments"
+                               style="border-radius: 4px; margin: 10px; margin-left: 0; border-color: #c8c8c8">
+                        <input type="button" id="tmw-create-tag" value="Create new tag"
+                               style="border-radius: 4px; border-color: #c8c8c8; margin: 10px; margin-left: 0">
+                        <input type="text" id="tmw-tag-name" placeholder="New tag"
+                               style="border-radius: 4px; width: 47%">
                         <div class="form-control" id="tmw-task-comments" style="display: none;
                         margin-bottom: 10px; height: auto"></div>
                         <textarea class="form-control" rows="4" id="tmw-task-comment" placeholder="Comment"
@@ -291,15 +302,16 @@
 
             </form>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" style="border: 1px solid">Cancel</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" style="border: 1px solid">Cancel
+                </button>
                 <button id="tmw-task-btn-save" type="button" class="btn btn-primary">Save</button>
-                <button id="tmw-task-btn-delete" type="button" class="btn btn-primary" data-dismiss="modal">Delete</button>
+                <button id="tmw-task-btn-delete" type="button" class="btn btn-primary" data-dismiss="modal">Delete
+                </button>
             </div>
         </div>
     </div>
 </div>
 </div>
-
 
 
 <div id="login">
@@ -316,7 +328,8 @@
                     <div class="form-group">
                         <input type="password" class="form-control" id="password1"
                                placeholder="password" required name="password">
-                        <label id="password-label" for="password1" style="display: none; color:red">Logon failure: unknown user name or bad password!</label>
+                        <label id="password-label" for="password1" style="display: none; color:red">Logon failure:
+                            unknown user name or bad password!</label>
                     </div>
                     <button type="submit" class="btn btn-default">login</button>
                     <span style="float:right; margin-top: 5px;"><a
@@ -344,7 +357,8 @@
                         <label for="reg-email">Enter email</label>
                         <input type="email" class="form-control" id="reg-email" placeholder="email"
                                name="remail">
-                        <label id="existing-email" for="reg-email" style="display: none; color:red">User with the same email exists!</label>
+                        <label id="existing-email" for="reg-email" style="display: none; color:red">User with the same
+                            email exists!</label>
                     </div>
                     <div class="form-group">
                         <label for="reg-password">Enter password</label>
@@ -365,7 +379,8 @@
 </div>
 
 
-<div class="modal fade" id="inviteUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="inviteUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -377,7 +392,8 @@
             <div class="modal-body">
                 <div class="form-group">
                     <label for="tmw-invite-email">Enter email</label>
-                    <input id="tmw-invite-email" type="email" class="form-control" placeholder="email" name="invite-email">
+                    <input id="tmw-invite-email" type="email" class="form-control" placeholder="email"
+                           name="invite-email">
                 </div>
             </div>
             <div class="modal-footer">
@@ -389,7 +405,8 @@
 </div>
 
 
-<div class="modal fade" id="tmw-worklog" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="tmw-worklog" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
     <div id="tmw-worklog-dialog" class="modal-dialog" role="document">
         <div class="modal-content">
 
@@ -405,27 +422,36 @@
                     <input id="tmw-total-spent-time" type="text" class="form-control" disabled>
                 </div>
 
-                    <div class="form-group col-md-4">
-                        <label for="tmw-set-spent-time">Add Spent Time</label>
-                        <input id="tmw-set-spent-time" type="time" class="form-control">
-                    </div>
+                <div class="form-group col-md-4">
+                    <label for="tmw-set-spent-time">Add Spent Time</label>
+                    <input id="tmw-set-spent-time" type="time" class="form-control">
+                </div>
 
-                    <div class="form-group col-md-4">
-                        <label for="tmw-set-left-time">Left Time</label>
-                        <input id="tmw-set-left-time" type="time" class="form-control">
-                    </div>
+                <div class="form-group col-md-4">
+                    <label for="tmw-set-left-time">Left Time</label>
+                    <input id="tmw-set-left-time" type="time" class="form-control">
+                </div>
 
             </div>
 
+            <div class="modal-body">
+
+
+                <div class="form-group col-md-12">
+                    <textarea id="tmw-body-worklog-users" name="textNote" class="form-control col-md-12" style="resize: none" rows="6"></textarea>
+                </div>
+
+            </div>
+
+
             <div id="tmw-spent-footer" class="modal-footer">
-                <button id="tmw-btn-cancel-add" type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button id="tmw-btn-cancel-add" type="button" class="btn btn-secondary" data-dismiss="modal">Cancel
+                </button>
                 <button id="tmw-btn-add-spent-time" type="button" class="btn btn-primary">Save</button>
             </div>
         </div>
     </div>
 </div>
-
-
 
 
 </body>

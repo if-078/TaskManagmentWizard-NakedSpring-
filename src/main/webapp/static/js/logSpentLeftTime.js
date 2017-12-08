@@ -21,11 +21,23 @@ $('#tmw-btn-task-worklog').on('click', function () {
 
                         success: function (workLogByTask) {
 
-                            console.log(workLogByTask);
 
-                            document.getElementById("tmw-total-spent-time").value = convertMinuteToHoursAndMinuteForWorkLog(task.spentTime);
+                            var totalSpentTime = 0;
+                            var workLogUsers = '';
+                            for(var i=0 ; i<workLogByTask.length; i++){
+                                totalSpentTime = totalSpentTime + workLogByTask[i].logTime;
+                                workLogUsers = workLogUsers + workLogByTask[i].date + ' - ' + workLogByTask[i].userName + ' - ' +
+                                    convertMinuteToHoursAndMinuteForWorkLog(workLogByTask[i].logTime) + '\n';
+
+                            }
+
+                            console.log(workLogUsers);
+
+                            document.getElementById("tmw-total-spent-time").value = convertMinuteToHoursAndMinuteForWorkLog(totalSpentTime);
                             document.getElementById("tmw-set-spent-time").value = '00:00';
                             document.getElementById("tmw-set-left-time").value = convertMinuteToHoursAndMinuteForWorkLog(task.leftTime);
+                            document.getElementById("tmw-body-worklog-users").value = workLogUsers;
+
 
                             if (data.length == 0) {
                                 //document.getElementById("tmw-set-spent-time").setAttribute("disabled", false);

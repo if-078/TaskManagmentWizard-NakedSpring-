@@ -1,5 +1,6 @@
 package com.softserve.academy.tmw.service.impl;
 
+import com.softserve.academy.tmw.dao.impl.JiraIntegrationDao;
 import com.softserve.academy.tmw.dto.TaskJiraDTO;
 import com.softserve.academy.tmw.entity.JiraCredential;
 import com.softserve.academy.tmw.entity.Task;
@@ -10,12 +11,17 @@ import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service
 public class JiraService {
     @Autowired
     private TaskService taskService;
+    @Autowired
+    private JiraIntegrationDao jiraIntegrationDao;
     private RestTemplate rest;
     private HttpHeaders headers;
     private HttpStatus status;
@@ -55,13 +61,14 @@ public class JiraService {
         HttpEntity<String> requestEntity = new HttpEntity<String>("", headers);
         ResponseEntity<String> responseEntity = rest.exchange(credentials.getUrl(), HttpMethod.GET, requestEntity, String.class);
         this.setStatus(responseEntity.getStatusCode());
-        TaskJiraDTO project=new TaskJiraDTO();
+        TaskJiraDTO project = new TaskJiraDTO();
         project.setJiraKey(credentials.getProjectKey());
         project.setName(credentials.getProjectName());
         try {
-            Task projectTask = taskService.createTaskByJiraDTO(project);
-        }catch (Exception e){
+            Task projectTask = jiraIntegrationDao.create(dtoToTask(project));
+        } catch (Exception e) {
             e.getCause();
+            e.printStackTrace();
         }
         JSONArray issues = new JSONObject(responseEntity.getBody()).getJSONArray("issues");
         for (int i = 0; i < issues.length(); i++) {
@@ -73,28 +80,36 @@ public class JiraService {
                 rootTaskDto.setStatusId(issue.getJSONObject("fields").getJSONObject("status").getJSONObject("statusCategory").getInt("id"));
                 rootTaskDto.setPriorityId(issue.getJSONObject("fields").getJSONObject("priority").getInt("id"));
                 rootTaskDto.setJiraKey(issue.getString("key"));
-                if ((issue.getJSONObject("fields").getJSONObject("assignee").get("emailAddress").equals(credentials.getName()) || issue.getJSONObject("fields").getJSONObject("assignee").get("key").equals(credentials.getName()))) {
-                    rootTaskDto.setAssignTo(credentials.getUserId());
-                } else {
-                    rootTaskDto.setAssignTo(0);
+                if (issue.getJSONObject("fields").optJSONObject("assignee") != null) {
+                    if (issue.getJSONObject("fields").getJSONObject("assignee").get("emailAddress").equals(credentials.getName()) || issue.getJSONObject("fields").getJSONObject("assignee").get("key").equals(credentials.getName())) {
+                        rootTaskDto.setAssignTo(credentials.getUserId());
+                    } else {
+                        rootTaskDto.setAssignTo(0);
+                    }
+
                 }
                 Task rootTask = taskService.createTaskByJiraDTO(rootTaskDto);
                 int rootTaskId = rootTask.getId();
                 for (int a = 0; a < issues.length(); a++) {
-                    if (issue.getJSONObject("parent").getString("key").equals(rootTaskDto.getJiraKey())) {
-                        JSONObject subIssue = issues.getJSONObject(a);
-                        TaskJiraDTO subTaskDto = new TaskJiraDTO();
-                        subTaskDto.setName(issue.getJSONObject("fields").getString("summary"));
-                        subTaskDto.setCreatedDate(issue.getJSONObject("fields").getString("created"));
-                        subTaskDto.setStatusId(issue.getJSONObject("fields").getJSONObject("status").getJSONObject("statusCategory").getInt("id"));
-                        subTaskDto.setPriorityId(issue.getJSONObject("fields").getJSONObject("priority").getInt("id"));
-                        subTaskDto.setJiraKey(issue.getString("key"));
-                        if ((issue.getJSONObject("fields").getJSONObject("assignee").get("emailAddress").equals(credentials.getName()) || issue.getJSONObject("fields").getJSONObject("assignee").get("key").equals(credentials.getName()))) {
-                            rootTaskDto.setAssignTo(credentials.getUserId());
+                    JSONObject subIssue = issues.getJSONObject(a);
+                    if (issue.getJSONObject("fields").getJSONObject("issuetype").getBoolean("subtask") == true) {
+                        if (subIssue.getJSONObject("fields").getJSONObject("parent").getString("key").equals(rootTaskDto.getJiraKey())) {
+                            TaskJiraDTO subTaskDto = new TaskJiraDTO();
+                            subTaskDto.setName(subIssue.getJSONObject("fields").getString("summary"));
+                            subTaskDto.setCreatedDate(subIssue.getJSONObject("fields").getString("created"));
+                            subTaskDto.setStatusId(subIssue.getJSONObject("fields").getJSONObject("status").getJSONObject("statusCategory").getInt("id"));
+                            subTaskDto.setPriorityId(subIssue.getJSONObject("fields").getJSONObject("priority").getInt("id"));
+                            subTaskDto.setJiraKey(subIssue.getString("key"));
+                            if ((subIssue.getJSONObject("fields").getJSONObject("assignee").get("emailAddress").equals(credentials.getName()) || issue.getJSONObject("fields").getJSONObject("assignee").get("key").equals(credentials.getName()))) {
+                                rootTaskDto.setAssignTo(credentials.getUserId());
+                            } else {
+                                rootTaskDto.setAssignTo(0);
+                            }
+
+                            Task subTask = jiraIntegrationDao.create(dtoToTask(subTaskDto));
                         } else {
-                            rootTaskDto.setAssignTo(0);
+                            continue;
                         }
-                        Task subTask = taskService.createTaskByJiraDTO(subTaskDto);
                     }
                 }
             }
@@ -110,5 +125,23 @@ public class JiraService {
         this.status = status;
     }
 
+    public Task dtoToTask(TaskJiraDTO taskJiraDTO) {
+        Task task = new Task();
+        task.setName(taskJiraDTO.getName());
+        task.setAssignTo(taskJiraDTO.getAssignTo());
+        task.setPriorityId(taskJiraDTO.getPriorityId());
+        task.setStatusId(taskJiraDTO.getStatusId());
+        task.setJiraKey(taskJiraDTO.getJiraKey());
+        task.setParentId(taskJiraDTO.getParentId());
 
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ", Locale.getDefault());
+        if (taskJiraDTO.getCreatedDate() != null) {
+            try {
+                task.setCreatedDate(dateFormat.parse(taskJiraDTO.getCreatedDate()));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+        return task;
+    }
 }

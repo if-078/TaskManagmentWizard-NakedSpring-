@@ -131,7 +131,7 @@ public class TaskDao extends EntityDao<Task> implements TaskDaoInterface {
       task.setPriorityId(1);
     }
 
-    refreshEstimateTimeOfParents(task.getId(), task.getEstimateTime(), task.getSpentTime(), task.getLeftTime());
+    //refreshEstimateTimeOfParents(task.getId(), task.getEstimateTime(), task.getSpentTime(), task.getLeftTime());
 
     String sql = "INSERT INTO " + table
         + " (name, created_date, planning_date, start_date, end_date, estimate_time, spent_time, left_time, assign_to, status_id, "

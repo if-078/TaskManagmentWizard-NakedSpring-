@@ -58,7 +58,7 @@ public class UserService implements UserServiceInterface {
     Hashids hashids = new Hashids();
     hashids.encode(user1.getId());
     String verifecationEmailMessage =
-        "http://localhost:8585/register/verify/" + hashids.encode(user1.getId());
+        "http://18.221.173.209:8585//register/verify/" + hashids.encode(user1.getId());
     sendEmailToUser(user1, verifecationEmailMessage, "Task Management Wizard email verification");
     return user1;
   }

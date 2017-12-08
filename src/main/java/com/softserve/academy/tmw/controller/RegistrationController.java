@@ -40,7 +40,7 @@ public class RegistrationController {
     try {
       boolean b = userService.verify(key);
       if (b) {
-        response.sendRedirect("http://localhost:8585");
+        response.sendRedirect("http://18.221.173.209:8585");
       }
     } catch (IOException e) {
       e.printStackTrace();
@@ -52,7 +52,7 @@ public class RegistrationController {
   void acceptInvitation (@PathVariable String key, HttpServletResponse response){
     try {
           if (userService.acceptProjectInvitation(key))
-              response.sendRedirect("http://localhost:8585");
+              response.sendRedirect("http://18.221.173.209:8585");
     } catch (IOException e) {
       e.printStackTrace();
     }

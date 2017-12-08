@@ -309,7 +309,7 @@ public class TaskService implements TaskServiceInterface {
     @Override
     public boolean inviteUserToProject(String email, Integer projectId){
         User user = serviceUser.findByEmail(email);
-        String message = "http://localhost:8585/register/invitationaccept/";
+        String message = "http://18.221.173.209:8585/register/invitationaccept/";
         Hashids hashids = new Hashids();
         message += hashids.encode(user.getId(), projectId);
         String subject = "You have got invitation to the project!!!";

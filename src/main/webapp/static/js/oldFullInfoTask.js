@@ -1,4 +1,6 @@
+var createdTag = null;
 var tags = [];
+var tagsAll = [];
 var comments = [];
 var taskID = null;
 var taskDTO = {};
@@ -35,8 +37,6 @@ var refreshTree = function (method, data) {
 var showFull = function (id) {
 
     currentEditTaskId = id;
-    console.log('INPUT in showFull');
-    console.log('id = ', id);
 
     taskDTO = {};
     clearTaskModal();
@@ -66,11 +66,16 @@ var showFull = function (id) {
             taskDTO.assignTo != null ? fillSelectUserAssign(taskDTO.assignTo.id) : $('#tmw-task-assignTo').val('');
             taskDTO.priority != null ? fillSelectPriority(taskDTO.priority.id) : $('#tmw-task-priority').val('');
             taskDTO.status != null ? fillSelectStatus(taskDTO.status.id) : $('#tmw-task-status').val('');
-//            fillSelectTags(taskDTO.id);
             fillSelectComments(taskDTO.id);
-                    $('#tagBoxModal').combobox('clear');
-                    $('#tagBoxModal').combobox('reload');
-                    $('#tag-input-modal span:first').css({"width": "100%", "border": "1px solid", "border-color": "#ccc"});
+            fillSelectTags(taskDTO.id);
+            $('#tag-input-modal span:first').css({"width": "100%", "border": "1px solid", "border-color": "#ccc"});
+
+            if (userId == firstManagerId || userId == secondaryManagerId) {
+                $('#tmw-invite-btn').show();
+            }
+            else {
+                $('#tmw-invite-btn').hide();
+            }
 
             $('#tmw-modal').modal('show');
         },
@@ -86,8 +91,6 @@ var showFull = function (id) {
 
 
 // GET FULL INFORMATION ABOUT THE TASK
-//$('#tag-input-modal span:first').css({"width": "100%", "border-color": "#ccc"});
-//$('#tag-input-modal a').css({"background-color": "#ccc","color": "#ccc"});
 
 $('#tmw-task-btn-save').on('click', function () {
     createOrUpdateTask(taskDTO);
@@ -100,20 +103,20 @@ $('#tmw-create-task').on('click', function() {
     day = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + day;
     $('#tmw-task-info').hide();
     $('#tmw-task-name').show();
-                $('#tmw-task-projectId').text(selectedProjectId);
-                $('#tmw-task-parentId').text(selectedTaskId);
-                $('#tmw-task-draftPlanning').val(day);
-                $('#tmw-task-estimateTime').val("08:00:00");
-                $('#tmw-task-spentTime').val("00:00:00");
-                $('#tmw-task-leftTime').val("08:00:00");
-                fillSelectUserAuthor(null);
-                fillSelectUserAssign(null);
-                fillSelectPriority(null);
-                fillSelectStatus(null);
-                fillSelectComments(null);
-                    $('#tagBoxModal').combobox('clear');
-                    $('#tagBoxModal').combobox('reload');
-                    $('#tag-input-modal span:first').css({"width": "100%", "border": "1px solid", "border-color": "#ccc"});
+    $('#tmw-task-projectId').text(selectedProjectId);
+    $('#tmw-task-parentId').text(selectedTaskId);
+    $('#tmw-task-draftPlanning').val(day);
+    $('#tmw-task-estimateTime').val("08:00:00");
+    $('#tmw-task-spentTime').val("00:00:00");
+    $('#tmw-task-leftTime').val("08:00:00");
+    fillSelectUserAuthor(null);
+    fillSelectUserAssign(null);
+    fillSelectPriority(null);
+    fillSelectStatus(null);
+    fillSelectComments(null);
+    $('#tagBoxModal').combobox('clear');
+    $('#tagBoxModal').combobox('reload');
+    $('#tag-input-modal span:first').css({"width": "100%", "border": "1px solid", "border-color": "#ccc"});
 
     $('#tmw-modal').modal('show');
     $('#tmw-task-name').blur(function() {
@@ -185,11 +188,10 @@ function createOrUpdateTask(taskDTO) {
                 "priorityId": $('#tmw-task-priority').find(":selected").val(),
                 "parentId": state.parentId,
                 "projectId": $('#tmw-task-projectId').text(),
-                "tags": getSelectedTags(),
+                "tags": tags,
                 "comments": getSelectedComments()
             }
 
-            showComment();
         createTask(task);
     } else {
         task =
@@ -208,10 +210,9 @@ function createOrUpdateTask(taskDTO) {
                 "priorityId": $('#tmw-task-priority').find(":selected").val(),
                 "parentId": taskDTO.parentId,
                 "projectId": taskDTO.projectId,
-                "tags": getSelectedTags(),
+                "tags": tags,
                 "comments": getSelectedComments()
             }
-        showComment();
         updateTask(task);
     }
 }
@@ -219,20 +220,22 @@ function createOrUpdateTask(taskDTO) {
 $('#tmw-create-tag').on('click', (function() {
     var tagName = $('#tmw-tag-name').val();
     $('#tmw-tag-name').val('');
-    var tag = {
+    createdTag = {
         "name": tagName,
         "userId": userId,
         "projectId": selectedProjectId
     }
     $.ajax({
         url: 'api/tags',
-        data: JSON.stringify(tag),
+        data: JSON.stringify(createdTag),
         type: 'POST',
         contentType: 'application/json',
         headers: createAuthToken(),
         success: function (data, textStatus, jqXHR) {
-                    $('#tagBoxModal').combobox('clear');
-                    $('#tagBoxModal').combobox('reload');
+            inputSelectedTags(data);
+            getTagsAll();
+            tagsAll.push(data);
+            tags = getSelectedTags();
         },
         error: function (jqXHR, textStatus, errorThrown) {
             if (jqXHR.status === 401) {
@@ -246,19 +249,23 @@ $('#tmw-create-tag').on('click', (function() {
 }));
 
 function getSelectedTags() {
-    var selectedIdOfTags = $('#tmw-tag-multi-select').val();
-    var selectedTags = [];
-
-    for (var i = 0; i < tags.length; i++) {
-        for (var j = 0; j < selectedIdOfTags.length; j++) {
-            if (tags[i].id == selectedIdOfTags[j]) {
-                selectedTags.push(tags[i]);
+    tags = [];
+    var tagsItems = $('#tag-input-modal span.tagbox-label');
+    var tagsId = [];
+    for (var i = 0; i < tagsItems.length; i++) {
+        for (var j = 0; j < tagsAll.length; j++) {
+            var tag = tagsAll[j];
+            if (tag.name == tagsItems[i].innerText) {
+                tags.push({
+                    "id": tag.id,
+                    "name": tag.name,
+                    "userId": tag.userId
+                });
                 break;
             }
         }
     }
-    return selectedTags;
-
+    return tags;
 }
 
 function getSelectedComments() {
@@ -276,16 +283,18 @@ function createTask(task) {
         headers: createAuthToken(),
         success: function (data) {
             $('#tmw-modal').modal('hide');
+            if ($('#tmw-task-comment').css('display') != 'none')
+                showComment();
             refreshTree("create", data);
             clearTaskModal();
 
+            openNodeAllProjects();
             if (task.parentId == 0) {
 //                $('#tmw-treeview').jstree('close_All');
-                $('#tmw-treeview').jstree('open_node', '' + 0);
-                console.log("create project");
+//                $('#tmw-treeview').jstree('open_node', '' + 0);
             }
             else {
-                  showDataOnCalendarAndTable();
+                showDataOnCalendarAndTable();
 
             }
         },
@@ -309,6 +318,8 @@ function updateTask(task) {
         headers: createAuthToken(),
         success: function () {
             $('#tmw-modal').modal('hide');
+            if ($('#tmw-task-comment').css('display') != 'none')
+                showComment();
             refreshTree("update", task);
             clearTaskModal();
             showDataOnCalendarAndTable();
@@ -331,6 +342,8 @@ function deleteTask(taskId) {
         success: function () {
             refreshTree("delete", taskId);
             showDataOnCalendarAndTable();
+            if ($('#tmw-task-comment').css('display') != 'none')
+                showComment();
             taskDTO = {};
         },
         error: function (jqXHR) {
@@ -477,105 +490,99 @@ function fillSelectStatus(id) {
 }
 
 function fillSelectTags(id) {
-    tags = [];
-    $('#tmw-tag-multi-select').empty();
+    tagsAll = [];
+    $('#tagBoxModal').combobox('clear');
+    $('#tagBoxModal').combobox('reload');
+
+    getTagsAll();
+    if (id != null)
+        $.ajax({
+            url: 'api/tasks/' + id + '/tags',
+            type: 'GET',
+            contentType: 'application/json',
+            headers: createAuthToken(),
+            success: function (data, textStatus, jqXHR) {
+                var token = jqXHR.getResponseHeader('Authentication');
+                window.sessionStorage.setItem("token", token);
+
+                for (var i = 0; i < data.length; i++) {
+                    inputSelectedTags(data[i]);
+                }
+
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                if (jqXHR.status === 401) {
+                    resetToken();
+                } else {
+                    throw new Error("an unexpected error occured: " + errorThrown);
+                }
+            }
+        });
+}
+
+function getTagsAll() {
     $.ajax({
         url: 'api/tags?projectId=' + selectedProjectId,
         type: 'GET',
         contentType: 'application/json',
-        headers: createAuthToken(),
-        success: function (data, textStatus, jqXHR) {
-            var token = jqXHR.getResponseHeader('Authentication');
-            window.sessionStorage.setItem("token", token);
-            tags = data;
-            console.log(tags);
-            $.each(data, function (i, tag) {
-                $('#tmw-tag-multi-select').append($('<option>', {
-                    value: tag.id,
-                    text: tag.name
-                }));
+        dataType: 'json',
+        success: function (data, jqXHR) {
+            tagsAll = $.map(data, function (item, index) {
+                return {
+                    id: item.id,
+                    name: item.name,
+                    userId: item.userId
+                };
             });
-
-            $('#tmw-tag-multi-select').multiselect({
-                buttonWidth: '100%',
-                inheritClass: true,
-                enableCaseInsensitiveFiltering: true,
-                dropRight: true,
-                numberDisplayed: 10,
-            });
-
-            $('#tmw-tag-multi-select').multiselect('deselectAll', false);
-            $('#tmw-tag-multi-select').multiselect('updateButtonText');
-
-            if (id != null) getTagsByTask(id);
         },
-        error: function (jqXHR, textStatus, errorThrown) {
-            if (jqXHR.status === 401) {
-                resetToken();
-            } else {
-                throw new Error("an unexpected error occured: " + errorThrown);
-            }
+        error: function () {
+            error.apply(this, arguments);
         }
     });
+
 }
 
-function getTagsByTask(id) {
-    $('#tmw-tag-multi-select').multiselect('deselectAll', false);
+function inputSelectedTags(tag) {
+    var i = $('#tag-input-modal span:first span:last').attr('tagbox-index');
+    if (i == undefined) i = 0;
+    else i = Number(i) + 1;
+    var span = '<span class="tagbox-label" tagbox-index="' + i +
+        '" style="height: 18px; line-height: 18px;">' + tag.name + '<a href="javascript:;" ' +
+        'class="tagbox-remove"></a></span>';
+    if (i == 0) {
+        $('#tag-input-modal span:first span:first').after(span);
+    }
+    else {
+        $('#tag-input-modal span:first span:last').after(span);
+    }
+    $('#tag-input-modal span:first').removeClass("textbox-focused").append('<input type="hidden" class=' +
+        '"textbox-value" name value="' + tag.id + '">');
+    $('#tag-input-modal span:first input:first').addClass("textbox-prompt");
 
-    $.ajax({
-        url: 'api/tasks/' + id + '/tags',
-        type: 'GET',
-        contentType: 'application/json',
-        headers: createAuthToken(),
-        success: function (data, textStatus, jqXHR) {
-            var token = jqXHR.getResponseHeader('Authentication');
-            window.sessionStorage.setItem("token", token);
-
-            $('#tmw-tag-multi-select').multiselect('select', getIdTagsOfTask(data));
-
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-            if (jqXHR.status === 401) {
-                resetToken();
-            } else {
-                throw new Error("an unexpected error occured: " + errorThrown);
-            }
-        }
-    });
-}
-
-function getIdTagsOfTask(data) {
-    var arrTagsId = [];
-
-    data.map(function (tag) {
-        arrTagsId.push(tag.id);
-    });
-
-    return arrTagsId;
 }
 
 function fillSelectComments(id) {
     comments = [];
     $('#tmw-task-comments').empty();
     if (id != null)
-    $.ajax({
-        url: 'api/comment/task/' + id,
-        type: 'GET',
-        contentType: 'application/json',
-        headers: createAuthToken(),
-        success: function (data, textStatus, jqXHR) {
-            var token = jqXHR.getResponseHeader('Authentication');
-            window.sessionStorage.setItem("token", token);
-            getComments(data);
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-            if (jqXHR.status === 401) {
-                resetToken();
-            } else {
-                throw new Error("an unexpected error occured: " + errorThrown);
+        $.ajax({
+            url: 'api/comment/task/' + id,
+            type: 'GET',
+            contentType: 'application/json',
+            headers: createAuthToken(),
+            success: function (data, textStatus, jqXHR) {
+                var token = jqXHR.getResponseHeader('Authentication');
+                window.sessionStorage.setItem("token", token);
+                getComments(data);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                if (jqXHR.status === 401) {
+                    resetToken();
+                } else {
+                    throw new Error("an unexpected error occured: " + errorThrown);
+                }
             }
-        }
-    });
+        });
 }
 
 var getComments = function (data) {
@@ -666,5 +673,7 @@ function showErrorsOfForm(data) {
             $('#tmw-task-estimateTime-error').text(data.fieldErrors[i].message).css('color', 'red');
         }
     }
+
+
 
 }

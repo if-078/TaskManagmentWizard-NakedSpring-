@@ -271,3 +271,5 @@ UPDATE tmw.users_tasks SET user_id = 3, task_id = 1 WHERE id = 2;
 UPDATE tmw.users_tasks SET user_id = 4, task_id = 1 WHERE id = 3;
 UPDATE tmw.users_tasks SET user_id = 6, task_id = 40 WHERE id = 4;
 UPDATE tmw.users_tasks SET user_id = 7, task_id = 40 WHERE id = 5;
+
+update user set active = 1;

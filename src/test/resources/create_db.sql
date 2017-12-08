@@ -49,6 +49,7 @@ create table task
 	parent_id int null,
 	author_id int null,
 	project_id int null,
+	jira_key varchar(20) null,
 	constraint fk_Tasks_Status1
 		foreign key (status_id) references tmw.status (id)
 			on update cascade on delete cascade,

@@ -82,7 +82,10 @@ $('#jira-integration').on('click', function () {
                 data: JSON.stringify({
                     "url": urlGetIssues,
                     "creds": encode,
-                    "projectKey": chooseProject.key
+                    "projectKey": chooseProject.key,
+                    "projectName":chooseProject.name,
+                    "userId": window.sessionStorage.getItem("id"),
+                    "name":jUsername,
                 }),
                 type: 'POST',
                 contentType: 'application/json',

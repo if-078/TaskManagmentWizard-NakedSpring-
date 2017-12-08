@@ -55,6 +55,14 @@ public class JiraService {
         HttpEntity<String> requestEntity = new HttpEntity<String>("", headers);
         ResponseEntity<String> responseEntity = rest.exchange(credentials.getUrl(), HttpMethod.GET, requestEntity, String.class);
         this.setStatus(responseEntity.getStatusCode());
+        TaskJiraDTO project=new TaskJiraDTO();
+        project.setJiraKey(credentials.getProjectKey());
+        project.setName(credentials.getProjectName());
+        try {
+            Task projectTask = taskService.createTaskByJiraDTO(project);
+        }catch (Exception e){
+            e.getCause();
+        }
         JSONArray issues = new JSONObject(responseEntity.getBody()).getJSONArray("issues");
         for (int i = 0; i < issues.length(); i++) {
             JSONObject issue = issues.getJSONObject(i);
@@ -71,7 +79,6 @@ public class JiraService {
                     rootTaskDto.setAssignTo(0);
                 }
                 Task rootTask = taskService.createTaskByJiraDTO(rootTaskDto);
-
                 int rootTaskId = rootTask.getId();
                 for (int a = 0; a < issues.length(); a++) {
                     if (issue.getJSONObject("parent").getString("key").equals(rootTaskDto.getJiraKey())) {

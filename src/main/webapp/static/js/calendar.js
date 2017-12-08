@@ -140,7 +140,7 @@ var taskCalendar = function () {
                             eventResize: resizeTaskOnCalendar,
 
                             eventClick: function (event) {
-                                $('#tmw-worklog').modal('show');
+                                showFull(event.id);
                             },
 
                             eventDragStop: function (event, e) {

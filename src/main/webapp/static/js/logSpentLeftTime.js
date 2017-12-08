@@ -52,23 +52,14 @@ $('#tmw-btn-add-spent-time').on('click', function () {
 
     $('#tmw-worklog').modal('hide');
 
-    //var spentTime = document.getElementById("tmw-set-spent-time").value;
-    console.log('count = ', ++count);
-
-    //var myObj = { "name":"John", "age":31, "city":"New York" };
-
-    var spentTime = {
-
-        "userId":userId,
-        "taskId":currentEditTaskId,
-        "date":"2017-10-01",
-        "logTime":100
-    };
-
-    console.log(spentTime);
+    var logSpentTime = document.getElementById("tmw-set-spent-time").value;
+    var logLeftTime = document.getElementById("tmw-set-left-time").value;
+    logTime = converHoursAndMinuteToMinutes(logSpentTime);
+    leftTime = converHoursAndMinuteToMinutes(logLeftTime);
 
     $.ajax({
-        url: 'api/tasks/logTask' + '?userId=' + userId + '&taskId=' + currentEditTaskId + '&logTime=' + 100,
+        url: 'api/tasks/logTask' + '?userId=' + userId + '&taskId=' + currentEditTaskId +
+        '&logTime=' + logTime + '&leftTime=' + leftTime,
         type: 'GET',
         contentType: 'application/json',
 
@@ -89,4 +80,9 @@ var convertMinuteToHoursAndMinuteForWorkLog = function (timeMinutes) {
     if (('' + wMinutes).length < 2) wMinutes = '0' + wMinutes;
 
     return ('' + wHours + ':' + wMinutes);
-}
+};
+
+
+var converHoursAndMinuteToMinutes = function (time) {
+    return +time.substring(0,2)*60 + +time.substring(3,5);;
+};

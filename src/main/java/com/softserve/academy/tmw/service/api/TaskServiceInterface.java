@@ -41,7 +41,7 @@ public interface TaskServiceInterface extends EntityServiceInterface<Task> {
 
   boolean hasPermissionToUpdate(int userId, int taskId);
 
-  boolean logTimeByTask(SpentTime spentTime);
+  boolean logTimeByTask(int userId, int taskId, int logTime, int spentTime);
 
   int getTotalSpentTimeByTask(int taskId);
 }

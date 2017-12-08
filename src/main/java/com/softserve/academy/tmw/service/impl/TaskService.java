@@ -318,8 +318,18 @@ public class TaskService implements TaskServiceInterface {
 
 
     @Override
-    public boolean logTimeByTask(SpentTime spentTime) {
+    public boolean logTimeByTask(int userId, int taskId, int logTime, int leftTime) {
+
+      SpentTime spentTime = new SpentTime(userId, taskId, new Date(), logTime);
+
       spentTimeDao.create(spentTime);
+
+      Task task = taskDao.findOne(taskId);
+      task.setSpentTime(logTime);
+      task.setLeftTime(leftTime);
+      taskDao.update(task);
+
+
 
       // To Do
       // update spent time for task

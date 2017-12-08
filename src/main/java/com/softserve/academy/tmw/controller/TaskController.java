@@ -88,11 +88,12 @@ public class TaskController {
   @ResponseStatus(HttpStatus.NO_CONTENT)
   boolean addStentTime(@RequestParam(name = "userId", required = false) int userId,
                        @RequestParam(name = "taskId", required = false) int taskId,
-                       @RequestParam(name = "logTime", required = false) int logTime) {
+                       @RequestParam(name = "logTime", required = false) int logTime,
+                       @RequestParam(name = "leftTime", required = false) int leftTime) {
 
-    System.out.println("userIs = " + userId);
-    System.out.println("taskId = " + taskId);
-    System.out.println("logTime = " + logTime);
+    if (taskService.hasPermissionToUpdate(userId, taskId)) {
+      return taskService.logTimeByTask(userId, taskId, logTime, leftTime);
+    }
 
     return false;
   }

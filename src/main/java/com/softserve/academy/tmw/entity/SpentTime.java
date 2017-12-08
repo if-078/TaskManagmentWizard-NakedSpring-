@@ -11,6 +11,7 @@ public class SpentTime {
     private Date date;
     private int logTime;
     private String userName;
+    private String taskName;
 
     public SpentTime(int id, int userId, int taskId, Date date, int logTime, String userName, String taskName) {
         this.id = id;
@@ -21,8 +22,6 @@ public class SpentTime {
         this.userName = userName;
         this.taskName = taskName;
     }
-
-    private String taskName;
 
     public SpentTime(int userId, int taskId, Date date, int logTime) {
         this.userId = userId;

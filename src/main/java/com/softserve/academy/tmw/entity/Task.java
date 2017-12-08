@@ -21,6 +21,15 @@ public class Task {
   private int parentId;
   private int authorId;
   private int projectId;
+  private String jiraKey;
+
+  public String getJiraKey() {
+    return jiraKey;
+  }
+
+  public void setJiraKey(String jiraKey) {
+    this.jiraKey = jiraKey;
+  }
 
   public int getSpentTime() {
     return spentTime;
@@ -64,8 +73,8 @@ public class Task {
   }
 
   public Task(String name, Date createdDate, Date planningDate, Date startDate, Date endDate,
-      int estimateTime, int spentTime, int leftTime,
-      int assignTo, int statusId, int priorityId, int parentId, int authorId, int projectId) {
+      int estimateTime, int spentTime, int leftTime, int assignTo, int statusId, int priorityId,
+      int parentId, int authorId, int projectId) {
     this.name = name;
     this.createdDate = createdDate;
     this.planningDate = planningDate;
@@ -80,12 +89,11 @@ public class Task {
     this.parentId = parentId;
     this.authorId = authorId;
     this.projectId = projectId;
-
   }
 
   public Task(int id, String name, Date createdDate, Date planningDate, Date startDate,
-      Date endDate, int estimateTime, int spentTime, int leftTime,
-              int assignTo, int statusId, int priorityId, int parentId, int authorId, int projectId) {
+      Date endDate, int estimateTime, int spentTime, int leftTime, int assignTo,
+      int statusId, int priorityId, int parentId, int authorId, int projectId) {
     this.id = id;
     this.name = name;
     this.createdDate = createdDate;
@@ -101,7 +109,6 @@ public class Task {
     this.parentId = parentId;
     this.authorId = authorId;
     this.projectId = projectId;
-
   }
 
   public void setId(int id) {

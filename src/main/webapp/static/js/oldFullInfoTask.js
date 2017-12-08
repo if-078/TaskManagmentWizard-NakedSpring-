@@ -71,10 +71,10 @@ var showFull = function (id) {
             $('#tag-input-modal span:first').css({"width": "100%", "border": "1px solid", "border-color": "#ccc"});
 
             if (userId == firstManagerId || userId == secondaryManagerId) {
-                $('#tmw-invite-btn').show();
+            $('#tmw-invite-btn').show();
             }
             else {
-                $('#tmw-invite-btn').hide();
+            $('#tmw-invite-btn').hide();
             }
 
             $('#tmw-modal').modal('show');
@@ -284,7 +284,7 @@ function createTask(task) {
         success: function (data) {
             $('#tmw-modal').modal('hide');
             if ($('#tmw-task-comment').css('display') != 'none')
-                showComment();
+            showComment();
             refreshTree("create", data);
             clearTaskModal();
 
@@ -319,7 +319,7 @@ function updateTask(task) {
         success: function () {
             $('#tmw-modal').modal('hide');
             if ($('#tmw-task-comment').css('display') != 'none')
-                showComment();
+            showComment();
             refreshTree("update", task);
             clearTaskModal();
             showDataOnCalendarAndTable();
@@ -343,7 +343,7 @@ function deleteTask(taskId) {
             refreshTree("delete", taskId);
             showDataOnCalendarAndTable();
             if ($('#tmw-task-comment').css('display') != 'none')
-                showComment();
+            showComment();
             taskDTO = {};
         },
         error: function (jqXHR) {

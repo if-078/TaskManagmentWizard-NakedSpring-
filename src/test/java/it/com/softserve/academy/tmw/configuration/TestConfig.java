@@ -1,4 +1,4 @@
-package it.com.softserve.academy.tmw.dao;
+package it.com.softserve.academy.tmw.configuration;
 
 import com.softserve.academy.tmw.controller.TagController;
 import it.com.softserve.academy.tmw.dao.utility.CommentPopulator;
@@ -7,7 +7,7 @@ import it.com.softserve.academy.tmw.dao.utility.RolePopulator;
 import it.com.softserve.academy.tmw.dao.utility.StatusPopulator;
 import it.com.softserve.academy.tmw.dao.utility.TaskPopulator;
 import it.com.softserve.academy.tmw.dao.utility.UserPopulator;
-
+import java.util.Properties;
 import javax.mail.Authenticator;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
@@ -22,10 +22,9 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.util.Properties;
-
 @Configuration
-@ComponentScan(basePackages = {"com.softserve.academy.tmw.dao","com.softserve.academy.tmw.service"})
+@ComponentScan(basePackages = {"com.softserve.academy.tmw.dao",
+    "com.softserve.academy.tmw.service"})
 public class TestConfig {
 
   @Bean
@@ -35,7 +34,9 @@ public class TestConfig {
   }
 
   @Bean
-  public TagController getTagController() {return new TagController();}
+  public TagController getTagController() {
+    return new TagController();
+  }
 
   @Bean
   public UserPopulator getUserPop() {
@@ -73,8 +74,7 @@ public class TestConfig {
   }
 
   @Bean
-  public JavaMailSender getJavaMailSender()
-  {
+  public JavaMailSender getJavaMailSender() {
 
     JavaMailSenderImpl sender = new JavaMailSenderImpl();
     Properties props = System.getProperties();

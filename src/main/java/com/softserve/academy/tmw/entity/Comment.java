@@ -1,7 +1,5 @@
 package com.softserve.academy.tmw.entity;
 
-import java.time.Instant;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 public class Comment {
@@ -74,12 +72,38 @@ public class Comment {
   @Override
   public String toString() {
     return "Comment{" +
-            "id=" + id +
-            ", commentText='" + commentText + '\'' +
-            ", createdDate=" + createdDate +
-            ", taskId=" + taskId +
-            ", userId=" + userId +
-            ", user='" + user + '\'' +
-            '}';
+        "id=" + id +
+        ", commentText='" + commentText + '\'' +
+        ", createdDate=" + createdDate +
+        ", taskId=" + taskId +
+        ", userId=" + userId +
+        ", user='" + user + '\'' +
+        '}';
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+
+    Comment comment = (Comment) o;
+
+    if (id != comment.id) {
+      return false;
+    }
+    return commentText != null ? commentText.equals(comment.commentText)
+        : comment.commentText == null;
+
+  }
+
+  @Override
+  public int hashCode() {
+    int result = id;
+    result = 31 * result + (commentText != null ? commentText.hashCode() : 0);
+    return result;
   }
 }

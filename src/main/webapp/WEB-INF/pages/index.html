@@ -1,0 +1,576 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>TMW</title>
+
+    <!-- jQuery v3.x -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <!-- Bootstrap v3.x -->
+    <link rel="stylesheet" type="text/css"
+          href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css"
+          integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+    <!-- jsTree -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
+
+    <!-- DataTables -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css">
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
+
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.js"></script>
+
+    <!-- MULTI SELECT BOOTSTRAP -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css">
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.js"></script>
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.min.js"></script>
+
+    <!-- FullCalendar Scheduler v1.x - Dependencies -->
+    <script src="static/lib/fullcalendar-scheduler/lib/jquery-ui.min.js"></script>
+    <script src="static/lib/fullcalendar-scheduler/lib/moment.min.js"></script>
+    <!-- <script src="static/lib/fullcalendar-scheduler/lib/gcal.min.js"></script> -->
+
+    <!-- FullCalendar v3.x -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.6.2/fullcalendar.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.6.2/fullcalendar.min.css" rel="stylesheet">
+
+    <!-- FullCalendar Scheduler v1.x -->
+    <script src="static/lib/fullcalendar-scheduler/scheduler.min.js"></script>
+    <link href="static/lib/fullcalendar-scheduler/scheduler.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Datepicker -->
+    <link rel="stylesheet" type="text/css"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker3.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js"></script>
+
+    <!-- Moment.js Business Time Plugin -->>
+    <script src="static/js/moment-business-time.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="/static/css/main.css">
+
+</head>
+
+<body>
+
+<!-- HEADER -->
+<nav id="nav" class="navbar navbar-default navbar-fixed-top" style="height:6%">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-2" style="float: left; width:50%">
+                <div class="navbar-header" style="float:left">
+                    <a class="navbar-brand" href="#">Time Management Wizard</a>
+                </div>
+            </div>
+            <div class="col-md-2 col-md-offset-8" style="float:right; margin:0; padding:15px">
+                <span id="user-login"></span>
+                <a id="logout" href="/" style="float:right">Logout</a></div>
+        </div>
+    </div>
+
+</nav>
+
+<!-- / HEADER -->
+
+<div id="main" class="container-fluid">
+    <div class="row">
+
+        <!-- SIDEBAR -->
+        <div class="tmw-sidebar col-xs-3">
+
+            <!-- PRIORITY, STATUS AND TAG FILTERS -->
+            <div class="form-horizontal">
+                <div id="tmw-filters" class="form-group">
+                    <div id="leftPanel" class="col-xs-12 btn-group-vertical">
+                        <!--loaded content-->
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div id="tmw-apply-btn-area" class="col-xs-6">
+                        <button id="tmw-apply-btn" class="btn btn-default btn-block" type="button">Apply</button>
+                    </div>
+                    <div id="tmw-reset-btn-area" class="col-xs-6">
+                        <button id="tmw-reset-btn" class="btn btn-default btn-block" type="button">Reset</button>
+                    </div>
+                </div>
+            </div>
+            <!-- / STATUS AND TAG FILTERS -->
+
+            <!-- BUTTON JIRA -->
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <div class="col-xs-12 btn-group-vertical">
+                        <button id="jira-integration" type="button" class="btn btn-default btn-block">Import project from Jira</button>
+                    </div>
+                </div>
+            </div>
+            <div id="tree-and-addbtn">
+
+                <!-- CREATE NEW TASK -->
+                <div id="tmw-create-task-div" class="row">
+                    <button id="tmw-create-task" type="button" class="btn btn-default pull-right">+</button>
+                </div>
+
+                <!-- TREE VIEW -->
+                <div id="tmw-treeview" class="tmw-treeview"></div>
+                <!-- / TREE VIEW -->
+
+            </div>
+
+
+        </div>
+        <!-- / SIDEBAR -->
+
+        <!-- MAIN -->
+        <div class="col-xs-9">
+            <div class="tmw-main row">
+
+
+                <div id="calendar-and-table-area">
+
+                    <div id="tmw-btn-switch" class="fc-button-group">
+                        <button id="tmw-btn-calendar-view" type="button"
+                                class="fc-button fc-state-default fc-corner-left fc-state-active">Calendar
+                        </button>
+                        <button id="tmw-btn-table-view" type="button"
+                                class="fc-button fc-state-default fc-corner-right"> Table
+                        </button>
+                    </div>
+
+                    <!-- PLANNING TABLE -->
+                    <div id="tmw-main-planning-table" class="tmw-main-planning-table row hidden">
+                        <div class="col-xs-12">
+                            <table id="tmw-task-planning-table"
+                                   class="tmw-task-planning-table table table-bordered table-hover"
+                                   cellspacing="0" style="width: 100%;"></table>
+                        </div>
+                    </div>
+                    <!-- / PLANNING TABLE -->
+
+                    <!-- CALENDAR -->
+                    <div id="tmw-main-calendar" class="tmw-main-calendar row">
+                        <div class="col-xs-12">
+                            <div id="tmw-task-calendar" class="tmw-task-calendar"></div>
+                        </div>
+                    </div>
+                    <!-- / CALENDAR -->
+
+                    <!-- BACKLOG TABLE -->
+                    <div id="tmw-main-table" class="tmw-main-table row">
+
+                        <div class="col-xs-12">
+                            <div id="tmw-name-table"><b>Backlog</b></div>
+                            <table id="tmw-task-table" class="tmw-task-table table table-bordered table-hover"
+                                   cellspacing="0" style="width: 100%;"></table>
+                        </div>
+                    </div>
+                    <!-- / BACKLOG TABLE -->
+                </div>
+
+
+            </div>
+        </div>
+        <!-- / MAIN -->
+
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="tmw-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="overflow-y: scroll">
+            <div class="modal-header">
+                <h5 class="modal-title" id="tmw-task-info"></h5>
+                <input type="text" class="form-control" id="tmw-task-name" placeholder="New Task" style="display: none">
+                <h5 class="modal-title" id="tmw-task-parentId" style="display: none"></h5>
+                <h5 class="modal-title" id="tmw-task-projectId" style="display: none"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form>
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="form-group col-md-3 task-full-1">
+                            <label for="tmw-task-author">Author</label>
+                            <select id="tmw-task-author" class="form-control author" disabled></select>
+                        </div>
+                        <div class="form-group col-md-3 task-full-1">
+                            <label for="tmw-task-assignTo">Assign to</label>
+                            <select id="tmw-task-assignTo" class="form-control assignTo"></select>
+                        </div>
+                        <div class="form-group col-md-3 task-full-1">
+                            <label for="tmw-task-priority">Priority</label>
+                            <select id="tmw-task-priority" class="form-control"></select>
+                        </div>
+                        <div class="form-group col-md-3 task-full-1">
+                            <label for="tmw-task-status">Status</label>
+                            <select id="tmw-task-status" class="form-control"></select>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="form-row">
+                    <div class="form-group col-md-3">
+                        <label for="tmw-task-estimateTime">Estimate time</label>
+                        <input type="text" class="form-control" id="tmw-task-estimateTime" placeholder="hh:mm:ss">
+                        <div id="tmw-task-estimateTime-error"></div>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="tmw-task-estimateTime">Spent time</label>
+                        <input type="text" class="form-control" id="tmw-task-spentTime" disabled placeholder="hh:mm:ss">
+                        <div id="tmw-task-spentTime-error"></div>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="tmw-task-estimateTime">Left time</label>
+                        <input type="text" class="form-control" id="tmw-task-leftTime" disabled placeholder="hh:mm:ss">
+                        <div id="tmw-task-leftTime-error"></div>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="tmw-btn-task-worklog">Add spent time</label>
+                        <button id="tmw-btn-task-worklog" type="button" class="btn btn-primary">Work Log Task</button>
+                        <div id="tmw-task-worklog-error"></div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-6" style="margin: 0">
+                        <label for="tmw-task-conteiner-draftPlanning">Draft Planning</label>
+                        <div class="form-group">
+                            <div class='input-group date' id="tmw-task-conteiner-draftPlanning">
+                                <input id="tmw-task-draftPlanning" type='text' class="form-control datepicker"
+                                       data-date-format="yyyy-mm-dd" placeholder='YYYY-MM-DD'/><span
+                                    class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                            </div>
+                            <div id="tmw-task-draftPlanning-error"></div>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6" style="margin: 0">
+                        <label for="tmw-task-conteiner-planningDate">Planning Date</label>
+                        <div class="form-group">
+                            <div class='input-group date' id="tmw-task-conteiner-planningDate">
+                                <input id="tmw-task-planningDate" type='text' class="form-control"
+                                       data-date-format="yyyy-mm-dd hh-mm-ss" placeholder='YYYY-MM-DD hh-mm-ss'/><span
+                                    class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                            </div>
+                            <div id="tmw-task-planningDate-error"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div id="tag-input-modal" class="form-group col-md-12" style="margin-bottom: 0; width:100%">
+                            <label for="tagBoxModal">Tags</label>
+                            <!--Build your select:-->
+                            <input id="tagBoxModal" class="easyui-tagbox" style="width:100%;" data-options="
+                   loader: tagLoader,
+                   mode: 'remote',
+                   valueField: 'id',
+                   textField: 'name',
+                   multiple:true,
+                   limitToList: true,
+                   hasDownArrow: true,
+                   prompt: 'Select a tag/s',
+                   onLoadSuccess:boxMessage
+                   "/>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-12" style="width: 100%">
+                        <input type="button" id="tmw-show-comment" value="Show/Hide comments"
+                               style="border-radius: 4px; margin: 10px; margin-left: 0; border-color: #c8c8c8">
+                        <input type="button" id="tmw-create-tag" value="Create new tag"
+                               style="border-radius: 4px; border-color: #c8c8c8; margin: 10px; margin-left: 0">
+                        <input type="text" id="tmw-tag-name" placeholder="New tag"
+                               style="border-radius: 4px; width: 47%">
+                        <div class="form-control" id="tmw-task-comments" style="display: none;
+                        margin-bottom: 10px; height: auto"></div>
+                        <textarea class="form-control" rows="4" id="tmw-task-comment" placeholder="Comment"
+                                  style="display: none"></textarea>
+                        <div id="tmw-task-comment-error"></div>
+                        <input type="button" id="tmw-save-comment" value="Save comments" style="border-color: #c8c8c8; display: none;
+                        margin: 10px; margin-left: 0">
+                    </div>
+                </div>
+                <div id="tmw-invite" class="form-row">
+                    <div class="form-group col-md-12" style="width: 100%">
+                        <button id="tmw-invite-btn" class="btn btn-default btn-block" type="button">Invite</button>
+                    </div>
+                </div>
+
+            </form>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" style="border: 1px solid">Cancel
+                </button>
+                <button id="tmw-task-btn-save" type="button" class="btn btn-primary">Save</button>
+                <button id="tmw-task-btn-delete" type="button" class="btn btn-primary" data-dismiss="modal">Delete
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal Jira-->
+<div class="modal fade" id="jira-modal-authorization" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="jiraModalLabel">Login to your Jira account</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form>
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <label for="jira-link">Link</label>
+                        <input type="text" class="form-control" id="jira-link">
+                    </div>
+                </div>
+
+
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <label for="jira-login">Login</label>
+                        <input type="text" class="form-control" id="jira-login">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <label for="jira-password">Password</label>
+                        <input type="password" class="form-control" id="jira-password">
+                    </div>
+                </div>
+
+
+
+            </form>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button id="jira-ok" type="button" class="btn btn-primary">Ok</button>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<div class="modal fade" id="jira-modal-choose-project" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" aria-hidden="true">
+            <div class="modal-header">
+                <h5 class="modal-title">Choose Jira project to import tasks</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <form>
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <ul id="jira-projects-list"></ul>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <div id="choose-project-text"></div>
+                    </div>
+                </div>
+
+            </form>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button id="jira-project-ok" type="button" class="btn btn-primary">Ok</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="jira-modal-success" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" aria-hidden="true">
+            <div class="modal-header">
+                <h5 class="modal-title">Successful import</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="login">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
+                <p>Sign In</p>
+                <form id="loginForm">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="mail" placeholder="email"
+                               required name="email">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control" id="password1"
+                               placeholder="password" required name="password">
+                        <label id="password-label" for="password1" style="display: none; color:red">Logon failure:
+                            unknown user name or bad password!</label>
+                    </div>
+                    <button type="submit" class="btn btn-default">login</button>
+                    <span style="float:right; margin-top: 5px;"><a
+                            id="reg-button">New here? create an account!</a></span>
+                </form>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+    </div>
+</div>
+<div id="registration">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
+                <p>Sign Up</p>
+                <form id="registration-form" role="form">
+                    <div class="form-group">
+                        <label for="reg-name">Enter your name</label>
+                        <input type="text" class="form-control" id="reg-name" placeholder="username"
+                               name="rname">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="reg-email">Enter email</label>
+                        <input type="email" class="form-control" id="reg-email" placeholder="email"
+                               name="remail">
+                        <label id="existing-email" for="reg-email" style="display: none; color:red">User with the same
+                            email exists!</label>
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-password">Enter password</label>
+                        <input type="password" class="form-control" id="reg-password"
+                               placeholder="password" name="rpassword">
+                    </div>
+                    <div class="form-group">
+                        <label for="rconfirm-pass">Confirm password</label>
+                        <input type="password" class="form-control" id="rconfirm-pass" placeholder="confirm password"
+                               name="rconfirm">
+                    </div>
+                    <button type="submit" class="btn btn-default">sign up</button>
+                </form>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="inviteUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Invite User</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="tmw-invite-email">Enter email</label>
+                    <input id="tmw-invite-email" type="email" class="form-control" placeholder="email"
+                           name="invite-email">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button id="tmw-btn-send-invite" type="button" class="btn btn-primary">Invite</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="tmw-worklog" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div id="tmw-worklog-dialog" class="modal-dialog" role="document">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title"><b>Add spent time and set left time </b></h5>
+            </div>
+
+            <div id="tmw-body-worklog" class="modal-body">
+
+
+                <div class="form-group col-md-4">
+                    <label for="tmw-total-spent-time">Total Spent Time</label>
+                    <input id="tmw-total-spent-time" type="text" class="form-control" disabled>
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label for="tmw-set-spent-time">Add Spent Time</label>
+                    <input id="tmw-set-spent-time" type="time" class="form-control">
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label for="tmw-set-left-time">Left Time</label>
+                    <input id="tmw-set-left-time" type="time" class="form-control">
+                </div>
+
+            </div>
+
+            <div class="modal-body">
+
+
+                <div class="form-group col-md-12">
+                    <textarea id="tmw-body-worklog-users" name="textNote" class="form-control col-md-12" style="resize: none" rows="6"></textarea>
+                </div>
+
+            </div>
+
+
+            <div id="tmw-spent-footer" class="modal-footer">
+                <button id="tmw-btn-cancel-add" type="button" class="btn btn-secondary" data-dismiss="modal">Cancel
+                </button>
+                <button id="tmw-btn-add-spent-time" type="button" class="btn btn-primary">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+
+<script src="static/js/main.js"></script>
+
+<script src="static/js/treeFilter.js"></script>
+<script src="static/js/timeFilter.js"></script>
+<script src="static/js/statusFilter.js"></script>
+<script src="static/js/backlogTable.js"></script>
+<script src="static/js/oldFullInfoTask.js"></script>
+
+<script src="static/js/calendar.js"></script>
+<script src="static/js/planningTable.js"></script>
+<script src="static/js/inviteUser.js"></script>
+<script src="static/js/logSpentLeftTime.js"></script>
+<script src="static/js/loginOrRegistration.js"></script>
+<script src="static/js/jiraIntegration.js"></script>
+
+
+</html>

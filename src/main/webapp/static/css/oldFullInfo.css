@@ -1,0 +1,9 @@
+$('#tag-input-modal span:first') {
+    width: 100%;
+    border-color: #ccc;
+}
+
+$('#tag-input-modal a') {
+    background-color: #ccc;
+    color: #ccc;
+}

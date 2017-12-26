@@ -79,14 +79,6 @@ public class TagControllerItTest {
         .content(jsonMapper.writeValueAsString(tags.get(2))))
         .andExpect(status().isCreated());
 
-Tag badTag = tags.get(2);
-badTag.setProjectId(10);
-    mockMvc.perform(post("/api/tags/")
-            .accept(MediaType.APPLICATION_JSON)
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(jsonMapper.writeValueAsString(badTag)))
-            .andExpect(status().isCreated());
-
     MvcResult result = mockMvc.perform(get("/api/tags/" + tags.get(0).getId())
         .accept(MediaType.APPLICATION_JSON)
         .contentType(MediaType.APPLICATION_JSON))

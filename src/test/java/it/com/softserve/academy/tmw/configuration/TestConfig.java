@@ -1,6 +1,7 @@
 package it.com.softserve.academy.tmw.configuration;
 
 import com.softserve.academy.tmw.controller.CommentController;
+import com.softserve.academy.tmw.controller.StatusController;
 import com.softserve.academy.tmw.controller.TagController;
 import com.softserve.academy.tmw.controller.UserController;
 import it.com.softserve.academy.tmw.dao.utility.CommentPopulator;
@@ -33,6 +34,10 @@ public class TestConfig {
   public DataSource dataSource() {
     return new EmbeddedDatabaseBuilder().setType(EmbeddedDatabaseType.H2)
         .addScript("classpath:create_db.sql").build();
+  }
+  @Bean
+  public StatusController getStatusController() {
+    return new StatusController();
   }
 
   @Bean

@@ -4,8 +4,6 @@ import com.softserve.academy.tmw.dao.impl.TagDao;
 import com.softserve.academy.tmw.entity.Tag;
 import com.softserve.academy.tmw.service.api.TagServiceInterface;
 import java.util.List;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -49,16 +47,11 @@ public class TagService implements TagServiceInterface {
 
   @Override
   public Tag findOne(int id) {
-
-    Optional<Tag> optionalTag = Optional.empty();
-
     try {
-      optionalTag = Optional.of(tagDao.findOne(id));
-
+      return tagDao.findOne(id);
     } catch (EmptyResultDataAccessException e) {
-
+      return new Tag();
     }
-    return optionalTag.get();
   }
 
   @Override

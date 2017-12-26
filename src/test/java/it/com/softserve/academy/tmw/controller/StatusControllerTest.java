@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.softserve.academy.tmw.controller.StatusController;
 import com.softserve.academy.tmw.entity.Status;
 import it.com.softserve.academy.tmw.configuration.TestConfig;
+import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.DirtiesContext;
@@ -24,5 +25,10 @@ public class StatusControllerTest {
     private ObjectMapper jsonMapper = new ObjectMapper();
     private MockMvc mockMvc;
     private List<Status> statuses;
+
+    @Before
+    public void setUp() {
+        
+    }
 
 }

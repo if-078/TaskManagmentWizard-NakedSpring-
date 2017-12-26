@@ -48,10 +48,5 @@ public class StatusController {
     return service.delete(status.getId());
   }
 
-  @PutMapping
-  boolean update(@RequestBody String json) throws SQLException, IOException {
-    Status statusObj = objectMapper.readValue(json, Status.class);
-    return service.update(statusObj);
-  }
 
 }

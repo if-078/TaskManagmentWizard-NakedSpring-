@@ -7,6 +7,8 @@ import com.softserve.academy.tmw.service.api.EntityServiceInterface;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
+
+import com.softserve.academy.tmw.service.impl.StatusService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,15 +22,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("api/status")
 public class StatusController {
 
-  EntityServiceInterface<Status> service;
+  StatusService service;
 
   ObjectMapper objectMapper;
 
-  @Autowired
-  public StatusController(EntityServiceInterface<Status> service, ObjectMapper objectMapper) {
-    this.service = service;
-    this.objectMapper = objectMapper;
-  }
 
   @GetMapping
   public List<Status> get() throws SQLException, JsonProcessingException {
